@@ -1,0 +1,107 @@
+.collapse-wrap-admin {
+	& .ant-collapse-header-text {
+		width: 65%;
+	}
+
+	@include max-media(1450px) {
+		& .ant-collapse-header-text {
+			width: 60%;
+		}
+	}
+
+	@include max-media(1024px) {
+		& .ant-collapse-header-text {
+			width: 65%;
+		}
+	}
+
+	@include max-media(575px) {
+		& .ant-collapse-header-text {
+			width: 60%;
+		}
+	}
+}
+
+.collapse-wrap {
+	& .ant-collapse-header-text {
+		width: 100%;
+	}
+}
+
+.video-item-container {
+	@apply m-[8px] rounded-xl bg-[#fff] hover:drop-shadow-lg duration-300 shadow-md;
+}
+
+.video-status-tag {
+	@apply absolute top-0 left-0 text-[#fff] px-[8px] py-[4px] rounded-tl-xl rounded-br-xl z-20;
+}
+
+.videos-thumnail {
+	@apply object-cover w-full h-56 rounded-xl rounded-br-none rounded-bl-none duration-300;
+}
+
+.video-section-container {
+	@apply flex items-center py-[8px] px-[8px] mb-2 hover:bg-tw-gray rounded;
+}
+
+.video-course-section {
+	.ant-collapse-header {
+		padding: 8px 32px 13px 8px !important;
+	}
+}
+
+.video-section-body {
+	@apply flex flex-1 items-center justify-start ml-[8px] group-hover:text-[#000];
+}
+
+.video-section-title {
+	@apply my-auto select-none in-1-line w-full;
+}
+
+.video-section-time {
+	@apply my-auto select-none text-[#7c7c7c] line-clamp-1 text-[12px] font-[500] mt-[-3px];
+}
+
+.ant-collapse-expand-icon {
+	.ant-collapse-arrow {
+		height: 13px !important;
+		right: 8px !important;
+	}
+}
+
+.video-blur {
+	@apply absolute top-0 bottom-0 left-0 right-0 backdrop-blur-none group-hover:backdrop-blur-sm z-10 duration-500;
+	@apply rounded-xl group-hover:rounded-bl-none group-hover:rounded-br-none;
+}
+
+.video-option-menu {
+	@apply absolute top-8 group-hover:top-0 bottom-0 right-0 left-0 opacity-tw-0 group-hover:opacity-tw-10 duration-500 z-20 flex justify-center items-center bg-[#00000018];
+	@apply rounded-xl group-hover:rounded-bl-none group-hover:rounded-br-none;
+}
+
+.video-price {
+	@apply text-[16px] font-[600] mb-2;
+}
+
+.video-name {
+	@apply text-[18px] font-[600] mb-2 line-clamp-1;
+}
+
+.video-detail {
+	.ant-tabs-tab {
+		background: #d8d8d8 !important;
+		.ant-tabs-tab-btn {
+			color: #000 !important;
+		}
+	}
+	.ant-tabs-tab-active {
+		background: #1b73e8 !important;
+		.ant-tabs-tab-btn {
+			color: #fff !important;
+		}
+	}
+	.ant-tabs-tabpane-active {
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+	}
+}
