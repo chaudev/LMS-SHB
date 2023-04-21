@@ -20,7 +20,6 @@ function LoginForm(props: ILoginForm) {
 
 	const [visible, setVisible] = useState(false)
 
-	const [loadingTrial, setLoadingTrial] = useState(false)
 	const [trialUsers, setTrialUsers] = useState([])
 
 	function removeFullNameContainingChau(arr) {
@@ -86,11 +85,6 @@ function LoginForm(props: ILoginForm) {
 					Đăng nhập {props.loading && <Spin className="loading-white" />}
 				</button>
 
-				<button onClick={() => setVisible(true)} className="btn-login mt-4 !bg-[#ee8503]" type="button">
-					<ImEnter className="mr-[8px]" />
-					Dùng thử
-				</button>
-
 				{!!props?.alloweRegisters && (
 					<div className="mt-4 register">
 						Bạn chưa có tài khoản? <a href="/register">Đăng ký</a>
@@ -101,32 +95,6 @@ function LoginForm(props: ILoginForm) {
 					<a href="/fogot-password">Quên mật khẩu?</a>
 				</div>
 			</div>
-
-			<Modal width={500} open={visible} onCancel={() => setVisible(false)} footer={null}>
-				<div className="w-full h-[300px] flex flex-col items-center justify-center">
-					<Lottie loop animationData={loadingJson} play className="inner w-[350px] mx-auto" />
-				</div>
-
-				<Divider>
-					<h1 className="text-center">Chọn tài khoản dùng thử</h1>
-				</Divider>
-
-				<div className="grid grid-cols-4 gap-3">
-					{trialUsers.map((user) => {
-						return (
-							<div
-								onClick={() => {
-									setLoadingTrial(true)
-									_submit({ username: user.UserName, password: 'mon4medi4' })
-								}}
-								className="bg-[#0d6efd] shadow-sm none-selection cursor-pointer hover:bg-[#0d60dd] active:bg-[#0d6efd] rounded-[6px] h-[36px] flex items-center justify-center col-span-1"
-							>
-								<div className="font-[600] text-[#fff] text-[16px]">{user?.RoleName}</div>
-							</div>
-						)
-					})}
-				</div>
-			</Modal>
 		</Form>
 	)
 }
