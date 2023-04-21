@@ -31,16 +31,16 @@ export const AdminMenu = [
 		TabName: 'Tài chính',
 		Icon: <FaMoneyBillAlt size={20} />
 	},
-	{
-		Key: 'video',
-		TabName: 'Khoá học video',
-		Icon: <IoVideocam size={22} />
-	},
-	{
-		Key: 'library-online',
-		TabName: 'Thư viện online',
-		Icon: <IoLibrarySharp size={22} />
-	},
+	// {
+	// 	Key: 'video',
+	// 	TabName: 'Khoá học video',
+	// 	Icon: <IoVideocam size={22} />
+	// },
+	// {
+	// 	Key: 'library-online',
+	// 	TabName: 'Thư viện online',
+	// 	Icon: <IoLibrarySharp size={22} />
+	// },
 	// {
 	// 	Key: 'library',
 	// 	TabName: 'Đề thi',
@@ -106,13 +106,13 @@ export const AdminChildMenu = [
 				Key: '/finance/refund',
 				Route: '/finance/refund',
 				Text: 'Hoàn tiền'
-			},
-			{
-				TypeItem: 'single',
-				Key: '/finance/donation-history',
-				Route: '/finance/donation-history',
-				Text: 'Lịch sử tặng'
 			}
+			// {
+			// 	TypeItem: 'single',
+			// 	Key: '/finance/donation-history',
+			// 	Route: '/finance/donation-history',
+			// 	Text: 'Lịch sử tặng'
+			// }
 		]
 	},
 	{
@@ -132,7 +132,7 @@ export const AdminChildMenu = [
 				ItemType: 'single',
 				Key: '/info-course/service-appointment-test',
 				Route: '/info-course/service-appointment-test',
-				Text: 'Khách hẹn test',
+				Text: 'Hẹn kiểm tra đầu vào',
 				Icon: ''
 			},
 			{
@@ -163,41 +163,41 @@ export const AdminChildMenu = [
 				Text: 'Học viên chuyển lớp',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/registration',
-				Route: '/info-course/registration',
-				Text: 'Hẹn đăng ký',
-				Icon: ''
-			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/registration',
+			// 	Route: '/info-course/registration',
+			// 	Text: 'Hẹn đăng ký',
+			// 	Icon: ''
+			// },
 			{
 				ItemType: 'single',
 				Key: '/info-course/student/warning',
 				Route: '/info-course/student/warning',
 				Text: 'Cảnh báo học viên',
 				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/feedbacks',
-				Route: '/info-course/feedbacks',
-				Text: 'Phản hồi học viên',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/rollup',
-				Route: '/info-course/rollup',
-				Text: 'Điểm danh học viên (QR)',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/parents',
-				Route: '/info-course/parents',
-				Text: 'Phụ huynh',
-				Icon: ''
 			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/feedbacks',
+			// 	Route: '/info-course/feedbacks',
+			// 	Text: 'Phản hồi học viên',
+			// 	Icon: ''
+			// }
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/rollup',
+			// 	Route: '/info-course/rollup',
+			// 	Text: 'Điểm danh học viên (QR)',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/parents',
+			// 	Route: '/info-course/parents',
+			// 	Text: 'Phụ huynh',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{
@@ -305,13 +305,13 @@ export const AdminChildMenu = [
 				Icon: '',
 				Route: '/class/tutoring-config',
 				Text: 'Cấu hình thời gian đặt lịch'
-			},
-			{
-				TypeItem: 'single',
-				Key: '/class/zoom-rooms',
-				Route: '/class/zoom-rooms',
-				Text: 'Danh sách phòng Zoom'
 			}
+			// {
+			// 	TypeItem: 'single',
+			// 	Key: '/class/zoom-rooms',
+			// 	Route: '/class/zoom-rooms',
+			// 	Text: 'Danh sách phòng Zoom'
+			// }
 		]
 	},
 	{
@@ -390,14 +390,14 @@ export const AdminChildMenu = [
 						Route: '/options/study-time',
 						Text: 'Ca học',
 						Icon: ''
-					},
-					{
-						ItemType: 'single',
-						Key: '/options/zoom',
-						Route: '/options/zoom',
-						Text: 'Cấu hình Zoom',
-						Icon: ''
 					}
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/zoom',
+					// 	Route: '/options/zoom',
+					// 	Text: 'Cấu hình Zoom',
+					// 	Icon: ''
+					// }
 				]
 			},
 			{

@@ -31,16 +31,16 @@ export const AcademicMenu = [
 		TabName: 'Tài chính',
 		Icon: <FaMoneyBillAlt size={20} />
 	},
-	{
-		Key: 'video',
-		TabName: 'Khoá học video',
-		Icon: <IoVideocam size={22} />
-	},
-	{
-		Key: 'library-online',
-		TabName: 'Thư viện online',
-		Icon: <IoLibrarySharp size={22} />
-	},
+	// {
+	// 	Key: 'video',
+	// 	TabName: 'Khoá học video',
+	// 	Icon: <IoVideocam size={22} />
+	// },
+	// {
+	// 	Key: 'library-online',
+	// 	TabName: 'Thư viện online',
+	// 	Icon: <IoLibrarySharp size={22} />
+	// },
 	// {
 	// 	Key: 'library',
 	// 	TabName: 'Đề thi',
@@ -119,7 +119,7 @@ export const AcademicChildMenu = [
 				ItemType: 'single',
 				Key: '/info-course/service-appointment-test',
 				Route: '/info-course/service-appointment-test',
-				Text: 'Khách hẹn test',
+				Text: 'Hẹn kiểm tra đầu vào',
 				Icon: ''
 			},
 			{
@@ -150,27 +150,27 @@ export const AcademicChildMenu = [
 				Text: 'Học viên chuyển lớp',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/registration',
-				Route: '/info-course/registration',
-				Text: 'Hẹn đăng ký',
-				Icon: ''
-			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/registration',
+			// 	Route: '/info-course/registration',
+			// 	Text: 'Hẹn đăng ký',
+			// 	Icon: ''
+			// },
 			{
 				ItemType: 'single',
 				Key: '/info-course/student/warning',
 				Route: '/info-course/student/warning',
 				Text: 'Cảnh báo học viên',
 				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/feedbacks',
-				Route: '/info-course/feedbacks',
-				Text: 'Phản hồi học viên',
-				Icon: ''
 			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/feedbacks',
+			// 	Route: '/info-course/feedbacks',
+			// 	Text: 'Phản hồi học viên',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{

@@ -122,14 +122,14 @@ export const AccountantChildMenu = [
 				Route: '/info-course/changed',
 				Text: 'Học viên chuyển lớp',
 				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/registration',
-				Route: '/info-course/registration',
-				Text: 'Hẹn đăng ký',
-				Icon: ''
 			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/registration',
+			// 	Route: '/info-course/registration',
+			// 	Text: 'Hẹn đăng ký',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{

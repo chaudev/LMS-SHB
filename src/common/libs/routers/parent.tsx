@@ -21,17 +21,17 @@ export const ParentStudentMenu = [
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />
-	},
-	{
-		Key: 'video',
-		TabName: 'Khoá học video',
-		Icon: <IoVideocam size={22} />
-	},
-	{
-		Key: 'library-online',
-		TabName: 'Thư viện online',
-		Icon: <IoLibrarySharp size={22} />
 	}
+	// {
+	// 	Key: 'video',
+	// 	TabName: 'Khoá học video',
+	// 	Icon: <IoVideocam size={22} />
+	// },
+	// {
+	// 	Key: 'library-online',
+	// 	TabName: 'Thư viện online',
+	// 	Icon: <IoLibrarySharp size={22} />
+	// }
 ]
 
 export const ParentStudentChildMenu = [

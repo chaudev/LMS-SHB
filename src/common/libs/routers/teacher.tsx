@@ -29,16 +29,16 @@ export const TeacherMenu = [
 		TabName: 'Tài chính',
 		Icon: <FaMoneyBillAlt size={20} />
 	},
-	{
-		Key: 'video',
-		TabName: 'Khoá học video',
-		Icon: <IoVideocam size={22} />
-	},
-	{
-		Key: 'library-online',
-		TabName: 'Thư viện online',
-		Icon: <IoLibrarySharp size={22} />
-	},
+	// {
+	// 	Key: 'video',
+	// 	TabName: 'Khoá học video',
+	// 	Icon: <IoVideocam size={22} />
+	// },
+	// {
+	// 	Key: 'library-online',
+	// 	TabName: 'Thư viện online',
+	// 	Icon: <IoLibrarySharp size={22} />
+	// },
 	// {
 	// 	Key: 'library',
 	// 	TabName: 'Đề thi',
@@ -134,7 +134,7 @@ export const TeacherChildMenu = [
 				ItemType: 'single',
 				Key: '/info-course/service-appointment-test',
 				Route: '/info-course/service-appointment-test',
-				Text: 'Khách hẹn test',
+				Text: 'Hẹn kiểm tra đầu vào',
 				Icon: ''
 			},
 			{
