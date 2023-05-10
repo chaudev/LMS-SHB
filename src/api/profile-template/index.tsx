@@ -7,13 +7,17 @@ export const profileTemplateApi = {
 		return instance.get<IApiResultData<IProfileTemplate[]>>(url, {})
 	},
 
-	// // Thêm mới data
-	// add(data: INewsFeedCommentReply) {
-	// 	return instance.post(url, data)
-	// },
+	changeIndexProfileTemplate(params) {
+		return instance.put<IApiResultData<IProfileTemplate[]>>(url + '/change-index', params)
+	},
+	deleteById(Id) {
+		return instance.delete<IApiResultData<IProfileTemplate[]>>(url + '/' + Id)
+	},
 
-	// // Update data
-	// update(data: any) {
-	// 	return instance.put(url, data)
-	// }
+	createProfileTemplate(params) {
+		return instance.post<IApiResultData<IProfileTemplate>>(url, params)
+	},
+	updateProfileTemplate(params) {
+		return instance.put<IApiResultData<IProfileTemplate>>(url, params)
+	}
 }
