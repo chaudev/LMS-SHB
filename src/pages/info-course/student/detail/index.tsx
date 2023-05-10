@@ -5,10 +5,6 @@ import StudentDetailInfoPage from '~/common/pages/Student/StudentDetailInfoPage'
 export interface IStudentDetailInfoProps {}
 
 export default function StudentDetailInfo(props: IStudentDetailInfoProps) {
-	return (
-		<>
-			<StudentDetailInfoPage />
-		</>
-	)
+	return <StudentDetailInfoPage />
 }
 StudentDetailInfo.Layout = MainLayout

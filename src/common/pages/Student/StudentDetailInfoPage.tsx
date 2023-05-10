@@ -109,6 +109,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						key: '8',
 						label: `Lịch sử học`,
 						children: <TabClassListHistory StudentDetail={studentDetail} />
+					},
+					{
+						key: '9',
+						label: `Hồ sơ`,
+						children: <TabClassListHistory StudentDetail={studentDetail} />
 					}
 			  ]
 
