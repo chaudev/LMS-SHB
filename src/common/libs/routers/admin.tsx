@@ -520,6 +520,49 @@ export const AdminChildMenu = [
 						Icon: ''
 					}
 				]
+			},
+			{
+				ItemType: 'sub-menu',
+				Key: 'sub-list-staff-child-306',
+				Icon: '',
+				TitleSub: 'Cấu hình tình trạng',
+				SubMenuList: [
+					{
+						ItemType: 'single',
+						Key: '/options/foreignLanguage',
+						Route: '/options/foreignLanguage',
+						Text: 'Tình trạng tiếng',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/visaStatus',
+						Route: '/options/visaStatus',
+						Text: 'Tình trạng Visa',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/profile-status',
+						Route: '/options/profile-status',
+						Text: 'Tình trạng hồ sơ',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/process',
+						Route: '/options/process',
+						Text: 'Tình trạng xử lý hồ sơ',
+						Icon: ''
+					}
+				]
+			},
+			{
+				ItemType: 'single',
+				Key: '/options/office',
+				Route: '/options/office',
+				Text: 'Văn phòng đại diện',
+				Icon: ''
 			}
 		]
 	}
