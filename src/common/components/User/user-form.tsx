@@ -25,6 +25,12 @@ import TextBoxField from '../FormControl/TextBoxField'
 import RestApi from '~/api/RestApi'
 import { formNoneRequired, formRequired } from '~/common/libs/others/form'
 import Router from 'next/router'
+import { officeApi } from '~/api/office'
+import { profileStatusApi } from '~/api/profile-status'
+import { foreignLanguageApi } from '~/api/foreign-language'
+import { partnerApi } from '~/api/partner'
+import { processApi } from '~/api/process'
+import { visaStatusApi } from '~/api/visa-status'
 
 const CreateUser: FC<ICreateNew> = (props) => {
 	const { className, onOpen, roleStaff, source, purpose, sale, learningNeed } = props
@@ -36,8 +42,13 @@ const CreateUser: FC<ICreateNew> = (props) => {
 	const [wards, setWards] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [isTeacherSelect, setIsTeacherSelect] = useState(false)
-
+	const [office, setOffice] = useState([])
+	const [profileStatus, setProfileStatus] = useState([])
+	const [foreignLanguage, setForeignLanguage] = useState([])
 	const [isModalVisible, setIsModalVisible] = useState(false)
+	const [partner, setPartner] = useState([])
+	const [process, setProcess] = useState([])
+	const [visaStatus, setVisaStatus] = useState([])
 
 	const user = useSelector((state: RootState) => state.user.information)
 	const area = useSelector((state: RootState) => state.area.Area)
@@ -115,6 +126,96 @@ const CreateUser: FC<ICreateNew> = (props) => {
 		}
 	}
 
+	const getOffice = async () => {
+		try {
+			const res = await officeApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setOffice(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const getProfileStatus = async () => {
+		try {
+			const res = await profileStatusApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setProfileStatus(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const getForeignLanguage = async () => {
+		try {
+			const res = await foreignLanguageApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setForeignLanguage(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const getPartner = async () => {
+		try {
+			const res = await partnerApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setPartner(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const getProcess = async () => {
+		try {
+			const res = await processApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setProcess(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const getVisaStatus = async () => {
+		try {
+			const res = await visaStatusApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setVisaStatus(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
 	useEffect(() => {
 		if (isModalVisible && area.length == 0) {
 			getAllArea()
@@ -133,6 +234,28 @@ const CreateUser: FC<ICreateNew> = (props) => {
 		}
 		if (!!isModalVisible && programs.length == 0) {
 			getPrograms()
+		}
+		if (!!isModalVisible && office.length == 0) {
+			getOffice()
+		}
+		if (!!isModalVisible && profileStatus.length == 0) {
+			getProfileStatus()
+		}
+
+		if (!!isModalVisible && foreignLanguage.length == 0) {
+			getForeignLanguage()
+		}
+
+		if (!!isModalVisible && partner.length == 0) {
+			getPartner()
+		}
+
+		if (!!isModalVisible && process.length == 0) {
+			getProcess()
+		}
+
+		if (!!isModalVisible && visaStatus.length == 0) {
+			getVisaStatus()
 		}
 	}, [isModalVisible])
 
@@ -541,6 +664,17 @@ const CreateUser: FC<ICreateNew> = (props) => {
 									optionList={purpose}
 									onChangeSelect={(value) => handleSelect('PurposeId', value)}
 								/>
+
+								<Divider className="col-span-4" orientation="center">
+									Thông tin hồ sơ
+								</Divider>
+
+								<SelectField className="col-span-2" label="Văn phòng đại diện" name="OfficeId" optionList={office} />
+								<SelectField className="col-span-2" label="Tình trạng hồ sơ" name="ProfileStatusId" optionList={profileStatus} />
+								<SelectField className="col-span-2" label="Trình độ ngoại ngữ" name="ForeignLanguageId" optionList={foreignLanguage} />
+								<SelectField className="col-span-2" label="Đối tác" name="PartnerId" optionList={partner} />
+								<SelectField className="col-span-2" label="Tình trạng xử lý hồ sơ" name="ProcessId" optionList={process} />
+								<SelectField className="col-span-2" label="Tình trạng visa" name="VisaStatusId" optionList={visaStatus} />
 							</>
 						)}
 					</div>
