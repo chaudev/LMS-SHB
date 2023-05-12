@@ -390,6 +390,13 @@ export const AdminChildMenu = [
 						Route: '/options/study-time',
 						Text: 'Ca học',
 						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/majors',
+						Route: '/options/majors',
+						Text: 'Ngành học',
+						Icon: ''
 					}
 					// {
 					// 	ItemType: 'single',
@@ -503,6 +510,13 @@ export const AdminChildMenu = [
 						Route: '/options/paymentPemission',
 						Text: 'Cấp quyền thanh toán',
 						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/gift',
+						Route: '/options/gift',
+						Text: 'Quà tặng',
+						Icon: ''
 					}
 				]
 			},
@@ -517,6 +531,20 @@ export const AdminChildMenu = [
 						Key: '/options/paymentPemission',
 						Route: '/options/profile-template',
 						Text: 'Mẫu hồ sơ',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/office',
+						Route: '/options/office',
+						Text: 'Văn phòng đại diện',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/partner',
+						Route: '/options/partner',
+						Text: 'Đối tác',
 						Icon: ''
 					}
 				]
@@ -556,13 +584,6 @@ export const AdminChildMenu = [
 						Icon: ''
 					}
 				]
-			},
-			{
-				ItemType: 'single',
-				Key: '/options/office',
-				Route: '/options/office',
-				Text: 'Văn phòng đại diện',
-				Icon: ''
 			}
 		]
 	}
