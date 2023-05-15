@@ -46,6 +46,7 @@ type IUserResponse = IBaseApi<{
 	AreaName: string
 	StatusId: number
 	RoleId: number
+	Extension?: string
 	RoleName: string
 	Avatar: string
 	AreaId: number
@@ -120,9 +121,8 @@ type IUserInformation = IBaseApi<{
 }>
 interface IUserProfileTemplateItem {
 	Id: number
-
 	Index: number
-	Name: string
+	ProfileTemplateName: string
 	ProfileTemplateId: number
 	Type: number
 	UserId: number
@@ -131,5 +131,5 @@ interface IUserProfileTemplateItem {
 interface IUpdateUserProfileTemplate {
 	UserId: number
 	ProfileTemplateId: number
-	value: string
+	Value: string
 }

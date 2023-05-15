@@ -23,13 +23,14 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 	const [studentDetail, setStudentDetail] = useState<IUserResponse>()
 	const [isVisibleModal, setIsVisibleModal] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
-	const router = useRouter()
+ 	const router = useRouter()
 	const [form] = Form.useForm()
 	const userInformation = useSelector((state: RootState) => state.user.information)
 
 	const getStudentDetail = async () => {
 		try {
 			const res = await userInformationApi.getByID(router.query.StudentID)
+
 			if (res.status === 200) {
 				setStudentDetail(res.data.data)
 			}
@@ -46,7 +47,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '1',
 						label: `Chi tiết`,
-						children: <TabStudentDetail StudentDetail={studentDetail} />
+						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
 					},
 					{
 						key: '2',
@@ -60,7 +61,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					},
 					{
 						key: '4',
-						label: `Thanh toán`,                                                   
+						label: `Thanh toán`,
 						children: <TabBill StudentDetail={studentDetail} />
 					},
 					{
@@ -73,7 +74,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '1',
 						label: `Chi tiết`,
-						children: <TabStudentDetail StudentDetail={studentDetail} />
+						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
 					},
 					{
 						key: '2',
@@ -109,8 +110,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						key: '8',
 						label: `Lịch sử học`,
 						children: <TabClassListHistory StudentDetail={studentDetail} />
-					},
-					
+					}
 			  ]
 
 	const onChange = (key: string) => {

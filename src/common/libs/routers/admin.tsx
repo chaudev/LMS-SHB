@@ -390,6 +390,13 @@ export const AdminChildMenu = [
 						Route: '/options/study-time',
 						Text: 'Ca học',
 						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/majors',
+						Route: '/options/majors',
+						Text: 'Ngành học',
+						Icon: ''
 					}
 					// {
 					// 	ItemType: 'single',
@@ -503,6 +510,13 @@ export const AdminChildMenu = [
 						Route: '/options/paymentPemission',
 						Text: 'Cấp quyền thanh toán',
 						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/gift',
+						Route: '/options/gift',
+						Text: 'Quà tặng',
+						Icon: ''
 					}
 				]
 			},
@@ -522,11 +536,69 @@ export const AdminChildMenu = [
 			// 	]
 			// }
 			{
-				ItemType: 'single',
-				Key: '/options/paymentPemission',
-				Route: '/options/profile-template',
-				Text: 'Mẫu hồ sơ',
-				Icon: ''
+				ItemType: 'sub-menu',
+				Key: 'sub-list-staff-child-305',
+				Icon: '',
+				TitleSub: 'Hồ sơ',
+				SubMenuList: [
+					{
+						ItemType: 'single',
+						Key: '/options/paymentPemission',
+						Route: '/options/profile-template',
+						Text: 'Mẫu hồ sơ',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/office',
+						Route: '/options/office',
+						Text: 'Văn phòng đại diện',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/partner',
+						Route: '/options/partner',
+						Text: 'Đối tác',
+						Icon: ''
+					}
+				]
+			},
+			{
+				ItemType: 'sub-menu',
+				Key: 'sub-list-staff-child-306',
+				Icon: '',
+				TitleSub: 'Cấu hình tình trạng',
+				SubMenuList: [
+					{
+						ItemType: 'single',
+						Key: '/options/foreignLanguage',
+						Route: '/options/foreignLanguage',
+						Text: 'Tình trạng tiếng',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/visaStatus',
+						Route: '/options/visaStatus',
+						Text: 'Tình trạng Visa',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/profile-status',
+						Route: '/options/profile-status',
+						Text: 'Tình trạng hồ sơ',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/process',
+						Route: '/options/process',
+						Text: 'Tình trạng xử lý hồ sơ',
+						Icon: ''
+					}
+				]
 			}
 		]
 	}

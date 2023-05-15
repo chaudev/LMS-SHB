@@ -1,0 +1,26 @@
+.ForeignLanguagePage {
+	.config-ForeignLanguage {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: repeat(4, minmax(0px, 1fr));
+		@include tablet {
+			grid-template-columns: repeat(3, minmax(0px, 1fr));
+		}
+		@include mobile {
+			grid-template-columns: repeat(1, minmax(0px, 1fr));
+		}
+		margin-bottom: 1rem;
+		.item {
+			padding: 16px;
+			border-radius: 6px;
+			border: 1px solid #eaeaea;
+			@include flex(center, space-between);
+			font-weight: 500;
+			gap: 1rem;
+			.action {
+				cursor: pointer;
+				@include flex(center, center);
+			}
+		}
+	}
+}

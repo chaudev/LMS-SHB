@@ -181,8 +181,18 @@ const ProfileTemplatePage = () => {
 																			<div className="col-span-4 text-gray font-[500]">{item.Name}</div>
 																			<div className="col-span-2">{item.Type === 1 ? 'Văn bản' : 'Lựa chọn'}</div>
 																			<div className="col-span-2">
+																				<IconButton
+																					type="button"
+																					icon="edit"
+																					color="green"
+																					onClick={() => {
+																						openModalUpdate(item)
+																					}}
+																					className=""
+																					tooltip="Cập nhật thông tin"
+																				/>
 																				<Popconfirm
-																					title="Bạn có chắc muốn xóa file này?"
+																					title="Bạn có chắc muốn xóa thông tin này?"
 																					okText="Có"
 																					cancelText="Hủy"
 																					onConfirm={() => deleteItemProfileTemplate(item)}
@@ -196,16 +206,6 @@ const ProfileTemplatePage = () => {
 																						tooltip="Xóa Thông tin này"
 																					/>
 																				</Popconfirm>
-																				<IconButton
-																					type="button"
-																					icon="edit"
-																					color="green"
-																					onClick={() => {
-																						openModalUpdate(item)
-																					}}
-																					className=""
-																					tooltip="Cập nhật thông tin"
-																				/>
 																			</div>
 																		</div>
 																		<Divider></Divider>

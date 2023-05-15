@@ -12,6 +12,7 @@ type IFormInputText = {
 	defaultValue?: string
 	onChange?: any
 	value?: any
+	suffix?: element
 }
 
 type IUploadImageField = {
@@ -60,6 +61,9 @@ type IFormSelectField = {
 	onScroll?: function
 	optionList: ISelectOptionList[]
 	title?: string[] | string
+	suffix?: element
+	allowClear?:boolean
+
 }
 
 type ISelectOptionList = {
@@ -110,6 +114,7 @@ type ITextBoxField = {
 	rules?: array
 	maxLength?: number
 	onChange?: Function
+	autoSize?:boolean
 }
 
 type IDatePickerField = {
@@ -132,4 +137,5 @@ type IDatePickerField = {
 	form?: any
 	showTime?: any
 	onChange?: FC
+	suffix?: element
 }

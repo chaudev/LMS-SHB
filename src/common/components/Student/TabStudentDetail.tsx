@@ -1,8 +1,7 @@
-import { Card, Checkbox, Divider, Form, Select, Skeleton, Tag } from 'antd'
+import { Divider, Form, Modal, Select, Skeleton, Tag } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useRef, useState } from 'react'
 import { areaApi, districtApi, wardApi } from '~/api/area'
 import { branchApi } from '~/api/branch'
 import { learningNeedApi } from '~/api/learning-needs'
@@ -10,26 +9,50 @@ import { purposeApi } from '~/api/purpose'
 import { sourceApi } from '~/api/source'
 import { userInformationApi } from '~/api/user'
 import { ShowNostis, ShowNoti } from '~/common/utils'
-import { RootState } from '~/store'
 import DatePickerField from '../FormControl/DatePickerField'
 import InputTextField from '../FormControl/InputTextField'
 import SelectField from '../FormControl/SelectField'
 import TextBoxField from '../FormControl/TextBoxField'
-import PrimaryButton from '../Primary/Button'
 import TextArea from 'antd/lib/input/TextArea'
+import IconButton from '../Primary/IconButton'
+import { FiChevronDown } from 'react-icons/fi'
+import PrimaryButton from '../Primary/Button'
 
 export interface ITabStudentDetailProps {
 	StudentDetail: IUserResponse
+	setStudentDetail: any
 }
 
 export default function TabStudentDetail(props: ITabStudentDetailProps) {
-	const { StudentDetail } = props
+	const { StudentDetail, setStudentDetail } = props
+	console.log(StudentDetail)
+	const router = useRouter()
+
 	const [optionList, setOptionList] = useState({ branch: [], purpose: [], area: [], source: [], learningNeed: [], sale: [] })
 	const [district, setDistrict] = useState([])
 	const [ward, setWard] = useState([])
-	const [isLoading, setIsLoading] = useState(false)
+	const [init, setInit] = useState(true)
+
+	const [isLoading, setIsLoading] = useState<string>('')
 	const [form] = Form.useForm()
-	const router = useRouter()
+	const FullName = Form.useWatch('FullName', form)
+	const UserName = Form.useWatch('UserName', form)
+	const Email = Form.useWatch('Email', form)
+	const Gender = Form.useWatch('Gender', form)
+	const StatusId = Form.useWatch('StatusId', form)
+	const Extension = Form.useWatch('Extension', form)
+	const BranchIds = Form.useWatch('BranchIds', form)
+	const AreaId = Form.useWatch('AreaId', form)
+	const DistrictId = Form.useWatch('DistrictId', form)
+	const WardId = Form.useWatch('WardId', form)
+	const DOB = Form.useWatch('DOB', form)
+	const Address = Form.useWatch('Address', form)
+	const LearningNeedId = Form.useWatch('LearningNeedId', form)
+	const SourceId = Form.useWatch('SourceId', form)
+	const SaleId = Form.useWatch('SaleId', form)
+	const PurposeId = Form.useWatch('PurposeId', form)
+
+	const ref = useRef(null)
 
 	const getDistrict = async (areaID) => {
 		try {
@@ -113,22 +136,26 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 
 	useEffect(() => {
 		if (StudentDetail) {
-			form.setFieldsValue({
-				...StudentDetail,
-				BranchIds: Number(StudentDetail.BranchIds),
-				DOB: StudentDetail?.DOB ? moment(StudentDetail?.DOB) : null
-			})
-			if (StudentDetail.AreaId) {
-				getDistrict(StudentDetail.AreaId)
-			}
-			if (StudentDetail.DistrictId) {
-				getWard(StudentDetail.DistrictId)
+			if (!init) {
+				form.setFieldsValue(ref.current.getFieldsValue())
+			} else {
+				form.setFieldsValue({
+					...StudentDetail,
+					BranchIds: Number(StudentDetail.BranchIds),
+					DOB: StudentDetail?.DOB ? moment(StudentDetail?.DOB) : null
+				})
+				if (StudentDetail.AreaId) {
+					getDistrict(StudentDetail.AreaId)
+				}
+				if (StudentDetail.DistrictId) {
+					getWard(StudentDetail.DistrictId)
+				}
+				setInit(false)
 			}
 		}
 	}, [StudentDetail])
 
 	const _onSubmit = async (data) => {
-		setIsLoading(true)
 		try {
 			let res = await userInformationApi.update({
 				...data,
@@ -139,54 +166,136 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				ShowNoti('success', res.data.message)
 			}
 		} catch (error) {
-			setIsLoading(false)
 			ShowNoti('error', error.message)
 		} finally {
-			setIsLoading(false)
+		}
+	}
+
+	const updateUserInfo = async (key, value) => {
+		try {
+			setIsLoading(key)
+			const payload = { ...StudentDetail, [key]: value }
+			let res = await userInformationApi.update(payload)
+			if (res.status == 200) {
+				ShowNoti('success', res.data.message)
+				setStudentDetail(payload)
+			}
+			setIsLoading('')
+		} catch (error) {
+			ShowNoti('error', error.message)
+			setIsLoading('')
 		}
 	}
 
 	const customLable = (label) => {
-		return <div className="text-gray font-[500]">{label}</div>
+		return <div className="">{label}</div>
 	}
 
+	console.log('BranchIds', BranchIds)
+
+	if (!StudentDetail) {
+		return <></>
+	}
 	return (
 		<div>
-			<>
-				<Divider>
-					<h2 className="py-4 font-[600] text-center">Thông tin cá nhân</h2>
-				</Divider>
-				<Form form={form} labelAlign="left" onFinish={_onSubmit} labelCol={{ span: 4 }}>
-					<InputTextField className="border-none" name="FullName" label={customLable(labelUser.FullName)} />
-					<Divider />
-					<InputTextField className="border-none" name="UserName" label={customLable(labelUser.UserName)} />
-					<Divider />
+			<Divider>
+				<h2 className="py-4 font-[600] text-center">Thông tin cá nhân</h2>
+			</Divider>
+			<Form
+				ref={ref}
+				layout={window.innerWidth < 600 ? 'vertical' : 'horizontal'}
+				form={form}
+				labelAlign="left"
+				labelWrap={true}
+				onFinish={_onSubmit}
+				labelCol={{ span: 5 }}
+			>
+				<div className="d-flex justify-between items-center">
+					<InputTextField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						name="FullName"
+						label={customLable(labelUser.FullName)}
+					/>
+					<IconButonUpdateUser
+						isShow={FullName !== StudentDetail.FullName}
+						onClick={() => updateUserInfo('FullName', FullName)}
+						loading={isLoading === 'FullName'}
+					/>
+				</div>
 
-					<InputTextField className="border-none" name="Email" label={customLable(labelUser.Email)} />
-					<Divider />
+				<Divider />
+				<div className="d-flex justify-between items-center">
+					<InputTextField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						name="UserName"
+						label={customLable(labelUser.UserName)}
+					/>
+
+					<IconButonUpdateUser
+						isShow={UserName !== StudentDetail.UserName}
+						onClick={() => updateUserInfo('UserName', UserName)}
+						loading={isLoading === 'UserName'}
+					/>
+				</div>
+
+				<Divider />
+				<div className="d-flex justify-between items-center">
+					<InputTextField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						name="Email"
+						label={customLable(labelUser.Email)}
+					/>
+					<IconButonUpdateUser
+						isShow={Email !== StudentDetail.Email}
+						onClick={() => updateUserInfo('Email', Email)}
+						loading={isLoading === 'Email'}
+					/>
+				</div>
+
+				<Divider />
+				<div className="d-flex justify-between items-center">
 					<SelectField
 						name="Gender"
-						className="border-none"
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						label={customLable(labelUser.Gender)}
+						allowClear={false}
 						optionList={[
 							{ value: 0, title: 'Khác' },
 							{ value: 1, title: 'Nam' },
 							{ value: 2, title: 'Nữ' }
 						]}
 					/>
-					<Divider />
+
+					<IconButonUpdateUser
+						isShow={Gender != StudentDetail.Gender}
+						onClick={() => updateUserInfo('Gender', Gender)}
+						loading={isLoading === 'Gender'}
+					/>
+				</div>
+
+				<Divider />
+				<div className="d-flex justify-between items-center">
 					<DatePickerField
-						classNamePicker="border-none"
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						classNamePicker="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						label={customLable(labelUser.DOB)}
 						name="DOB"
 						mode="single"
 						format="DD/MM/YYYY"
-						allowClear={true}
+						allowClear={false}
 					/>
-					<Divider />
+					<IconButonUpdateUser
+						isShow={moment(DOB).format('yyy/mm/dd') !== moment(StudentDetail.DOB).format('yyy/mm/dd')}
+						onClick={() => updateUserInfo('DOB', new Date(DOB))}
+						loading={isLoading === 'DOB'}
+					/>
+				</div>
+
+				<Divider />
+				<div className="d-flex justify-between items-center">
 					<SelectField
 						name="StatusId"
-						className="border-none"
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						label={customLable(labelUser.Status)}
 						optionList={[
 							{
@@ -198,26 +307,68 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								title: 'Khóa'
 							}
 						]}
+						allowClear={false}
 						placeholder="Chọn trạng thái hoạt động"
 					/>
+					<IconButonUpdateUser
+						isShow={StatusId !== StudentDetail.StatusId}
+						onClick={() => updateUserInfo('StatusId', StatusId)}
+						loading={isLoading === 'StatusId'}
+					/>
+				</div>
 
-					<TextBoxField name="Extension" label={customLable(labelUser.Extension)} />
+				<Divider></Divider>
+				<div className="d-flex w-full justify-between items-start">
+					<TextBoxField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						name="Extension"
+						autoSize={true}
+						label={customLable(labelUser.Extension)}
+					/>
 
-					<Divider>Địa chỉ</Divider>
+					<IconButonUpdateUser
+						isShow={Extension !== StudentDetail.Extension}
+						onClick={() => updateUserInfo('Extension', Extension)}
+						loading={isLoading === 'Extension'}
+					/>
+				</div>
 
+				<Divider>Địa chỉ</Divider>
+				<div className="d-flex w-full justify-between items-start">
 					<SelectField
-						className="border-none"
+						className="border-none min-w-xs w-full items-center m-0 hover:border-none focus:border-none"
 						name="BranchIds"
 						label={customLable(labelUser.Branch)}
 						optionList={optionList.branch}
-						onChangeSelect={(data) => {}}
 					/>
+					<IconButonUpdateUser
+						isShow={BranchIds != StudentDetail.BranchIds}
+						onClick={() => updateUserInfo('BranchIds', BranchIds)}
+						loading={isLoading === 'BranchIds'}
+					/>
+				</div>
 
-					<InputTextField className="border-none" name="Address" label={customLable(labelUser.Address)} />
+				<Divider />
 
+				<div className="d-flex w-full justify-between items-start">
+					<InputTextField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						name="Address"
+						placeholder="Nhập địa chỉ"
+						label={customLable(labelUser.Address)}
+					/>
+					<IconButonUpdateUser
+						isShow={Address !== StudentDetail.Address}
+						onClick={() => updateUserInfo('Address', Address)}
+						loading={isLoading === 'Address'}
+					/>
+				</div>
+
+				<Divider />
+				<div className="d-flex w-full justify-between items-start">
 					<SelectField
 						name="AreaId"
-						className="border-none"
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						label={customLable(labelUser.Area)}
 						placeholder="Chọn tỉnh/thành phố"
 						optionList={optionList.area}
@@ -225,9 +376,17 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 							getDistrict(data)
 						}}
 					/>
+					<IconButonUpdateUser
+						isShow={AreaId !== StudentDetail.AreaId}
+						onClick={() => updateUserInfo('AreaId', AreaId)}
+						loading={isLoading === 'AreaId'}
+					/>
+				</div>
 
+				<Divider />
+				<div className="d-flex w-full justify-between items-start">
 					<SelectField
-						className="border-none"
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						disabled={district.length > 0 ? false : true}
 						name="DistrictId"
 						label={customLable(labelUser.District)}
@@ -237,9 +396,17 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 							getWard(data)
 						}}
 					/>
+					<IconButonUpdateUser
+						isShow={DistrictId !== StudentDetail.DistrictId}
+						onClick={() => updateUserInfo('DistrictId', DistrictId)}
+						loading={isLoading === 'DistrictId'}
+					/>
+				</div>
 
+				<Divider />
+				<div className="d-flex w-full justify-between items-start">
 					<SelectField
-						className="border-none"
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						disabled={ward.length > 0 ? false : true}
 						placeholder="Chọn phường/xã"
 						label={customLable(labelUser.Ward)}
@@ -247,48 +414,111 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						optionList={ward}
 					/>
 
-					{router.query.StudentID && (
-						<>
-							<Divider>Thông tin học</Divider>
-							<SelectField className="border-none" name="LearningNeedId" label="Nhu cầu học" optionList={optionList.learningNeed} />
-							<SelectField className="border-none" name="SourceId" label="Nguồn khách hàng" optionList={optionList.source} />
-							<SelectField className="border-none" name="SaleId" label="Tư vấn viên" optionList={optionList.sale} />
-							<SelectField className="border-none" name="PurposeId" label="Mục đích học" optionList={optionList.purpose} />
-						</>
-					)}
-					<UserProfileTemplate StudentDetail={StudentDetail} />
+					<IconButonUpdateUser
+						isShow={WardId !== StudentDetail.WardId}
+						onClick={() => updateUserInfo('WardId', WardId)}
+						loading={isLoading === 'WardId'}
+					/>
+				</div>
 
-					<div className="row mt-3">
-						<div className="col-12 flex justify-end">
-							<PrimaryButton
-								background="blue"
-								type="submit"
-								loading={isLoading}
-								children={<span>Lưu</span>}
-								icon="save"
-								onClick={() => {}}
+				{router.query.StudentID && (
+					<>
+						<Divider>Thông tin học</Divider>
+						<div className="d-flex justify-between items-center">
+							<SelectField
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								name="LearningNeedId"
+								label="Nhu cầu học"
+								optionList={optionList.learningNeed}
+							/>
+							<IconButonUpdateUser
+								isShow={LearningNeedId !== StudentDetail.LearningNeedId}
+								onClick={() => updateUserInfo('LearningNeedId', LearningNeedId)}
+								loading={isLoading === 'LearningNeedId'}
 							/>
 						</div>
-					</div>
-				</Form>
-			</>
+						<Divider></Divider>
+						<div className="d-flex justify-between items-center">
+							<SelectField
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								name="SourceId"
+								label="Nguồn khách hàng"
+								optionList={optionList.source}
+							/>
+							<IconButonUpdateUser
+								isShow={SourceId !== StudentDetail.SourceId}
+								onClick={() => updateUserInfo('SourceId', SourceId)}
+								loading={isLoading === 'SourceId'}
+							/>
+						</div>
+						<Divider></Divider>
+						<div className="d-flex justify-between items-center">
+							<SelectField
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								name="SaleId"
+								label="Tư vấn viên"
+								optionList={optionList.sale}
+							/>
+							<IconButonUpdateUser
+								isShow={SaleId !== StudentDetail.SaleId}
+								onClick={() => updateUserInfo('SaleId', SaleId)}
+								loading={isLoading === 'SaleId'}
+							/>
+						</div>
+						<Divider></Divider>
+						<div className="d-flex justify-between items-center">
+							<SelectField
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								name="PurposeId"
+								label="Mục đích học"
+								optionList={optionList.purpose}
+							/>
+							<IconButonUpdateUser
+								isShow={PurposeId !== StudentDetail.PurposeId}
+								onClick={() => updateUserInfo('PurposeId', PurposeId)}
+								loading={isLoading === 'PurposeId'}
+							/>
+						</div>
+					</>
+				)}
+				<UserProfileTemplate />
+			</Form>
 		</div>
 	)
 }
 
-const UserProfileTemplate = ({ StudentDetail }) => {
+const IconButonUpdateUser = ({ onClick, loading , isShow = false }) => {
+	return (
+		<>
+			{isShow && (
+				<IconButton
+					onClick={onClick}
+					tooltip="Cập nhật"
+					loading={loading}
+					type="button"
+					color="green"
+					icon="save"
+					background="transparent"
+				/>
+			)}
+		</>
+	)
+}
+const UserProfileTemplate = ({}) => {
 	const router = useRouter()
-
+	const [form] = Form.useForm()
 	const { StudentID } = router.query
 	const [loading, setLoading] = useState<{ type: string; status: boolean }>({ type: '', status: false })
 	const [profileTemplate, setProfileTemplate] = useState([])
-	console.log(StudentDetail)
+	const [profileItem, setProfileItem] = useState<IUserProfileTemplateItem | null>(null)
+	const [textUpdate, setTextUpdate] = useState<IUserProfileTemplateItem[]>([])
 
 	const getAllProfileTemplate = async () => {
 		try {
 			setLoading({ type: 'GET_ALL', status: true })
 			const response = await userInformationApi.getAllProfileTemplate(String(StudentID))
 			if (response.status === 200) {
+				setTextUpdate(response.data.data)
 				setProfileTemplate(response.data.data)
 			}
 			if (response.status === 204) {
@@ -309,12 +539,48 @@ const UserProfileTemplate = ({ StudentDetail }) => {
 
 	const updateProfileTemplateItem = async (item, value) => {
 		try {
-			setLoading({ type: `UPDATE_${item.Id}`, status: true })
+			setLoading({ type: `UPDATE_ITEM_${item.Index}`, status: true })
 			const payload: IUpdateUserProfileTemplate = {
 				UserId: Number(StudentID),
 				ProfileTemplateId: item.ProfileTemplateId,
-				value: value
+				Value: value
 			}
+
+			const response = await userInformationApi.updateProfileTemplateItem(payload)
+			if (response.status === 200) {
+				let temp = []
+				profileTemplate.map((item) => {
+					if (item.ProfileTemplateId === response.data.data.ProfileTemplateId) {
+						temp.push({
+							...response.data.data,
+							Type: item.Type,
+							Index: item.Index
+						})
+					} else {
+						temp.push(item)
+					}
+				})
+				setProfileTemplate(temp)
+				ShowNostis.success(response.data.message)
+			}
+
+			setLoading({ type: '', status: false })
+		} catch (error) {
+			ShowNostis.error(error.message)
+			setLoading({ type: '', status: false })
+		}
+	}
+
+	const _onFinish = async (params) => {
+		try {
+			setLoading({ type: `UPDATE_PROFILE`, status: true })
+
+			const payload: IUpdateUserProfileTemplate = {
+				UserId: Number(StudentID),
+				ProfileTemplateId: profileItem.ProfileTemplateId,
+				...params
+			}
+
 			const response = await userInformationApi.updateProfileTemplateItem(payload)
 			if (response.status === 200) {
 				let temp = []
@@ -326,10 +592,11 @@ const UserProfileTemplate = ({ StudentDetail }) => {
 					}
 				})
 				setProfileTemplate(temp)
+				form.setFieldsValue(null)
+				setProfileItem(null)
+				ShowNostis.success(response.data.message)
 			}
-			console.log('response', response)
 
-			console.log(item)
 			setLoading({ type: '', status: false })
 		} catch (error) {
 			ShowNostis.error(error.message)
@@ -343,72 +610,116 @@ const UserProfileTemplate = ({ StudentDetail }) => {
 			{loading.type === 'GET_ALL' && loading.status === true ? (
 				<Skeleton></Skeleton>
 			) : (
-				<div className="grid gap-4 pt-4">
-					{profileTemplate.map((item) => {
+				<div className="grid  pt-4">
+					{profileTemplate.map((item, index) => {
 						return (
 							<React.Fragment key={item.Id}>
-								<div key={item.Id} className="grid grid-cols-8 gap-2 justify-between">
-									<div className="col-span-4 font-[500]">{item.Name}</div>
-									<div className="col-span-4 d-flex justify-end">
+								<div className="grid grid-cols-8 smartphone:grid-cols-4  gap-2 justify-between">
+									<div className="col-span-4 font-[500]">{item.ProfileTemplateName}</div>
+									<div className="col-span-4 d-flex justify-end items-start">
 										{item.Type !== 1 ? (
-											<Select
-												className={`primary-input border-none`}
-												// showSearch
-												// allowClear 
-												showArrow
-												value={item.Value}
-												// loading={isLoading}
-												// style={style}
-												// placeholder={placeholder}
-												// optionFilterProp="children"
-												// disabled={disabled}
-												onChange={(value) => {
-													updateProfileTemplateItem(item, value)
-												}} 
-												loading={loading.type ===`Update_${item.Id}` && loading.status=== true}
-												 style={{ width: '100%' }}
-												tagRender={(props) => {
-													console.log('tagRender',props);
-													
-													return (
-														<Tag
-															color="#87d068"
-															// onMouseDown={onPreventMouseDown}
-															// closable={closable}
-															// onClose={onClose}
-															// style={{ marginRight: 3 }}
-														>
-															{props.label}
-														</Tag>
-													)
+											<Tag
+												className="rounded-full	 px-2 cursor-pointer	"
+												onClick={() => {
+													form.setFieldsValue(item)
+													setProfileItem(item)
 												}}
+												color={item.Value == 'true' ? 'green' : 'orange'}
 											>
-												{[
-													{
-														value: 'true',
-														title: 'Đã có'
-													},
-													{
-														value: 'false',
-														title: 'Chưa có'
-													}
-												].map((o, idx) => (
-													<Select.Option key={idx} value={o.value}>
-														{o.title}
-													</Select.Option>
-												))}
-											</Select>
+												<div className="d-flex items-center px-2">
+													{item.Value == 'true' ? 'Đã có' : 'Chưa có'} <FiChevronDown size={22} />
+												</div>
+											</Tag>
 										) : (
-											<TextArea rows={4} placeholder="can resize" />
+											<div className="d-flex w-full justify-between items-start">
+												<TextArea
+													value={textUpdate[index].Value}
+													onChange={(e) => {
+														let newValue = []
+														textUpdate.forEach((i) => {
+															if (i.Index === item.Index) {
+																newValue.push({
+																	...item,
+																	Value: e.target.value
+																})
+															} else {
+																newValue.push(i)
+															}
+														})
+
+														setTextUpdate(newValue)
+													}}
+													rows={4}
+													placeholder="Nhập thông tin"
+												/>
+												<IconButonUpdateUser
+													isShow={textUpdate[index].Value !== profileTemplate[index].Value}
+													onClick={() => updateProfileTemplateItem(item, textUpdate[index].Value)}
+													loading={loading.type === `UPDATE_ITEM_${item.Index}` && loading.status === true}
+												/>
+											</div>
 										)}
 									</div>
 								</div>
-								<Divider> </Divider>
+								<Divider></Divider>
 							</React.Fragment>
 						)
 					})}
 				</div>
 			)}
+			<Modal
+				title={profileItem?.ProfileTemplateName}
+				open={!!profileItem}
+				centered
+				closable={false}
+				destroyOnClose
+				onCancel={() => {
+					form.setFieldsValue(null)
+					setProfileItem(null)
+				}}
+				cancelText=""
+				footer={false}
+			>
+				<Form form={form} onFinish={_onFinish} layout="vertical">
+					<SelectField
+						name="Value"
+						label={'Trạng thái'}
+						optionList={[
+							{
+								value: 'true',
+								title: 'Đã có'
+							},
+							{
+								value: 'false',
+								title: 'Chưa có'
+							}
+						]}
+						placeholder="Chọn trạng thái"
+					/>
+					<div className="d-flex justify-center gap-3">
+						<PrimaryButton
+							type="button"
+							onClick={() => {
+								form.setFieldsValue(null)
+								setProfileItem(null)
+							}}
+							loading={loading.type === 'UPDATE_PROFILE' && loading.status === true}
+							icon="cancel"
+							background="orange"
+						>
+							Hủy
+						</PrimaryButton>
+						<PrimaryButton
+							loading={loading.type === 'UPDATE_PROFILE' && loading.status === true}
+							type="submit"
+							icon="save"
+							background="primary"
+						>
+							Cập nhật
+						</PrimaryButton>
+					</div>
+				</Form>
+			</Modal>
 		</>
 	)
 }

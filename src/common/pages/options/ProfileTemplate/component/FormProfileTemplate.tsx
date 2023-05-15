@@ -15,15 +15,17 @@ const FormProfileTemplate = ({ form, handleCreateUpdate, isModalOpen }) => {
 				<Input placeholder="Vui lòng nhập tên thông tin" />
 			</Form.Item>
 			<Form.Item label="Tên thông tin" name="Name" rules={[{ required: true, message: 'Vui lòng nhập tên thông tin' }]}>
-				<Input placeholder="Vui lòng nhập tên thông tin" />
+				<Input className="primary-input" placeholder="Vui lòng nhập tên thông tin" />
 			</Form.Item>
+			{isModalOpen.type === 'CREATE' && (
+				<Form.Item label="Kiểu thông tin" name="Type" rules={[{ required: true, message: 'Vui lòng nhập tên thông tin' }]}>
+					<Select className="primary-input">
+						<Select.Option value="1">Văn bản</Select.Option>
+						<Select.Option value="2">Lựa chọn</Select.Option>
+					</Select>
+				</Form.Item>
+			)}
 
-			<Form.Item label="Kiểu thông tin" name="Type" rules={[{ required: true, message: 'Vui lòng nhập tên thông tin' }]}>
-				<Select>
-					<Select.Option value="1">Văn bản</Select.Option>
-					<Select.Option value="2">Lựa chọn</Select.Option>
-				</Select>
-			</Form.Item>
 			<div className="d-flex justify-center gap-4">
 				<PrimaryButton className="text-white" type="button" icon="cancel" background="orange">
 					Hủy

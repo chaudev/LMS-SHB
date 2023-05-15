@@ -1,4 +1,4 @@
-import { Tooltip } from 'antd'
+import { Spin, Tooltip } from 'antd'
 import { FC, useRef } from 'react'
 import { Edit, LogIn, Trash, X, FileMinus, Edit3, Book, Trash2 } from 'react-feather'
 import { AiOutlineCheckCircle, AiOutlineEye, AiOutlineInfoCircle, AiOutlineUsergroupAdd } from 'react-icons/ai'
@@ -13,7 +13,7 @@ import { TbDownload, TbReportMoney, TbSchool, TbUpload } from 'react-icons/tb'
 import { VscRootFolderOpened } from 'react-icons/vsc'
 
 const IconButton: FC<IIconButton> = (props) => {
-	const { tooltip, background, icon, type, onClick, className, color, size, disabled } = props
+	const { tooltip, background, icon, type, onClick, className, color, size, disabled, loading } = props
 	const refTooltip = useRef(null)
 	function getBG() {
 		if (background == 'green') {
@@ -175,13 +175,21 @@ const IconButton: FC<IIconButton> = (props) => {
 
 	return (
 		<Tooltip title={tooltip} ref={refTooltip}>
-			<button
+			{/* <button
 				type={type}
 				onClick={_onClick}
 				className={`none-selection rounded-lg w-auto inline-flex items-center btn-icon cursor-pointer ${getBG()} ${getColor()} ${className}`}
 				disabled={disabled}
 			>
 				{!!icon && getIcon()}
+			</button> */}
+			<button
+				type={type}
+				disabled={loading}
+				onClick={_onClick}
+				className={`none-selection rounded-lg px-2 w-auto items-center btn-icon cursor-pointer ${getBG()} ${getColor()} ${className}`}
+			>
+				{loading ? <Spin /> : <>{!!icon && getIcon()} </>}
 			</button>
 		</Tooltip>
 	)

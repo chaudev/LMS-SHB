@@ -4,7 +4,7 @@ import { IDatePickerField } from '../form-control'
 
 export default function DatePickerField(props: IDatePickerField) {
 	const { placeholder, allowClear, placement, placeholderRange, disabled, rules } = props
-	const { name, label, mode, format, picker, classNamePicker, isRequired, className, form, showTime, onChange } = props
+	const { name, label, mode, format, picker, classNamePicker, isRequired, className, form, showTime, onChange, suffix } = props
 
 	const handleChange = (data) => {
 		!!onChange && onChange(data)
@@ -24,6 +24,7 @@ export default function DatePickerField(props: IDatePickerField) {
 						allowClear={allowClear}
 						format={format}
 						disabledDate={props?.disabledDate}
+						suffixIcon={suffix}
 					/>
 				) : (
 					<DatePicker.RangePicker
@@ -35,6 +36,7 @@ export default function DatePickerField(props: IDatePickerField) {
 						placement={placement}
 						allowClear={allowClear}
 						format={format}
+						suffixIcon={suffix}
 						disabledDate={props?.disabledDate}
 					/>
 				)
@@ -48,6 +50,7 @@ export default function DatePickerField(props: IDatePickerField) {
 					placement={placement}
 					allowClear={allowClear}
 					format={format}
+					suffixIcon={suffix}
 					disabledDate={props?.disabledDate}
 				/>
 			) : (
@@ -60,6 +63,7 @@ export default function DatePickerField(props: IDatePickerField) {
 					placement={placement}
 					allowClear={allowClear}
 					format={format}
+					suffixIcon={suffix}
 					disabledDate={props?.disabledDate}
 				/>
 			)}
