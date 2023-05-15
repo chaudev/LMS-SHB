@@ -1,5 +1,6 @@
 import { Form, Select } from 'antd'
 import React from 'react'
+import { IFormSelectField } from '../form-control'
 
 const SelectField = (props: IFormSelectField) => {
 	const { style, label, onChangeSelect, optionList, isRequired, className, placeholder, disabled, name, rules, mode, isLoading } = props

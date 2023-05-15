@@ -1,9 +1,10 @@
 import { DatePicker, Form } from 'antd'
 import React from 'react'
+import { IDatePickerField } from '../form-control'
 
 export default function DatePickerField(props: IDatePickerField) {
 	const { placeholder, allowClear, placement, placeholderRange, disabled, rules } = props
-	const { name, label, mode, format, picker, isRequired, className, form, showTime, onChange } = props
+	const { name, label, mode, format, picker, classNamePicker, isRequired, className, form, showTime, onChange } = props
 
 	const handleChange = (data) => {
 		!!onChange && onChange(data)
@@ -15,7 +16,7 @@ export default function DatePickerField(props: IDatePickerField) {
 				picker == 'showTime' ? (
 					<DatePicker.RangePicker
 						disabled={disabled}
-						className="primary-input"
+						className={`primary-input ${classNamePicker}`}
 						placeholder={placeholderRange}
 						onChange={handleChange}
 						showTime={{ format: showTime }}
@@ -27,7 +28,7 @@ export default function DatePickerField(props: IDatePickerField) {
 				) : (
 					<DatePicker.RangePicker
 						disabled={disabled}
-						className="primary-input"
+						className={`primary-input ${classNamePicker}`}
 						placeholder={placeholderRange}
 						onChange={handleChange}
 						picker={picker}
@@ -40,7 +41,7 @@ export default function DatePickerField(props: IDatePickerField) {
 			) : picker == 'showTime' ? (
 				<DatePicker
 					disabled={disabled}
-					className="primary-input"
+					className={`primary-input ${classNamePicker}`}
 					placeholder={placeholder}
 					onChange={handleChange}
 					showTime={{ format: showTime }}
@@ -52,7 +53,7 @@ export default function DatePickerField(props: IDatePickerField) {
 			) : (
 				<DatePicker
 					disabled={disabled}
-					className="primary-input"
+					className={`primary-input ${classNamePicker}`}
 					placeholder={placeholder}
 					onChange={handleChange}
 					picker={picker}

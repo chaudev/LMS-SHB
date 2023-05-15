@@ -1,5 +1,6 @@
 import { Form } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
+import { ITextBoxField } from '../form-control'
 
 export default function TextBoxField(props: ITextBoxField) {
 	const { style, label, isRequired, className, allowClear, placeholder, disabled, name, rules, rows, maxLength, onChange } = props

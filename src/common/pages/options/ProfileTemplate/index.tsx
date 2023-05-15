@@ -1,10 +1,7 @@
-import { Button, Card, Divider, Form, Input, Modal, Popconfirm, Select, Skeleton, Space } from 'antd'
+import { Card, Divider, Form, Modal, Popconfirm, Skeleton } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { DivideCircle } from 'react-feather'
-import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { profileTemplateApi } from '~/api/profile-template'
-import PrimaryTable from '~/common/components/Primary/Table'
 import { ShowNostis } from '~/common/utils'
 import { RootState } from '~/store'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
@@ -17,7 +14,6 @@ const ProfileTemplatePage = () => {
 	const [form] = Form.useForm()
 	form.getFieldsValue()
 	const [loading, setLoading] = useState<{ type: '' | 'GET_ALL' | 'UPDATE' | 'CREATE'; status: boolean }>({ type: '', status: false })
-	const userInfomation = useSelector((state: RootState) => state.user.information)
 	const [profileTemplates, setProfileTemplates] = useState<IProfileTemplate[]>([])
 	const [isModalOpen, setIsModalOpen] = useState<{ type: '' | 'UPDATE' | 'CREATE'; status: boolean }>({ type: '', status: false })
 
@@ -154,7 +150,7 @@ const ProfileTemplatePage = () => {
 						))}
 					</div>
 					<Divider>
-						<h2 className="py-4 font-[600] text-center">Thông tin thêm</h2>
+						<h2 className="py-4 font-[600] text-center">Mẫu chứng chỉ / Chứng nhận</h2>
 					</Divider>
 					{!!loading.status && loading.type === 'GET_ALL' ? (
 						<Skeleton></Skeleton>
@@ -226,7 +222,7 @@ const ProfileTemplatePage = () => {
 							</DragDropContext>
 
 							<PrimaryButton onClick={() => openModalCreate()} type="button" icon="add" background="blue">
-								Thêm Thông tin
+								Thêm chứng chỉ
 							</PrimaryButton>
 						</div>
 					)}
@@ -237,7 +233,7 @@ const ProfileTemplatePage = () => {
 					setIsModalOpen({ type: '', status: false })
 					form.resetFields()
 				}}
-				title={isModalOpen.type === 'CREATE' ? 'Thêm Thông tin' : 'Cập nhật thông tin'}
+				title={isModalOpen.type === 'CREATE' ? 'Thêm chứng chỉ' : 'Cập nhật chứng chỉ'}
 				open={isModalOpen.status}
 				footer={null}
 			>

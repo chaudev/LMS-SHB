@@ -506,20 +506,27 @@ export const AdminChildMenu = [
 					}
 				]
 			},
+			// {
+			// 	ItemType: 'sub-menu',
+			// 	Key: 'sub-list-staff-child-305',
+			// 	Icon: '',
+			// 	TitleSub: 'Hồ sơ',
+			// 	SubMenuList: [
+			// 		{
+			// 			ItemType: 'single',
+			// 			Key: '/options/paymentPemission',
+			// 			Route: '/options/profile-template',
+			// 			Text: 'Mẫu hồ sơ',
+			// 			Icon: ''
+			// 		}
+			// 	]
+			// }
 			{
-				ItemType: 'sub-menu',
-				Key: 'sub-list-staff-child-305',
-				Icon: '',
-				TitleSub: 'Hồ sơ',
-				SubMenuList: [
-					{
-						ItemType: 'single',
-						Key: '/options/paymentPemission',
-						Route: '/options/profile-template',
-						Text: 'Mẫu hồ sơ',
-						Icon: ''
-					}
-				]
+				ItemType: 'single',
+				Key: '/options/paymentPemission',
+				Route: '/options/profile-template',
+				Text: 'Mẫu hồ sơ',
+				Icon: ''
 			}
 		]
 	}

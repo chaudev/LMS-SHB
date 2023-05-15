@@ -60,7 +60,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					},
 					{
 						key: '4',
-						label: `Thanh toán`,
+						label: `Thanh toán`,                                                   
 						children: <TabBill StudentDetail={studentDetail} />
 					},
 					{
@@ -110,11 +110,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						label: `Lịch sử học`,
 						children: <TabClassListHistory StudentDetail={studentDetail} />
 					},
-					{
-						key: '9',
-						label: `Hồ sơ`,
-						children: <TabClassListHistory StudentDetail={studentDetail} />
-					}
+					
 			  ]
 
 	const onChange = (key: string) => {
