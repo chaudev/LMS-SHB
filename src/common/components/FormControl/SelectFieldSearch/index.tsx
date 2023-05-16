@@ -1,6 +1,7 @@
 import { Form, Select } from 'antd'
 import _ from 'lodash'
 import React from 'react'
+import { IFormSelectField } from '../form-control'
 
 const SelectFieldSearch = (props: IFormSelectField) => {
 	const {

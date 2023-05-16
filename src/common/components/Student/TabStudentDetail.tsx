@@ -1,4 +1,4 @@
-import { Divider, Form, Modal, Select, Skeleton, Tag } from 'antd'
+import { Divider, Form } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
@@ -8,21 +8,18 @@ import { learningNeedApi } from '~/api/learning-needs'
 import { purposeApi } from '~/api/purpose'
 import { sourceApi } from '~/api/source'
 import { userInformationApi } from '~/api/user'
-import { ShowNostis, ShowNoti } from '~/common/utils'
+import { ShowNoti } from '~/common/utils'
 import DatePickerField from '../FormControl/DatePickerField'
 import InputTextField from '../FormControl/InputTextField'
 import SelectField from '../FormControl/SelectField'
 import TextBoxField from '../FormControl/TextBoxField'
-import TextArea from 'antd/lib/input/TextArea'
-import IconButton from '../Primary/IconButton'
-import { FiChevronDown } from 'react-icons/fi'
-import PrimaryButton from '../Primary/Button'
+
 import IconButonUpdateUser from './UserProfileTemplate/IconButonUpdateUser'
 import UserProfileTemplate from './UserProfileTemplate'
 
 export interface ITabStudentDetailProps {
 	StudentDetail: IUserResponse
-	setStudentDetail: any
+	setStudentDetail?: any
 }
 
 export default function TabStudentDetail(props: ITabStudentDetailProps) {
@@ -178,8 +175,8 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 			const payload = { ...StudentDetail, [key]: value }
 			let res = await userInformationApi.update(payload)
 			if (res.status == 200) {
-				ShowNoti('success', res.data.message)
 				setStudentDetail(payload)
+				ShowNoti('success', res.data.message)
 			}
 			setIsLoading('')
 		} catch (error) {
@@ -473,7 +470,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						</div>
 					</>
 				)}
-				<UserProfileTemplate />
+				{router.query.StudentID && <UserProfileTemplate />}
 			</Form>
 		</div>
 	)

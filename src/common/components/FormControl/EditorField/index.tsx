@@ -1,6 +1,7 @@
 import { Form } from 'antd'
 import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
+import { IEditorField } from '../form-control'
 
 const DynamicComponentWithNoSSR = dynamic(() => import('./Editor'), {
 	ssr: false
