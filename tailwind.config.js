@@ -101,7 +101,7 @@ module.exports = {
 			'tw-secondary': '#c94a4f'
 		},
 		screens: {
-			smartphone: '360px',
+			smartphone: '375px',
 			tablet: '640px',
 			laptop: '1024px',
 			desktop: '1280px',

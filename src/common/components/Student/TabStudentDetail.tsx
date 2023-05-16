@@ -17,6 +17,8 @@ import TextArea from 'antd/lib/input/TextArea'
 import IconButton from '../Primary/IconButton'
 import { FiChevronDown } from 'react-icons/fi'
 import PrimaryButton from '../Primary/Button'
+import IconButonUpdateUser from './UserProfileTemplate/IconButonUpdateUser'
+import UserProfileTemplate from './UserProfileTemplate'
 
 export interface ITabStudentDetailProps {
 	StudentDetail: IUserResponse
@@ -25,7 +27,6 @@ export interface ITabStudentDetailProps {
 
 export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const { StudentDetail, setStudentDetail } = props
-	console.log(StudentDetail)
 	const router = useRouter()
 
 	const [optionList, setOptionList] = useState({ branch: [], purpose: [], area: [], source: [], learningNeed: [], sale: [] })
@@ -187,15 +188,6 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 		}
 	}
 
-	const customLable = (label) => {
-		return <div className="">{label}</div>
-	}
-
-	console.log('BranchIds', BranchIds)
-
-	if (!StudentDetail) {
-		return <></>
-	}
 	return (
 		<div>
 			<Divider>
@@ -203,7 +195,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 			</Divider>
 			<Form
 				ref={ref}
-				layout={window.innerWidth < 600 ? 'vertical' : 'horizontal'}
+				layout={window.innerWidth < 640 ? 'vertical' : 'horizontal'}
 				form={form}
 				labelAlign="left"
 				labelWrap={true}
@@ -214,7 +206,8 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 					<InputTextField
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						name="FullName"
-						label={customLable(labelUser.FullName)}
+						placeholder="Nhập họ và tên"
+						label={labelUser.FullName}
 					/>
 					<IconButonUpdateUser
 						isShow={FullName !== StudentDetail.FullName}
@@ -222,28 +215,27 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'FullName'}
 					/>
 				</div>
-
 				<Divider />
 				<div className="d-flex justify-between items-center">
 					<InputTextField
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						name="UserName"
-						label={customLable(labelUser.UserName)}
+						placeholder="Nhập tên đăng nhập"
+						label={labelUser.UserName}
 					/>
-
 					<IconButonUpdateUser
 						isShow={UserName !== StudentDetail.UserName}
 						onClick={() => updateUserInfo('UserName', UserName)}
 						loading={isLoading === 'UserName'}
 					/>
 				</div>
-
 				<Divider />
 				<div className="d-flex justify-between items-center">
 					<InputTextField
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						name="Email"
-						label={customLable(labelUser.Email)}
+						placeholder="Nhập email"
+						label={labelUser.Email}
 					/>
 					<IconButonUpdateUser
 						isShow={Email !== StudentDetail.Email}
@@ -251,38 +243,37 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'Email'}
 					/>
 				</div>
-
 				<Divider />
 				<div className="d-flex justify-between items-center">
 					<SelectField
 						name="Gender"
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-						label={customLable(labelUser.Gender)}
+						label={labelUser.Gender}
 						allowClear={false}
+						placeholder="Chọn giới tính"
 						optionList={[
 							{ value: 0, title: 'Khác' },
 							{ value: 1, title: 'Nam' },
 							{ value: 2, title: 'Nữ' }
 						]}
 					/>
-
 					<IconButonUpdateUser
 						isShow={Gender != StudentDetail.Gender}
 						onClick={() => updateUserInfo('Gender', Gender)}
 						loading={isLoading === 'Gender'}
 					/>
 				</div>
-
 				<Divider />
 				<div className="d-flex justify-between items-center">
 					<DatePickerField
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						classNamePicker="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-						label={customLable(labelUser.DOB)}
+						label={labelUser.DOB}
 						name="DOB"
 						mode="single"
 						format="DD/MM/YYYY"
 						allowClear={false}
+						placeholder="Nhập ngày sinh"
 					/>
 					<IconButonUpdateUser
 						isShow={moment(DOB).format('yyy/mm/dd') !== moment(StudentDetail.DOB).format('yyy/mm/dd')}
@@ -290,13 +281,12 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'DOB'}
 					/>
 				</div>
-
 				<Divider />
 				<div className="d-flex justify-between items-center">
 					<SelectField
 						name="StatusId"
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-						label={customLable(labelUser.Status)}
+						label={labelUser.Status}
 						optionList={[
 							{
 								value: 0,
@@ -316,14 +306,14 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'StatusId'}
 					/>
 				</div>
-
 				<Divider></Divider>
 				<div className="d-flex w-full justify-between items-start">
 					<TextBoxField
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						name="Extension"
+						placeholder="Nhập giới thiệu thêm về bản thân"
 						autoSize={true}
-						label={customLable(labelUser.Extension)}
+						label={labelUser.Extension}
 					/>
 
 					<IconButonUpdateUser
@@ -332,13 +322,13 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'Extension'}
 					/>
 				</div>
-
-				<Divider>Địa chỉ</Divider>
+				<Divider></Divider>
 				<div className="d-flex w-full justify-between items-start">
 					<SelectField
 						className="border-none min-w-xs w-full items-center m-0 hover:border-none focus:border-none"
 						name="BranchIds"
-						label={customLable(labelUser.Branch)}
+						label={labelUser.Branch}
+						placeholder="Chọn trung tâm"
 						optionList={optionList.branch}
 					/>
 					<IconButonUpdateUser
@@ -347,15 +337,13 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'BranchIds'}
 					/>
 				</div>
-
 				<Divider />
-
 				<div className="d-flex w-full justify-between items-start">
 					<InputTextField
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						name="Address"
 						placeholder="Nhập địa chỉ"
-						label={customLable(labelUser.Address)}
+						label={labelUser.Address}
 					/>
 					<IconButonUpdateUser
 						isShow={Address !== StudentDetail.Address}
@@ -363,14 +351,13 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'Address'}
 					/>
 				</div>
-
 				<Divider />
 				<div className="d-flex w-full justify-between items-start">
 					<SelectField
 						name="AreaId"
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-						label={customLable(labelUser.Area)}
-						placeholder="Chọn tỉnh/thành phố"
+						label={labelUser.Area}
+						placeholder="Chọn tỉnh / thành phố"
 						optionList={optionList.area}
 						onChangeSelect={(data) => {
 							getDistrict(data)
@@ -382,15 +369,14 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'AreaId'}
 					/>
 				</div>
-
 				<Divider />
 				<div className="d-flex w-full justify-between items-start">
 					<SelectField
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						disabled={district.length > 0 ? false : true}
 						name="DistrictId"
-						label={customLable(labelUser.District)}
-						placeholder="Chọn quận/huyện"
+						label={labelUser.District}
+						placeholder="Chọn quận / huyện"
 						optionList={district}
 						onChangeSelect={(data) => {
 							getWard(data)
@@ -409,7 +395,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						disabled={ward.length > 0 ? false : true}
 						placeholder="Chọn phường/xã"
-						label={customLable(labelUser.Ward)}
+						label={labelUser.Ward}
 						name="WardId"
 						optionList={ward}
 					/>
@@ -423,12 +409,15 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 
 				{router.query.StudentID && (
 					<>
-						<Divider>Thông tin học</Divider>
+						<Divider>
+							<h2 className="py-4 font-[600] text-center">Thông tin học</h2>
+						</Divider>
 						<div className="d-flex justify-between items-center">
 							<SelectField
 								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 								name="LearningNeedId"
 								label="Nhu cầu học"
+								placeholder="Chọn nhu cầu học"
 								optionList={optionList.learningNeed}
 							/>
 							<IconButonUpdateUser
@@ -443,6 +432,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 								name="SourceId"
 								label="Nguồn khách hàng"
+								placeholder="Chọn nguồn khách hàng"
 								optionList={optionList.source}
 							/>
 							<IconButonUpdateUser
@@ -457,6 +447,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 								name="SaleId"
 								label="Tư vấn viên"
+								placeholder="Chọn tư vấn viên"
 								optionList={optionList.sale}
 							/>
 							<IconButonUpdateUser
@@ -471,6 +462,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 								name="PurposeId"
 								label="Mục đích học"
+								placeholder="Chọn mục đích học"
 								optionList={optionList.purpose}
 							/>
 							<IconButonUpdateUser
@@ -484,243 +476,6 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				<UserProfileTemplate />
 			</Form>
 		</div>
-	)
-}
-
-const IconButonUpdateUser = ({ onClick, loading , isShow = false }) => {
-	return (
-		<>
-			{isShow && (
-				<IconButton
-					onClick={onClick}
-					tooltip="Cập nhật"
-					loading={loading}
-					type="button"
-					color="green"
-					icon="save"
-					background="transparent"
-				/>
-			)}
-		</>
-	)
-}
-const UserProfileTemplate = ({}) => {
-	const router = useRouter()
-	const [form] = Form.useForm()
-	const { StudentID } = router.query
-	const [loading, setLoading] = useState<{ type: string; status: boolean }>({ type: '', status: false })
-	const [profileTemplate, setProfileTemplate] = useState([])
-	const [profileItem, setProfileItem] = useState<IUserProfileTemplateItem | null>(null)
-	const [textUpdate, setTextUpdate] = useState<IUserProfileTemplateItem[]>([])
-
-	const getAllProfileTemplate = async () => {
-		try {
-			setLoading({ type: 'GET_ALL', status: true })
-			const response = await userInformationApi.getAllProfileTemplate(String(StudentID))
-			if (response.status === 200) {
-				setTextUpdate(response.data.data)
-				setProfileTemplate(response.data.data)
-			}
-			if (response.status === 204) {
-				setProfileTemplate([])
-			}
-			setLoading({ type: '', status: false })
-		} catch (error) {
-			ShowNostis.error(error.message)
-			setLoading({ type: '', status: false })
-		}
-	}
-
-	useEffect(() => {
-		if (StudentID) {
-			getAllProfileTemplate()
-		}
-	}, [StudentID])
-
-	const updateProfileTemplateItem = async (item, value) => {
-		try {
-			setLoading({ type: `UPDATE_ITEM_${item.Index}`, status: true })
-			const payload: IUpdateUserProfileTemplate = {
-				UserId: Number(StudentID),
-				ProfileTemplateId: item.ProfileTemplateId,
-				Value: value
-			}
-
-			const response = await userInformationApi.updateProfileTemplateItem(payload)
-			if (response.status === 200) {
-				let temp = []
-				profileTemplate.map((item) => {
-					if (item.ProfileTemplateId === response.data.data.ProfileTemplateId) {
-						temp.push({
-							...response.data.data,
-							Type: item.Type,
-							Index: item.Index
-						})
-					} else {
-						temp.push(item)
-					}
-				})
-				setProfileTemplate(temp)
-				ShowNostis.success(response.data.message)
-			}
-
-			setLoading({ type: '', status: false })
-		} catch (error) {
-			ShowNostis.error(error.message)
-			setLoading({ type: '', status: false })
-		}
-	}
-
-	const _onFinish = async (params) => {
-		try {
-			setLoading({ type: `UPDATE_PROFILE`, status: true })
-
-			const payload: IUpdateUserProfileTemplate = {
-				UserId: Number(StudentID),
-				ProfileTemplateId: profileItem.ProfileTemplateId,
-				...params
-			}
-
-			const response = await userInformationApi.updateProfileTemplateItem(payload)
-			if (response.status === 200) {
-				let temp = []
-				profileTemplate.map((item) => {
-					if (item.ProfileTemplateId === response.data.data.ProfileTemplateId) {
-						temp.push(response.data.data)
-					} else {
-						temp.push(item)
-					}
-				})
-				setProfileTemplate(temp)
-				form.setFieldsValue(null)
-				setProfileItem(null)
-				ShowNostis.success(response.data.message)
-			}
-
-			setLoading({ type: '', status: false })
-		} catch (error) {
-			ShowNostis.error(error.message)
-			setLoading({ type: '', status: false })
-		}
-	}
-
-	return (
-		<>
-			<Divider>Chứng chỉ / Chứng nhận </Divider>
-			{loading.type === 'GET_ALL' && loading.status === true ? (
-				<Skeleton></Skeleton>
-			) : (
-				<div className="grid  pt-4">
-					{profileTemplate.map((item, index) => {
-						return (
-							<React.Fragment key={item.Id}>
-								<div className="grid grid-cols-8 smartphone:grid-cols-4  gap-2 justify-between">
-									<div className="col-span-4 font-[500]">{item.ProfileTemplateName}</div>
-									<div className="col-span-4 d-flex justify-end items-start">
-										{item.Type !== 1 ? (
-											<Tag
-												className="rounded-full	 px-2 cursor-pointer	"
-												onClick={() => {
-													form.setFieldsValue(item)
-													setProfileItem(item)
-												}}
-												color={item.Value == 'true' ? 'green' : 'orange'}
-											>
-												<div className="d-flex items-center px-2">
-													{item.Value == 'true' ? 'Đã có' : 'Chưa có'} <FiChevronDown size={22} />
-												</div>
-											</Tag>
-										) : (
-											<div className="d-flex w-full justify-between items-start">
-												<TextArea
-													value={textUpdate[index].Value}
-													onChange={(e) => {
-														let newValue = []
-														textUpdate.forEach((i) => {
-															if (i.Index === item.Index) {
-																newValue.push({
-																	...item,
-																	Value: e.target.value
-																})
-															} else {
-																newValue.push(i)
-															}
-														})
-
-														setTextUpdate(newValue)
-													}}
-													rows={4}
-													placeholder="Nhập thông tin"
-												/>
-												<IconButonUpdateUser
-													isShow={textUpdate[index].Value !== profileTemplate[index].Value}
-													onClick={() => updateProfileTemplateItem(item, textUpdate[index].Value)}
-													loading={loading.type === `UPDATE_ITEM_${item.Index}` && loading.status === true}
-												/>
-											</div>
-										)}
-									</div>
-								</div>
-								<Divider></Divider>
-							</React.Fragment>
-						)
-					})}
-				</div>
-			)}
-			<Modal
-				title={profileItem?.ProfileTemplateName}
-				open={!!profileItem}
-				centered
-				closable={false}
-				destroyOnClose
-				onCancel={() => {
-					form.setFieldsValue(null)
-					setProfileItem(null)
-				}}
-				cancelText=""
-				footer={false}
-			>
-				<Form form={form} onFinish={_onFinish} layout="vertical">
-					<SelectField
-						name="Value"
-						label={'Trạng thái'}
-						optionList={[
-							{
-								value: 'true',
-								title: 'Đã có'
-							},
-							{
-								value: 'false',
-								title: 'Chưa có'
-							}
-						]}
-						placeholder="Chọn trạng thái"
-					/>
-					<div className="d-flex justify-center gap-3">
-						<PrimaryButton
-							type="button"
-							onClick={() => {
-								form.setFieldsValue(null)
-								setProfileItem(null)
-							}}
-							loading={loading.type === 'UPDATE_PROFILE' && loading.status === true}
-							icon="cancel"
-							background="orange"
-						>
-							Hủy
-						</PrimaryButton>
-						<PrimaryButton
-							loading={loading.type === 'UPDATE_PROFILE' && loading.status === true}
-							type="submit"
-							icon="save"
-							background="primary"
-						>
-							Cập nhật
-						</PrimaryButton>
-					</div>
-				</Form>
-			</Modal>
-		</>
 	)
 }
 

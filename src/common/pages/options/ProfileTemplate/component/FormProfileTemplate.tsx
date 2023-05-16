@@ -1,7 +1,7 @@
 import { Form, Input, Select } from 'antd'
 import PrimaryButton from '~/common/components/Primary/Button'
 
-const FormProfileTemplate = ({ form, handleCreateUpdate, isModalOpen }) => {
+const FormProfileTemplate = ({ form, handleCreateUpdate, isModalOpen = { type: '' }, onCancelModal }) => {
 	return (
 		<Form
 			layout="vertical"
@@ -27,11 +27,11 @@ const FormProfileTemplate = ({ form, handleCreateUpdate, isModalOpen }) => {
 			)}
 
 			<div className="d-flex justify-center gap-4">
-				<PrimaryButton className="text-white" type="button" icon="cancel" background="orange">
+				<PrimaryButton onClick={onCancelModal} className="text-white" type="button" icon="cancel" background="orange">
 					Hủy
 				</PrimaryButton>
 				<PrimaryButton type="submit" icon={isModalOpen.type === 'CREATE' ? 'add' : 'edit'} background="blue">
-					{isModalOpen.type === 'CREATE' ? 'Thêm Thông tin' : 'Cập nhật thông tin'}
+					{isModalOpen.type === 'CREATE' ? 'Thêm thông tin' : 'Cập nhật thông tin'}
 				</PrimaryButton>
 			</div>
 		</Form>
