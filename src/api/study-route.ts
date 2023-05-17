@@ -16,12 +16,14 @@ export const studyRouteApi = {
 	update(data: any) {
 		return instance.put(url, data, {})
 	},
-    delete(id) {
+	delete(id) {
 		return instance.delete(`${url}/${id}`)
 	},
 
-    updateIndex(data) {
-        return instance.post(`${url}/update-index`, data)
-    }
-    
+	updateIndex(data) {
+		return instance.post(`${url}/update-index`, data)
+	},
+	updateUseTemplate(data: IUseTemplate) {
+		return instance.post(`${url}/use-template`, data)
+	}
 }

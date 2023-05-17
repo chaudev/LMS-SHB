@@ -22,3 +22,7 @@ type IStudentStudyRoute = IBaseApi<{
 }>
 
 
+interface IUseTemplate {
+	StudyRouteTemplateId:number,
+	StudentId
+}
