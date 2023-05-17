@@ -49,11 +49,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						label: `Chi tiết`,
 						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
 					},
-					{
-						key: '2',
-						label: `Hợp đồng`,
-						children: <TabStudentContract StudentDetail={studentDetail} />
-					},
+					// {
+					// 	key: '2',
+					// 	label: `Hợp đồng`,
+					// 	children: <TabStudentContract StudentDetail={studentDetail} />
+					// },
 					{
 						key: '3',
 						label: `Lộ trình`,
@@ -76,11 +76,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						label: `Chi tiết`,
 						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
 					},
-					{
-						key: '2',
-						label: `Hợp đồng`,
-						children: <TabStudentContract StudentDetail={studentDetail} />
-					},
+					// {
+					// 	key: '2',
+					// 	label: `Hợp đồng`,
+					// 	children: <TabStudentContract StudentDetail={studentDetail} />
+					// },
 					{
 						key: '3',
 						label: `Lớp học`,
@@ -96,11 +96,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						label: `Thanh toán`,
 						children: <TabBill StudentDetail={studentDetail} />
 					},
-					{
-						key: '6',
-						label: `Mã khuyến mãi`,
-						children: <TabDiscountHistory StudentDetail={studentDetail} />
-					},
+					// {
+					// 	key: '6',
+					// 	label: `Mã khuyến mãi`,
+					// 	children: <TabDiscountHistory StudentDetail={studentDetail} />
+					// },
 					{
 						key: '7',
 						label: `Kiểm tra đầu vào`,

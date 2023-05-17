@@ -34,3 +34,7 @@ type IBaseApi<T> = {
 type IApiResultDetail<T = any> = {
 	data: T
 }
+type IApiResultCreate <T = any> = {
+	data: T,
+	message: string
+}

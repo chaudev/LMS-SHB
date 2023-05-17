@@ -372,6 +372,13 @@ export const AdminChildMenu = [
 					},
 					{
 						ItemType: 'single',
+						Key: '/options/study-route-template',
+						Route: '/options/study-route-template',
+						Text: 'Mẫu lộ trình học',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
 						Key: '/options/specialize',
 						Route: '/options/specialize',
 						Text: 'Chuyên môn',
@@ -413,13 +420,14 @@ export const AdminChildMenu = [
 				Icon: '',
 				TitleSub: 'Khác',
 				SubMenuList: [
-					{
-						ItemType: 'single',
-						Key: '/options/discount',
-						Route: '/options/discount',
-						Text: 'Mã khuyến mãi',
-						Icon: ''
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/discount',
+					// 	Route: '/options/discount',
+					// 	Text: 'Mã khuyến mãi',
+					// 	Icon: ''
+					// },
+
 					{
 						ItemType: 'single',
 						Key: '/options/learning-needs',

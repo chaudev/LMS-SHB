@@ -345,13 +345,13 @@ export const ManagerChildMenu = [
 				Icon: '',
 				TitleSub: 'Khác',
 				SubMenuList: [
-					{
-						ItemType: 'single',
-						Key: '/options/discount',
-						Route: '/options/discount',
-						Text: 'Mã khuyến mãi',
-						Icon: ''
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/discount',
+					// 	Route: '/options/discount',
+					// 	Text: 'Mã khuyến mãi',
+					// 	Icon: ''
+					// },
 					{
 						ItemType: 'single',
 						Key: '/options/learning-needs',

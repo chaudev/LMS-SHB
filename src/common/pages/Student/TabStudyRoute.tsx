@@ -36,6 +36,7 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 			setLoading(false)
 		}
 	}
+	
 	const handleMoveItem = async (index: number, item: any, type: string) => {
 		const temp = [...dataTable]
 		const move = dataTable[index]
@@ -59,6 +60,7 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 		}
 		await setDataTable(temp)
 	}
+
 	const getStudentStudyRoute = async (params) => {
 		try {
 			setLoading(true)
@@ -80,6 +82,7 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 			setLoading(false)
 		}
 	}
+
 	useEffect(() => {
 		if (StudentDetail) {
 			getStudentStudyRoute(apiParameters)
