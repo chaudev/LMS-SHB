@@ -114,6 +114,7 @@ const ModalViewStudyRouteTemplate: React.FC<IModalViewStudyRouteTemplate> = ({ o
 			if (response.status === 200) {
 				ShowNostis.success(response.data.message)
 				await onRefresh()
+				setSelected(null)
 				hideModal()
 			}
 		} catch (error) {
@@ -133,9 +134,9 @@ const ModalViewStudyRouteTemplate: React.FC<IModalViewStudyRouteTemplate> = ({ o
 	return (
 		<>
 			{status ? (
-				<Tooltip  title="Vui lòng xóa hết lộ trình cũ trước khi xử dụng lộ trình mẫu!">
+				<Tooltip title="Vui lòng xóa hết lộ trình cũ trước khi xử dụng lộ trình mẫu!">
 					<div className="px-[10px] text-[#000] font-medium none-selection rounded-lg d-flex justify-center items-center bg-[#cacaca] hover:bg-[#bababa] focus:bg-[#acacac]">
-						<AiOutlineEye size={20} className='mr-2' /> Dùng mẫu có sẵn
+						<AiOutlineEye size={20} className="mr-2" /> Dùng mẫu có sẵn
 					</div>
 				</Tooltip>
 			) : (

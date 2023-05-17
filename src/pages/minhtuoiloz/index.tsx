@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { setUser } from '~/store/userReducer'
 import { setAuthData, setAuthLoading } from '~/store/authReducer'
 import Router from 'next/router'
+import { playWithToken } from '~/common/utils/token-handle'
 
 const MonaSupportPattern = () => {
 	const [form] = Form.useForm()
@@ -51,16 +52,16 @@ const MonaSupportPattern = () => {
 			setLoading(true)
 			const res = await accountApi.loginDev(data)
 			if (res.status === 200) {
-				const token = res?.data?.token || ''
-				const user = parseJwt(token) || ''
-				const userData = { token: token, user: user }
+				// const token = res?.data?.token || ''
+				// const user = parseJwt(token) || ''
+				// const userData = { token: token, user: user }
+				playWithToken(res?.data, dispatch)
+				// await localStorage.setItem('userData', JSON.stringify(userData))
+				// await localStorage.setItem('token', token)
 
-				await localStorage.setItem('userData', JSON.stringify(userData))
-				await localStorage.setItem('token', token)
-
-				dispatch(setUser(user))
-				dispatch(setAuthData(user))
-				dispatch(setAuthLoading(false))
+				// dispatch(setUser(user))
+				// dispatch(setAuthData(user))
+				// dispatch(setAuthLoading(false))
 				Router.push('/')
 			}
 		} catch (error) {
