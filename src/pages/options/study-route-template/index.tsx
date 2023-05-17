@@ -1,6 +1,6 @@
 import React from 'react'
 import { MainLayout } from '~/common'
-import StudyRoutePage from '~/common/pages/options/StydyRouteTemplate'
+import StudyRoutePage from '~/common/pages/options/StudyRouteTemplate'
 
 const StudyRouteTemplate = () => {
 	return <StudyRoutePage></StudyRoutePage>
