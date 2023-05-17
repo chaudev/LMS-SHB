@@ -2,7 +2,7 @@ import { instance } from '~/api/instance'
 
 const URl = 'api/StudyRouteTemplate'
 
-export const StudyRouteTemplateApi = {
+export const studyRouteTemplateApi = {
 	getAllStudyRoute(params) {
 		return instance.get<IApiResultData<IStudyRoute[]>>(URl, { params })
 	},

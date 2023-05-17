@@ -2,6 +2,7 @@ import { nanoid } from '@reduxjs/toolkit'
 import { Form, Input, Modal } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { paymentTypeApi } from '~/api/option/payment-type'
 import { studyRouteTemplateApi } from '~/api/option/study-route-template'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import PrimaryButton from '~/common/components/Primary/Button'
@@ -10,7 +11,7 @@ import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNostis } from '~/common/utils'
 
-const StudyRouteTemplatePage = () => {
+const PaymentTypePage = () => {
 	const [form] = Form.useForm()
 	const router = useRouter()
 	const initParamters = {
@@ -22,20 +23,22 @@ const StudyRouteTemplatePage = () => {
 	const [apiParameters, setApiParameters] = useState(initParamters)
 	const [totalRow, setTotalRow] = useState(1)
 	const [loading, setLoading] = useState<string>('')
-	const [studyRouterTemplates, setRouteTemplates] = useState<IStudyRoute[]>([])
-	const [studyRouterTemplateItem, setRouteTemplateItem] = useState<IStudyRoute>()
+	const [paymentType, setPaymentType] = useState<IPaymentType[]>([])
+	const [paymentTypeItem, setPaymentTypeItem] = useState<IPaymentType>()
 	const [isShow, setIsShow] = useState<'' | 'CREATE' | 'UPDATE'>('')
-	const getAllStudyRouteTemplate = async () => {
+
+	const getAllPaymentType = async () => {
 		try {
 			setLoading('GET_ALL')
-			const res = await studyRouteTemplateApi.getAllStudyRoute(apiParameters)
+			const res = await paymentTypeApi.getAllPaymentType(apiParameters)
+			console.log(res)
 
 			if (res.status === 200) {
-				setRouteTemplates(res.data.data)
+				setPaymentType(res.data.data)
 				setTotalRow(res.data.totalRow)
 			}
 			if (res.status === 204) {
-				setRouteTemplates([])
+				setPaymentType([])
 				setTotalRow(1)
 			}
 			setLoading('')
@@ -46,20 +49,26 @@ const StudyRouteTemplatePage = () => {
 	}
 
 	useEffect(() => {
-		getAllStudyRouteTemplate()
+		getAllPaymentType()
 	}, [apiParameters])
+
 	useEffect(() => {
-		if (isShow === 'UPDATE' && studyRouterTemplateItem) {
-			form.setFieldValue('Name', studyRouterTemplateItem.Name)
+		if (isShow === 'UPDATE' && paymentTypeItem) {
+			form.setFieldsValue(paymentTypeItem)
 		} else {
 			form.resetFields()
 		}
-	}, [studyRouterTemplateItem])
+	}, [paymentTypeItem])
 
 	const columns = [
 		{
 			title: 'Tên',
 			dataIndex: 'Name',
+			render: (text) => <>{text}</>
+		},
+		{
+			title: 'Số lần',
+			dataIndex: 'Times',
 			render: (text) => <>{text}</>
 		},
 		{
@@ -72,19 +81,19 @@ const StudyRouteTemplatePage = () => {
 					<div className="d-fex gap-3">
 						<IconButton
 							onClick={() => {
-								router.push({ pathname: '/options/study-route-template/detail', query: { slug: item.Id, key: nanoid(), name: item.Name } })
+								router.push({ pathname: '/options/payment-type/detail', query: { slug: item.Id, key: nanoid(), name: item.Name } })
 							}}
-							tooltip="Xem chi tiết lộ trình"
+							tooltip="Xem chi tiết hình thức thanh toán"
 							type="button"
 							icon="eye"
 							color="yellow"
 						></IconButton>
 						<IconButton
 							onClick={() => {
-								setRouteTemplateItem(item)
+								setPaymentTypeItem(item)
 								setIsShow('UPDATE')
 							}}
-							tooltip="Cập nhật lộ trình"
+							tooltip="Cập nhật hình thức thanh toán"
 							type="button"
 							icon="edit"
 							color="green"
@@ -92,7 +101,7 @@ const StudyRouteTemplatePage = () => {
 						<IconButton
 							onClick={() => deleteStudyRouteTemplate(item)}
 							loading={loading === `DELETE_${item.Id}`}
-							tooltip="Xóa lộ trình"
+							tooltip="Xóa hình thức thanh toán"
 							type="button"
 							icon="remove"
 							color="red"
@@ -106,14 +115,10 @@ const StudyRouteTemplatePage = () => {
 	const deleteStudyRouteTemplate = async (item) => {
 		try {
 			setLoading(`DELETE_${item.Id}`)
-			const response = await studyRouteTemplateApi.deleteStudyRouteTemplate(item.Id)
+			const response = await paymentTypeApi.deletePaymentType(item.Id)
 			if (response.status == 200) {
 				ShowNostis.success(response.data.message)
-				const res = await studyRouteTemplateApi.getAllStudyRoute(apiParameters)
-				if (res.status === 200) {
-					setRouteTemplates(res.data.data)
-					setTotalRow(res.data.totalRow)
-				}
+				getAllPaymentType()
 			}
 			setLoading(``)
 		} catch (error) {
@@ -124,24 +129,25 @@ const StudyRouteTemplatePage = () => {
 
 	const _onFinish = async (params) => {
 		try {
+			console.log('params', params)
+
 			if (isShow === 'CREATE') {
 				const response = await studyRouteTemplateApi.createStudyRouteTemplate(params)
 				if (response.status === 200) {
 					ShowNostis.success(response.data.message)
-					getAllStudyRouteTemplate()
+					await getAllPaymentType()
 					setIsShow('')
 				}
 			}
 			if (isShow === 'UPDATE') {
 				const payload = {
-					Id: studyRouterTemplateItem.Id,
-					Name: params.Name,
-					Thumbnail: ''
+					Id: paymentTypeItem.Id,
+					Name: params.Name
 				}
 				const response = await studyRouteTemplateApi.updateStudyRouteTemplate(payload)
 				if (response.status === 200) {
 					ShowNostis.success(response.data.message)
-					getAllStudyRouteTemplate()
+					await getAllPaymentType()
 					setIsShow('')
 				}
 			}
@@ -154,7 +160,7 @@ const StudyRouteTemplatePage = () => {
 		<>
 			<PrimaryTable
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, pageIndex: event })}
-				data={studyRouterTemplates}
+				data={paymentType}
 				total={totalRow}
 				loading={loading === 'GET_ALL'}
 				columns={columns}
@@ -183,13 +189,14 @@ const StudyRouteTemplatePage = () => {
 				destroyOnClose
 				centered
 				onCancel={() => setIsShow('')}
-				title={isShow == 'UPDATE' ? 'Cập nhật mẫu lộ trình học' : 'Tạo mới mẫu lộ trình học'}
+				title={isShow == 'UPDATE' ? 'Cập nhật hình thức thanh toán' : 'Tạo mới hình thức thanh toán'}
 				footer={false}
 			>
 				<Form form={form} layout="vertical" onFinish={_onFinish}>
-					<Form.Item>
-						<InputTextField name="Name" label="Tên lộ trình học" />
-					</Form.Item>
+					<InputTextField name="Name" label="Tên hình thức thanh toán" />
+
+					<InputTextField name="Times" label="Số lần thanh toán" />
+
 					<div className="d-flex justify-center ">
 						<PrimaryButton type="submit" icon={isShow === 'UPDATE' ? 'save' : 'add'} background="primary">
 							{isShow == 'UPDATE' ? 'Cập nhật' : 'Thêm mới'}
@@ -201,4 +208,4 @@ const StudyRouteTemplatePage = () => {
 	)
 }
 
-export default StudyRouteTemplatePage
+export default PaymentTypePage

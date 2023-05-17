@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useMemo, useState } from 'react'
 import { AiOutlineEye } from 'react-icons/ai'
 import { FcClock } from 'react-icons/fc'
-import { StudyRouteTemplateApi } from '~/api/option/study-route-template'
+import { studyRouteTemplateApi } from '~/api/option/study-route-template'
 import { StudyRouteTemplateDetailApi } from '~/api/option/study-router-template-detail'
 import { studyRouteApi } from '~/api/study-route'
 import PrimaryButton from '~/common/components/Primary/Button'
@@ -35,7 +35,7 @@ const ModalViewStudyRouteTemplate: React.FC<IModalViewStudyRouteTemplate> = ({ o
 	const getAllStudyRouteTemplate = async () => {
 		try {
 			setLoading('GET_ALL')
-			const res = await StudyRouteTemplateApi.getAllStudyRoute(apiParameters)
+			const res = await studyRouteTemplateApi.getAllStudyRoute(apiParameters)
 
 			if (res.status === 200) {
 				let templ = []

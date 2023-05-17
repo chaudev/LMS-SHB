@@ -1,9 +1,9 @@
 import React from 'react'
 import { MainLayout } from '~/common'
-import StydyRoutePage from '~/common/pages/options/StydyRouteTemplate'
+import StudyRoutePage from '~/common/pages/options/StydyRouteTemplate'
 
 const StudyRouteTemplate = () => {
-	return <StydyRoutePage></StydyRoutePage>
+	return <StudyRoutePage></StudyRoutePage>
 }
 StudyRouteTemplate.Layout = MainLayout
 
