@@ -533,13 +533,13 @@ export const AdminChildMenu = [
 						Text: 'Quà tặng',
 						Icon: ''
 					},
-					{
-						ItemType: 'single',
-						Key: '/options/payment-type',
-						Route: '/options/payment-type',
-						Text: 'Hình thức đóng tiền',
-						Icon: ''
-					}
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/payment-type',
+					// 	Route: '/options/payment-type',
+					// 	Text: 'Hình thức đóng tiền',
+					// 	Icon: ''
+					// }
 				]
 			},
 			// {
