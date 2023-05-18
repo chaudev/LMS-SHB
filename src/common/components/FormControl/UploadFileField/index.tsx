@@ -5,6 +5,7 @@ import { SiMicrosoftexcel } from 'react-icons/si'
 import { UploadFileApi } from '~/api/common/upload-image'
 import { ShowNoti } from '~/common/utils'
 import PrimaryButton from '../../Primary/Button'
+import { IUploadFileField } from '../form-control'
 
 export default function UploadFileField(props: IUploadFileField) {
 	const { style, label, name, isRequired, className, disabled, rules, multiple, onChangeFile, form, buttonText, max } = props

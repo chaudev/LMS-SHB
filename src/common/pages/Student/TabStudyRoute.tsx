@@ -9,10 +9,12 @@ import PrimaryTag from '~/common/components/Primary/Tag'
 import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
 import { ModalStudyRoute } from './ModalStudyRoute'
+import ModalViewStudyRouteTemplate from './ModalViewStudyRouteTemplate'
 
 type ITabStudyRoute = {
 	StudentDetail: IUserResponse
 }
+
 export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 	const user = useSelector((state: RootState) => state.user.information)
 	const [loading, setLoading] = useState(false)
@@ -36,6 +38,7 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 			setLoading(false)
 		}
 	}
+
 	const handleMoveItem = async (index: number, item: any, type: string) => {
 		const temp = [...dataTable]
 		const move = dataTable[index]
@@ -59,6 +62,7 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 		}
 		await setDataTable(temp)
 	}
+
 	const getStudentStudyRoute = async (params) => {
 		try {
 			setLoading(true)
@@ -80,6 +84,7 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 			setLoading(false)
 		}
 	}
+
 	useEffect(() => {
 		if (StudentDetail) {
 			getStudentStudyRoute(apiParameters)
@@ -91,13 +96,18 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 			<Card
 				title=""
 				extra={
-					<>
+					<div className="d-flex gap-3">
 						{user?.RoleId == 3 || user?.RoleId == 8 ? (
 							''
 						) : (
 							<ModalStudyRoute mode="add" onRefresh={() => getStudentStudyRoute(apiParameters)} />
 						)}
-					</>
+
+						<ModalViewStudyRouteTemplate
+							status={dataTable.length > 0 ? true : false}
+							onRefresh={() => getStudentStudyRoute(apiParameters)}
+						/>
+					</div>
 				}
 			>
 				{!loading && dataTable?.length == 0 && <Empty />}
@@ -107,26 +117,38 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 						{dataTable &&
 							dataTable?.length > 0 &&
 							dataTable?.map((item, index) => (
-								<Timeline.Item label={`[${item?.ProgramModel?.Code}] ${item?.ProgramModel?.Name}`} key={index} dot={<FcClock />}>
+								<Timeline.Item
+									label={<div className="text-green font-[500]">{`[${item?.ProgramModel?.Code}] ${item?.ProgramModel?.Name}`}</div>}
+									key={index}
+									dot={<FcClock />}
+								>
 									<div className="flex justify-between ">
 										<div>
 											<PrimaryTag color={item?.Status == 1 ? 'yellow' : item?.Status == 2 ? 'blue' : 'green'} children={item?.StatusName} />
-											<p>Người tạo: {item?.CreatedBy}</p>
-											<p>Ngày tạo: {moment(item?.CreatedOn).format('DD-MM-YYYY HH:mm A')}</p>
-											<p>Ghi chú: {item?.Note}</p>
+											<p>
+												<span className="font-[500] ">Người tạo:</span> {item?.CreatedBy}
+											</p>
+											<p>
+												<span className="font-[500]">Ngày tạo:</span> {moment(item?.CreatedOn).format('DD-MM-YYYY HH:mm A')}
+											</p>
+											<p>
+												<span className="font-[500]">Ghi chú:</span> {item?.Note}
+											</p>
 										</div>
 										{user?.RoleId == 3 || user?.RoleId == 8 ? (
 											''
 										) : (
-											<div className="flex items-center">
-												<div className="icon mr-2 cursor-pointer" onClick={() => handleMoveItem(index, item, 'up')}>
-													{index !== 0 && <ImMoveUp size={22} color="#0068ac" />}
-												</div>
-												<div className="icon cursor-pointer">
-													{index + 1 < dataTable.length && (
-														<ImMoveDown size={22} color="#007134" onClick={() => handleMoveItem(index, item, 'down')} />
-													)}
-												</div>
+											<div className="flex items-center gap-1">
+												{index !== 0 && (
+													<div className="icon   cursor-pointer" onClick={() => handleMoveItem(index, item, 'up')}>
+														<ImMoveUp size={22} color="#0068ac" />
+													</div>
+												)}
+												{index + 1 < dataTable.length && (
+													<div className="icon  cursor-pointer" onClick={() => handleMoveItem(index, item, 'down')}>
+														<ImMoveDown size={22} color="#007134" />
+													</div>
+												)}
 												<ModalStudyRoute mode="edit" onRefresh={() => getStudentStudyRoute(apiParameters)} dataRow={item} />
 												<ModalStudyRoute mode="delete" onRefresh={() => getStudentStudyRoute(apiParameters)} dataRow={item} />
 											</div>

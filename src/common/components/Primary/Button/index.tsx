@@ -69,7 +69,7 @@ const PrimaryButton: FC<IPrimaryButton> = (props) => {
 			if (background == 'primary') {
 				return 'text-white'
 			}
-			
+
 			if (background == 'disabled') {
 				return 'text-white'
 			}

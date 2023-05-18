@@ -188,9 +188,9 @@ function Header({ isOpenMenu, isOpen, funcMenuMobile, openMenuMobile }: IHeader)
 				</div>
 
 				<div className="header-menu">
-					<div className="mr-[16px]">
+					{/* <div className="mr-[16px]">
 						<CartButton />
-					</div>
+					</div> */}
 
 					<div className="mr-[16px]">
 						<Notification />

@@ -1,6 +1,7 @@
 import { Form } from 'antd'
 import React from 'react'
 import { NumericFormat } from 'react-number-format'
+import { IFormInputNumber } from '../form-control'
 
 const InputNumberField = (props: IFormInputNumber) => {
 	const { style, label, isRequired, className, placeholder, disabled, name, rules, max, onChange } = props

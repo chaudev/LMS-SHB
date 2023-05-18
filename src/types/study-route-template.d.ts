@@ -1,6 +1,6 @@
-type IPaymentType = {
+type IStudyRoute = {
 	Name: string
-	Times: number
+	Thumbnail: string
 	Id: number
 	Enable: boolean
 	CreatedOn: string

@@ -40,4 +40,5 @@ type IIconButton = {
 	size?: number
 	placementTooltip?: any
 	titleTooltip?: string
+	loading?:boolean
 }

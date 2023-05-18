@@ -6,7 +6,7 @@ import Popup from './MenuContext'
 const PrimaryTable: FC<IPrimaryTable> = (props) => {
 	const { columns, children, TitleCard, Extra, className, loading, bordered } = props
 	const { total, current, expand, data, onExpand, onChangePage, menuContext, pageSize } = props
-
+ 	
 	const [dataSource, setDataSource] = useState([])
 	const [rowKeys, setRowKeys] = useState([{ currentPage: 1, listKeys: [] }])
 	const [currentPage, setCurrentPage] = useState(1)

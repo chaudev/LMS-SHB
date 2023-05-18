@@ -1,6 +1,7 @@
 import { instance } from '~/api/instance'
 
 const url = '/api/TestAppointment'
+
 export const testAppointmentApi = {
 	getAll(todoApi: object) {
 		return instance.get<IApiResultData<ITestCustomer[]>>(url, {

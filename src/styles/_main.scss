@@ -21,7 +21,9 @@ a {
 * {
 	box-sizing: border-box;
 }
-
+.border-none{
+	border-style: none !important;
+}
 .loading-blue {
 	line-height: 0;
 	transition: 0.3s;

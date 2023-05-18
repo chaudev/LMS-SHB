@@ -372,6 +372,13 @@ export const AdminChildMenu = [
 					},
 					{
 						ItemType: 'single',
+						Key: '/options/study-route-template',
+						Route: '/options/study-route-template',
+						Text: 'Mẫu lộ trình học',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
 						Key: '/options/specialize',
 						Route: '/options/specialize',
 						Text: 'Chuyên môn',
@@ -413,13 +420,14 @@ export const AdminChildMenu = [
 				Icon: '',
 				TitleSub: 'Khác',
 				SubMenuList: [
-					{
-						ItemType: 'single',
-						Key: '/options/discount',
-						Route: '/options/discount',
-						Text: 'Mã khuyến mãi',
-						Icon: ''
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/discount',
+					// 	Route: '/options/discount',
+					// 	Text: 'Mã khuyến mãi',
+					// 	Icon: ''
+					// },
+
 					{
 						ItemType: 'single',
 						Key: '/options/learning-needs',
@@ -499,6 +507,13 @@ export const AdminChildMenu = [
 					},
 					{
 						ItemType: 'single',
+						Key: '/options/payment-type',
+						Route: '/options/payment-type',
+						Text: 'Hình thức thanh toán',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
 						Key: '/options/tags',
 						Route: '/options/tags',
 						Text: 'Danh mục từ khoá',
@@ -527,6 +542,21 @@ export const AdminChildMenu = [
 					}
 				]
 			},
+			// {
+			// 	ItemType: 'sub-menu',
+			// 	Key: 'sub-list-staff-child-305',
+			// 	Icon: '',
+			// 	TitleSub: 'Hồ sơ',
+			// 	SubMenuList: [
+			// 		{
+			// 			ItemType: 'single',
+			// 			Key: '/options/paymentPemission',
+			// 			Route: '/options/profile-template',
+			// 			Text: 'Mẫu hồ sơ',
+			// 			Icon: ''
+			// 		}
+			// 	]
+			// }
 			{
 				ItemType: 'sub-menu',
 				Key: 'sub-list-staff-child-305',

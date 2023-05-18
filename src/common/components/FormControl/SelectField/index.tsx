@@ -1,8 +1,24 @@
 import { Form, Select } from 'antd'
 import React from 'react'
+import { IFormSelectField } from '../form-control'
 
 const SelectField = (props: IFormSelectField) => {
-	const { style, label, onChangeSelect, optionList, isRequired, className, placeholder, disabled, name, rules, mode, isLoading } = props
+	const {
+		style,
+		label,
+		onChangeSelect,
+		optionList,
+		isRequired,
+		className,
+		placeholder,
+		disabled,
+		name,
+		rules,
+		mode,
+		isLoading,
+		suffix,
+		allowClear = true
+	} = props
 	const { Option } = Select
 
 	const checkOnChangeSelect = (value) => {
@@ -16,11 +32,12 @@ const SelectField = (props: IFormSelectField) => {
 				mode={mode}
 				className={`primary-input ${className}`}
 				showSearch
-				allowClear
+				allowClear={allowClear}
 				loading={isLoading}
 				style={style}
 				placeholder={placeholder}
 				optionFilterProp="children"
+				suffixIcon={suffix}
 				disabled={disabled}
 				onChange={(value) => {
 					checkOnChangeSelect(value)

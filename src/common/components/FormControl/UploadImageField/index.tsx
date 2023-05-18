@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { UploadFileApi } from '~/api/common/upload-image'
 import { ShowNoti } from '~/common/utils'
 import { PlusOutlined } from '@ant-design/icons'
+import { IUploadImageField } from '../form-control'
 
 const UploadImageField = (props: IUploadImageField) => {
 	const { style, label, name, isRequired, className, disabled, rules, multiple, form, setIsLoadingImage } = props

@@ -1,5 +1,6 @@
 import { Form, Input } from 'antd'
 import React from 'react'
+import { IFormInputText } from '../form-control'
 
 const InputPassText = (props: IFormInputText) => {
 	const { style, label, isRequired, className, allowClear, placeholder, disabled, name, rules } = props

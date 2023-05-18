@@ -1,3 +1,4 @@
+import React from 'react'
 type IFormInputText = {
 	style?: object
 	label: string | element
@@ -11,6 +12,7 @@ type IFormInputText = {
 	defaultValue?: string
 	onChange?: any
 	value?: any
+	suffix?: element
 }
 
 type IUploadImageField = {
@@ -59,6 +61,9 @@ type IFormSelectField = {
 	onScroll?: function
 	optionList: ISelectOptionList[]
 	title?: string[] | string
+	suffix?: element
+	allowClear?:boolean
+
 }
 
 type ISelectOptionList = {
@@ -98,7 +103,7 @@ type IUploadFileField = {
 
 type ITextBoxField = {
 	style?: object
-	label?: string
+	label?: string | element
 	name?: string
 	rows?: number
 	isRequired?: boolean
@@ -109,10 +114,11 @@ type ITextBoxField = {
 	rules?: array
 	maxLength?: number
 	onChange?: Function
+	autoSize?:boolean
 }
 
 type IDatePickerField = {
-	label: string
+	label: string |element
 	name: string
 	mode: 'range' | 'single'
 	placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
@@ -120,6 +126,8 @@ type IDatePickerField = {
 	picker?: 'date' | 'showTime' | 'date' | 'week' | 'month' | 'quarter' | 'year'
 	isRequired?: boolean
 	className?: string
+	classNamePicker?: string
+
 	placeholderRange?: [string, string]
 	placeholder?: string
 	disabled?: boolean
@@ -129,4 +137,5 @@ type IDatePickerField = {
 	form?: any
 	showTime?: any
 	onChange?: FC
+	suffix?: element
 }

@@ -58,6 +58,15 @@ export const userInformationApi = {
 	},
 	checkExistUserName(data: any) {
 		return instance.post('/api/check-exist-username', data)
+	},
+
+	// profile template
+	getAllProfileTemplate(Id: string | number) {
+		return instance.get<IApiResultData<IUserProfileTemplateItem[]>>(url + '/profile/' + Id)
+	},
+
+	updateProfileTemplateItem(params: IUpdateUserProfileTemplate) {
+		return instance.put<IApiResultData<IUserProfileTemplateItem>>(url + '/profile/', params)
 	}
 }
 

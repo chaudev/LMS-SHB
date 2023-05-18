@@ -23,13 +23,14 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 	const [studentDetail, setStudentDetail] = useState<IUserResponse>()
 	const [isVisibleModal, setIsVisibleModal] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
-	const router = useRouter()
+ 	const router = useRouter()
 	const [form] = Form.useForm()
 	const userInformation = useSelector((state: RootState) => state.user.information)
 
 	const getStudentDetail = async () => {
 		try {
 			const res = await userInformationApi.getByID(router.query.StudentID)
+
 			if (res.status === 200) {
 				setStudentDetail(res.data.data)
 			}
@@ -46,13 +47,13 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '1',
 						label: `Chi tiết`,
-						children: <TabStudentDetail StudentDetail={studentDetail} />
+						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
 					},
-					{
-						key: '2',
-						label: `Hợp đồng`,
-						children: <TabStudentContract StudentDetail={studentDetail} />
-					},
+					// {
+					// 	key: '2',
+					// 	label: `Hợp đồng`,
+					// 	children: <TabStudentContract StudentDetail={studentDetail} />
+					// },
 					{
 						key: '3',
 						label: `Lộ trình`,
@@ -73,13 +74,13 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '1',
 						label: `Chi tiết`,
-						children: <TabStudentDetail StudentDetail={studentDetail} />
+						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
 					},
-					{
-						key: '2',
-						label: `Hợp đồng`,
-						children: <TabStudentContract StudentDetail={studentDetail} />
-					},
+					// {
+					// 	key: '2',
+					// 	label: `Hợp đồng`,
+					// 	children: <TabStudentContract StudentDetail={studentDetail} />
+					// },
 					{
 						key: '3',
 						label: `Lớp học`,
@@ -95,11 +96,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						label: `Thanh toán`,
 						children: <TabBill StudentDetail={studentDetail} />
 					},
-					{
-						key: '6',
-						label: `Mã khuyến mãi`,
-						children: <TabDiscountHistory StudentDetail={studentDetail} />
-					},
+					// {
+					// 	key: '6',
+					// 	label: `Mã khuyến mãi`,
+					// 	children: <TabDiscountHistory StudentDetail={studentDetail} />
+					// },
 					{
 						key: '7',
 						label: `Kiểm tra đầu vào`,
@@ -108,11 +109,6 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '8',
 						label: `Lịch sử học`,
-						children: <TabClassListHistory StudentDetail={studentDetail} />
-					},
-					{
-						key: '9',
-						label: `Hồ sơ`,
 						children: <TabClassListHistory StudentDetail={studentDetail} />
 					}
 			  ]

@@ -1,8 +1,7 @@
-import { Card, Divider, Form } from 'antd'
+import { Divider, Form } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useRef, useState } from 'react'
 import { areaApi, districtApi, wardApi } from '~/api/area'
 import { branchApi } from '~/api/branch'
 import { learningNeedApi } from '~/api/learning-needs'
@@ -10,26 +9,48 @@ import { purposeApi } from '~/api/purpose'
 import { sourceApi } from '~/api/source'
 import { userInformationApi } from '~/api/user'
 import { ShowNoti } from '~/common/utils'
-import { RootState } from '~/store'
 import DatePickerField from '../FormControl/DatePickerField'
 import InputTextField from '../FormControl/InputTextField'
 import SelectField from '../FormControl/SelectField'
 import TextBoxField from '../FormControl/TextBoxField'
-import PrimaryButton from '../Primary/Button'
+
+import IconButonUpdateUser from './UserProfileTemplate/IconButonUpdateUser'
+import UserProfileTemplate from './UserProfileTemplate'
 
 export interface ITabStudentDetailProps {
 	StudentDetail: IUserResponse
+	setStudentDetail?: any
 }
 
 export default function TabStudentDetail(props: ITabStudentDetailProps) {
-	const { StudentDetail } = props
+	const { StudentDetail, setStudentDetail } = props
+	const router = useRouter()
+
 	const [optionList, setOptionList] = useState({ branch: [], purpose: [], area: [], source: [], learningNeed: [], sale: [] })
 	const [district, setDistrict] = useState([])
 	const [ward, setWard] = useState([])
-	const [isLoading, setIsLoading] = useState(false)
+	const [init, setInit] = useState(true)
+
+	const [isLoading, setIsLoading] = useState<string>('')
 	const [form] = Form.useForm()
-	const userInformation = useSelector((state: RootState) => state.user.information)
-	const router = useRouter()
+	const FullName = Form.useWatch('FullName', form)
+	const UserName = Form.useWatch('UserName', form)
+	const Email = Form.useWatch('Email', form)
+	const Gender = Form.useWatch('Gender', form)
+	const StatusId = Form.useWatch('StatusId', form)
+	const Extension = Form.useWatch('Extension', form)
+	const BranchIds = Form.useWatch('BranchIds', form)
+	const AreaId = Form.useWatch('AreaId', form)
+	const DistrictId = Form.useWatch('DistrictId', form)
+	const WardId = Form.useWatch('WardId', form)
+	const DOB = Form.useWatch('DOB', form)
+	const Address = Form.useWatch('Address', form)
+	const LearningNeedId = Form.useWatch('LearningNeedId', form)
+	const SourceId = Form.useWatch('SourceId', form)
+	const SaleId = Form.useWatch('SaleId', form)
+	const PurposeId = Form.useWatch('PurposeId', form)
+
+	const ref = useRef(null)
 
 	const getDistrict = async (areaID) => {
 		try {
@@ -113,22 +134,26 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 
 	useEffect(() => {
 		if (StudentDetail) {
-			form.setFieldsValue({
-				...StudentDetail,
-				BranchIds: Number(StudentDetail.BranchIds),
-				DOB: StudentDetail?.DOB ? moment(StudentDetail?.DOB) : null
-			})
-			if (StudentDetail.AreaId) {
-				getDistrict(StudentDetail.AreaId)
-			}
-			if (StudentDetail.DistrictId) {
-				getWard(StudentDetail.DistrictId)
+			if (!init) {
+				form.setFieldsValue(ref.current.getFieldsValue())
+			} else {
+				form.setFieldsValue({
+					...StudentDetail,
+					BranchIds: Number(StudentDetail.BranchIds),
+					DOB: StudentDetail?.DOB ? moment(StudentDetail?.DOB) : null
+				})
+				if (StudentDetail.AreaId) {
+					getDistrict(StudentDetail.AreaId)
+				}
+				if (StudentDetail.DistrictId) {
+					getWard(StudentDetail.DistrictId)
+				}
+				setInit(false)
 			}
 		}
 	}, [StudentDetail])
 
 	const _onSubmit = async (data) => {
-		setIsLoading(true)
 		try {
 			let res = await userInformationApi.update({
 				...data,
@@ -139,147 +164,334 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				ShowNoti('success', res.data.message)
 			}
 		} catch (error) {
-			setIsLoading(false)
 			ShowNoti('error', error.message)
 		} finally {
-			setIsLoading(false)
+		}
+	}
+
+	const updateUserInfo = async (key, value) => {
+		try {
+			setIsLoading(key)
+			const payload = { ...StudentDetail, [key]: value }
+			let res = await userInformationApi.update(payload)
+			if (res.status == 200) {
+				setStudentDetail(payload)
+				ShowNoti('success', res.data.message)
+			}
+			setIsLoading('')
+		} catch (error) {
+			ShowNoti('error', error.message)
+			setIsLoading('')
 		}
 	}
 
 	return (
 		<div>
-			<Card title="Thông tin cá nhân">
-				<Form form={form} layout="vertical" onFinish={_onSubmit}>
-					<div className="row">
-						<div className="col-md-6 col-12">
-							<InputTextField name="FullName" label="Họ tên" />
-						</div>
-						<div className="col-md-6 col-12">
-							<InputTextField name="UserName" label="Tên đăng nhập" />
-						</div>
-						<div className="col-md-6 col-12">
-							<InputTextField name="Mobile" label="Số điện thoại" />
-						</div>
-						<div className="col-md-6 col-12">
-							<InputTextField name="Email" label="Email" />
-						</div>
-						<div className="col-md-6 col-12">
+			<Divider>
+				<h2 className="py-4 font-[600] text-center">Thông tin cá nhân</h2>
+			</Divider>
+			<Form
+				ref={ref}
+				layout={window.innerWidth < 640 ? 'vertical' : 'horizontal'}
+				form={form}
+				labelAlign="left"
+				labelWrap={true}
+				onFinish={_onSubmit}
+				labelCol={{ span: 5 }}
+			>
+				<div className="d-flex justify-between items-center">
+					<InputTextField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						name="FullName"
+						placeholder="Nhập họ và tên"
+						label={labelUser.FullName}
+					/>
+					<IconButonUpdateUser
+						isShow={FullName !== StudentDetail.FullName}
+						onClick={() => updateUserInfo('FullName', FullName)}
+						loading={isLoading === 'FullName'}
+					/>
+				</div>
+				<Divider />
+				<div className="d-flex justify-between items-center">
+					<InputTextField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						name="UserName"
+						placeholder="Nhập tên đăng nhập"
+						label={labelUser.UserName}
+					/>
+					<IconButonUpdateUser
+						isShow={UserName !== StudentDetail.UserName}
+						onClick={() => updateUserInfo('UserName', UserName)}
+						loading={isLoading === 'UserName'}
+					/>
+				</div>
+				<Divider />
+				<div className="d-flex justify-between items-center">
+					<InputTextField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						name="Email"
+						placeholder="Nhập email"
+						label={labelUser.Email}
+					/>
+					<IconButonUpdateUser
+						isShow={Email !== StudentDetail.Email}
+						onClick={() => updateUserInfo('Email', Email)}
+						loading={isLoading === 'Email'}
+					/>
+				</div>
+				<Divider />
+				<div className="d-flex justify-between items-center">
+					<SelectField
+						name="Gender"
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						label={labelUser.Gender}
+						allowClear={false}
+						placeholder="Chọn giới tính"
+						optionList={[
+							{ value: 0, title: 'Khác' },
+							{ value: 1, title: 'Nam' },
+							{ value: 2, title: 'Nữ' }
+						]}
+					/>
+					<IconButonUpdateUser
+						isShow={Gender != StudentDetail.Gender}
+						onClick={() => updateUserInfo('Gender', Gender)}
+						loading={isLoading === 'Gender'}
+					/>
+				</div>
+				<Divider />
+				<div className="d-flex justify-between items-center">
+					<DatePickerField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						classNamePicker="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						label={labelUser.DOB}
+						name="DOB"
+						mode="single"
+						format="DD/MM/YYYY"
+						allowClear={false}
+						placeholder="Nhập ngày sinh"
+					/>
+					<IconButonUpdateUser
+						isShow={moment(DOB).format('yyy/mm/dd') !== moment(StudentDetail.DOB).format('yyy/mm/dd')}
+						onClick={() => updateUserInfo('DOB', new Date(DOB))}
+						loading={isLoading === 'DOB'}
+					/>
+				</div>
+				<Divider />
+				<div className="d-flex justify-between items-center">
+					<SelectField
+						name="StatusId"
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						label={labelUser.Status}
+						optionList={[
+							{
+								value: 0,
+								title: 'Hoạt động'
+							},
+							{
+								value: 1,
+								title: 'Khóa'
+							}
+						]}
+						allowClear={false}
+						placeholder="Chọn trạng thái hoạt động"
+					/>
+					<IconButonUpdateUser
+						isShow={StatusId !== StudentDetail.StatusId}
+						onClick={() => updateUserInfo('StatusId', StatusId)}
+						loading={isLoading === 'StatusId'}
+					/>
+				</div>
+				<Divider></Divider>
+				<div className="d-flex w-full justify-between items-start">
+					<TextBoxField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						name="Extension"
+						placeholder="Nhập giới thiệu thêm về bản thân"
+						autoSize={true}
+						label={labelUser.Extension}
+					/>
+
+					<IconButonUpdateUser
+						isShow={Extension !== StudentDetail.Extension}
+						onClick={() => updateUserInfo('Extension', Extension)}
+						loading={isLoading === 'Extension'}
+					/>
+				</div>
+				<Divider></Divider>
+				<div className="d-flex w-full justify-between items-start">
+					<SelectField
+						className="border-none min-w-xs w-full items-center m-0 hover:border-none focus:border-none"
+						name="BranchIds"
+						label={labelUser.Branch}
+						placeholder="Chọn trung tâm"
+						optionList={optionList.branch}
+					/>
+					<IconButonUpdateUser
+						isShow={BranchIds != StudentDetail.BranchIds}
+						onClick={() => updateUserInfo('BranchIds', BranchIds)}
+						loading={isLoading === 'BranchIds'}
+					/>
+				</div>
+				<Divider />
+				<div className="d-flex w-full justify-between items-start">
+					<InputTextField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						name="Address"
+						placeholder="Nhập địa chỉ"
+						label={labelUser.Address}
+					/>
+					<IconButonUpdateUser
+						isShow={Address !== StudentDetail.Address}
+						onClick={() => updateUserInfo('Address', Address)}
+						loading={isLoading === 'Address'}
+					/>
+				</div>
+				<Divider />
+				<div className="d-flex w-full justify-between items-start">
+					<SelectField
+						name="AreaId"
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						label={labelUser.Area}
+						placeholder="Chọn tỉnh / thành phố"
+						optionList={optionList.area}
+						onChangeSelect={(data) => {
+							getDistrict(data)
+						}}
+					/>
+					<IconButonUpdateUser
+						isShow={AreaId !== StudentDetail.AreaId}
+						onClick={() => updateUserInfo('AreaId', AreaId)}
+						loading={isLoading === 'AreaId'}
+					/>
+				</div>
+				<Divider />
+				<div className="d-flex w-full justify-between items-start">
+					<SelectField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						disabled={district.length > 0 ? false : true}
+						name="DistrictId"
+						label={labelUser.District}
+						placeholder="Chọn quận / huyện"
+						optionList={district}
+						onChangeSelect={(data) => {
+							getWard(data)
+						}}
+					/>
+					<IconButonUpdateUser
+						isShow={DistrictId !== StudentDetail.DistrictId}
+						onClick={() => updateUserInfo('DistrictId', DistrictId)}
+						loading={isLoading === 'DistrictId'}
+					/>
+				</div>
+
+				<Divider />
+				<div className="d-flex w-full justify-between items-start">
+					<SelectField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						disabled={ward.length > 0 ? false : true}
+						placeholder="Chọn phường/xã"
+						label={labelUser.Ward}
+						name="WardId"
+						optionList={ward}
+					/>
+
+					<IconButonUpdateUser
+						isShow={WardId !== StudentDetail.WardId}
+						onClick={() => updateUserInfo('WardId', WardId)}
+						loading={isLoading === 'WardId'}
+					/>
+				</div>
+
+				{router.query.StudentID && (
+					<>
+						<Divider>
+							<h2 className="py-4 font-[600] text-center">Thông tin học</h2>
+						</Divider>
+						<div className="d-flex justify-between items-center">
 							<SelectField
-								name="Gender"
-								label="Giới tính"
-								optionList={[
-									{ value: 0, title: 'Khác' },
-									{ value: 1, title: 'Nam' },
-									{ value: 2, title: 'Nữ' }
-								]}
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								name="LearningNeedId"
+								label="Nhu cầu học"
+								placeholder="Chọn nhu cầu học"
+								optionList={optionList.learningNeed}
+							/>
+							<IconButonUpdateUser
+								isShow={LearningNeedId !== StudentDetail.LearningNeedId}
+								onClick={() => updateUserInfo('LearningNeedId', LearningNeedId)}
+								loading={isLoading === 'LearningNeedId'}
 							/>
 						</div>
-						<div className="col-md-6 col-12">
-							<DatePickerField label="Ngày sinh" name="DOB" mode="single" format="DD/MM/YYYY" allowClear={true} />
-						</div>
-
-						<div className="col-md-6 col-12">
+						<Divider></Divider>
+						<div className="d-flex justify-between items-center">
 							<SelectField
-								name="StatusId"
-								label="Trạng thái hoạt động"
-								optionList={[
-									{
-										value: 0,
-										title: 'Hoạt động'
-									},
-									{
-										value: 1,
-										title: 'Khóa'
-									}
-								]}
-								placeholder="Chọn trạng thái hoạt động"
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								name="SourceId"
+								label="Nguồn khách hàng"
+								placeholder="Chọn nguồn khách hàng"
+								optionList={optionList.source}
+							/>
+							<IconButonUpdateUser
+								isShow={SourceId !== StudentDetail.SourceId}
+								onClick={() => updateUserInfo('SourceId', SourceId)}
+								loading={isLoading === 'SourceId'}
 							/>
 						</div>
-						<div className="col-md-6 col-12">
-							<TextBoxField name="Extension" label="Giới thiệu thêm" />
-						</div>
-						<Divider>Địa chỉ</Divider>
-
-						<div className="col-12">
-							<SelectField name="BranchIds" label="Trung tâm" optionList={optionList.branch} onChangeSelect={(data) => {}} />
-						</div>
-
-						<div className="col-md-6 col-12">
-							<InputTextField name="Address" label="Địa chỉ" />
-						</div>
-
-						<div className="col-md-6 col-12">
+						<Divider></Divider>
+						<div className="d-flex justify-between items-center">
 							<SelectField
-								name="AreaId"
-								label="Tỉnh/thành phố"
-								placeholder="Chọn tỉnh/thành phố"
-								optionList={optionList.area}
-								onChangeSelect={(data) => {
-									getDistrict(data)
-								}}
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								name="SaleId"
+								label="Tư vấn viên"
+								placeholder="Chọn tư vấn viên"
+								optionList={optionList.sale}
+							/>
+							<IconButonUpdateUser
+								isShow={SaleId !== StudentDetail.SaleId}
+								onClick={() => updateUserInfo('SaleId', SaleId)}
+								loading={isLoading === 'SaleId'}
 							/>
 						</div>
-
-						<div className="col-md-6 col-12">
+						<Divider></Divider>
+						<div className="d-flex justify-between items-center">
 							<SelectField
-								disabled={district.length > 0 ? false : true}
-								name="DistrictId"
-								label="Quận/huyện"
-								placeholder="Chọn quận/huyện"
-								optionList={district}
-								onChangeSelect={(data) => {
-									getWard(data)
-								}}
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								name="PurposeId"
+								label="Mục đích học"
+								placeholder="Chọn mục đích học"
+								optionList={optionList.purpose}
+							/>
+							<IconButonUpdateUser
+								isShow={PurposeId !== StudentDetail.PurposeId}
+								onClick={() => updateUserInfo('PurposeId', PurposeId)}
+								loading={isLoading === 'PurposeId'}
 							/>
 						</div>
-
-						<div className="col-md-6 col-12">
-							<SelectField
-								disabled={ward.length > 0 ? false : true}
-								placeholder="Chọn phường/xã"
-								name="WardId"
-								label="Phường/xã"
-								optionList={ward}
-							/>
-						</div>
-
-						{router.query.StudentID && (
-							<>
-								<Divider>Thông tin học</Divider>
-
-								<div className="col-md-6 col-12">
-									<SelectField name="LearningNeedId" label="Nhu cầu học" optionList={optionList.learningNeed} />
-								</div>
-
-								<div className="col-md-6 col-12">
-									<SelectField name="SourceId" label="Nguồn khách hàng" optionList={optionList.source} />
-								</div>
-
-								<div className="col-md-6 col-12">
-									<SelectField name="SaleId" label="Tư vấn viên" optionList={optionList.sale} />
-								</div>
-
-								<div className="col-md-6 col-12">
-									<SelectField name="PurposeId" label="Mục đích học" optionList={optionList.purpose} />
-								</div>
-							</>
-						)}
-					</div>
-
-					<div className="row mt-3">
-						<div className="col-12 flex justify-end">
-							<PrimaryButton
-								background="blue"
-								type="submit"
-								loading={isLoading}
-								children={<span>Lưu</span>}
-								icon="save"
-								onClick={() => {}}
-							/>
-						</div>
-					</div>
-				</Form>
-			</Card>
+					</>
+				)}
+				{router.query.StudentID && <UserProfileTemplate />}
+			</Form>
 		</div>
 	)
+}
+
+const labelUser = {
+	FullName: 'Họ tên',
+	UserName: 'Tên đăng nhập',
+	DOB: 'Ngày sinh',
+	Gender: 'Giới tính',
+	Mobile: 'Số điện thoại',
+	Email: 'Email',
+	Address: 'Địa chỉ',
+	Status: 'Trạng thái hoạt động',
+	Area: 'Tỉnh/thành phố',
+	District: 'Quận/huyện',
+	Ward: 'Phường/xã',
+	Extension: 'Giới thiệu thêm',
+	Branch: 'Trung tâm',
+	LearningNeed: 'Nhu cầu học',
+	Source: 'Nguồn khách hàng',
+	Sale: 'Tư vấn viên',
+	Purpose: 'Mục đích học'
 }
