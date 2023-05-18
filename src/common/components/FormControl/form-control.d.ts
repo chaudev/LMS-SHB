@@ -13,6 +13,7 @@ type IFormInputText = {
 	onChange?: any
 	value?: any
 	suffix?: element
+	hidden?:boolean
 }
 
 type IUploadImageField = {

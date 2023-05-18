@@ -1,6 +1,6 @@
 import { Form, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { majorsApi } from '~/api/majors'
+import { majorsApi } from '~/api/majors/majors'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import TextBoxField from '~/common/components/FormControl/TextBoxField'
 import UploadImageField from '~/common/components/FormControl/UploadImageField'

@@ -1,6 +1,6 @@
 import { AiFillSetting } from 'react-icons/ai'
 import { BsFillGridFill } from 'react-icons/bs'
-import { FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { FaMediumM, FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { RiFileList2Fill } from 'react-icons/ri'
 import { TiHome } from 'react-icons/ti'
@@ -22,10 +22,16 @@ export const AdminMenu = [
 		Icon: <FaUserGraduate size={20} />
 	},
 	{
+		Key: 'majors',
+		TabName: 'Ngành học',
+		Icon: <FaMediumM size={20} />
+	},
+	{
 		Key: 'staff',
 		TabName: 'Nhân viên',
 		Icon: <FaUserTie size={20} />
 	},
+
 	{
 		Key: 'finance',
 		TabName: 'Tài chính',
@@ -329,6 +335,22 @@ export const AdminChildMenu = [
 			}
 		]
 	},
+	
+	{
+		MenuName: 'Chuyên ngành',
+		MenuTitle: 'Chuyên ngành',
+		Parent: 'majors',
+		MenuKey: '/majors',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/majors/registration',
+				Route: '/majors/registration',
+				Text: 'Đăng ký chuyên ngành',
+				Icon: ''
+			}
+		]
+	},
 	{
 		MenuName: 'Khóa học',
 		MenuTitle: 'Khóa học video',
@@ -532,7 +554,7 @@ export const AdminChildMenu = [
 						Route: '/options/gift',
 						Text: 'Quà tặng',
 						Icon: ''
-					},
+					}
 					// {
 					// 	ItemType: 'single',
 					// 	Key: '/options/payment-type',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { majorsApi } from '~/api/majors'
+import { majorsApi } from '~/api/majors/majors'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ModalMajorsCRUD } from './ModalMajorsCRUD'
