@@ -88,9 +88,9 @@ const UpdateClassForm = (props) => {
 						<div className="col-md-6 col-12">
 							<InputTextField name="Name" label="Tên lớp" />
 						</div>
-						<div className="col-md-6 col-12">
+						{/* <div className="col-md-6 col-12">
 							<InputNumberField name="Price" label="Giá lớp học" />
-						</div>
+						</div> */}
 						<div className="col-md-6 col-12">
 							<InputNumberField name="MaxQuantity" label="Số lượng học viên tối đa" />
 						</div>

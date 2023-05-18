@@ -91,8 +91,8 @@ const CreateClassForm = (props) => {
 		TeacherId: yup.string().required('Bạn không được để trống'),
 		CurriculumId: yup.string().required('Bạn không được để trống'),
 		StartDay: yup.string().required('Bạn không được để trống'),
-		TeachingFee: yup.string().required('Bạn không được để trống'),
-		Price: yup.string().required('Bạn không được để trống')
+		TeachingFee: yup.string().required('Bạn không được để trống')
+		// Price: yup.string().required('Bạn không được để trống')
 	})
 	const yupSync = {
 		async validator({ field }, value) {
@@ -287,9 +287,9 @@ const CreateClassForm = (props) => {
 			const findProgramByID = programs.find((item) => {
 				return item.Id === value
 			})
-			if (!!findProgramByID) {
-				form.setFieldsValue({ Price: findProgramByID.Price })
-			}
+			// if (!!findProgramByID) {
+			// 	form.setFieldsValue({ Price: findProgramByID.Price })
+			// }
 			getAllCurriculumByProgram(value)
 		}
 		if (name === 'BranchId') {
@@ -342,7 +342,7 @@ const CreateClassForm = (props) => {
 			Name: data.Name,
 			Thumbnail: data.Thumbnail,
 			GradeId: data.GradeId,
-			Price: removeCommas(data.Price),
+			// Price: removeCommas(data.Price),
 			AcademicId: isAcademic() ? Number(user.UserInformationId) : data.AcademicId,
 			AcademicName: getAcademicNameById?.title,
 			TeachingFee: removeCommas(data.TeachingFee),
@@ -554,7 +554,7 @@ const CreateClassForm = (props) => {
 						<div className="col-md-6 col-12">
 							<DatePickerField isRequired rules={[yupSync]} mode="single" label="Ngày mở lớp" name="StartDay" />
 						</div>
-						<div className="col-md-6 col-12">
+						{/* <div className="col-md-6 col-12">
 							<InputNumberField
 								isRequired
 								rules={[yupSync]}
@@ -563,7 +563,7 @@ const CreateClassForm = (props) => {
 								label="Giá lớp học"
 								name="Price"
 							/>
-						</div>
+						</div> */}
 						<div className="col-md-6 col-12">
 							<InputNumberField
 								placeholder="Nhập số lượng học viên tối đa (mặc định 20)"

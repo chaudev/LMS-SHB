@@ -298,7 +298,7 @@ const ListClass = () => {
 									todoApi={todoApi}
 									getAllClass={getAllClass}
 								/> */}
-								<div className="custom-pagination">
+								<div className="custom-pagination my-4">
 									<Pagination
 										size="small"
 										current={current}
