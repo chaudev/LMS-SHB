@@ -2,7 +2,7 @@ import React from 'react'
 type IFormInputText = {
 	style?: object
 	label: string | element
-	name: string
+	name: string |[number,string]
 	isRequired?: boolean
 	className?: string
 	allowClear?: boolean
@@ -47,7 +47,7 @@ type IFormInputNumber = {
 
 type IFormSelectField = {
 	style?: object
-	name: string
+	name: string | [number,string]
 	label: string | element
 	isRequired?: boolean
 	className?: string
@@ -59,7 +59,7 @@ type IFormSelectField = {
 	onChangeSelect?: function
 	onSearch?: function
 	onScroll?: function
-	optionList: ISelectOptionList[]
+	optionList: ISelectOptionList[] | []
 	title?: string[] | string
 	suffix?: element
 	allowClear?:boolean
@@ -69,6 +69,7 @@ type IFormSelectField = {
 type ISelectOptionList = {
 	title: string
 	value: any
+	disabled?:boolean
 }
 
 type IEditorField = {

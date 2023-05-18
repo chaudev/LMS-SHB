@@ -17,5 +17,11 @@ export const paymentTypeApi = {
 	},
 	deletePaymentType(id) {
 		return instance.delete<IApiResultCreate<{ message: string }>>(URl + '/' + id)
+	},
+	getAllPaymentTypeDetail(id) {
+		return instance.get<IApiResultData<IPaymentTypeDetail[]>>(URl + '/detail/' + id)
+	},
+	updatePaymentTypeDetail(params) {
+		return instance.put<IApiResultCreate<IPaymentTypeDetail>>(URl + '/detail/', params)
 	}
 }

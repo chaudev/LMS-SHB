@@ -45,7 +45,7 @@ const SelectField = (props: IFormSelectField) => {
 			>
 				{optionList &&
 					optionList.map((o, idx) => (
-						<Option disabled={disabled} key={idx} value={o.value}>
+						<Option disabled={disabled || o.disabled} key={idx} value={o.value}>
 							{o.title}
 						</Option>
 					))}

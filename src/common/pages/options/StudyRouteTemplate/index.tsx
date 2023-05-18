@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit'
-import { Form, Input, Modal } from 'antd'
+import { Form, Input, Modal, Popconfirm } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { studyRouteTemplateApi } from '~/api/option/study-route-template'
@@ -70,6 +70,24 @@ const StudyRouteTemplatePage = () => {
 			render: (data, item) => {
 				return (
 					<div className="d-fex gap-3">
+						<Popconfirm
+							title={
+								<p>
+									Xóa Lộ trình <span className="font-[500] text-[red]">{item.Name}</span>
+								</p>
+							}
+							okText="Xóa"
+							cancelText="Hủy"
+							onConfirm={() => deleteStudyRouteTemplate(item)}
+						>
+							<IconButton
+								loading={loading === `DELETE_${item.Id}`}
+								tooltip="Xóa lộ trình"
+								type="button"
+								icon="remove"
+								color="red"
+							></IconButton>
+						</Popconfirm>
 						<IconButton
 							onClick={() => {
 								router.push({ pathname: '/options/study-route-template/detail', query: { slug: item.Id, key: nanoid(), name: item.Name } })
@@ -89,14 +107,15 @@ const StudyRouteTemplatePage = () => {
 							icon="edit"
 							color="green"
 						></IconButton>
-						<IconButton
+
+						{/* <IconButton
 							onClick={() => deleteStudyRouteTemplate(item)}
 							loading={loading === `DELETE_${item.Id}`}
 							tooltip="Xóa lộ trình"
 							type="button"
 							icon="remove"
 							color="red"
-						></IconButton>
+						></IconButton> */}
 					</div>
 				)
 			}

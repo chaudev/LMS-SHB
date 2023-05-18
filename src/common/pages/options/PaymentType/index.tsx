@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit'
-import { Form, Input, Modal } from 'antd'
+import { Form, Input, Modal, Popconfirm } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { paymentTypeApi } from '~/api/option/payment-type'
@@ -31,7 +31,6 @@ const PaymentTypePage = () => {
 		try {
 			setLoading('GET_ALL')
 			const res = await paymentTypeApi.getAllPaymentType(apiParameters)
-			console.log(res)
 
 			if (res.status === 200) {
 				setPaymentType(res.data.data)
@@ -79,15 +78,25 @@ const PaymentTypePage = () => {
 			render: (data, item) => {
 				return (
 					<div className="d-fex gap-3">
-						<IconButton
-							onClick={() => {
-								router.push({ pathname: '/options/payment-type/detail', query: { slug: item.Id, key: nanoid(), name: item.Name } })
-							}}
-							tooltip="Xem chi tiết hình thức thanh toán"
-							type="button"
-							icon="eye"
-							color="yellow"
-						></IconButton>
+						<Popconfirm
+							title={
+								<p>
+									Xóa hình thức thanh toán <span className="font-[500] text-[red]">{item.Name}</span>
+								</p>
+							}
+							okText="Xóa"
+							cancelText="Hủy"
+							onConfirm={() => deletePaymentTypeItem(item)}
+						>
+							<IconButton
+								loading={loading === `DELETE_${item.Id}`}
+								tooltip="Xóa hình thức thanh toán"
+								type="button"
+								icon="remove"
+								color="red"
+							></IconButton>
+						</Popconfirm>
+
 						<IconButton
 							onClick={() => {
 								setPaymentTypeItem(item)
@@ -99,12 +108,13 @@ const PaymentTypePage = () => {
 							color="green"
 						></IconButton>
 						<IconButton
-							onClick={() => deleteStudyRouteTemplate(item)}
-							loading={loading === `DELETE_${item.Id}`}
-							tooltip="Xóa hình thức thanh toán"
+							onClick={() => {
+								router.push({ pathname: '/options/payment-type/detail', query: { slug: item.Id, key: nanoid(), name: item.Name } })
+							}}
+							tooltip="Xem chi tiết hình thức thanh toán"
 							type="button"
-							icon="remove"
-							color="red"
+							icon="eye"
+							color="yellow"
 						></IconButton>
 					</div>
 				)
@@ -112,7 +122,7 @@ const PaymentTypePage = () => {
 		}
 	]
 
-	const deleteStudyRouteTemplate = async (item) => {
+	const deletePaymentTypeItem = async (item) => {
 		try {
 			setLoading(`DELETE_${item.Id}`)
 			const response = await paymentTypeApi.deletePaymentType(item.Id)
@@ -129,10 +139,8 @@ const PaymentTypePage = () => {
 
 	const _onFinish = async (params) => {
 		try {
-			console.log('params', params)
-
 			if (isShow === 'CREATE') {
-				const response = await studyRouteTemplateApi.createStudyRouteTemplate(params)
+				const response = await paymentTypeApi.createPaymentType(params)
 				if (response.status === 200) {
 					ShowNostis.success(response.data.message)
 					await getAllPaymentType()
@@ -144,7 +152,7 @@ const PaymentTypePage = () => {
 					Id: paymentTypeItem.Id,
 					Name: params.Name
 				}
-				const response = await studyRouteTemplateApi.updateStudyRouteTemplate(payload)
+				const response = await paymentTypeApi.updatePaymentType(payload)
 				if (response.status === 200) {
 					ShowNostis.success(response.data.message)
 					await getAllPaymentType()
@@ -194,9 +202,7 @@ const PaymentTypePage = () => {
 			>
 				<Form form={form} layout="vertical" onFinish={_onFinish}>
 					<InputTextField name="Name" label="Tên hình thức thanh toán" />
-
-					<InputTextField name="Times" label="Số lần thanh toán" />
-
+					{isShow !== 'UPDATE' ? <InputTextField name="Times" label="Số lần thanh toán" /> : ''}
 					<div className="d-flex justify-center ">
 						<PrimaryButton type="submit" icon={isShow === 'UPDATE' ? 'save' : 'add'} background="primary">
 							{isShow == 'UPDATE' ? 'Cập nhật' : 'Thêm mới'}
