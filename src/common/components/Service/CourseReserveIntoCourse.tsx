@@ -201,7 +201,7 @@ const CourseReserveIntoCourse = React.memo((props: any) => {
 
 							<Spin spinning={isLoadingCourseDetail}>
 								<div className="row">
-									<div className="col-md-6 col-12">
+									{/* <div className="col-md-6 col-12">
 										<Form.Item label="Giá lớp học">
 											<Input
 												disabled={true}
@@ -210,7 +210,7 @@ const CourseReserveIntoCourse = React.memo((props: any) => {
 												value={courseAfterDetail != null ? Intl.NumberFormat('ja-JP').format(courseAfterDetail.Price) : ''}
 											/>
 										</Form.Item>
-									</div>
+									</div> */}
 
 									<div className="col-md-6 col-12">
 										<Form.Item label="Số tiền trả thêm">

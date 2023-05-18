@@ -292,13 +292,13 @@ export const AdminChildMenu = [
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
 			},
-			{
-				TypeItem: 'single',
-				Key: '/class/register',
-				Icon: '',
-				Route: '/class/register',
-				Text: 'Đăng ký học'
-			},
+			// {
+			// 	TypeItem: 'single',
+			// 	Key: '/class/register',
+			// 	Icon: '',
+			// 	Route: '/class/register',
+			// 	Text: 'Đăng ký học'
+			// },
 			{
 				TypeItem: 'single',
 				Key: '/class/tutoring-config',
@@ -516,6 +516,13 @@ export const AdminChildMenu = [
 						Key: '/options/gift',
 						Route: '/options/gift',
 						Text: 'Quà tặng',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/payment-type',
+						Route: '/options/payment-type',
+						Text: 'Hình thức đóng tiền',
 						Icon: ''
 					}
 				]

@@ -76,20 +76,7 @@ export const OfficePage = () => {
 				loading={loading}
 				total={totalItems}
 				onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
-				TitleCard={
-					<div className="flex-1">
-						<Input.Search
-							className="primary-search max-w-[250px]"
-							onChange={(event) => {
-								if (event.target.value == '') {
-									setTodoApi({ ...todoApi, pageIndex: 1, search: '' })
-								}
-							}}
-							onSearch={(event) => setTodoApi({ ...todoApi, pageIndex: 1, search: event })}
-							placeholder="Tìm kiếm"
-						/>
-					</div>
-				}
+				TitleCard={<h1 className="text-2xl font-medium">Danh sách văn phòng đại diện</h1>}
 				data={data}
 				columns={columns}
 				Extra={<ModalOfficeCRUD mode="add" onRefresh={() => getData(todoApi)} />}
