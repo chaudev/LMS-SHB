@@ -313,7 +313,7 @@ const MajorsRegistrationPage = () => {
 						<TextBoxField name="Note" label={'Ghi chú'} />
 
 						<div className="d-flex justify-center mt-3">
-							<PrimaryButton type="submit" icon="add" background="green">
+							<PrimaryButton type="submit" icon="add" loading={loading ==='CREATE'} background="green">
 								Đăng ký
 							</PrimaryButton>
 						</div>
