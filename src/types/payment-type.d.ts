@@ -7,6 +7,7 @@ type IPaymentType = {
 	CreatedBy: string
 	ModifiedOn: string
 	ModifiedBy: string
+	Fit: boolean
 }
 type IPaymentTypeDetail = {
 	PaymentTypeId: number
@@ -14,6 +15,8 @@ type IPaymentTypeDetail = {
 	Type: number
 	ValueId: number
 	Percent: number
+	TypeName: string
+	ValueName: string
 	Id: number
 	Enable: boolean
 	CreatedOn: string

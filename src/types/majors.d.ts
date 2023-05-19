@@ -11,4 +11,6 @@ type IMajorsRegistrationAvailble = {
 	StudentCode: string
 	Avatar: string
 	HasMajors: boolean
+	Email: string
+	Mobile: string
 }

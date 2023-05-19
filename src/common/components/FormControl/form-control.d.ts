@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 type IFormInputText = {
 	style?: object
 	label: string | element
@@ -44,6 +44,7 @@ type IFormInputNumber = {
 	max?: number
 	onChange?: any
 	loading?: boolean
+	hidden?:boolean
 }
 
 type IFormSelectField = {
@@ -61,10 +62,10 @@ type IFormSelectField = {
 	onSearch?: function
 	onScroll?: function
 	optionList: ISelectOptionList[] | []
-	title?: string[] | string
+	title?: string[] | string | ReactNode
 	suffix?: element
 	allowClear?:boolean
-
+	hidden?:boolean
 }
 
 type ISelectOptionList = {

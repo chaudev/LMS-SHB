@@ -1,105 +1,166 @@
-import { Card, Form } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Card, Form, Modal, Spin } from 'antd'
+import React, { useEffect, useMemo, useState } from 'react'
 import { giftApi } from '~/api/gift'
 import { majorsApi } from '~/api/majors/majors'
 import { majorsRegistrationApi } from '~/api/majors/registration'
 import { paymentTypeApi } from '~/api/option/payment-type'
+import InputNumberField from '~/common/components/FormControl/InputNumberField'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import SelectField from '~/common/components/FormControl/SelectField'
+import TextBoxField from '~/common/components/FormControl/TextBoxField'
+import PrimaryButton from '~/common/components/Primary/Button'
 import { ShowNostis } from '~/common/utils'
+import { removeCommas } from '~/common/utils/super-functions'
+import ModalViewPaymenTypeDetail from './ModalViewPaymenTypeDetail'
+import CardInfomation from './CardInfomation'
+import { ISelectOptionList } from '~/common/components/FormControl/form-control'
+import { optionPaymentType } from '~/common/constant/PaymentType'
+
+interface IListOption {
+	students: ISelectOptionList[]
+	majors: ISelectOptionList[]
+	gift: ISelectOptionList[]
+	payment: ISelectOptionList[]
+}
+interface IListData {
+	students: IMajorsRegistrationAvailble[]
+	majors: IMajors[]
+	gift: IGift[]
+	payment: IPaymentType[]
+}
 
 const MajorsRegistrationPage = () => {
 	const [form] = Form.useForm()
 	const StudentId = Form.useWatch('StudentId', form)
 	const MajorsId = Form.useWatch('MajorsId', form)
-	const MajorsOptions = Form.useWatch('MajorsOptions', form)
+	const PaymentTypeId = Form.useWatch('PaymentTypeId', form)
+	const TotalPrice = Form.useWatch('TotalPrice', form)
+	const Percent = Form.useWatch('Percent', form)
+	const Type = Form.useWatch('Type', form)
+	const initValue = {
+		students: [],
+		majors: [],
+		gift: [],
+		payment: []
+	}
 
-	const [studentAvaileblesOptions, setStudentAvaileblesOptions] = useState<{ title: string; value: number | string }[]>([])
-	const [studentAvailebles, setStudentAvailebles] = useState<IMajorsRegistrationAvailble[]>([])
-	const [majors, setMajors] = useState<IMajors[]>([])
-	const [grifOptions, setGrifOptions] = useState<{ title: string; value: number | string }[]>([])
+	const [modal, contextHolder] = Modal.useModal()
+
+	const [listOption, SetListOption] = useState<IListOption>(initValue)
+	const [listData, setListData] = useState<IListData>(initValue)
+
+	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL'>('')
+
+	const [paymentTypeDetail, setPaymentTypeDetail] = useState<IPaymentTypeDetail[]>([])
+
+	const formatOption = (data) => {
+		let templ = []
+
+		data.forEach((element) => {
+			templ.push({
+				title: element.Name,
+				value: element.Id
+			})
+		})
+		return templ
+	}
 
 	const initPage = async () => {
 		try {
-			const [students, majors, grif, paymentType] = await Promise.all([
+			setLoading('GET_ALL')
+			let templOption = { students: [], majors: [], gift: [], payment: [] }
+			let templData = { students: [], majors: [], gift: [], payment: [] }
+			const [students, majors, gift, paymentType] = await Promise.all([
 				majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
 				majorsApi.getAll({ pageSize: 9999, pageIndex: 1 }),
 				giftApi.getAll({ pageSize: 9999, pageIndex: 1 }),
 				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 })
 			])
-            console.log('paymentType====>',paymentType);
-            
-		} catch (error) {}
-	}
 
-	const getMajorsRegistrationStudentAvailable = async () => {
-		try {
-			const response = await majorsRegistrationApi.getAllMajorsRegistrationAvailble()
-			if (response.status === 200) {
-				const templ = []
-				response.data.data.map((item, index) => {
+			if (students.status === 200) {
+				let templ = []
+				students.data.data.map((item, index) => {
 					templ.push({
 						title: item.StudentName + ' - ' + item.StudentCode,
 						value: item.StudentId
 					})
 				})
-				setStudentAvaileblesOptions(templ)
-				setStudentAvailebles(response.data.data)
+				templOption.students = templ
+				templData.students = students.data.data
 			}
-		} catch (error) {}
-	}
+			if (majors.status === 200) {
+				let templ = formatOption(majors.data.data)
 
-	const getAllMajors = async () => {
-		try {
-			const response = await majorsApi.getAll({ pageSize: 9999, pageIndex: 1 })
-			if (response.status === 200) {
-				const templ = []
-				response.data.data.forEach((item, index) => {
-					templ.push({
-						title: item.Name,
-						value: item.Id
-					})
-				})
-
-				form.setFieldValue('MajorsOptions', templ)
-				setMajors(response.data.data)
+				templOption.majors = templ
+				templData.majors = majors.data.data
 			}
+			if (gift.status === 200) {
+				let templ = formatOption(gift.data.data)
+				templOption.gift = templ
+				templData.gift = gift.data.data
+			}
+			if (paymentType.status === 200) {
+				let templ = formatOption(paymentType.data.data)
+				templOption.payment = templ
+				templData.payment = paymentType.data.data
+			}
+
+			SetListOption(templOption)
+			setListData(templData)
+			setLoading('')
 		} catch (error) {
-			// ShowNostis.error(error.message)
+			setLoading('')
 		}
 	}
-	const getAllGrif = async () => {
+
+	const getPaymentTypeDetail = async () => {
 		try {
-			const response = await giftApi.getAll({ pageSize: 9999, pageIndex: 1 })
+			setLoading('PAYMENT_DETAIL')
+
+			const response = await paymentTypeApi.getAllPaymentTypeDetail(PaymentTypeId)
 			if (response.status === 200) {
-				const templ = []
-				response.data.data.forEach((item, index) => {
-					templ.push({
-						title: item.Name,
-						value: item.Id
-					})
-				})
-				setGrifOptions(templ)
+				let detail = response.data.data[0]
+				if (detail.Type == 1) {
+					const countTotal = (TotalPrice * detail.Percent) / 100
+					form.setFieldValue('countTotal', countTotal ? countTotal : 0)
+				} else {
+					form.setFieldValue('countTotal', '')
+				}
+				form.setFieldValue('Type', Number(detail.Type))
+				form.setFieldValue('Percent', detail.Percent)
 			}
+			setPaymentTypeDetail(response.data.data)
+			setLoading('')
 		} catch (error) {
-			// ShowNostis.error(error.message)
+			setLoading('')
 		}
 	}
 
 	useEffect(() => {
-		// getMajorsRegistrationStudentAvailable()
-		// getAllMajors()
-		// getAllGrif()
-        initPage()
+		initPage()
 	}, [])
 
 	useEffect(() => {
 		if (StudentId) {
-			const student = studentAvailebles.find((value) => {
+			const student = listData.students.find((value) => {
 				return value.StudentId == StudentId
 			})
 			if (student.HasMajors == true) {
-				ShowNostis.warning('Học viên đã có nghành học. Vui lòng sử dụng tính năng chuyển ngành học!')
+				const templ = listData.students.find((value) => {
+					return value.StudentId == StudentId
+				})
+				modal.confirm({
+					title: 'Cảnh báo',
+
+					content: (
+						<>
+							Học viên <span className="font-[500]  text-tw-orange">{templ.StudentName}</span> đã có ngành học,Vui lòng sử dụng tính năng chuyển ngành
+							học!
+						</>
+					),
+					okText: 'Chuyển ngành',
+					cancelText: 'Hủy'
+				})
 				form.setFieldValue('StudentId', '')
 			}
 			form.setFieldValue('MajorsId', '')
@@ -108,60 +169,158 @@ const MajorsRegistrationPage = () => {
 
 	useEffect(() => {
 		if (MajorsId) {
-			const templ = majors.find((value) => {
+			const templ = listData.majors.find((value) => {
 				return value.Id == MajorsId
 			})
 			form.setFieldValue('MajorsId', templ.Id)
+			form.setFieldValue('TotalPrice', templ.Price)
+			form.setFieldValue('Description', templ.Description)
 		} else {
 		}
 	}, [MajorsId])
 
-	const _onFinish = (params) => {
-		console.log('_onFinish', params)
+	useEffect(() => {
+		if (PaymentTypeId) {
+			getPaymentTypeDetail()
+		} else {
+			setPaymentTypeDetail([])
+			form.setFieldValue('Percent', '')
+			form.setFieldValue('countTotal', '')
+			form.setFieldValue('Type', '')
+		}
+	}, [PaymentTypeId])
+
+	useEffect(() => {
+		if (TotalPrice && PaymentTypeId) {
+			if (Percent) {
+				let countPaid = (removeCommas(TotalPrice) * Percent) / 100
+				form.setFieldValue('countTotal', countPaid)
+			}
+		}
+	}, [TotalPrice])
+
+	const _onFinish = async (params) => {
+		try {
+			setLoading('CREATE')
+
+			const payload = {
+				MajorsId: params.MajorsId,
+				StudentId: params.StudentId,
+				TotalPrice: removeCommas(params.TotalPrice),
+				Paid: removeCommas(params.Paid),
+				GiftId: params.GiftId,
+				PaymentTypeId: params.PaymentTypeId,
+				Note: params.Note
+			}
+
+			const response = await majorsRegistrationApi.majorsRegistration(payload)
+			if (response.status === 200) {
+				ShowNostis.success(response.data.message)
+			}
+			setLoading('')
+		} catch (error) {
+			ShowNostis.error(error.message)
+			setLoading('')
+		}
 	}
+
+	const getInformation = () =>
+		useMemo(() => {
+			const templ = listData.students.find((value) => {
+				return value.StudentId == StudentId
+			})
+			return <CardInfomation templ={templ} />
+		}, [StudentId])
+
 	return (
-		<Card title="Đăng ký ngành học">
+		<Spin spinning={loading === 'GET_ALL'}>
+			{contextHolder}
 			<Form form={form} layout="vertical" onFinish={_onFinish}>
-				<InputTextField name="MajorsOptions" label={''} hidden={true} />
-				<SelectField
-					className="col-span-2"
-					name={'StudentId'}
-					label="Chọn học viên"
-					optionList={studentAvaileblesOptions}
-					rules={[{ required: true, message: 'Vui lòng chọn loại' }]}
-				/>
-				<SelectField
-					className="col-span-2"
-					name={'MajorsId'}
-					label="Chọn ngành học"
-					optionList={MajorsOptions}
-					disabled={!StudentId}
-					rules={[{ required: true, message: 'Vui lòng ngành học' }]}
-				/>
-				<InputTextField
-					name="TotalPrice"
-					disabled={!StudentId}
-					label="Tên hình thức thanh toán"
-					rules={[{ required: true, message: 'Vui lòng nhập tên hình thức  thanh toán' }]}
-				/>
-				<SelectField
-					className="col-span-2"
-					name={'GridId'}
-					label="Chọn ngành học"
-					optionList={grifOptions}
-					disabled={!StudentId}
-					rules={[{ required: true, message: 'Vui lòng ngành học' }]}
-				/>
-				<SelectField
-					className="col-span-2"
-					name={'GridId'}
-					label="Hình thức đóng tiền"
-					optionList={grifOptions}
-					disabled={!StudentId}
-					rules={[{ required: true, message: 'Vui lòng ngành học' }]}
-				/>
+				<div className="grid grid-cols-1 w800:grid-cols-2 gap-3">
+					<div className="d-flex flex-col gap-3">
+						<Card title="Thông tin học viên" className="col-span-1">
+							<SelectField
+								className="col-span-2"
+								name={'StudentId'}
+								label="Chọn học viên"
+								optionList={listOption.students}
+								rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}
+							/>
+							<div className="d-flex flex-col gap-3">{getInformation()}</div>
+						</Card>
+						<Card title="Ngành học" className="col-span-1">
+							<SelectField
+								className="col-span-2"
+								name={'MajorsId'}
+								label="Chọn ngành học"
+								optionList={listOption.majors}
+								rules={[{ required: true, message: 'Vui lòng ngành học' }]}
+							/>
+							<InputNumberField
+								name="TotalPrice"
+								label="Giá ngành học"
+								rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
+							/>
+							<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
+						</Card>
+					</div>
+					<Card title="Thanh toán" className="col-span-1 ">
+						<SelectField
+							className="col-span-2"
+							name={'PaymentTypeId'}
+							isLoading={loading === 'PAYMENT_DETAIL'}
+							label={
+								<div className="d-flex items-center">
+									Hình thức thanh toán
+									<ModalViewPaymenTypeDetail
+										paymentType={listOption.payment}
+										PaymentTypeId={PaymentTypeId}
+										paymentTypeDetail={paymentTypeDetail}
+									/>
+								</div>
+							}
+							optionList={listOption.payment}
+							rules={[{ required: true, message: 'Vui lòng chọn hình thức thanh toán' }]}
+						/>
+						<SelectField
+							className="col-span-2"
+							hidden={Type === 1 ? false : true}
+							name={'Type'}
+							label="Loại thanh toán"
+							disabled
+							optionList={optionPaymentType}
+						/>
+						<InputTextField
+							name="Percent"
+							label="Phần trăm"
+							disabled
+							hidden={Type === 1 ? false : true}
+							rules={[{ required: true, message: 'Vui lòng nhập số tiền phải đóng' }]}
+						/>
+						<InputNumberField
+							name="countTotal"
+							disabled={true}
+							hidden={Type === 1 ? false : true}
+							label="Số tiền phải đóng"
+							rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
+						/>
+						<InputNumberField
+							name="Paid"
+							label="Thanh toán"
+							rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
+						/>
+						<SelectField className="col-span-2" name={'GiftId'} label="Quà tặng" optionList={listOption.gift} />
+						<TextBoxField name="Note" label={'Ghi chú'} />
+
+						<div className="d-flex justify-center mt-3">
+							<PrimaryButton type="submit" icon="add" background="green">
+								Đăng ký
+							</PrimaryButton>
+						</div>
+					</Card>
+				</div>
 			</Form>
-		</Card>
+		</Spin>
 	)
 }
 

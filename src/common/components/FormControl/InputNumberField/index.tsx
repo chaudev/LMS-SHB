@@ -4,11 +4,11 @@ import { NumericFormat } from 'react-number-format'
 import { IFormInputNumber } from '../form-control'
 
 const InputNumberField = (props: IFormInputNumber) => {
-	const { style, label, isRequired, className, placeholder, disabled, name, rules, max, onChange } = props
+	const { style, label, isRequired, className, placeholder, disabled, name, rules, max, onChange ,hidden=false } = props
 
 	return (
 		<>
-			<Form.Item name={name} style={style} label={label} className={`${className}`} required={isRequired} rules={rules}>
+			<Form.Item name={name} style={style} label={label} className={`${className}`} hidden={hidden} required={isRequired} rules={rules}>
 				<NumericFormat
 					onChange={onChange}
 					placeholder={placeholder}

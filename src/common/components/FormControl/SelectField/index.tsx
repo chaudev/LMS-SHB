@@ -17,7 +17,8 @@ const SelectField = (props: IFormSelectField) => {
 		mode,
 		isLoading,
 		suffix,
-		allowClear = true
+		allowClear = true,
+		hidden = false
 	} = props
 	const { Option } = Select
 
@@ -27,7 +28,7 @@ const SelectField = (props: IFormSelectField) => {
 	}
 
 	return (
-		<Form.Item name={name} style={style} label={label} className={`${className}`} required={isRequired} rules={rules}>
+		<Form.Item name={name} style={style} label={label} className={`${className}`} hidden={hidden} required={isRequired} rules={rules}>
 			<Select
 				mode={mode}
 				className={`primary-input ${className}`}
