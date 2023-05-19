@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { giftApi } from '~/api/gift'
 import { majorsApi } from '~/api/majors/majors'
 import { majorsRegistrationApi } from '~/api/majors/registration'
+import { paymentTypeApi } from '~/api/option/payment-type'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import SelectField from '~/common/components/FormControl/SelectField'
 import { ShowNostis } from '~/common/utils'
@@ -17,6 +18,19 @@ const MajorsRegistrationPage = () => {
 	const [studentAvailebles, setStudentAvailebles] = useState<IMajorsRegistrationAvailble[]>([])
 	const [majors, setMajors] = useState<IMajors[]>([])
 	const [grifOptions, setGrifOptions] = useState<{ title: string; value: number | string }[]>([])
+
+	const initPage = async () => {
+		try {
+			const [students, majors, grif, paymentType] = await Promise.all([
+				majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
+				majorsApi.getAll({ pageSize: 9999, pageIndex: 1 }),
+				giftApi.getAll({ pageSize: 9999, pageIndex: 1 }),
+				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 })
+			])
+            console.log('paymentType====>',paymentType);
+            
+		} catch (error) {}
+	}
 
 	const getMajorsRegistrationStudentAvailable = async () => {
 		try {
@@ -73,9 +87,10 @@ const MajorsRegistrationPage = () => {
 	}
 
 	useEffect(() => {
-		getMajorsRegistrationStudentAvailable()
-		getAllMajors()
-        getAllGrif()
+		// getMajorsRegistrationStudentAvailable()
+		// getAllMajors()
+		// getAllGrif()
+        initPage()
 	}, [])
 
 	useEffect(() => {
@@ -133,6 +148,14 @@ const MajorsRegistrationPage = () => {
 					className="col-span-2"
 					name={'GridId'}
 					label="Chọn ngành học"
+					optionList={grifOptions}
+					disabled={!StudentId}
+					rules={[{ required: true, message: 'Vui lòng ngành học' }]}
+				/>
+				<SelectField
+					className="col-span-2"
+					name={'GridId'}
+					label="Hình thức đóng tiền"
 					optionList={grifOptions}
 					disabled={!StudentId}
 					rules={[{ required: true, message: 'Vui lòng ngành học' }]}
