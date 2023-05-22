@@ -8,8 +8,8 @@ import { studyRouteApi } from '~/api/study-route'
 import PrimaryTag from '~/common/components/Primary/Tag'
 import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
-import { ModalStudyRoute } from './ModalStudyRoute'
-import ModalViewStudyRouteTemplate from './ModalViewStudyRouteTemplate'
+import { ModalStudyRoute } from '../ModalStudyRoute'
+import ModalViewStudyRouteTemplate from '../ModalViewStudyRouteTemplate'
 
 type ITabStudyRoute = {
 	StudentDetail: IUserResponse

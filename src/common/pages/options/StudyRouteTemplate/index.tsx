@@ -95,7 +95,7 @@ const StudyRouteTemplatePage = () => {
 							tooltip="Xem chi tiết lộ trình"
 							type="button"
 							icon="eye"
-							color="yellow"
+							color="orange"
 						></IconButton>
 						<IconButton
 							onClick={() => {
@@ -105,7 +105,7 @@ const StudyRouteTemplatePage = () => {
 							tooltip="Cập nhật lộ trình"
 							type="button"
 							icon="edit"
-							color="green"
+							color="yellow"
 						></IconButton>
 
 						{/* <IconButton
@@ -210,7 +210,7 @@ const StudyRouteTemplatePage = () => {
 						<InputTextField name="Name" label="Tên lộ trình học" />
 					</Form.Item>
 					<div className="d-flex justify-center ">
-						<PrimaryButton type="submit" icon={isShow === 'UPDATE' ? 'save' : 'add'} background="primary">
+						<PrimaryButton type="submit" icon={isShow === 'UPDATE' ? 'save' : 'add'} background={isShow === 'UPDATE' ? 'primary' : 'green'}>
 							{isShow == 'UPDATE' ? 'Cập nhật' : 'Thêm mới'}
 						</PrimaryButton>
 					</div>

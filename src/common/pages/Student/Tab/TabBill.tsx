@@ -5,7 +5,7 @@ import PrimaryTable from '~/common/components/Primary/Table'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { parseToMoney } from '~/common/utils/common'
-import { BillDetail } from './BillDetail'
+import { BillDetail } from '../BillDetail'
 
 type ITabBill = {
 	StudentDetail: IUserResponse

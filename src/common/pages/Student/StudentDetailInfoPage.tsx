@@ -10,12 +10,13 @@ import TabStudentContract from '~/common/components/Student/TabStudentContract'
 import TabStudentDetail from '~/common/components/Student/TabStudentDetail'
 import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
-import { TabBill } from './TabBill'
-import { TabClassList } from './TabClassList'
-import { TabClassListHistory } from './TabClassListHistory'
-import { TabDiscountHistory } from './TabDiscountHistory'
-import { TabStudyRoute } from './TabStudyRoute'
-import { TabTestAppointment } from './TabTestAppointment'
+import { TabBill } from './Tab/TabBill'
+import { TabClassList } from './Tab/TabClassList'
+import { TabClassListHistory } from './Tab/TabClassListHistory'
+import { TabDiscountHistory } from './Tab/TabDiscountHistory'
+import { TabStudyRoute } from './Tab/TabStudyRoute'
+import { TabTestAppointment } from './Tab/TabTestAppointment'
+import TabMajors from './Tab/TabMajors'
 
 export interface IStudentDetailInfoPageProps {}
 
@@ -23,7 +24,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 	const [studentDetail, setStudentDetail] = useState<IUserResponse>()
 	const [isVisibleModal, setIsVisibleModal] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
- 	const router = useRouter()
+	const router = useRouter()
 	const [form] = Form.useForm()
 	const userInformation = useSelector((state: RootState) => state.user.information)
 
@@ -110,6 +111,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						key: '8',
 						label: `Lịch sử học`,
 						children: <TabClassListHistory StudentDetail={studentDetail} />
+					},
+					{
+						key: '9',
+						label: `Ngành học`,
+						children: <TabMajors StudentDetail={studentDetail} />
 					}
 			  ]
 

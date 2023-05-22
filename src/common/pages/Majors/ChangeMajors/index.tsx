@@ -15,6 +15,7 @@ import ModalViewPaymenTypeDetail from '../Component/ModalViewPaymenTypeDetail'
 import CardInfomation from '../Component/CardInfomation'
 import { ISelectOptionList } from '~/common/components/FormControl/form-control'
 import { optionPaymentType } from '~/common/constant/PaymentType'
+import CardOldMajors from '../Component/CardOldMajors'
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -29,7 +30,7 @@ interface IListData {
 	payment: IPaymentType[]
 }
 
-const MajorsRegistrationPage = () => {
+const ChangeMajorsPage = () => {
 	const [form] = Form.useForm()
 	const StudentId = Form.useWatch('StudentId', form)
 	const MajorsId = Form.useWatch('MajorsId', form)
@@ -48,6 +49,8 @@ const MajorsRegistrationPage = () => {
 
 	const [listOption, SetListOption] = useState<IListOption>(initValue)
 	const [listData, setListData] = useState<IListData>(initValue)
+	const [oldMajors, setOldMajors] = useState<IMajorsRegistration>()
+	const [tuitionInOld, setTuitionInOld] = useState<number | string>()
 
 	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL'>('')
 
@@ -136,6 +139,43 @@ const MajorsRegistrationPage = () => {
 		}
 	}
 
+	const getTuitionInOldMajors = async () => {
+		try {
+			setLoading('PAYMENT_DETAIL')
+			const response = await majorsRegistrationApi.getTuitionInOldMajors(StudentId)
+			if (response.status === 200) {
+				setTuitionInOld(response.data.data)
+			}
+			setLoading('')
+		} catch (error) {
+			setLoading('')
+		}
+	}
+
+	const getMajorsStudent = async () => {
+		try {
+			setLoading('GET_ALL')
+			const params = {
+				studentId: Number(StudentId),
+				pageSize: 9999,
+				pageIndex: 1
+			}
+			const response = await majorsRegistrationApi.getAllMajorsRegistration(params)
+
+			if (response.status === 200) {
+				let findOldMajors = response.data.data.find((item) => item.Status === 1)
+				setOldMajors(findOldMajors)
+			}
+			if (response.status === 204) {
+				setOldMajors(null)
+			}
+			setLoading('')
+		} catch (error) {
+			ShowNostis.error(error.message)
+			setLoading('')
+		}
+	}
+
 	useEffect(() => {
 		initPage()
 	}, [])
@@ -145,7 +185,9 @@ const MajorsRegistrationPage = () => {
 			const student = listData.students.find((value) => {
 				return value.StudentId == StudentId
 			})
-			if (student.HasMajors == true) {
+			console.log(student)
+
+			if (student.HasMajors == false) {
 				const templ = listData.students.find((value) => {
 					return value.StudentId == StudentId
 				})
@@ -153,14 +195,17 @@ const MajorsRegistrationPage = () => {
 					title: 'Cảnh báo',
 					content: (
 						<>
-							Học viên <span className="font-[500]  text-tw-orange">{templ.StudentName}</span> đã có ngành học. Vui lòng sử dụng tính năng chuyển ngành
-							học!
+							Học viên <span className="font-[500]  text-[orange]">{templ.StudentName}</span> chưa có chuyên ngành. Vui lòng sử dụng tính
+							năng đăng ký ngành học!
 						</>
 					),
-					okText: 'Chuyển ngành',
+					okText: 'Đăng ký ngành học',
 					cancelText: 'Hủy'
 				})
 				form.setFieldValue('StudentId', '')
+			} else {
+				getTuitionInOldMajors()
+				getMajorsStudent()
 			}
 			form.setFieldValue('MajorsId', '')
 		}
@@ -201,18 +246,17 @@ const MajorsRegistrationPage = () => {
 	const _onFinish = async (params) => {
 		try {
 			setLoading('CREATE')
-
 			const payload = {
 				MajorsId: params.MajorsId,
 				StudentId: params.StudentId,
 				TotalPrice: removeCommas(params.TotalPrice),
-				Paid: removeCommas(params.Paid),
+				Paid: params.Paid ? removeCommas(params.Paid) : 0,
 				GiftId: params.GiftId,
 				PaymentTypeId: params.PaymentTypeId,
 				Note: params.Note
 			}
 
-			const response = await majorsRegistrationApi.majorsRegistration(payload)
+			const response = await majorsRegistrationApi.changeMajors(payload)
 			if (response.status === 200) {
 				ShowNostis.success(response.data.message)
 			}
@@ -228,12 +272,17 @@ const MajorsRegistrationPage = () => {
 			const templ = listData.students.find((value) => {
 				return value.StudentId == StudentId
 			})
-			return <CardInfomation templ={templ} />
+			return (
+				<>
+					<CardInfomation templ={templ} />
+				</>
+			)
 		}, [StudentId])
 
 	return (
 		<Spin spinning={loading === 'GET_ALL'}>
 			{contextHolder}
+
 			<Form form={form} layout="vertical" onFinish={_onFinish}>
 				<div className="grid grid-cols-1 w800:grid-cols-2 gap-3">
 					<div className="d-flex flex-col gap-3">
@@ -245,22 +294,36 @@ const MajorsRegistrationPage = () => {
 								optionList={listOption.students}
 								rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}
 							/>
-							<div className="d-flex flex-col gap-3">{getInformation()}</div>
+							<div className="d-flex flex-col gap-3">
+								{getInformation()} <CardOldMajors oldMajors={oldMajors} tuitionInOld={tuitionInOld} />
+							</div>
 						</Card>
-						<Card title="Ngành học" className="col-span-1">
+						<Card title="Thay đổi chuyên ngành" className="col-span-1">
 							<SelectField
 								className="col-span-2"
 								name={'MajorsId'}
-								label="Chọn ngành học"
+								label="Chọn chuyên ngành"
 								optionList={listOption.majors}
-								rules={[{ required: true, message: 'Vui lòng ngành học' }]}
+								rules={[
+									{
+										required: true,
+										message: 'Vui lòng chuyên ngành'
+									},
+									{
+										validator: async (_, id) => {
+											if (id == oldMajors.MajorsId) {
+												return Promise.reject(new Error('Chuyên ngành mới phải khác chuyên ngành hiện tại'))
+											}
+										}
+									}
+								]}
 							/>
 							<InputNumberField
 								name="TotalPrice"
-								label="Giá ngành học"
-								rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
+								label="Giá chuyên ngành"
+								rules={[{ required: true, message: 'Vui lòng nhập giá chuyên ngành' }]}
 							/>
-							<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
+							<TextBoxField name="Description" label={'Mô tả chuyên ngành'} disabled />
 						</Card>
 					</div>
 					<Card title="Thanh toán" className="col-span-1 ">
@@ -289,31 +352,15 @@ const MajorsRegistrationPage = () => {
 							disabled
 							optionList={optionPaymentType}
 						/>
-						<InputTextField
-							name="Percent"
-							label="Phần trăm"
-							disabled
-							hidden={Type === 1 ? false : true}
-							rules={[{ required: true, message: 'Vui lòng nhập số tiền phải đóng' }]}
-						/>
-						<InputNumberField
-							name="countTotal"
-							disabled={true}
-							hidden={Type === 1 ? false : true}
-							label="Số tiền phải đóng"
-							rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
-						/>
-						<InputNumberField
-							name="Paid"
-							label="Thanh toán"
-							rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
-						/>
+						<InputTextField name="Percent" label="Phần trăm" disabled hidden={Type === 1 ? false : true} />
+						<InputNumberField name="countTotal" disabled={true} hidden={Type === 1 ? false : true} label="Số tiền phải đóng" />
+						<InputNumberField name="Paid" hidden={Type != 1 ? true : false} label="Thanh toán" />
 						<SelectField className="col-span-2" name={'GiftId'} label="Quà tặng" optionList={listOption.gift} />
 						<TextBoxField name="Note" label={'Ghi chú'} />
 
 						<div className="d-flex justify-center mt-3">
-							<PrimaryButton type="submit" icon="add" loading={loading ==='CREATE'} background="green">
-								Đăng ký
+							<PrimaryButton type="submit" icon="exchange" loading={loading === 'CREATE'} background="green">
+								Chuyển ngành
 							</PrimaryButton>
 						</div>
 					</Card>
@@ -323,4 +370,4 @@ const MajorsRegistrationPage = () => {
 	)
 }
 
-export default MajorsRegistrationPage
+export default ChangeMajorsPage

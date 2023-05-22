@@ -1,7 +1,7 @@
 type IIconButton = {
 	disabled?: boolean
-	background?: 'green' | 'yellow' | 'blue' | 'red' | 'black' | 'disabled' | 'primary' | 'transparent'
-	color: 'green' | 'yellow' | 'blue' | 'red' | 'black' | 'disabled' | 'primary' | 'transparent' | 'white'
+	background?: 'green' | 'yellow' | 'blue' | 'red' | 'black' | 'disabled' | 'primary' | 'transparent'|'orange'
+	color: 'green' | 'yellow' | 'blue' | 'red' | 'black' | 'disabled' | 'primary' | 'transparent' | 'white' | 'orange'
 	icon?:
 		| 'add'
 		| 'up-arrow'
@@ -40,5 +40,5 @@ type IIconButton = {
 	size?: number
 	placementTooltip?: any
 	titleTooltip?: string
-	loading?:boolean
+	loading?: boolean
 }

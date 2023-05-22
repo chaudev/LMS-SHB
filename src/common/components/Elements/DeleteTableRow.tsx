@@ -28,7 +28,7 @@ const DeleteTableRow = (props) => {
 	return (
 		<>
 			<IconButton
-				color="primary"
+				color="red"
 				type="button"
 				icon="remove"
 				tooltip={title || 'Xóa'}

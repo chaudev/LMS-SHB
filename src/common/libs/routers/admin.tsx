@@ -335,7 +335,6 @@ export const AdminChildMenu = [
 			}
 		]
 	},
-	
 	{
 		MenuName: 'Chuyên ngành',
 		MenuTitle: 'Chuyên ngành',
@@ -344,9 +343,23 @@ export const AdminChildMenu = [
 		MenuItem: [
 			{
 				ItemType: 'single',
+				Key: '/majors',
+				Route: '/majors',
+				Text: 'Chuyên ngành',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
 				Key: '/majors/registration',
 				Route: '/majors/registration',
 				Text: 'Đăng ký chuyên ngành',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/majors/change-majors',
+				Route: '/majors/change-majors',
+				Text: 'Thay đổi chuyên ngành',
 				Icon: ''
 			}
 		]
@@ -419,14 +432,8 @@ export const AdminChildMenu = [
 						Route: '/options/study-time',
 						Text: 'Ca học',
 						Icon: ''
-					},
-					{
-						ItemType: 'single',
-						Key: '/options/majors',
-						Route: '/options/majors',
-						Text: 'Ngành học',
-						Icon: ''
 					}
+
 					// {
 					// 	ItemType: 'single',
 					// 	Key: '/options/zoom',
@@ -543,8 +550,8 @@ export const AdminChildMenu = [
 					},
 					{
 						ItemType: 'single',
-						Key: '/options/paymentPemission',
-						Route: '/options/paymentPemission',
+						Key: '/options/payment-pemission',
+						Route: '/options/payment-pemission',
 						Text: 'Cấp quyền thanh toán',
 						Icon: ''
 					},
@@ -587,7 +594,7 @@ export const AdminChildMenu = [
 				SubMenuList: [
 					{
 						ItemType: 'single',
-						Key: '/options/paymentPemission',
+						Key: '/options/profile-template',
 						Route: '/options/profile-template',
 						Text: 'Mẫu hồ sơ',
 						Icon: ''
@@ -616,8 +623,8 @@ export const AdminChildMenu = [
 				SubMenuList: [
 					{
 						ItemType: 'single',
-						Key: '/options/foreignLanguage',
-						Route: '/options/foreignLanguage',
+						Key: '/options/foreign-language',
+						Route: '/options/foreign-language',
 						Text: 'Tình trạng tiếng',
 						Icon: ''
 					},

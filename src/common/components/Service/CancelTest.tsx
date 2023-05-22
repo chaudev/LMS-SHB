@@ -43,7 +43,7 @@ const CancelTest = (props) => {
 					<CloseOutlined size={20} />
 				</button>
 			</Tooltip> */}
-			<IconButton icon="cancel" tooltip="Hủy lịch hẹn" color="primary" type="button" onClick={showModal} />
+			<IconButton icon="cancel" tooltip="Hủy lịch hẹn" color="red" type="button" onClick={showModal} />
 			<Modal
 				title={
 					// <button className="btn btn-icon delete">

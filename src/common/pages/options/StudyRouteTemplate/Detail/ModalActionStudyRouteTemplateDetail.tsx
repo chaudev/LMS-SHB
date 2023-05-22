@@ -124,14 +124,13 @@ const ModalActionStudyRouteTemplateDetail: React.FC<IModalActionStudyRouteTempla
 					<div className="col-span-2">
 						<TextBoxField name="Note" label="Ghi chú" />
 					</div>
-					<div className="d-flex justify-center">
+					<div className="d-flex justify-center gap-3">
 						<PrimaryButton onClick={() => onClose()} background="red" icon="cancel" type="button">
 							Huỷ
 						</PrimaryButton>
 						<PrimaryButton
 							loading={isLoading}
-							className="ml-2"
-							background="blue"
+							background={mode === 'CREATE' ? 'green' : 'primary'}
 							icon={mode === 'CREATE' ? 'add' : 'save'}
 							type="submit"
 							children={mode === 'CREATE' ? 'Thêm mới' : 'Cập nhật'}
