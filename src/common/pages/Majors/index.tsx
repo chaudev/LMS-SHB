@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { majorsApi } from '~/api/majors/majors'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { ModalMajorsCRUD } from './ModalMajorsCRUD'
+import { ModalMajorsCRUD } from './Component/ModalMajorsCRUD'
 import { _check } from '~/common/utils'
 import { parseToMoney } from '~/common/utils/common'
+import IconButton from '~/common/components/Primary/IconButton'
+import { useRouter } from 'next/router'
+import { nanoid } from '@reduxjs/toolkit'
+import { Input } from 'antd'
 
 export const MajorsPage = () => {
-	const init = { pageIndex: 1, pageSize: PAGE_SIZE }
+	const router = useRouter()
+	const init = { pageIndex: 1, pageSize: PAGE_SIZE, search: null }
 	const [data, setData] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [todoApi, setTodoApi] = useState(init)
@@ -20,6 +25,9 @@ export const MajorsPage = () => {
 			if (res.status === 200) {
 				setData(res.data.data)
 				setTotalItems(res.data.totalRow)
+			}
+			if (res.status === 204) {
+				setData([])
 			}
 		} catch (error) {
 			setLoading(true)
@@ -51,7 +59,7 @@ export const MajorsPage = () => {
 			title: 'Giá',
 			width: 180,
 			dataIndex: 'Price',
-			render: (text) => <p className="">{parseToMoney(text)}</p>
+			render: (text) => <p className="">{parseToMoney(text)} VND</p>
 		},
 		{
 			title: 'Mô tả',
@@ -65,8 +73,24 @@ export const MajorsPage = () => {
 			width: 50,
 			render: (text, item) => (
 				<div className="flex items-center">
-					<ModalMajorsCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
 					<ModalMajorsCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					<ModalMajorsCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
+					<IconButton
+						type="button"
+						icon={'eye'}
+						color="orange"
+						onClick={() => {
+							router.push({
+								pathname: '/majors/students',
+								query: {
+									slug: item.Id,
+									key: nanoid(),
+									name: item.Name
+								}
+							})
+						}}
+						tooltip="Xem danh sách học viên trong ngành học"
+					/>
 				</div>
 			)
 		}
@@ -77,7 +101,18 @@ export const MajorsPage = () => {
 				loading={loading}
 				total={totalItems}
 				onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
-				TitleCard={<h1 className="text-2xl font-medium">Danh sách ngành học</h1>}
+				TitleCard={
+					<Input.Search
+						className="primary-search max-w-[250px] ml-[8px]"
+						onChange={(event) => {
+							if (event.target.value == '') {
+								setTodoApi({ ...todoApi, pageIndex: 1, search: '' })
+							}
+						}}
+						onSearch={(event) => setTodoApi({ ...todoApi, pageIndex: 1, search: event })}
+						placeholder="Tìm kiếm"
+					/>
+				}
 				data={data}
 				columns={columns}
 				Extra={<ModalMajorsCRUD mode="add" onRefresh={() => getData(todoApi)} />}

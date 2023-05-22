@@ -16,6 +16,7 @@ import CardInfomation from '../Component/CardInfomation'
 import { ISelectOptionList } from '~/common/components/FormControl/form-control'
 import { optionPaymentType } from '~/common/constant/PaymentType'
 import CardOldMajors from '../Component/CardOldMajors'
+import { useRouter } from 'next/router'
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -31,6 +32,7 @@ interface IListData {
 }
 
 const ChangeMajorsPage = () => {
+	const router = useRouter()
 	const [form] = Form.useForm()
 	const StudentId = Form.useWatch('StudentId', form)
 	const MajorsId = Form.useWatch('MajorsId', form)
@@ -185,7 +187,6 @@ const ChangeMajorsPage = () => {
 			const student = listData.students.find((value) => {
 				return value.StudentId == StudentId
 			})
-			console.log(student)
 
 			if (student.HasMajors == false) {
 				const templ = listData.students.find((value) => {
@@ -195,19 +196,21 @@ const ChangeMajorsPage = () => {
 					title: 'Cảnh báo',
 					content: (
 						<>
-							Học viên <span className="font-[500]  text-[orange]">{templ.StudentName}</span> chưa có chuyên ngành. Vui lòng sử dụng tính
-							năng đăng ký ngành học!
+							Học viên <span className="font-[500]  text-[orange]">{templ.StudentName}</span> chưa có ngành học. Vui lòng sử dụng tính năng
+							đăng ký ngành học!
 						</>
 					),
 					okText: 'Đăng ký ngành học',
-					cancelText: 'Hủy'
+					cancelText: 'Hủy',
+					onOk: () => {
+						router.push('/majors/registration/')
+					}
 				})
 				form.setFieldValue('StudentId', '')
 			} else {
 				getTuitionInOldMajors()
 				getMajorsStudent()
 			}
-			form.setFieldValue('MajorsId', '')
 		}
 	}, [StudentId])
 
@@ -220,6 +223,9 @@ const ChangeMajorsPage = () => {
 			form.setFieldValue('TotalPrice', templ.Price)
 			form.setFieldValue('Description', templ.Description)
 		} else {
+			form.setFieldValue('MajorsId', '')
+			form.setFieldValue('TotalPrice', '')
+			form.setFieldValue('Description', '')
 		}
 	}, [MajorsId])
 
@@ -298,21 +304,21 @@ const ChangeMajorsPage = () => {
 								{getInformation()} <CardOldMajors oldMajors={oldMajors} tuitionInOld={tuitionInOld} />
 							</div>
 						</Card>
-						<Card title="Thay đổi chuyên ngành" className="col-span-1">
+						<Card title="Thay đổi ngành học" className="col-span-1">
 							<SelectField
 								className="col-span-2"
 								name={'MajorsId'}
-								label="Chọn chuyên ngành"
+								label="Chọn ngành học"
 								optionList={listOption.majors}
 								rules={[
 									{
 										required: true,
-										message: 'Vui lòng chuyên ngành'
+										message: 'Vui lòng chọn ngành học'
 									},
 									{
 										validator: async (_, id) => {
 											if (id == oldMajors.MajorsId) {
-												return Promise.reject(new Error('Chuyên ngành mới phải khác chuyên ngành hiện tại'))
+												return Promise.reject(new Error('Ngành học mới phải khác ngành học hiện tại'))
 											}
 										}
 									}
@@ -320,10 +326,10 @@ const ChangeMajorsPage = () => {
 							/>
 							<InputNumberField
 								name="TotalPrice"
-								label="Giá chuyên ngành"
-								rules={[{ required: true, message: 'Vui lòng nhập giá chuyên ngành' }]}
+								label="Giá ngành học"
+								rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
 							/>
-							<TextBoxField name="Description" label={'Mô tả chuyên ngành'} disabled />
+							<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
 						</Card>
 					</div>
 					<Card title="Thanh toán" className="col-span-1 ">

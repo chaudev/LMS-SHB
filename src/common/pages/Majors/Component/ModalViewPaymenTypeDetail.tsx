@@ -24,7 +24,7 @@ const ModalViewPaymenTypeDetail = ({ paymentType, paymentTypeDetail = [], Paymen
 			{paymentTypeDetail && paymentTypeDetail.length > 0 && (
 				<Tooltip title="Xem chi tiết">
 					&nbsp;&nbsp;
-					<AiOutlineExclamationCircle onClick={showModal} size={16} color="#1b73e8" />
+					<AiOutlineExclamationCircle className="cursor-pointer" onClick={showModal} size={16} color="#1b73e8" />
 				</Tooltip>
 			)}
 			<Modal
@@ -49,9 +49,15 @@ const ModalViewPaymenTypeDetail = ({ paymentType, paymentTypeDetail = [], Paymen
 									}
 								>
 									<div className="d-flex flex-col">
-										<span className="font-[500] text-[green]"> {item.TypeName}</span>
-										<span className="font-[500]">Tình trạng: {item.ValueName}</span>
-										<span className="font-[500]">Phần trăm: {item.Percent}%</span>
+										<span className="font-[500] text-[green]">{item.TypeName}</span>
+										<div>
+											<span className="font-[500]">Tình trạng: </span>
+											{item.ValueName}
+										</div>
+										<div>
+											<span className="font-[500]">Phần trăm: </span>
+											{item.Percent}%
+										</div>
 									</div>
 								</Timeline.Item>
 							))}

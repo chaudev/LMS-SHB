@@ -336,8 +336,8 @@ export const AdminChildMenu = [
 		]
 	},
 	{
-		MenuName: 'Chuyên ngành',
-		MenuTitle: 'Chuyên ngành',
+		MenuName: 'Ngành học',
+		MenuTitle: 'Ngành học',
 		Parent: 'majors',
 		MenuKey: '/majors',
 		MenuItem: [
@@ -345,21 +345,21 @@ export const AdminChildMenu = [
 				ItemType: 'single',
 				Key: '/majors',
 				Route: '/majors',
-				Text: 'Chuyên ngành',
+				Text: 'Danh sách ngành học',
 				Icon: ''
 			},
 			{
 				ItemType: 'single',
 				Key: '/majors/registration',
 				Route: '/majors/registration',
-				Text: 'Đăng ký chuyên ngành',
+				Text: 'Đăng ký Ngành học',
 				Icon: ''
 			},
 			{
 				ItemType: 'single',
 				Key: '/majors/change-majors',
 				Route: '/majors/change-majors',
-				Text: 'Thay đổi chuyên ngành',
+				Text: 'Thay đổi ngành học',
 				Icon: ''
 			}
 		]

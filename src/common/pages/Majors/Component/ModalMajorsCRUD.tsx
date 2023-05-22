@@ -131,7 +131,7 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 			{mode == 'delete' && (
 				<>
 					<div
-						className="flex items-center cursor-pointer"
+						// className="flex items-center cursor-pointer"
 						onClick={() => {
 							onOpen()
 						}}
@@ -155,9 +155,9 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 							onClick={() => form.submit()}
 							className="ml-2"
 							background="blue"
-							icon={mode !== 'delete' ? 'save' : 'remove'}
+							icon={mode == 'delete' ? 'remove' : mode == 'add' ? 'add' : 'save'}
 							type="button"
-							children={mode !== 'delete' ? 'Lưu' : 'Xóa'}
+							children={mode == 'delete' ? 'Xóa' : mode == 'add' ? 'Thêm mới' : 'Cập nhật'}
 						/>
 					</>
 				}

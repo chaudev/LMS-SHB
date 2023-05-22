@@ -15,6 +15,7 @@ import ModalViewPaymenTypeDetail from '../Component/ModalViewPaymenTypeDetail'
 import CardInfomation from '../Component/CardInfomation'
 import { ISelectOptionList } from '~/common/components/FormControl/form-control'
 import { optionPaymentType } from '~/common/constant/PaymentType'
+import { useRouter } from 'next/router'
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -30,6 +31,7 @@ interface IListData {
 }
 
 const MajorsRegistrationPage = () => {
+	const router = useRouter()
 	const [form] = Form.useForm()
 	const StudentId = Form.useWatch('StudentId', form)
 	const MajorsId = Form.useWatch('MajorsId', form)
@@ -158,11 +160,13 @@ const MajorsRegistrationPage = () => {
 						</>
 					),
 					okText: 'Chuyển ngành',
-					cancelText: 'Hủy'
+					cancelText: 'Hủy',
+					onOk: () => {
+						router.push('/majors/change-majors/')
+					}
 				})
 				form.setFieldValue('StudentId', '')
 			}
-			form.setFieldValue('MajorsId', '')
 		}
 	}, [StudentId])
 
@@ -175,6 +179,9 @@ const MajorsRegistrationPage = () => {
 			form.setFieldValue('TotalPrice', templ.Price)
 			form.setFieldValue('Description', templ.Description)
 		} else {
+			form.setFieldValue('MajorsId', '')
+			form.setFieldValue('TotalPrice', '')
+			form.setFieldValue('Description', '')
 		}
 	}, [MajorsId])
 
@@ -247,20 +254,20 @@ const MajorsRegistrationPage = () => {
 							/>
 							<div className="d-flex flex-col gap-3">{getInformation()}</div>
 						</Card>
-						<Card title="Chuyên ngành" className="col-span-1">
+						<Card title="Ngành học" className="col-span-1">
 							<SelectField
 								className="col-span-2"
 								name={'MajorsId'}
-								label="Chọn chuyên ngành"
+								label="Chọn ngành học"
 								optionList={listOption.majors}
-								rules={[{ required: true, message: 'Vui lòng chuyên ngành' }]}
+								rules={[{ required: true, message: 'Vui lòng ngành học' }]}
 							/>
 							<InputNumberField
 								name="TotalPrice"
-								label="Giá chuyên ngành"
-								rules={[{ required: true, message: 'Vui lòng nhập giá chuyên ngành' }]}
+								label="Giá ngành học"
+								rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
 							/>
-							<TextBoxField name="Description" label={'Mô tả chuyên ngành'} disabled />
+							<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
 						</Card>
 					</div>
 					<Card title="Thanh toán" className="col-span-1 ">
@@ -306,7 +313,8 @@ const MajorsRegistrationPage = () => {
 						<InputNumberField
 							name="Paid"
 							label="Thanh toán"
-							rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
+							hidden={Type === 1 ? false : true}
+							// rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
 						/>
 						<SelectField className="col-span-2" name={'GiftId'} label="Quà tặng" optionList={listOption.gift} />
 						<TextBoxField name="Note" label={'Ghi chú'} />

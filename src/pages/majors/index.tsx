@@ -1,6 +1,6 @@
 import React from 'react'
 import { MainLayout } from '~/common'
-import { MajorsPage } from '~/common/pages/options/Majors/MajorsPage'
+import { MajorsPage } from '~/common/pages/Majors'
 
 const Majors = () => {
 	return <MajorsPage />

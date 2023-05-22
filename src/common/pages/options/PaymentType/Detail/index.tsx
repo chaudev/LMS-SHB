@@ -228,7 +228,7 @@ const PaymentDetailPage = () => {
 													},
 													{
 														validator: (_, value) =>
-															value <= 100 ? Promise.resolve() : Promise.reject(new Error('Phần trăm phải nhỏ hơn 100%'))
+															value <= 100 ? Promise.resolve() : Promise.reject(new Error('Phần trăm phải nhỏ hơn hoặc bằng 100%'))
 													}
 												]}
 											/>
