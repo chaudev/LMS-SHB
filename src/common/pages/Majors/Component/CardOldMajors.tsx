@@ -3,7 +3,6 @@ import React from 'react'
 import { parseToMoney } from '~/common/utils/common'
 
 function CardOldMajors({ oldMajors, tuitionInOld }) {
-	console.log('CardOldMajors', oldMajors)
 	if (!oldMajors) {
 		return
 	}

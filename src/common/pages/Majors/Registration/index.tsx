@@ -153,8 +153,8 @@ const MajorsRegistrationPage = () => {
 					title: 'Cảnh báo',
 					content: (
 						<>
-							Học viên <span className="font-[500]  text-tw-orange">{templ.StudentName}</span> đã có ngành học. Vui lòng sử dụng tính năng chuyển ngành
-							học!
+							Học viên <span className="font-[500]  text-tw-orange">{templ.StudentName}</span> đã có ngành học. Vui lòng sử dụng tính năng
+							chuyển ngành học!
 						</>
 					),
 					okText: 'Chuyển ngành',
@@ -247,20 +247,20 @@ const MajorsRegistrationPage = () => {
 							/>
 							<div className="d-flex flex-col gap-3">{getInformation()}</div>
 						</Card>
-						<Card title="Ngành học" className="col-span-1">
+						<Card title="Chuyên ngành" className="col-span-1">
 							<SelectField
 								className="col-span-2"
 								name={'MajorsId'}
-								label="Chọn ngành học"
+								label="Chọn chuyên ngành"
 								optionList={listOption.majors}
-								rules={[{ required: true, message: 'Vui lòng ngành học' }]}
+								rules={[{ required: true, message: 'Vui lòng chuyên ngành' }]}
 							/>
 							<InputNumberField
 								name="TotalPrice"
-								label="Giá ngành học"
-								rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
+								label="Giá chuyên ngành"
+								rules={[{ required: true, message: 'Vui lòng nhập giá chuyên ngành' }]}
 							/>
-							<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
+							<TextBoxField name="Description" label={'Mô tả chuyên ngành'} disabled />
 						</Card>
 					</div>
 					<Card title="Thanh toán" className="col-span-1 ">
@@ -312,7 +312,7 @@ const MajorsRegistrationPage = () => {
 						<TextBoxField name="Note" label={'Ghi chú'} />
 
 						<div className="d-flex justify-center mt-3">
-							<PrimaryButton type="submit" icon="add" loading={loading ==='CREATE'} background="green">
+							<PrimaryButton type="submit" icon="add" loading={loading === 'CREATE'} background="green">
 								Đăng ký
 							</PrimaryButton>
 						</div>
