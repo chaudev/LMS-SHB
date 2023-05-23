@@ -52,7 +52,7 @@ const MajorsStudentPage = () => {
 
 	const columns = [
 		{
-			title: 'Thông tin',
+			title: 'Thông tin sinh viên',
 			dataIndex: 'Code',
 			render: (value, item) => (
 				<div className="flex items-center">
