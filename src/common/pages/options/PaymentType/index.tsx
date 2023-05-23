@@ -105,7 +105,7 @@ const PaymentTypePage = () => {
 							tooltip="Cập nhật hình thức thanh toán"
 							type="button"
 							icon="edit"
-							color="green"
+							color="primary"
 						></IconButton>
 						<IconButton
 							onClick={() => {

@@ -1,4 +1,5 @@
 import { Card, Col, Divider, Form, Progress, Row, Spin } from 'antd'
+import { xorWith } from 'lodash'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { number } from 'yup'
@@ -39,7 +40,6 @@ const PaymentDetailPage = () => {
 			Items.forEach((element) => {
 				initValue = initValue + Number(element.Percent)
 			})
-
 			setProgress(initValue)
 		}
 	}, [Items])
@@ -89,22 +89,8 @@ const PaymentDetailPage = () => {
 		} catch (error) {}
 	}
 
-	const getAllPaymentTypeDetail = async () => {
-		try {
-			const responseDetail = await paymentTypeApi.getAllPaymentTypeDetail(Number(slug))
-			if (responseDetail.status === 200) {
-				form.setFieldValue('Items', responseDetail.data.data)
-			}
-			const response = await paymentTypeApi.getPaymentTypeById(Number(slug))
-			if (response.status === 200) {
-				form.setFieldValue('Name', response.data.data.Name)
-			}
-		} catch (error) {}
-	}
-
 	useEffect(() => {
 		if (!!slug) {
-			getAllPaymentTypeDetail()
 			getAllOptionType()
 		}
 	}, [slug])
@@ -244,7 +230,7 @@ const PaymentDetailPage = () => {
 						<Progress percent={progress} status={progress == 100 ? 'active' : 'exception'} format={(percent) => `${progress}% / 100% `} />
 					</div>
 					<div className="py-2 d-flex justify-center">
-						<PrimaryButton loading={loading === 'UPDATE'} type="submit" icon="save" background="green">
+						<PrimaryButton loading={loading === 'UPDATE'} type="submit" icon="save" background="primary">
 							Cập nhật
 						</PrimaryButton>
 					</div>

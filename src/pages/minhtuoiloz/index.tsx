@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { accountApi } from '~/api/account'
 import { Spin, Table, Form, Input } from 'antd'
-import { parseJwt } from '~/common/utils'
-import { useDispatch } from 'react-redux'
-import { setUser } from '~/store/userReducer'
-import { setAuthData, setAuthLoading } from '~/store/authReducer'
-import Router from 'next/router'
+ import { useDispatch } from 'react-redux'
+ import Router from 'next/router'
 import { playWithToken } from '~/common/utils/token-handle'
 
 const MonaSupportPattern = () => {

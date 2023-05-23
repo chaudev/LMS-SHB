@@ -1,18 +1,38 @@
+import { Collapse, Spin } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { majorsRegistrationApi } from '~/api/majors/registration'
-import PrimaryTable from '~/common/components/Primary/Table'
-import { ShowNostis } from '~/common/utils'
-import { parseToMoney } from '~/common/utils/common'
 
-interface TabMajors {
-	StudentDetail: IUserResponse
+import { majorsRegistrationApi } from '~/api/majors/registration'
+import { ShowNostis } from '~/common/utils'
+import CardPaymentTimes from './CardPaymentTime'
+import CardLearningHistory from './CardLearningHistory'
+import HeaderPanalMajors from './HeaderPanalMajors'
+import { foreignLanguageApi } from '~/api/foreign-language'
+import { visaStatusApi } from '~/api/visa-status'
+import { profileStatusApi } from '~/api/profile-status'
+import { processApi } from '~/api/process'
+
+interface TabMajors {}
+
+interface IOptionType {
+	foreignLanguage: IOption[]
+	visaStatus: IOption[]
+	profileStatus: IOption[]
+	processingStatus: IOption[]
 }
-const TabMajors: React.FC<TabMajors> = ({ StudentDetail }) => {
+
+interface IOption {
+	value: string | number
+	title: string
+}
+
+const TabMajors: React.FC<TabMajors> = () => {
 	const router = useRouter()
 	const { StudentID } = router.query
 	const [majors, setMajors] = useState<IMajorsRegistration[]>([])
 	const [loading, setLoading] = useState<'' | 'GET_ALL'>('')
+	const [panels, SetPanals] = useState<number[]>([])
+	const [optionType, setOptionType] = useState<IOptionType>()
 
 	const getMajorsRegistration = async () => {
 		try {
@@ -25,60 +45,105 @@ const TabMajors: React.FC<TabMajors> = ({ StudentDetail }) => {
 			const response = await majorsRegistrationApi.getAllMajorsRegistration(params)
 
 			if (response.status === 200) {
-				console.log(response)
 				setMajors(response.data.data)
+				SetPanals([response.data.data[0].Id])
 			}
 			if (response.status === 204) {
 				setMajors([])
 			}
 			setLoading('')
 		} catch (error) {
-			ShowNostis.error(error.message)
 			setLoading('')
+			ShowNostis.error(error.message)
 		}
+	}
+	const getAllOptionType = async () => {
+		try {
+			// setLoading('INIT_PAGE')
+			const [foreignLanguage, visaStatus, profileStatus, processingStatus] = await Promise.all([
+				foreignLanguageApi.getAll({ pageIndex: 1, pageSize: 9999 }),
+				visaStatusApi.getAll({ pageIndex: 1, pageSize: 9999 }),
+				profileStatusApi.getAll({ pageIndex: 1, pageSize: 9999 }),
+				processApi.getAll({ pageIndex: 1, pageSize: 9999 })
+			])
+
+			let tempOption = { foreignLanguage: [], visaStatus: [], profileStatus: [], processingStatus: [] }
+
+			if (foreignLanguage.status === 200) {
+				let temp = []
+				foreignLanguage.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
+				tempOption.foreignLanguage = temp
+			}
+			if (visaStatus.status === 200) {
+				let temp = []
+				visaStatus.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
+				tempOption.visaStatus = temp
+			}
+			if (profileStatus.status === 200) {
+				let temp = []
+				profileStatus.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
+				tempOption.profileStatus = temp
+			}
+			if (processingStatus.status === 200) {
+				let temp = []
+				processingStatus.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
+				tempOption.processingStatus = temp
+			}
+
+			setOptionType(tempOption)
+			// setLoading('')
+		} catch (error) {}
 	}
 
 	useEffect(() => {
-		if (!!StudentID) getMajorsRegistration()
+		if (!!StudentID) {
+			getAllOptionType()
+			getMajorsRegistration()
+		}
 	}, [StudentID])
 
-	const columns = [
-		{
-			title: 'Ngành học',
-			dataIndex: 'MajorsName',
-			render: (text) => <p className="text-[16px] font-[600]">{text}</p>
-		},
-		{
-			title: 'Giá tiền',
-			dataIndex: 'TotalPrice',
-			render: (text) => <p>{parseToMoney(text)}</p>
-		},
-		{
-			title: 'Trạng thái',
-			dataIndex: 'StatusName',
-			render: (value, item) => {
-				console.log(item)
-				return <span className={`tag ${item.Status == 1 ? 'blue' : 'gray'}`}>{value}</span>
-			}
-		},
-		{
-			title: 'Ghi chú',
-			dataIndex: 'Note',
-			render: (text) => <p>{text}</p>
-		},
-		{
-			title: 'Quà tặng',
-			dataIndex: 'GiftName',
-			render: (text) => <p>{text}</p>
-		},
-		{
-			title: 'Phương Thức thanh toán',
-			dataIndex: 'PaymentTypeName',
-			render: (text) => <p>{text}</p>
-		}
-	]
-
-	return <PrimaryTable columns={columns} loading={loading === 'GET_ALL'} data={majors} />
+	return (
+		<Spin spinning={loading === 'GET_ALL'}>
+			<div className="d-flex flex-col gap-3">
+				{majors &&
+					majors.map((item) => (
+						<Collapse
+							key={item.Id}
+							bordered={false}
+							defaultActiveKey={[majors[0].Id]}
+							onChange={(value) => {
+								if (value && !panels.includes(Number(value))) {
+									let refPanals = [...panels]
+									refPanals.push(Number(value))
+									SetPanals(refPanals)
+								}
+							}}
+						>
+							<Collapse.Panel
+								key={item.Id}
+								header={
+									<HeaderPanalMajors
+										majorsName={item.MajorsName}
+										paymentTypeName={item.PaymentTypeName}
+										giftName={item.GiftName}
+										note={item.Note}
+										statusName={item.StatusName}
+										status={item.Status}
+										paid={item.Paid}
+										totalPrice={item.TotalPrice}
+									/>
+								}
+							>
+								<div className="d-flex flex-col gap-3">
+									<CardPaymentTimes optionType={optionType} majorsId={item.Id} studentId={Number(StudentID)} panels={panels} />
+									<CardLearningHistory majorsId={item.Id} studentId={Number(StudentID)} panels={panels} />
+								</div>
+							</Collapse.Panel>
+						</Collapse>
+					))}
+			</div>
+		</Spin>
+	)
 }
 
 export default TabMajors

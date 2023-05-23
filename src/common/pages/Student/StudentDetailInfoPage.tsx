@@ -115,7 +115,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '9',
 						label: `Ngành học`,
-						children: <TabMajors StudentDetail={studentDetail} />
+						children: <TabMajors  />
 					}
 			  ]
 

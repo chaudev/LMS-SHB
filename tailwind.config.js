@@ -99,6 +99,7 @@ module.exports = {
 			'tw-primary': '#1b73e8',
 			'tw-primary-lightest': '#cc9fa7',
 			'tw-secondary': '#c94a4f'
+			 
 		},
 		screens: {
 			smartphone: '375px',
