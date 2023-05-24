@@ -1,12 +1,9 @@
-import { Input, Select, Skeleton } from 'antd'
-import { useRouter } from 'next/router'
+import { Input, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { transcriptApi } from '~/api/transcript'
-import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
-import InputTextField from '../FormControl/InputTextField'
 import PrimaryButton from '../Primary/Button'
 import PrimaryTable from '../Primary/Table'
 import { ModalTranscript } from './ModalTranscript'
@@ -36,7 +33,6 @@ const InputNote = ({ value, onChange, index }) => {
 }
 
 export const TranscriptPage = () => {
-	const router = useRouter()
 	const user = useSelector((state: RootState) => state.user.information)
 	const [loading, setLoading] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
@@ -44,6 +40,8 @@ export const TranscriptPage = () => {
 	const [transcriptId, setTranscriptId] = useState(null)
 	const [disabled, setDisabled] = useState(true)
 	const [dataTranscript, setDataTranscript] = useState<{ title: string; value: string }[]>([])
+
+	const currentClassDetails = useSelector((state: RootState) => state.classState.currentClassDetails)
 
 	const handleChangeListening = (info, index) => {
 		let temp = [...dataTable]
@@ -73,9 +71,23 @@ export const TranscriptPage = () => {
 		setDisabled(false)
 	}
 
+	const handleChangeGrammar = (info, index) => {
+		let temp = [...dataTable]
+		temp[index] = { ...temp[index], Grammar: info.target.value }
+		setDataTable(temp)
+		setDisabled(false)
+	}
+
 	const handleChangeMedium = (info, index) => {
 		let temp = [...dataTable]
 		temp[index] = { ...temp[index], Medium: info.target.value }
+		setDataTable(temp)
+		setDisabled(false)
+	}
+
+	const handleChangeStatus = (info, index) => {
+		let temp = [...dataTable]
+		temp[index] = { ...temp[index], PassOrFail: info }
 		setDataTable(temp)
 		setDisabled(false)
 	}
@@ -162,53 +174,27 @@ export const TranscriptPage = () => {
 	}, [transcriptId])
 
 	useEffect(() => {
-		if (router?.query?.class) {
-			getTranscriptByClass(router?.query?.class)
+		if (currentClassDetails?.Id) {
+			getTranscriptByClass(currentClassDetails?.Id)
 		}
-	}, [router?.query?.class])
+	}, [currentClassDetails?.Id])
 
 	const columns = [
 		{
-			title: 'Tên học viên',
+			fixed: 'left',
+			title: 'Học viên',
 			dataIndex: 'StudentName',
-			width: 180,
-			render: (text) => <p className="font-semibold">{text}</p>
-		},
-		{
-			title: 'Listening',
-			width: 100,
-			dataIndex: 'Listening',
-			render: (text, item, index) => (
-				<div className="antd-custom-wrap">
-					<Input
-						disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
-						onChange={(val) => handleChangeListening(val, index)}
-						value={item?.Listening}
-						className="rounded-lg h-[36px]"
-					/>
-				</div>
-			)
-		},
-		{
-			title: 'Speaking',
-			width: 100,
-			dataIndex: 'Speaking',
-			render: (text, item, index) => (
+			width: 200,
+			render: (text, item) => (
 				<>
-					<div className="antd-custom-wrap">
-						<Input
-							disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
-							onChange={(val) => handleChangeSpeaking(val, index)}
-							value={item?.Speaking}
-							className="rounded-lg h-[36px]"
-						/>
-					</div>
+					<p className="text-primary font-[600]">{text}</p>
+					<p className="text-[14px]">{item?.StudentCode}</p>
 				</>
 			)
 		},
 		{
-			title: 'Reading',
-			width: 100,
+			title: 'Đọc',
+			width: 80,
 			dataIndex: 'Reading',
 			render: (text, item, index) => (
 				<>
@@ -217,15 +203,30 @@ export const TranscriptPage = () => {
 							disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
 							onChange={(val) => handleChangeReading(val, index)}
 							value={item?.Reading}
-							className="rounded-lg h-[36px]"
+							className="rounded-lg h-[36px] text-center"
 						/>
 					</div>
 				</>
 			)
 		},
 		{
-			title: 'Writing',
-			width: 100,
+			title: 'Nghe',
+			width: 80,
+			dataIndex: 'Listening',
+			render: (text, item, index) => (
+				<div className="antd-custom-wrap">
+					<Input
+						disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
+						onChange={(val) => handleChangeListening(val, index)}
+						value={item?.Listening}
+						className="rounded-lg h-[36px] text-center"
+					/>
+				</div>
+			)
+		},
+		{
+			title: 'Viết',
+			width: 80,
 			dataIndex: 'Writing',
 			render: (text, item, index) => (
 				<>
@@ -234,15 +235,49 @@ export const TranscriptPage = () => {
 							disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
 							onChange={(val) => handleChangeWriting(val, index)}
 							value={item?.Writing}
-							className="rounded-lg h-[36px]"
+							className="rounded-lg h-[36px] text-center"
 						/>
 					</div>
 				</>
 			)
 		},
 		{
-			title: 'Trung bình',
-			width: 100,
+			title: 'Ngữ pháp',
+			width: 96,
+			dataIndex: 'Grammar',
+			render: (text, item, index) => (
+				<>
+					<div className="antd-custom-wrap">
+						<Input
+							disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
+							onChange={(val) => handleChangeGrammar(val, index)}
+							value={item?.Grammar}
+							className="rounded-lg h-[36px] text-center"
+						/>
+					</div>
+				</>
+			)
+		},
+		{
+			title: 'Nói',
+			width: 80,
+			dataIndex: 'Speaking',
+			render: (text, item, index) => (
+				<>
+					<div className="antd-custom-wrap">
+						<Input
+							disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
+							onChange={(val) => handleChangeSpeaking(val, index)}
+							value={item?.Speaking}
+							className="rounded-lg h-[36px] text-center"
+						/>
+					</div>
+				</>
+			)
+		},
+		{
+			title: 'Tổng',
+			width: 80,
 			dataIndex: 'Medium',
 			render: (text, item, index) => (
 				<>
@@ -251,14 +286,39 @@ export const TranscriptPage = () => {
 							disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
 							onChange={(val) => handleChangeMedium(val, index)}
 							value={item?.Medium}
-							className="rounded-lg h-[36px]"
+							className="rounded-lg h-[36px] text-center"
 						/>
 					</div>
 				</>
 			)
 		},
 		{
-			title: 'Ghi chú',
+			title: 'Trạng thái',
+			width: 100,
+			dataIndex: 'PassOrFail',
+			render: (text, item, index) => (
+				<>
+					<div className="antd-custom-wrap">
+						<Select
+							onChange={(val) => handleChangeStatus(val, index)}
+							value={item?.PassOrFail}
+							allowClear
+							className="primary-input !h-[34px] w-[100px]"
+							placeholder="Chọn"
+						>
+							<Select.Option key="false" value={false}>
+								Trượt
+							</Select.Option>
+							<Select.Option key="true" value={true}>
+								Đỗ
+							</Select.Option>
+						</Select>
+					</div>
+				</>
+			)
+		},
+		{
+			title: 'Nhận xét',
 			width: 180,
 			dataIndex: 'Note',
 			render: (text, item, index) => {
@@ -279,7 +339,7 @@ export const TranscriptPage = () => {
 								<div className="extra-table">
 									<ModalTranscript
 										mode="add"
-										onRefresh={() => getTranscriptByClass(router?.query?.class)}
+										onRefresh={() => getTranscriptByClass(currentClassDetails?.Id)}
 										setTranscriptId={setTranscriptId}
 									/>
 								</div>
@@ -305,11 +365,11 @@ export const TranscriptPage = () => {
 							</div>
 
 							{(user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7) && (
-								<div className="mr-tw-4 ml-[8px]">
+								<div className="mr-[8px] ml-[8px]">
 									<ModalTranscript
 										mode="delete"
 										Id={transcriptId}
-										onRefresh={() => getTranscriptByClass(router?.query?.class)}
+										onRefresh={() => getTranscriptByClass(currentClassDetails?.Id)}
 										setTranscriptId={setTranscriptId}
 									/>
 								</div>

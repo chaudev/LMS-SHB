@@ -24,6 +24,8 @@ import { RollUpTeacherPage } from './RollUpTeacherPage'
 import { ScheduleList } from './ScheduleList'
 import { TranscriptPage } from './TranscriptPage'
 import Router from 'next/router'
+import Head from 'next/head'
+import appConfigs from '~/appConfig'
 
 const itemsAdmin = [
 	'Lịch học',
@@ -54,6 +56,7 @@ const itemsParent = ['Lịch học', 'Các buổi học', 'Điểm danh', 'Bản
 
 const MenuClass = () => {
 	const user = useSelector((state: RootState) => state.user.information)
+	const currentClassDetails = useSelector((state: RootState) => state.classState.currentClassDetails)
 
 	const getAdminContent = (index) => {
 		switch (index) {
@@ -382,19 +385,24 @@ const MenuClass = () => {
 	}
 
 	return (
-		<Tabs
-			defaultActiveKey="0"
-			tabPosition="left"
-			activeKey={(Router.query?.menu || 0) + ''}
-			onChange={(event: any) => Router.push({ query: { ...Router?.query, menu: event } })}
-			items={getTabItems().items.map((item, index) => {
-				return {
-					label: getTabItems().label(item, index),
-					key: index.toString(),
-					children: getTabItems().children(index)
-				}
-			})}
-		/>
+		<>
+			<Head>
+				<title>{`${appConfigs.appName} - ${currentClassDetails?.Name}`}</title>
+			</Head>
+			<Tabs
+				defaultActiveKey="0"
+				tabPosition="left"
+				activeKey={(Router.query?.menu || 0) + ''}
+				onChange={(event: any) => Router.push({ query: { ...Router?.query, menu: event } })}
+				items={getTabItems().items.map((item, index) => {
+					return {
+						label: getTabItems().label(item, index),
+						key: index.toString(),
+						children: getTabItems().children(index)
+					}
+				})}
+			/>
+		</>
 	)
 }
 
