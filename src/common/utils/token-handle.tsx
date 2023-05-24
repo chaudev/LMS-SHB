@@ -51,13 +51,13 @@ async function playWithToken(params, dispatch) {
  * redirect them to the login page with the current page as a query parameter
  */
 async function logOut() {
-	// localStorage.clear()
-	// const redirect = Router.pathname
-	// if (redirect == '/' || redirect == '/dashboard') {
-	// 	Router.replace({ pathname: '/signin' })
-	// } else {
-	// 	Router.replace({ pathname: '/signin', query: { redirect: redirect } })
-	// }
+	localStorage.clear()
+	const redirect = Router.pathname
+	if (redirect == '/' || redirect == '/dashboard') {
+		Router.replace({ pathname: '/signin' })
+	} else {
+		Router.replace({ pathname: '/signin', query: { redirect: redirect } })
+	}
 }
 
 export { parseJwt, playWithToken, logOut }

@@ -31,6 +31,8 @@ import Lottie from 'react-lottie-player'
 
 import loadingJson from '~/common/components/json/loading-calendar.json'
 import { setBreadcrumb } from '~/store/globalState'
+import Head from 'next/head'
+import appConfigs from '~/appConfig'
 
 const CalenderClassEdit = () => {
 	const router = useRouter()
