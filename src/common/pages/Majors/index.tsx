@@ -13,7 +13,7 @@ import { Input } from 'antd'
 export const MajorsPage = () => {
 	const router = useRouter()
 	const init = { pageIndex: 1, pageSize: PAGE_SIZE, search: null }
-	const [data, setData] = useState([])
+	const [data, setData] = useState<IMajors[]>([])
 	const [loading, setLoading] = useState(false)
 	const [todoApi, setTodoApi] = useState(init)
 	const [totalItems, setTotalItems] = useState(0)
@@ -60,6 +60,12 @@ export const MajorsPage = () => {
 			width: 180,
 			dataIndex: 'Price',
 			render: (text) => <p className="">{parseToMoney(text)} VND</p>
+		},
+		{
+			title: 'Trạng thái',
+			width: 180,
+			dataIndex: 'StatusName',
+			render: (text) => <p className="">{text}</p>
 		},
 		{
 			title: 'Mô tả',

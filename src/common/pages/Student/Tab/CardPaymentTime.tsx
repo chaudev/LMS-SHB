@@ -32,14 +32,15 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 	const [form] = Form.useForm()
 	const Items = Form.useWatch('Items', form)
 	const [open, setOpen] = useState(false)
+	console.log('panels', panels)
 
 	const [paymentTimes, setPaymentTimes] = useState<IPaymentTimes[]>([])
-	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'UPDATE_PAYMENT_TIME'>('')
+	const [loading, setLoading] = useState<string>('')
 	const [progress, setProgress] = useState<number>(0)
 
 	const getPaymentTime = async () => {
 		try {
-			setLoading('GET_ALL')
+			setLoading(`GET_ALL_${majorsId}`)
 			const params = {
 				majorsRegistrationId: Number(majorsId),
 				studentId: studentId,
@@ -59,7 +60,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 	}
 
 	useEffect(() => {
-		if (!!majorsId && panels && panels.includes(majorsId)) {
+		if ((!!majorsId && panels && panels.includes(majorsId)) && paymentTimes.length === 0) {
 			getPaymentTime()
 		}
 	}, [majorsId, panels])
@@ -126,12 +127,9 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 		}
 	}
 
-	if (loading === 'GET_ALL') {
-		return <Skeleton />
-	}
-
 	return (
 		<Card
+			id={String(majorsId)}
 			title="Đợt thanh toán"
 			extra={
 				<>
@@ -144,6 +142,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 					)}
 				</>
 			}
+			loading={loading === `GET_ALL_${majorsId}`}
 		>
 			{paymentTimes && paymentTimes.length > 0 ? (
 				<Timeline className="p-3">

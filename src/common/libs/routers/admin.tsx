@@ -1,8 +1,7 @@
 import { AiFillSetting } from 'react-icons/ai'
 import { BsFillGridFill } from 'react-icons/bs'
-import { FaMediumM, FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
-import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
-import { RiFileList2Fill } from 'react-icons/ri'
+import { FaLayerGroup, FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+
 import { TiHome } from 'react-icons/ti'
 
 export const AdminMenu = [
@@ -24,7 +23,7 @@ export const AdminMenu = [
 	{
 		Key: 'majors',
 		TabName: 'Ngành học',
-		Icon: <FaMediumM size={20} />
+		Icon: <FaLayerGroup size={20} />
 	},
 	{
 		Key: 'staff',
@@ -102,8 +101,8 @@ export const AdminChildMenu = [
 			},
 			{
 				TypeItem: 'single',
-				Key: '/finance/paymentApprove',
-				Route: '/finance/paymentApprove',
+				Key: '/finance/payment-approve',
+				Route: '/finance/payment-approve',
 				Icon: '',
 				Text: 'Duyệt thanh toán'
 			},
@@ -239,21 +238,21 @@ export const AdminChildMenu = [
 				Route: '/users/salary',
 				Text: 'Bảng lương',
 				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/users/teacher/open-calender',
-				Route: '/users/teacher/open-calender',
-				Text: 'Mở lịch trống',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/users/salary-tutoring-config',
-				Route: '/users/salary-tutoring-config',
-				Text: 'Cấu hình lương dạy kèm',
-				Icon: ''
 			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/users/teacher/open-calender',
+			// 	Route: '/users/teacher/open-calender',
+			// 	Text: 'Mở lịch trống',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/users/salary-tutoring-config',
+			// 	Route: '/users/salary-tutoring-config',
+			// 	Text: 'Cấu hình lương dạy kèm',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{

@@ -8,6 +8,7 @@ import PrimaryButton from '~/common/components/Primary/Button'
 import IconButton from '~/common/components/Primary/IconButton'
 import { ShowNoti } from '~/common/utils'
 import InputNumberField from '~/common/components/FormControl/InputNumberField'
+import SelectField from '~/common/components/FormControl/SelectField'
 
 type I = {
 	mode: 'add' | 'edit' | 'delete'
@@ -194,6 +195,29 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 											placeholder="Nhập giá"
 										/>
 									</div>
+									{mode === 'edit' ? (
+										<div className="col-span-2">
+											<SelectField
+												isRequired
+												rules={[{ required: true, message: 'Bạn không được để trống!' }]}
+												label="Trạng thái"
+												name="Status"
+												placeholder="Cập nhật trạng thái"
+												optionList={[
+													{
+														value: 1,
+														title: 'Mở khóa học'
+													},
+													{
+														value: 2,
+														title: 'Đóng khóa học'
+													}
+												]}
+											/>
+										</div>
+									) : (
+										''
+									)}
 									<TextBoxField className="col-span-2" name="Description" label="Mô tả" />
 								</>
 							)}

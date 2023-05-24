@@ -107,15 +107,6 @@ const StudyRouteTemplatePage = () => {
 							icon="edit"
 							color="yellow"
 						></IconButton>
-
-						{/* <IconButton
-							onClick={() => deleteStudyRouteTemplate(item)}
-							loading={loading === `DELETE_${item.Id}`}
-							tooltip="Xóa lộ trình"
-							type="button"
-							icon="remove"
-							color="red"
-						></IconButton> */}
 					</div>
 				)
 			}
@@ -128,12 +119,18 @@ const StudyRouteTemplatePage = () => {
 			const response = await studyRouteTemplateApi.deleteStudyRouteTemplate(item.Id)
 			if (response.status == 200) {
 				ShowNostis.success(response.data.message)
-				const res = await studyRouteTemplateApi.getAllStudyRoute(apiParameters)
-				if (res.status === 200) {
-					setRouteTemplates(res.data.data)
-					setTotalRow(res.data.totalRow)
-				}
+				// const res = await studyRouteTemplateApi.getAllStudyRoute(apiParameters)
+				// if (res.status === 200) {
+				// 	setRouteTemplates(res.data.data)
+				// 	setTotalRow(res.data.totalRow)
+				// }
+				// if (res.status === 204) {
+				// 	setRouteTemplates([])
+				// 	setTotalRow(1)
+				// }
+				await getAllStudyRouteTemplate()
 			}
+
 			setLoading(``)
 		} catch (error) {
 			setLoading(``)

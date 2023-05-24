@@ -3,6 +3,8 @@ type IMajors = {
 	Thumbnail: string
 	Price: number
 	Description: string
+	Status:number,
+	StatusName:string
 	Id: number
 }
 

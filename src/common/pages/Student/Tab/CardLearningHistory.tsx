@@ -13,11 +13,13 @@ interface ICardLearningHistory {
 
 const CardLearningHistory: React.FC<ICardLearningHistory> = ({ majorsId, studentId, panels }) => {
 	const [learningHistorys, setLearningHistorys] = useState<ILearningHistory[]>([])
-	const [loading, setLoading] = useState<boolean>(false)
+	const [loading, setLoading] = useState<string>('')
 
 	const getLearningHistory = async () => {
 		try {
-			setLoading(true)
+			setLoading(String(majorsId))
+			console.log('setLoading(String(majorsId))', majorsId)
+
 			const params = {
 				majorsRegistrationId: Number(majorsId),
 				studentId: studentId,
@@ -29,35 +31,32 @@ const CardLearningHistory: React.FC<ICardLearningHistory> = ({ majorsId, student
 			if (ressponse.status === 200) {
 				setLearningHistorys(ressponse.data.data)
 			}
-			setLoading(false)
+			setLoading('')
 		} catch (error) {
 			ShowNostis.error(error.message)
-			setLoading(false)
+			setLoading('')
 		}
 	}
 
 	useEffect(() => {
-		if (!!majorsId && panels && panels.includes(majorsId)) {
+		if (!!majorsId && panels && panels.includes(majorsId) && learningHistorys.length === 0) {
 			getLearningHistory()
 		}
 	}, [majorsId, panels])
 
-	if (loading) {
-		return <Skeleton />
-	}
 	return (
-		<Card title="Lịch sử học tập">
+		<Card title="Lịch sử học tập" loading={loading === String(majorsId)}>
 			{learningHistorys && learningHistorys.length > 0 ? (
 				<Timeline className="p-3">
 					{learningHistorys.map((item) => {
 						return (
 							<Timeline.Item color="blue" key={item.Id} dot={<BsClockHistory size={22} />}>
-								<Card >
+								<Card>
 									<Card.Meta
 										description={
 											<div className="d-flex flex-col gap-3  radius-lg">
 												<span className={`text-base	text-[#1890ff]`}>{moment(item.CreatedOn).format('HH:MM DD/MM/YYYY')}</span>
-												<span className={``}>{item.Description}</span>
+												<span className={`text-[black]`}>{item.Description}</span>
 											</div>
 										}
 									></Card.Meta>

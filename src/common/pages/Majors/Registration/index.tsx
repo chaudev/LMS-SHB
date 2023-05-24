@@ -74,7 +74,7 @@ const MajorsRegistrationPage = () => {
 			let templData = { students: [], majors: [], gift: [], payment: [] }
 			const [students, majors, gift, paymentType] = await Promise.all([
 				majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
-				majorsApi.getAll({ pageSize: 9999, pageIndex: 1 }),
+				majorsApi.getAll({ pageSize: 9999, pageIndex: 1, status: 1 }),
 				giftApi.getAll({ pageSize: 9999, pageIndex: 1 }),
 				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 })
 			])
@@ -223,6 +223,7 @@ const MajorsRegistrationPage = () => {
 			if (response.status === 200) {
 				ShowNostis.success(response.data.message)
 			}
+			form.resetFields()
 			setLoading('')
 		} catch (error) {
 			ShowNostis.error(error.message)

@@ -76,8 +76,8 @@ export const AccountantChildMenu = [
 			},
 			{
 				TypeItem: 'single',
-				Key: '/finance/paymentApprove',
-				Route: '/finance/paymentApprove',
+				Key: '/finance/payment-approve',
+				Route: '/finance/payment-approve',
 				Icon: '',
 				Text: 'Duyệt thanh toán'
 			},

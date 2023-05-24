@@ -95,8 +95,8 @@ export const AcademicChildMenu = [
 			},
 			{
 				TypeItem: 'single',
-				Key: '/finance/paymentApprove',
-				Route: '/finance/paymentApprove',
+				Key: '/finance/payment-approve',
+				Route: '/finance/payment-approve',
 				Icon: '',
 				Text: 'Duyệt thanh toán'
 			}
@@ -193,13 +193,13 @@ export const AcademicChildMenu = [
 				Text: 'Bảng lương',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/users/teacher/open-calender',
-				Route: '/users/teacher/open-calender',
-				Text: 'Mở lịch trống',
-				Icon: ''
-			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/users/teacher/open-calender',
+			// 	Route: '/users/teacher/open-calender',
+			// 	Text: 'Mở lịch trống',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{

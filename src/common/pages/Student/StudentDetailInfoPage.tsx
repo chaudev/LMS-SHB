@@ -34,8 +34,6 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 			if (res.status === 200) {
 				setStudentDetail(res.data.data)
 			}
-			if (res.status === 204) {
-			}
 		} catch (err) {
 			ShowNoti('error', err.message)
 		}

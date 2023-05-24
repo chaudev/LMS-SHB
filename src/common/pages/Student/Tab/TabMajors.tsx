@@ -106,15 +106,16 @@ const TabMajors: React.FC<TabMajors> = () => {
 		<Spin spinning={loading === 'GET_ALL'}>
 			<div className="d-flex flex-col gap-3">
 				{majors &&
-					majors.map((item) => (
+					majors.map((item) => ( 	
 						<Collapse
 							key={item.Id}
 							bordered={false}
 							defaultActiveKey={[majors[0].Id]}
 							onChange={(value) => {
-								if (value && !panels.includes(Number(value))) {
+								console.log(value)
+								if (value && !panels.includes(item.Id)) {
 									let refPanals = [...panels]
-									refPanals.push(Number(value))
+									refPanals.push(item.Id)
 									SetPanals(refPanals)
 								}
 							}}
