@@ -252,18 +252,18 @@ const Programs = () => {
 				return <p className="font-weight-primary">{text}</p>
 			}
 		},
-		{
-			title: 'Học phí',
-			width: 120,
-			dataIndex: 'Price',
-			render: (Price) => {
-				return (
-					<p className="font-weight-black weight-600" style={{ color: 'black' }}>
-						{new Intl.NumberFormat().format(Price)}
-					</p>
-				)
-			}
-		},
+		// {
+		// 	title: 'Học phí',
+		// 	width: 120,
+		// 	dataIndex: 'Price',
+		// 	render: (Price) => {
+		// 		return (
+		// 			<p className="font-weight-black weight-600" style={{ color: 'black' }}>
+		// 				{new Intl.NumberFormat().format(Price)}
+		// 			</p>
+		// 		)
+		// 	}
+		// },
 		{
 			title: 'Người tạo',
 			width: 110,

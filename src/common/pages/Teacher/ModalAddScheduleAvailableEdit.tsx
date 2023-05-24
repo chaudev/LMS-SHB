@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlineWarning } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { scheduleAvailableApi } from '~/api/schedule-available'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 import DatePickerField from '~/common/components/FormControl/DatePickerField'
 import SelectField from '~/common/components/FormControl/SelectField'
 import TextBoxField from '~/common/components/FormControl/TextBoxField'
@@ -23,7 +23,7 @@ const ModalAddScheduleAvailableEdit = (props) => {
 	const [teachers, setTeacher] = useState<{ title: string; value: string }[]>([])
 	const getTeacher = async () => {
 		try {
-			const res = await userInformationApi.getByRole(2)
+			const res = await userInformationApi.getAllUserByRole(2)
 			if (res.status === 200) {
 				let temp = []
 				res?.data?.data?.forEach((item) => {

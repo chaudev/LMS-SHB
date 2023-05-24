@@ -1,7 +1,7 @@
 import { Tooltip } from 'antd'
 import React, { useEffect } from 'react'
 import { FiCopy } from 'react-icons/fi'
-import RestApi from '~/api/RestApi'
+import { billApi } from '~/api/bill'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNostis } from '~/common/utils'
@@ -18,7 +18,7 @@ const BillDetails = ({ bill }) => {
 
 	async function getData() {
 		try {
-			const res = await RestApi.getByID<any>('Bill/detail', bill?.Id)
+			const res = await billApi.getBillDetail(bill?.Id)
 			if (res.status == 200) {
 				setData(res.data.data)
 				setTotalPage(res.data.totalRow)

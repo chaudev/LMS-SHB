@@ -15,7 +15,7 @@ import InputNumberField from '../../FormControl/InputNumberField'
 import { removeCommas } from '~/common/utils/super-functions'
 import { parseToMoney } from '~/common/utils/common'
 import PrimaryButton from '../../Primary/Button'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 
 interface IPaymentForm {
 	isEdit?: boolean
@@ -37,10 +37,6 @@ const PaymentForm: FC<IPaymentForm> = ({ isEdit, onRefresh, item }) => {
 	const [students, setStudents] = useState<any>([])
 
 	function toggle() {
-		setVisible(!visible)
-	}
-
-	function openEdit() {
 		setVisible(!visible)
 	}
 
@@ -197,7 +193,7 @@ const PaymentForm: FC<IPaymentForm> = ({ isEdit, onRefresh, item }) => {
 							))}
 						</Select>
 					</Form.Item>
-					<Form.Item className="col-span-1" name="PaymentMethodId" label="Phương thức thanh toán" rules={formRequired}>
+					{/* <Form.Item className="col-span-1" name="PaymentMethodId" label="Phương thức thanh toán" rules={formRequired}>
 						<Select loading={methodsLoading} disabled={loading} placeholder="Chọn phương thức" className="primary-input">
 							{methods.map((thisMethod) => {
 								return (
@@ -207,14 +203,14 @@ const PaymentForm: FC<IPaymentForm> = ({ isEdit, onRefresh, item }) => {
 								)
 							})}
 						</Select>
-					</Form.Item>
+					</Form.Item> */}
 					<InputNumberField
 						disabled={loading}
 						onChange={(event) => form.setFieldValue('Price', event.target.value)}
 						label="Số tiền"
 						name="Price"
 						placeholder="Nhập số tiền"
-						className="col-span-1"
+						className="col-span-2"
 					/>
 					<Form.Item className="col-span-2" label="Ghi chú" name="Note" rules={formNoneRequired}>
 						<Input.TextArea rows={5} placeholder="" disabled={loading} />

@@ -7,7 +7,7 @@ import { branchApi } from '~/api/branch'
 import { learningNeedApi } from '~/api/learning-needs'
 import { purposeApi } from '~/api/purpose'
 import { sourceApi } from '~/api/source'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 import { ShowNoti } from '~/common/utils'
 import DatePickerField from '../FormControl/DatePickerField'
 import InputTextField from '../FormControl/InputTextField'
@@ -127,7 +127,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				areaApi.getAll({ pageIndex: 1, pageSize: 99999 }),
 				sourceApi.getAll({ pageIndex: 1, pageSize: 99999 }),
 				learningNeedApi.getAll({ pageIndex: 1, pageSize: 99999 }),
-				userInformationApi.getByRole(5),
+				userInformationApi.getAllUserByRole(5),
 				purposeApi.getAll({ pageIndex: 1, pageSize: 99999 }),
 				officeApi.getAll({ pageIndex: 1, pageSize: 99999 }),
 				profileStatusApi.getAll({ pageIndex: 1, pageSize: 99999 }),

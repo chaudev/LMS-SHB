@@ -14,7 +14,7 @@ import FilterColumn from '~/common/components/FilterTable/Filter/FilterColumn'
 import { fmSelectArr } from '~/common/utils/common'
 import { ShowNoti } from '~/common/utils'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { roleApi } from '~/api/user'
+import { roleApi } from '~/api/user/user'
 
 const StaffSalaryPage = () => {
 	const [dataTable, setDataTable] = useState<IStaffSalary[]>([])

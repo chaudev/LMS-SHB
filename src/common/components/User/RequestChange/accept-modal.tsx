@@ -1,11 +1,11 @@
 import { Modal, Card, Popconfirm } from 'antd'
 import React, { FC, useState } from 'react'
-import { requestApi } from '~/api/user'
 import { ShowNoti } from '~/common/utils'
 
 import moment from 'moment'
 import IconButton from '../../Primary/IconButton'
 import PrimaryButton from '../../Primary/Button'
+import { changeInfoApi } from '~/api/user/change-info'
 
 const AcceptRequest: FC<{ data: any; onRefresh?: Function; onDelete?: Function }> = (props) => {
 	const { onRefresh, data, onDelete } = props
@@ -16,7 +16,7 @@ const AcceptRequest: FC<{ data: any; onRefresh?: Function; onDelete?: Function }
 	async function postAccept() {
 		setLoading(true)
 		try {
-			const response = await requestApi.acceptUpdate(data?.Id)
+			const response = await changeInfoApi.acceptUpdate(data?.Id)
 			if (response.status === 200) {
 				if (!!onRefresh) {
 					onRefresh()

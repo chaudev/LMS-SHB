@@ -16,8 +16,8 @@ type IProps = {
 		mode?: 'multiple' | 'tag'
 		optionList?: { title: string; value: any }[]
 		value?: number
-		handleScroll: Function
-		handleSearch: Function
+		handleScroll?: Function
+		handleSearch?: Function
 	}[]
 	handleFilter: Function
 	handleReset: Function

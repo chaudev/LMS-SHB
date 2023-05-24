@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { branchApi } from '~/api/branch'
 import { paymentMethodsApi } from '~/api/payment-method'
 import { refundApi } from '~/api/refund'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 import PrimaryTable from '~/common/components/Primary/Table'
 import PrimaryTag from '~/common/components/Primary/Tag'
@@ -200,7 +200,7 @@ export default function RefundPage(props: IRefundPageProps) {
 
 	const getOptionStudent = async () => {
 		try {
-			let res = await userInformationApi.getByRole(3)
+			let res = await userInformationApi.getAllUserByRole(3)
 			if (res.status == 200) {
 				let temp = []
 				res.data.data.forEach((item) => temp.push({ title: `${item.FullName}-${item.UserCode}`, value: item.UserInformationId }))

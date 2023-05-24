@@ -5,7 +5,7 @@ import PrimaryButton from '../../Primary/Button'
 import TextArea from 'antd/lib/input/TextArea'
 import IconButonUpdateUser from './IconButonUpdateUser'
 import { useRouter } from 'next/router'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 import { ShowNostis } from '~/common/utils'
 import { FiChevronDown } from 'react-icons/fi'
 

@@ -4,7 +4,7 @@ import { Edit } from 'react-feather'
 import { useForm } from 'react-hook-form'
 import { MdAddCircleOutline, MdSave } from 'react-icons/md'
 import { feedbackApi } from '~/api/feedback'
-import { roleApi } from '~/api/user'
+import { roleApi } from '~/api/user/user'
 // import { useWrap } from '~/src/context/wrap'
 import { ShowNoti } from '~/common/utils'
 

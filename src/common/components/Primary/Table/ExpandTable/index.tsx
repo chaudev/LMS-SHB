@@ -84,8 +84,6 @@ const ExpandTable = (props) => {
 		}
 	}, [props.isResetKey])
 
-	console.log(props.sumPrice)
-
 	const renderStatistical = () => {
 		return (
 			<div className="statistical-contain">

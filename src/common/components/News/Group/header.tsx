@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 import { FaUserPlus } from 'react-icons/fa'
 import { IoClose, IoPersonAddSharp } from 'react-icons/io5'
 import RestApi from '~/api/RestApi'
-import { userInNewsFeedGroup } from '~/api/user'
 import { ShowNostis } from '~/common/utils'
 import GroupForm from './form'
 import Avatar from '../../Avatar'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
+import { userInNewsFeedGroup } from '~/api/user/user-in-news-feed-group'
 
 const { Search } = Input
 

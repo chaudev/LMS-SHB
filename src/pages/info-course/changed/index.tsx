@@ -95,7 +95,7 @@ const ChangedPage = () => {
 							{value}
 						</a>
 					</PrimaryTooltip>
-					<h3 className="text-[14px] font-[400]">{parseToMoney(item?.OldPrice)}</h3>
+					{/* <h3 className="text-[14px] font-[400]">{parseToMoney(item?.OldPrice)}</h3> */}
 				</div>
 			)
 		},
@@ -113,7 +113,7 @@ const ChangedPage = () => {
 							{value}
 						</a>
 					</PrimaryTooltip>
-					<h3 className="text-[14px] font-[400]">{parseToMoney(item?.NewPrice)}</h3>
+					{/* <h3 className="text-[14px] font-[400]">{parseToMoney(item?.NewPrice)}</h3> */}
 				</div>
 			)
 		},

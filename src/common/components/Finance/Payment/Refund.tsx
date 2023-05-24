@@ -113,7 +113,6 @@ const RefundForm: FC<IRefund> = ({ isEdit, onRefresh, item }) => {
 			StudentId: item?.StudentId
 		}
 
-		console.log('-- DATA_SUBMIT', DATA_SUBMIT)
 
 		!isEdit && post(DATA_SUBMIT)
 		isEdit && edit(DATA_SUBMIT)

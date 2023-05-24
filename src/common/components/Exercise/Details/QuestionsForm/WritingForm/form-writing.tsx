@@ -66,7 +66,6 @@ const FormWriting: FC<IGroupForm> = (props) => {
 
 	// Call api update new section data
 	async function postCreateQuestion(param) {
-		console.log('DATA_SUBMIT: ', param)
 		let temp = []
 		let count = 1
 		exercises.forEach((element) => {
@@ -100,7 +99,6 @@ const FormWriting: FC<IGroupForm> = (props) => {
 	}
 
 	async function _submit(param) {
-		console.log('-- submit param: ', { ...param, AnswerCreates: [] })
 
 		setLoading(true)
 		setTextError('')

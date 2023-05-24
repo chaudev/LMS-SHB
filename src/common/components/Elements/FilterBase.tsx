@@ -7,6 +7,7 @@ import { MdOutlineRestore, MdSearch } from 'react-icons/md'
 
 const FilterBase = (props) => {
 	const { dataFilter } = props
+
 	const { handleFilter, handleReset } = props
 	const { RangePicker } = DatePicker
 
@@ -26,7 +27,8 @@ const FilterBase = (props) => {
 	}
 
 	// ------------- ON SUBMIT -----------------
-	const onSubmit = () => {
+	const onSubmit = (params) => {
+		listFilter
 		handleFilter(listFilter)
 		// resetFilter();
 		// form.resetFields();
@@ -42,13 +44,12 @@ const FilterBase = (props) => {
 			}
 			return true
 		})
+
 		setListFilter([...listFilter])
 	}
 
 	// ------------- GET VALUE FILTER ----------------
 	const getValueFilter = (value, typeFilter, nameFilter) => {
-		console.log('getValueFilter: ', value)
-
 		switch (typeFilter) {
 			case 'date-range':
 				if (value.length > 1) {
@@ -71,6 +72,9 @@ const FilterBase = (props) => {
 			case 'date-single':
 				let formatValue = moment(value.toDate()).format('YYYY/MM/DD')
 				returnListFilter(formatValue, nameFilter)
+				break
+			case 'select':
+				returnListFilter(value, nameFilter)
 				break
 			default:
 				returnListFilter(value, nameFilter)

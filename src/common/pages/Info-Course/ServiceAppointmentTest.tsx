@@ -19,7 +19,7 @@ import { useDispatch } from 'react-redux'
 import { setBranch } from '~/store/branchReducer'
 import StudentForm from '~/common/components/Student/StudentForm'
 import { examApi } from '~/api/exam'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 import ExpandedRowAppointment from '~/common/components/Service/ExpandedRowAppointment'
 import IconButton from '~/common/components/Primary/IconButton'
 import { useRouter } from 'next/router'
@@ -302,7 +302,7 @@ export default function ServiceAppointmentTest(props) {
 
 	const getTeachers = async () => {
 		try {
-			const res = await userInformationApi.getByRole(2)
+			const res = await userInformationApi.getAllUserByRole(2)
 			if (res.status === 200) {
 				setListTeacher(parseSelectArrayUser(res.data.data, 'FullName', 'UserCode', 'UserInformationId'))
 			} else {
@@ -315,7 +315,7 @@ export default function ServiceAppointmentTest(props) {
 
 	const getStudents = async () => {
 		try {
-			const res = await userInformationApi.getByRole(3)
+			const res = await userInformationApi.getAllUserByRole(3)
 			if (res.status === 200) {
 				setListStudent(parseSelectArrayUser(res.data.data, 'FullName', 'UserCode', 'UserInformationId'))
 			} else {

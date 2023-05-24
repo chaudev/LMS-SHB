@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { requestApi } from '~/api/user'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
 
 import PrimaryTable from '../../Primary/Table'
 import AcceptRequest from './accept-modal'
+import { changeInfoApi } from '~/api/user/change-info'
 
 const initParamters = {
 	pageSize: PAGE_SIZE,
@@ -25,7 +25,7 @@ const RequestChange = () => {
 	async function deleteRequest(param) {
 		setLoading(true)
 		try {
-			const response = await requestApi.delete(param)
+			const response = await changeInfoApi.delete(param)
 			if (response.status === 200) {
 				getRequest(apiParameters)
 			}
@@ -70,7 +70,7 @@ const RequestChange = () => {
 	const getRequest = async (param) => {
 		setLoading(true)
 		try {
-			const response = await requestApi.getAll(param)
+			const response = await changeInfoApi.getAll(param)
 			if (response.status === 200) {
 				setRequest(response.data.data)
 				setTotalRow(response.data.totalRow)

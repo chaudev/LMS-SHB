@@ -1,4 +1,4 @@
-import { instance } from './instance'
+import { instance } from '../instance'
 
 const url = '/api/UserInformation'
 
@@ -11,7 +11,7 @@ export const userInformationApi = {
 		})
 	},
 
-	getByRole(role) {
+	getAllUserByRole(role) {
 		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/user-available/${role}`)
 	},
 
@@ -104,26 +104,6 @@ export const accountApi = {
 	}
 }
 
-export const requestApi = {
-	getAll(params) {
-		return instance.get<IApiResultData<any>>('/api/ChangeInfo', { params })
-	},
-	getByID(ID) {
-		return instance.get<IApiResultData<IUserResponse>>(`${'/api/ChangeInfo'}${ID}`)
-	},
-	add(data) {
-		return instance.post('/api/ChangeInfo', data)
-	},
-	update(data: { Enable?: boolean } & any) {
-		return instance.put('/api/ChangeInfo', data)
-	},
-	acceptUpdate(ID) {
-		return instance.put(`/api/ChangeInfo/${ID}/Status/Approve`)
-	},
-	delete(data) {
-		return instance.delete('/api/ChangeInfo/' + data)
-	}
-}
 
 export const roleApi = {
 	getRole(roleType) {
@@ -135,20 +115,3 @@ export const roleApi = {
 	}
 }
 
-export const userInNewsFeedGroup = {
-	getAllUserInRoom(params: { newsFeedGroupId: number }) {
-		return instance.get<IApiResultData<any>>('/api/UserInNewsFeedGroup', {
-			params
-		})
-	},
-	addMember(params) {
-		return instance.post('/api/UserInNewsFeedGroup', params)
-	},
-	getUserNotIn(groupId) {
-		return instance.get(`/api/UserInNewsFeedGroup/user-not-in-group/${groupId}`, {})
-	},
-
-	deleteMember(memberId) {
-		return instance.delete(`/api/UserInNewsFeedGroup/${memberId}`, {})
-	}
-}

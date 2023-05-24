@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { areaApi } from '~/api/area'
-import { registerApi, userInformationApi } from '~/api/user'
+import { registerApi, userInformationApi } from '~/api/user/user'
 import { Input, Popover } from 'antd'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'

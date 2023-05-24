@@ -10,7 +10,7 @@ import { MdOutlineAttachMoney, MdOutlineBookmarkAdded, MdOutlineBookmarkBorder, 
 import { RiComputerLine } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { classApi } from '~/api/class'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 import { ShowNoti } from '~/common/utils'
 import { parseSelectArray, parseToMoney } from '~/common/utils/common'
 import { RootState } from '~/store'

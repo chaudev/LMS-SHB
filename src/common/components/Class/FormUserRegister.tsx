@@ -3,7 +3,7 @@ import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { billApi } from '~/api/bill'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 import { ShowNoti } from '~/common/utils'
 import Avatar from '../Avatar'
 

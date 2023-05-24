@@ -1,5 +1,5 @@
-import { DatePicker, Form, Input, Modal } from 'antd'
-import React, { FC, useState } from 'react'
+import { DatePicker, Form, Input, Modal, Select } from 'antd'
+import React, { FC, useEffect, useState } from 'react'
 import RestApi from '~/api/RestApi'
 import { ShowNostis } from '~/common/utils'
 import PrimaryTooltip from '../../PrimaryTooltip'
@@ -8,6 +8,7 @@ import ModalFooter from '../../ModalFooter'
 import { formNoneRequired, formRequired } from '~/common/libs/others/form'
 import InputNumberField from '../../FormControl/InputNumberField'
 import moment from 'moment'
+import { paymentMethodsApi } from '~/api/payment-method'
 
 interface IPayForm {
 	isEdit?: boolean
@@ -27,6 +28,8 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 
 	const [loading, setLoading] = useState(false)
 	const [visible, setVisible] = useState(false)
+	const [methods, setMethods] = useState<any>([])
+	const [methodsLoading, setMethodsLoading] = useState(false)
 
 	function toggle() {
 		setVisible(!visible)
@@ -40,6 +43,31 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 		return 'Thanh toán'
 	}
 
+	const getPaymentMethods = async () => {
+		if (methods.length == 0) {
+			setMethodsLoading(true)
+			try {
+				const res = await paymentMethodsApi.getAll()
+				if (res.status == 200) {
+					setMethods(res.data.data)
+				}
+				if (res.status == 204) {
+					setMethods([])
+				}
+			} catch (err) {
+				ShowNostis.error(err?.message)
+			} finally {
+				setMethodsLoading(false)
+			}
+		}
+	}
+
+	useEffect(() => {
+		if (visible) {
+			getPaymentMethods()
+		}
+	}, [visible])
+
 	function onFinish(params) {
 		setLoading(true)
 
@@ -47,8 +75,6 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 			...params,
 			Paid: removeCommas(params.Paid)
 		}
-
-		console.log('-- DATA_SUBMIT', DATA_SUBMIT)
 
 		!isEdit && post(DATA_SUBMIT)
 		isEdit && edit(DATA_SUBMIT)
@@ -132,7 +158,17 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 							onChange={(e) => form.setFieldValue('PaymentAppointmentDate', e)}
 						/>
 					</Form.Item>
-
+					<Form.Item className="col-span-2" name="PaymentMethodId" label="Phương thức thanh toán" rules={formRequired}>
+						<Select loading={methodsLoading} disabled={loading} placeholder="Chọn phương thức" className="primary-input">
+							{methods.map((thisMethod) => {
+								return (
+									<Select.Option key={thisMethod.Id} value={thisMethod.Id}>
+										{thisMethod?.Name}
+									</Select.Option>
+								)
+							})}
+						</Select>
+					</Form.Item>
 					<Form.Item className="col-span-2" label="Ghi chú" name="Note" rules={formNoneRequired}>
 						<Input.TextArea disabled={loading} rows={5} placeholder="" />
 					</Form.Item>

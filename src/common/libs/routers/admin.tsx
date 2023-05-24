@@ -352,7 +352,7 @@ export const AdminChildMenu = [
 				ItemType: 'single',
 				Key: '/majors/registration',
 				Route: '/majors/registration',
-				Text: 'Đăng ký Ngành học',
+				Text: 'Đăng ký ngành học',
 				Icon: ''
 			},
 			{

@@ -92,7 +92,7 @@ const ProgramForm = React.memo((props: any) => {
 								/>
 							</div>
 
-							<div className="col-md-6 col-12">
+							{/* <div className="col-md-6 col-12">
 								<InputNumberField
 									className="w-full"
 									placeholder="Nhập học phí"
@@ -100,7 +100,7 @@ const ProgramForm = React.memo((props: any) => {
 									label="Học phí"
 									rules={[{ required: true, message: 'Bạn không được để trống' }]}
 								/>
-							</div>
+							</div> */}
 
 							<div className="col-12">
 								<EditorField

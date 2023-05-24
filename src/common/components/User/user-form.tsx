@@ -1,6 +1,6 @@
 import { Modal, Form, Divider, Select } from 'antd'
 import React, { FC, useEffect, useMemo, useState } from 'react'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 import { parseJwt, ShowNoti } from '~/common/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '~/store'

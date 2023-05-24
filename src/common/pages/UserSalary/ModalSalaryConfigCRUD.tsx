@@ -1,7 +1,7 @@
 import { Form, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { permissionApi } from '~/api/permission'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 import InputNumberField from '~/common/components/FormControl/InputNumberField'
 import TextBoxField from '~/common/components/FormControl/TextBoxField'
 import SelectField from '~/common/components/FormControl/SelectField'

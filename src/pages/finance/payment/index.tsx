@@ -1,6 +1,5 @@
 import { Input } from 'antd'
-import React, { useEffect } from 'react'
-import RestApi from '~/api/RestApi'
+import React, { useEffect, useState } from 'react'
 import { MainLayout } from '~/common'
 import PayForm from '~/common/components/Finance/Payment/pay'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
@@ -11,48 +10,37 @@ import BillDetails from '../../../common/components/Finance/BillDetails'
 import moment from 'moment'
 import Head from 'next/head'
 import appConfigs from '~/appConfig'
-import RefundForm from './Refund'
+import RefundForm from '../../../common/components/Finance/Payment/Refund'
 import PaymentForm from '~/common/components/Finance/Payment/Create'
-import FilterBase from '~/common/components/Elements/FilterBase'
+import { billApi } from '~/api/bill'
+import { userInformationApi } from '~/api/user/user'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import { branchApi } from '~/api/branch'
 
-const initParamters = { pageSize: PAGE_SIZE, pageIndex: 1, search: '', fromDate: null, toDate: null }
+const initParamters = { pageSize: PAGE_SIZE, pageIndex: 1, search: '', fromDate: null, toDate: null, studentIds: null, branchIds: null }
 const PaymentManagementPage = () => {
 	const [loading, setLoading] = React.useState(true)
 	const [totalPage, setTotalPage] = React.useState(1)
 	const [data, setData] = React.useState([])
 	const [sumPrice, setSumPrice] = React.useState({})
 	const [filters, setFilter] = React.useState(initParamters)
-
-	const [dataFilter, setDataFilter] = React.useState([
+	const [filterList, setFilterList] = useState([
 		{
-			name: 'date-range',
-			title: 'Từ - đến',
-			col: 'grid-cols-1',
-			type: 'date-range'
+			name: 'date',
+			title: 'Từ ngày - đến ngày',
+			col: 'col-span-2',
+			type: 'date-range',
+			value: null
 		}
 	])
+
 	useEffect(() => {
 		getData()
 	}, [filters])
 
-	let listFieldFilter = {
-		pageIndex: 1,
-		pageSize: PAGE_SIZE,
-		fromDate: null,
-		toDate: null
-	}
-	const handleFilter = (listFilter) => {
-		let newListFilter = { ...listFieldFilter }
-		listFilter.forEach((item, index) => {
-			let key = item.name
-			Object.keys(newListFilter).forEach((keyFilter) => {
-				if (keyFilter == key) {
-					newListFilter[key] = item.value
-				}
-			})
-		})
-		setFilter({ ...filters, ...newListFilter, pageIndex: 1 })
-	}
+	useEffect(() => {
+		getAllDataFilter()
+	}, [])
 
 	const handleReset = () => {
 		setFilter({ ...initParamters })
@@ -61,7 +49,8 @@ const PaymentManagementPage = () => {
 	async function getData() {
 		setLoading(true)
 		try {
-			const res = await RestApi.get<any>('Bill', filters)
+			const res = await billApi.getAll(filters)
+
 			if (res.status == 200) {
 				setData(res.data.data)
 				setTotalPage(res.data.totalRow)
@@ -70,6 +59,7 @@ const PaymentManagementPage = () => {
 				setData([])
 				setTotalPage(1)
 			}
+			// lấy toàn bộ học viên
 		} catch (error) {
 			ShowNostis.error(error?.message)
 		} finally {
@@ -77,6 +67,75 @@ const PaymentManagementPage = () => {
 		}
 	}
 
+	const getAllDataFilter = async () => {
+		try {
+			let tempFilter = []
+
+			const responseUser = await userInformationApi.getAllUserByRole(3)
+
+			if (responseUser.status === 200) {
+				let templ = []
+				responseUser.data.data.forEach((element) => {
+					templ.push({
+						value: element.UserInformationId,
+						title: element.FullName + ' - ' + element.UserCode
+					})
+				})
+				tempFilter.push({
+					name: 'studentIds',
+					title: 'Học viên',
+					type: 'select',
+					col: 'col-span-2',
+					optionList: templ
+				})
+			}
+
+			const responseBranch = await branchApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (responseBranch.status === 200) {
+				let templ = []
+
+				responseBranch.data.data.forEach((element) => {
+					templ.push({
+						value: element.Id,
+						title: element.Name
+					})
+				})
+				tempFilter.push({
+					name: 'branchIds',
+					title: 'Chi nhánh',
+					type: 'select',
+					col: 'col-span-2',
+					optionList: templ
+				})
+			}
+			setFilterList([...filterList, ...tempFilter])
+		} catch (error) {
+			ShowNostis.error(error?.message)
+		} finally {
+			setLoading(false)
+		}
+	}
+	const handleFilter = (listFilter) => {
+		let formDate = null
+		let toDate = null
+
+		if (listFilter.date) {
+			formDate = moment(listFilter.date[0].toDate()).format('YYYY-MM-DD')
+			toDate = moment(listFilter.date[1].toDate()).format('YYYY-MM-DD')
+		}
+		const params = {
+			pageIndex: 1,
+			...filters,
+			// ...listFilter,
+			studentIds: listFilter.studentIds,
+			branchIds: listFilter.branchIds,
+			formDate: formDate,
+			toDate: toDate
+		}
+		console.log(params)
+
+		setFilter(params)
+	}
 	const expandedRowRender = (item) => {
 		return <BillDetails bill={item} />
 	}
@@ -124,11 +183,11 @@ const PaymentManagementPage = () => {
 			width: 140,
 			render: (value, item) => <p className="font-[600] text-[#E53935]">{parseToMoney(value)}</p>
 		},
-		{
-			title: 'Phương thức',
-			dataIndex: 'PaymentMethodName',
-			width: 130
-		},
+		// {
+		// 	title: 'Phương thức',
+		// 	dataIndex: 'PaymentMethodName',
+		// 	width: 130
+		// },
 		{
 			title: 'Loại',
 			dataIndex: 'Type',
@@ -191,7 +250,7 @@ const PaymentManagementPage = () => {
 				TitleCard={
 					<div className="w-full flex items-center justify-between">
 						<div className="flex items-center">
-							<FilterBase dataFilter={dataFilter} handleFilter={handleFilter} handleReset={handleReset} />
+							<FilterBaseVer2 handleFilter={handleFilter} dataFilter={filterList} handleReset={handleReset} />
 							<Input.Search
 								className="primary-search max-w-[300px]"
 								onChange={(event) => {

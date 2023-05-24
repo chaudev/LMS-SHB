@@ -40,7 +40,7 @@ import { classApi } from '~/api/class'
 import { feedbackApi } from '~/api/feedback'
 import { ListFeedback } from '~/common/components/Dashboard/ListFeedback'
 import { feedbackStudentApi } from '~/api/feedbacks-student'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 
 const dataYear = [
 	{

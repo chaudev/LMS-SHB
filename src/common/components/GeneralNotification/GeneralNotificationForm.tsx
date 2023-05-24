@@ -13,7 +13,7 @@ import SelectField from '../FormControl/SelectField'
 import InputTextField from '../FormControl/InputTextField'
 import EditorField from '../FormControl/EditorField'
 import PrimaryButton from '../Primary/Button'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 
 const GeneralNotificationForm = (props) => {
 	const { getAllGeneralNotifications } = props

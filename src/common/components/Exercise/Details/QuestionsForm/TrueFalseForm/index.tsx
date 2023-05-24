@@ -73,7 +73,6 @@ const TrueFalseForm = () => {
 		return temp
 	}
 
-	console.log('--- TRUE OR FALSE Exercises: ', exercises)
 
 	return (
 		<div className="drag-list">

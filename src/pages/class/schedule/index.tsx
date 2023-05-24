@@ -18,7 +18,7 @@ import PopoverSearch from '~/common/components/Schedule/PopoverSearch'
 import Lottie from 'react-lottie-player'
 
 import loadingJson from '~/common/components/json/loading-calendar.json'
-import { userInformationApi } from '~/api/user'
+import { userInformationApi } from '~/api/user/user'
 
 const Schedule = () => {
 	const thisCalendar = useRef(null)
@@ -34,7 +34,7 @@ const Schedule = () => {
 	const getAllTeacher = async () => {
 		try {
 			const ROLE_TEACHER = 2
-			const res = await userInformationApi.getByRole(ROLE_TEACHER)
+			const res = await userInformationApi.getAllUserByRole(ROLE_TEACHER)
 			if (res.status === 200) {
 				setTeachers(res.data.data)
 			}
