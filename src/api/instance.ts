@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import appConfigs from '~/appConfig'
+import { log } from '~/common/utils'
 import { logOut } from '~/common/utils/token-handle'
 
 const SHOW_LOG = true
@@ -18,11 +19,11 @@ function getUrl(config: any) {
 }
 
 export const authHeader_X = async () => {
-	let data = await JSON.parse(localStorage.getItem('userData'))
+	let data = await JSON.parse(localStorage.getItem('lifeCenterData'))
 	return !!data && !!data.token ? { token: data.token } : {}
 }
 export const authHeader_Bearer = async () => {
-	let data = await JSON.parse(localStorage.getItem('userData'))
+	let data = await JSON.parse(localStorage.getItem('lifeCenterData'))
 	return !!data && !!data.token ? { Authorization: 'Bearer ' + data.token } : {}
 }
 

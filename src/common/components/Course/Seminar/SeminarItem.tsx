@@ -23,7 +23,7 @@ export default function SeminarItem(props: ISeminarItemProps) {
 	const [isDisabledStartButton, setIsDisabledStartBUtton] = useState(false)
 
 	useEffect(() => {
-		setUserRoleId(JSON.parse(localStorage.getItem('userData')).user.RoleId)
+		setUserRoleId(JSON.parse(localStorage.getItem('lifeCenterData')).user.RoleId)
 	}, [])
 
 	const handleCreateZoomRoom = async () => {

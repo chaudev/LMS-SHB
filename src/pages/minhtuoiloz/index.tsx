@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { accountApi } from '~/api/account'
 import { Spin, Table, Form, Input } from 'antd'
- import { useDispatch } from 'react-redux'
- import Router from 'next/router'
+import { useDispatch } from 'react-redux'
+import Router from 'next/router'
 import { playWithToken } from '~/common/utils/token-handle'
 
 const MonaSupportPattern = () => {
@@ -49,16 +49,7 @@ const MonaSupportPattern = () => {
 			setLoading(true)
 			const res = await accountApi.loginDev(data)
 			if (res.status === 200) {
-				// const token = res?.data?.token || ''
-				// const user = parseJwt(token) || ''
-				// const userData = { token: token, user: user }
 				playWithToken(res?.data, dispatch)
-				// await localStorage.setItem('userData', JSON.stringify(userData))
-				// await localStorage.setItem('token', token)
-
-				// dispatch(setUser(user))
-				// dispatch(setAuthData(user))
-				// dispatch(setAuthLoading(false))
 				Router.push('/')
 			}
 		} catch (error) {

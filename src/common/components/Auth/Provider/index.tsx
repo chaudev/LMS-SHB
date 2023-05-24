@@ -63,7 +63,7 @@ function AuthProvider({ children }: IAuthLayout) {
 
 	async function checkLogin() {
 		try {
-			const response = await JSON.parse(localStorage.getItem('userData'))
+			const response = await JSON.parse(localStorage.getItem('lifeCenterData'))
 			console.log('response: ', response)
 
 			if (!!response?.theRefresh) {
