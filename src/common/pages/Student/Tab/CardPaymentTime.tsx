@@ -2,12 +2,14 @@ import { Card, Col, Divider, Empty, Form, Input, Modal, Progress, Row, Skeleton,
 import React, { useEffect, useState } from 'react'
 import { AiOutlineCheck, AiOutlineFieldTime } from 'react-icons/ai'
 import { BiPlusCircle } from 'react-icons/bi'
+import { useSelector } from 'react-redux'
 import { paymentTimesApi } from '~/api/payment-times'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import SelectField from '~/common/components/FormControl/SelectField'
 import PrimaryButton from '~/common/components/Primary/Button'
 import { ShowNostis } from '~/common/utils'
 import { parseToMoney } from '~/common/utils/common'
+import { RootState } from '~/store'
 
 interface ICardLearningHistory {
 	majorsId: number
@@ -26,6 +28,7 @@ interface IOption {
 	title: string
 }
 const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId, studentId, panels }) => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [form] = Form.useForm()
 	const Items = Form.useWatch('Items', form)
 	const [open, setOpen] = useState(false)
@@ -131,13 +134,19 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 		<Card
 			title="Đợt thanh toán"
 			extra={
-				<PrimaryButton onClick={showModal} icon="edit" background="blue" type="button">
-					Cập nhật
-				</PrimaryButton>
+				<>
+					{userInformation && userInformation.RoleId != '3' ? (
+						<PrimaryButton onClick={showModal} icon="edit" background="blue" type="button">
+							Cập nhật
+						</PrimaryButton>
+					) : (
+						''
+					)}
+				</>
 			}
 		>
 			{paymentTimes && paymentTimes.length > 0 ? (
-				<Timeline className="p-3" >
+				<Timeline className="p-3">
 					{paymentTimes.map((item) => {
 						let color = item.Status === 3 ? 'green' : item.Status == 1 ? 'orange' : 'blue'
 						return (
@@ -159,7 +168,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 									{item.ValueName ? (
 										<div>
 											<span className="font-[500] text-[gray] inline-block w-2/6">Tình trạng:</span>
-											<span>{item.ValueName}</span>
+											<span className="font-[500]">{item.ValueName}</span>
 										</div>
 									) : (
 										''
@@ -228,8 +237,13 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 															className="col-span-2"
 															name={[field.name, 'Type']}
 															label="Loại"
-															disabled={Items[index].Status !== 1 ? true : false}
+															disabled={paymentTimes[index].Status !== 1 || paymentTimes[index].Type == 1}
 															optionList={[
+																{
+																	value: 1,
+																	title: 'Đăng ký ngành học',
+																	disabled: true
+																},
 																{
 																	value: 2,
 																	title: 'Thay đổi tình trạng hồ sơ'
@@ -259,7 +273,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 															className="col-span-2"
 															name={[field.name, 'ValueId']}
 															label="Tình trạng"
-															disabled={Items[index].Type === 1 ? true : false || Items[index].Status !== 1 ? true : false}
+															disabled={paymentTimes[index].Type === 1 || paymentTimes[index].Status !== 1}
 															optionList={
 																!Items[index].Type || !optionType
 																	? []
@@ -282,7 +296,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 															{...field}
 															name={[field.name, 'Percent']}
 															label="Phần trăm"
-															disabled={Items[index].Status !== 1 ? true : false}
+															disabled={paymentTimes[index].Status !== 1 || paymentTimes[index].Type === 1}
 															rules={[
 																{ required: true, message: 'Vui lòng phần trăm' },
 																{

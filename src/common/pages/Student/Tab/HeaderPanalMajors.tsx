@@ -28,11 +28,11 @@ const HeaderPanalMajors = ({ majorsName, status, statusName, paymentTypeName, gi
 			</div>
 			<div>
 				<span className="font-[500] text-[gray] inline-block w-2/6">Kiểu thanh toán</span>
-				<span>{paymentTypeName}</span>
+				<span className='font-[500]'>{paymentTypeName}</span>
 			</div>
 			<div>
 				<span className="font-[500] text-[gray] inline-block w-2/6">Học phí</span>
-				<span className="text-[primary]">{parseToMoney(totalPrice)} VND</span>
+				<span className="text-[blue]">{parseToMoney(totalPrice)} VND</span>
 			</div>
 			<div>
 				<span className="font-[500] text-[gray] inline-block w-2/6">Số tiền đã đóng</span>

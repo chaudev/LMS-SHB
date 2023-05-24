@@ -102,11 +102,14 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 						) : (
 							<ModalStudyRoute mode="add" onRefresh={() => getStudentStudyRoute(apiParameters)} />
 						)}
-
-						<ModalViewStudyRouteTemplate
-							status={dataTable.length > 0 ? true : false}
-							onRefresh={() => getStudentStudyRoute(apiParameters)}
-						/>
+						{user?.RoleId != 3 ? (
+							<ModalViewStudyRouteTemplate
+								status={dataTable.length > 0 ? true : false}
+								onRefresh={() => getStudentStudyRoute(apiParameters)}
+							/>
+						) : (
+							''
+						)}
 					</div>
 				}
 			>

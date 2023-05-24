@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 import { userInformationApi } from '~/api/user'
 import UploadImageField from '~/common/components/FormControl/UploadImageField'
 import PrimaryButton from '~/common/components/Primary/Button'
-import TabStudentContract from '~/common/components/Student/TabStudentContract'
 import TabStudentDetail from '~/common/components/Student/TabStudentDetail'
 import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
@@ -65,10 +64,15 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						label: `Thanh toán`,
 						children: <TabBill StudentDetail={studentDetail} />
 					},
+					// {
+					// 	key: '5',
+					// 	label: `Lịch sử học`,
+					// 	children: <TabClassListHistory StudentDetail={studentDetail} />
+					// },
 					{
-						key: '5',
-						label: `Lịch sử học`,
-						children: <TabClassListHistory StudentDetail={studentDetail} />
+						key: '9',
+						label: `Ngành học`,
+						children: <TabMajors />
 					}
 			  ]
 			: [
@@ -107,15 +111,15 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						label: `Kiểm tra đầu vào`,
 						children: <TabTestAppointment StudentDetail={studentDetail} />
 					},
-					{
-						key: '8',
-						label: `Lịch sử học`,
-						children: <TabClassListHistory StudentDetail={studentDetail} />
-					},
+					// {
+					// 	key: '8',
+					// 	label: `Lịch sử học`,
+					// 	children: <TabClassListHistory StudentDetail={studentDetail} />
+					// },
 					{
 						key: '9',
 						label: `Ngành học`,
-						children: <TabMajors  />
+						children: <TabMajors />
 					}
 			  ]
 

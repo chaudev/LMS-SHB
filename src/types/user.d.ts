@@ -57,6 +57,12 @@ type IUserResponse = IBaseApi<{
 	LearningStatusName: string
 	SourceId: number
 	LearningNeedId: number
+	OfficeId: number
+	ForeignLanguageId: number
+	PartnerId: number
+	ProcessId: number
+	VisaStatusId: number
+	ProfileStatusId: number
 	SaleId: number
 	PurposeId: number
 	Enable: boolean

@@ -13,9 +13,16 @@ import DatePickerField from '../FormControl/DatePickerField'
 import InputTextField from '../FormControl/InputTextField'
 import SelectField from '../FormControl/SelectField'
 import TextBoxField from '../FormControl/TextBoxField'
-
 import IconButonUpdateUser from './UserProfileTemplate/IconButonUpdateUser'
 import UserProfileTemplate from './UserProfileTemplate'
+import { officeApi } from '~/api/office'
+import { profileStatusApi } from '~/api/profile-status'
+import { foreignLanguageApi } from '~/api/foreign-language'
+import { partnerApi } from '~/api/partner'
+import { visaStatusApi } from '~/api/visa-status'
+import { processApi } from '~/api/process'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 export interface ITabStudentDetailProps {
 	StudentDetail: IUserResponse
@@ -23,10 +30,24 @@ export interface ITabStudentDetailProps {
 }
 
 export default function TabStudentDetail(props: ITabStudentDetailProps) {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const { StudentDetail, setStudentDetail } = props
 	const router = useRouter()
 
-	const [optionList, setOptionList] = useState({ branch: [], purpose: [], area: [], source: [], learningNeed: [], sale: [] })
+	const [optionList, setOptionList] = useState({
+		branch: [],
+		purpose: [],
+		area: [],
+		source: [],
+		learningNeed: [],
+		sale: [],
+		office: [],
+		profileStatus: [],
+		foreignLanguage: [],
+		partner: [],
+		visaStatus: [],
+		process: []
+	})
 	const [district, setDistrict] = useState([])
 	const [ward, setWard] = useState([])
 	const [init, setInit] = useState(true)
@@ -49,6 +70,12 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const SourceId = Form.useWatch('SourceId', form)
 	const SaleId = Form.useWatch('SaleId', form)
 	const PurposeId = Form.useWatch('PurposeId', form)
+	const OfficeId = Form.useWatch('OfficeId', form)
+	const ProfileStatusId = Form.useWatch('ProfileStatusId', form)
+	const ForeignLanguageId = Form.useWatch('ForeignLanguageId', form)
+	const PartnerId = Form.useWatch('PartnerId', form)
+	const ProcessId = Form.useWatch('ProcessId', form)
+	const VisaStatusId = Form.useWatch('VisaStatusId', form)
 
 	const ref = useRef(null)
 
@@ -82,16 +109,48 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 
 	const getInfoOptions = async () => {
 		try {
-			const [branchResponse, areaResponse, sourceResponse, learningResponse, saleResponse, purposeResponse] = await Promise.all([
+			const [
+				branchResponse,
+				areaResponse,
+				sourceResponse,
+				learningResponse,
+				saleResponse,
+				purposeResponse,
+				office,
+				profileStatus,
+				foreignLanguage,
+				partner,
+				visaStatus,
+				process
+			] = await Promise.all([
 				branchApi.getAll({ pageIndex: 1, pageSize: 99999 }),
 				areaApi.getAll({ pageIndex: 1, pageSize: 99999 }),
 				sourceApi.getAll({ pageIndex: 1, pageSize: 99999 }),
 				learningNeedApi.getAll({ pageIndex: 1, pageSize: 99999 }),
 				userInformationApi.getByRole(5),
-				purposeApi.getAll({ pageIndex: 1, pageSize: 99999 })
+				purposeApi.getAll({ pageIndex: 1, pageSize: 99999 }),
+				officeApi.getAll({ pageIndex: 1, pageSize: 99999 }),
+				profileStatusApi.getAll({ pageIndex: 1, pageSize: 99999 }),
+				foreignLanguageApi.getAll({ pageIndex: 1, pageSize: 99999 }),
+				partnerApi.getAll({ pageIndex: 1, pageSize: 99999 }),
+				visaStatusApi.getAll({ pageIndex: 1, pageSize: 99999 }),
+				processApi.getAll({ pageIndex: 1, pageSize: 99999 })
 			])
 
-			let tempOption = { branch: [], purpose: [], area: [], source: [], learningNeed: [], sale: [] }
+			let tempOption = {
+				branch: [],
+				purpose: [],
+				area: [],
+				source: [],
+				learningNeed: [],
+				sale: [],
+				office: [],
+				profileStatus: [],
+				foreignLanguage: [],
+				partner: [],
+				visaStatus: [],
+				process: []
+			}
 
 			if (branchResponse.status == 200) {
 				let temp = []
@@ -123,7 +182,36 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				areaResponse.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
 				tempOption.area = temp
 			}
-
+			if (office.status == 200) {
+				let temp = []
+				office.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
+				tempOption.office = temp
+			}
+			if (profileStatus.status == 200) {
+				let temp = []
+				profileStatus.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
+				tempOption.profileStatus = temp
+			}
+			if (foreignLanguage.status == 200) {
+				let temp = []
+				foreignLanguage.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
+				tempOption.foreignLanguage = temp
+			}
+			if (partner.status == 200) {
+				let temp = []
+				partner.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
+				tempOption.partner = temp
+			}
+			if (visaStatus.status == 200) {
+				let temp = []
+				visaStatus.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
+				tempOption.visaStatus = temp
+			}
+			if (process.status == 200) {
+				let temp = []
+				process.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
+				tempOption.process = temp
+			}
 			setOptionList(tempOption)
 		} catch (err) {}
 	}
@@ -403,7 +491,6 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'WardId'}
 					/>
 				</div>
-
 				{router.query.StudentID && (
 					<>
 						<Divider>
@@ -470,6 +557,102 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						</div>
 					</>
 				)}
+
+				<Divider>
+					<h2 className="py-4 font-[600] text-center">Thông tin hồ sơ</h2>
+				</Divider>
+				<>
+					<div className="d-flex justify-between items-center">
+						<SelectField
+							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+							name="OfficeId"
+							label="Văn phòng đại diện"
+							placeholder="Chọn văn phòng đại diện"
+							optionList={optionList.office}
+							disabled={userInformation.RoleId == 3}
+						/>
+						<IconButonUpdateUser
+							isShow={OfficeId !== StudentDetail.OfficeId}
+							onClick={() => updateUserInfo('OfficeId', OfficeId)}
+							loading={isLoading === 'OfficeId'}
+						/>
+					</div><Divider />
+					<div className="d-flex justify-between items-center">
+						<SelectField
+							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+							name="ProfileStatusId"
+							label="Tình trạng hồ sơ"
+							placeholder="Chọn tình trạng hồ sơ"
+							optionList={optionList.profileStatus}
+							disabled={userInformation.RoleId == 3}
+						/>
+						<IconButonUpdateUser
+							isShow={ProfileStatusId !== StudentDetail.ProfileStatusId}
+							onClick={() => updateUserInfo('ProfileStatusId', ProfileStatusId)}
+							loading={isLoading === 'ProfileStatusId'}
+						/>
+					</div><Divider />
+					<div className="d-flex justify-between items-center">
+						<SelectField
+							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+							name="ForeignLanguageId"
+							label="Trình độ ngoại ngữ"
+							placeholder="Chọn trình độ ngoại ngữ"
+							optionList={optionList.foreignLanguage}
+							disabled={userInformation.RoleId == 3}
+						/>
+						<IconButonUpdateUser
+							isShow={ForeignLanguageId !== StudentDetail.ForeignLanguageId}
+							onClick={() => updateUserInfo('ForeignLanguageId', ForeignLanguageId)}
+							loading={isLoading === 'ForeignLanguageId'}
+						/>
+					</div><Divider />
+					<div className="d-flex justify-between items-center">
+						<SelectField
+							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+							name="PartnerId"
+							label="Đối tác"
+							placeholder="Chọn đối tác"
+							optionList={optionList.partner}
+							disabled={userInformation.RoleId == 3}
+						/>
+						<IconButonUpdateUser
+							isShow={PartnerId !== StudentDetail.PartnerId}
+							onClick={() => updateUserInfo('PartnerId', PartnerId)}
+							loading={isLoading === 'PartnerId'}
+						/>
+					</div><Divider />
+					<div className="d-flex justify-between items-center">
+						<SelectField
+							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+							name="ProcessId"
+							label="Tình trạng xử lý hồ sơ"
+							placeholder="Chọn tình trạng xử lý hồ sơ"
+							optionList={optionList.process}
+							disabled={userInformation.RoleId == 3}
+						/>
+						<IconButonUpdateUser
+							isShow={ProcessId !== StudentDetail.ProcessId}
+							onClick={() => updateUserInfo('ProcessId', ProcessId)}
+							loading={isLoading === 'ProcessId'}
+						/>
+					</div><Divider />
+					<div className="d-flex justify-between items-center">
+						<SelectField
+							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+							name="VisaStatusId"
+							label="Tình trạng visa"
+							placeholder="Chọn tình trạng visa"
+							optionList={optionList.visaStatus}
+							disabled={userInformation.RoleId == 3}
+						/>
+						<IconButonUpdateUser
+							isShow={VisaStatusId !== StudentDetail.VisaStatusId}
+							onClick={() => updateUserInfo('VisaStatusId', VisaStatusId)}
+							loading={isLoading === 'VisaStatusId'}
+						/>
+					</div>
+				</>
 				{router.query.StudentID && <UserProfileTemplate />}
 			</Form>
 		</div>
