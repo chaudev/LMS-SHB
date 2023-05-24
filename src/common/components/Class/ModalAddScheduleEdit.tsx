@@ -28,8 +28,6 @@ const ModalAddScheduleEdit = (props) => {
 
 	const infoClass = useSelector((state: RootState) => state.class.infoClass)
 
-	console.log('--- infoClass: ', infoClass)
-
 	const getDataAvailable = async () => {
 		if (!!form.getFieldValue('StartTime') && !!form.getFieldValue('EndTime')) {
 			await checkTeacherAvailable({

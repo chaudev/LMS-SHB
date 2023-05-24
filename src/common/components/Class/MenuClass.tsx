@@ -23,6 +23,9 @@ import { RollUpStudent } from './RollUpStudent'
 import { RollUpTeacherPage } from './RollUpTeacherPage'
 import { ScheduleList } from './ScheduleList'
 import { TranscriptPage } from './TranscriptPage'
+import Router from 'next/router'
+import Head from 'next/head'
+import appConfigs from '~/appConfig'
 
 const itemsAdmin = [
 	'Lịch học',
@@ -37,6 +40,7 @@ const itemsAdmin = [
 ]
 
 const itemsStudent = ['Lịch học', 'Các buổi học', 'Tài liệu', 'Bảng điểm', 'Điểm danh bằng QR']
+
 const itemsTeacher = [
 	'Lịch học',
 	'Học viên',
@@ -52,8 +56,9 @@ const itemsParent = ['Lịch học', 'Các buổi học', 'Điểm danh', 'Bản
 
 const MenuClass = () => {
 	const user = useSelector((state: RootState) => state.user.information)
+	const currentClassDetails = useSelector((state: RootState) => state.classState.currentClassDetails)
 
-	const getChildrenClassAdmin = (index) => {
+	const getAdminContent = (index) => {
 		switch (index) {
 			case 0:
 				return <CalendarClassEdit />
@@ -78,7 +83,7 @@ const MenuClass = () => {
 		}
 	}
 
-	const getLabelClassAdmin = (item, index) => {
+	const getAdminLabel = (item, index) => {
 		switch (index) {
 			case 0:
 				return (
@@ -139,7 +144,7 @@ const MenuClass = () => {
 		}
 	}
 
-	const getChildrenClassStudent = (index) => {
+	const getStudentContent = (index) => {
 		switch (index) {
 			case 0:
 				return <CalendarClassEdit />
@@ -156,7 +161,7 @@ const MenuClass = () => {
 		}
 	}
 
-	const getLabelClassStudent = (item, index) => {
+	const getStudentLabel = (item, index) => {
 		switch (index) {
 			case 0:
 				return (
@@ -201,7 +206,7 @@ const MenuClass = () => {
 		}
 	}
 
-	const getChildrenClassTeacher = (index) => {
+	const getTeacherContent = (index) => {
 		switch (index) {
 			case 0:
 				return <CalendarClassEdit />
@@ -226,7 +231,7 @@ const MenuClass = () => {
 		}
 	}
 
-	const getLabelClassTeacher = (item, index) => {
+	const getTeacherLabel = (item, index) => {
 		switch (index) {
 			case 0:
 				return (
@@ -287,7 +292,7 @@ const MenuClass = () => {
 		}
 	}
 
-	const getChildrenClassParent = (index) => {
+	const getParentContent = (index) => {
 		switch (index) {
 			case 0:
 				return <CalendarClassEdit />
@@ -306,7 +311,7 @@ const MenuClass = () => {
 		}
 	}
 
-	const getLabelClassParent = (item, index) => {
+	const getParentLabel = (item, index) => {
 		switch (index) {
 			case 0:
 				return (
@@ -337,63 +342,66 @@ const MenuClass = () => {
 				return 'Lịch học'
 		}
 	}
+
+	const is = {
+		admin: user?.RoleId == 1,
+		student: user?.RoleId == 3,
+		teacher: user?.RoleId == 2,
+		manager: user?.RoleId == 4,
+		saler: user?.RoleId == 5,
+		accountant: user?.RoleId == 6,
+		academic: user?.RoleId == 7,
+		parent: user?.RoleId == 8
+	}
+
+	function getTabItems() {
+		const temp = { items: [], label: null, children: null }
+
+		if (is.admin || is.manager || is.saler || is.accountant || is.academic) {
+			temp.items = itemsAdmin
+			temp.label = getAdminLabel
+			temp.children = getAdminContent
+		}
+
+		if (is.teacher) {
+			temp.items = itemsTeacher
+			temp.label = getTeacherLabel
+			temp.children = getTeacherContent
+		}
+
+		if (is.student) {
+			temp.items = itemsStudent
+			temp.label = getStudentLabel
+			temp.children = getStudentContent
+		}
+
+		if (is.parent) {
+			temp.items = itemsParent
+			temp.label = getParentLabel
+			temp.children = getParentContent
+		}
+
+		return temp
+	}
+
 	return (
 		<>
-			{user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 5 || user?.RoleId == 6 || user?.RoleId == 7 ? (
-				<Tabs
-					defaultActiveKey="0"
-					tabPosition="left"
-					items={itemsAdmin.map((item, index) => {
-						return {
-							label: getLabelClassAdmin(item, index),
-							key: index.toString(),
-							children: getChildrenClassAdmin(index)
-						}
-					})}
-				/>
-			) : null}
-
-			{user?.RoleId == 2 ? (
-				<Tabs
-					defaultActiveKey="0"
-					tabPosition="left"
-					items={itemsTeacher.map((item, index) => {
-						return {
-							label: getLabelClassTeacher(item, index),
-							key: index.toString(),
-							children: getChildrenClassTeacher(index)
-						}
-					})}
-				/>
-			) : null}
-
-			{user?.RoleId == 3 ? (
-				<Tabs
-					defaultActiveKey="0"
-					tabPosition="left"
-					items={itemsStudent.map((item, index) => {
-						return {
-							label: getLabelClassStudent(item, index),
-							key: index.toString(),
-							children: getChildrenClassStudent(index)
-						}
-					})}
-				/>
-			) : null}
-
-			{user?.RoleId == 8 ? (
-				<Tabs
-					defaultActiveKey="0"
-					tabPosition="left"
-					items={itemsParent.map((item, index) => {
-						return {
-							label: getLabelClassParent(item, index),
-							key: index.toString(),
-							children: getChildrenClassParent(index)
-						}
-					})}
-				/>
-			) : null}
+			<Head>
+				<title>{`${appConfigs.appName} - ${currentClassDetails?.Name}`}</title>
+			</Head>
+			<Tabs
+				defaultActiveKey="0"
+				tabPosition="left"
+				activeKey={(Router.query?.menu || 0) + ''}
+				onChange={(event: any) => Router.push({ query: { ...Router?.query, menu: event } })}
+				items={getTabItems().items.map((item, index) => {
+					return {
+						label: getTabItems().label(item, index),
+						key: index.toString(),
+						children: getTabItems().children(index)
+					}
+				})}
+			/>
 		</>
 	)
 }
