@@ -41,7 +41,7 @@ export const TranscriptPage = () => {
 	const [disabled, setDisabled] = useState(true)
 	const [dataTranscript, setDataTranscript] = useState<{ title: string; value: string }[]>([])
 
-	const currentClassDetails = useSelector((state: RootState) => state.classState.currentClassDetails)
+	const currentClassDetails = useSelector((state: RootState) => state.classState?.currentClassDetails)
 
 	const handleChangeListening = (info, index) => {
 		let temp = [...dataTable]

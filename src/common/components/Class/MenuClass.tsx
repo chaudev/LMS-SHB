@@ -56,7 +56,7 @@ const itemsParent = ['Lịch học', 'Các buổi học', 'Điểm danh', 'Bản
 
 const MenuClass = () => {
 	const user = useSelector((state: RootState) => state.user.information)
-	const currentClassDetails = useSelector((state: RootState) => state.classState.currentClassDetails)
+	const currentClassDetails = useSelector((state: RootState) => state.classState?.currentClassDetails)
 
 	const getAdminContent = (index) => {
 		switch (index) {
