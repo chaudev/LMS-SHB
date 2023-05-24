@@ -29,7 +29,7 @@ async function playWithToken(params, dispatch) {
 	}
 	const userData = { token: token, user: user, theRefresh }
 	try {
-		await localStorage.setItem('userData', JSON.stringify(userData))
+		await localStorage.setItem('lifeCenterData', JSON.stringify(userData))
 	} catch (error) {
 		console.log('--- error: ', error)
 	}
@@ -51,13 +51,13 @@ async function playWithToken(params, dispatch) {
  * redirect them to the login page with the current page as a query parameter
  */
 async function logOut() {
-	localStorage.clear()
-	const redirect = Router.pathname
-	if (redirect == '/' || redirect == '/dashboard') {
-		Router.replace({ pathname: '/signin' })
-	} else {
-		Router.replace({ pathname: '/signin', query: { redirect: redirect } })
-	}
+	// localStorage.clear()
+	// const redirect = Router.pathname
+	// if (redirect == '/' || redirect == '/dashboard') {
+	// 	Router.replace({ pathname: '/signin' })
+	// } else {
+	// 	Router.replace({ pathname: '/signin', query: { redirect: redirect } })
+	// }
 }
 
 export { parseJwt, playWithToken, logOut }

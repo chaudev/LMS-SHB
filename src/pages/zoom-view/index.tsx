@@ -28,7 +28,7 @@ export default function ZoomView(props: IZoomViewProps) {
 	const [visibleModal, setVisibleModal] = useState(false)
 
 	useEffect(() => {
-		setUser(JSON.parse(localStorage.getItem('userData')).user)
+		setUser(JSON.parse(localStorage.getItem('lifeCenterData')).user)
 		changePrimaryZoom()
 	}, [])
 

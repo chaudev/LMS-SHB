@@ -25,7 +25,7 @@ function RegisterForm(props) {
 				const user = parseJwt(token) || ''
 				const userData = { token: token, user: user }
 
-				await localStorage.setItem('userData', JSON.stringify(userData))
+				await localStorage.setItem('lifeCenterData', JSON.stringify(userData))
 				await localStorage.setItem('token', token)
 
 				dispatch(setUser(user))

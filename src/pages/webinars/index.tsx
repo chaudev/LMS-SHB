@@ -23,7 +23,7 @@ export default function Seminar(props) {
 	const [selectOptions, setSelectOptions] = useState({ videoCourseList: [], teacherList: [] })
 
 	useEffect(() => {
-		setUserRoleId(JSON.parse(localStorage.getItem('userData')).user.RoleId)
+		setUserRoleId(JSON.parse(localStorage.getItem('lifeCenterData')).user.RoleId)
 	}, [])
 
 	const getPagination = (pageNumber: number) => {
