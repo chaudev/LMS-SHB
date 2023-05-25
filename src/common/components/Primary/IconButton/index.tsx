@@ -7,8 +7,8 @@ import { CgAddR, CgFileDocument } from 'react-icons/cg'
 import { FaChalkboardTeacher } from 'react-icons/fa'
 import { FiArrowDownCircle, FiArrowUpCircle, FiEdit, FiMenu, FiMoreVertical, FiPrinter, FiSave, FiSend, FiTrash2 } from 'react-icons/fi'
 import { HiOutlineFilter } from 'react-icons/hi'
-import { MdOutlineCancel, MdOutlineMoney } from 'react-icons/md'
-import { RiExchangeLine } from 'react-icons/ri'
+import { MdOutlineCancel, MdOutlineMoney, MdPendingActions } from 'react-icons/md'
+import { RiExchangeLine, RiReservedLine } from 'react-icons/ri'
 import { TbDownload, TbReportMoney, TbSchool, TbUpload } from 'react-icons/tb'
 import { VscRootFolderOpened } from 'react-icons/vsc'
 
@@ -73,6 +73,9 @@ const IconButton: FC<IIconButton> = (props) => {
 		}
 		if (color == 'orange') {
 			return 'text-[#FF9800] hover:text-[#f49302] focus:text-[#f49302]'
+		}
+		if (color == 'purple') {
+			return 'text-[#9000ff] hover:text-[#7517bd] active:text-[#9000ff] cursor-pointer none-selection'
 		}
 		if (color == 'transparent') {
 			return 'text-transparent'
@@ -169,6 +172,9 @@ const IconButton: FC<IIconButton> = (props) => {
 		}
 		if (icon == 'salary') {
 			return <TbReportMoney size={!!size ? size : 20} />
+		}
+		if (icon == 'reserved') {
+			return <MdPendingActions size={!!size ? size : 20} />
 		}
 	}
 

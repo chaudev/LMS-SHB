@@ -136,13 +136,13 @@ export const AcademicChildMenu = [
 				Text: 'Học viên trong lớp',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/reserved',
-				Route: '/info-course/reserved',
-				Text: 'Học viên bảo lưu',
-				Icon: ''
-			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/reserved',
+			// 	Route: '/info-course/reserved',
+			// 	Text: 'Học viên bảo lưu',
+			// 	Icon: ''
+			// },
 			{
 				ItemType: 'single',
 				Key: '/info-course/changed',

@@ -2,9 +2,9 @@ import React, { FC, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { areaApi } from '~/api/area'
 import { registerApi, userInformationApi } from '~/api/user/user'
-import { Input, Popover } from 'antd'
+import { Input, Popconfirm, Popover } from 'antd'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { ShowNoti } from '~/common/utils'
+import { ShowNostis, ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
 import { setArea } from '~/store/areaReducer'
 import PrimaryTable from '~/common/components/Primary/Table'
@@ -27,7 +27,7 @@ import { setPurpose } from '~/store/purposeReducer'
 import { setSaler } from '~/store/salerReducer'
 import { useRouter } from 'next/router'
 import { userInfoColumn } from '~/common/libs/columns/user-info'
-import { ButtonEye } from '~/common/components/TableButton'
+import { ButtonEye, ButtonPending } from '~/common/components/TableButton'
 import { PrimaryTooltip } from '~/common/components'
 import Filters from '~/common/components/Student/Filters'
 import IconButton from '~/common/components/Primary/IconButton'
@@ -146,24 +146,6 @@ const Student: FC<IPersonnel> = (props) => {
 			ShowNoti('error', err.message)
 		}
 	}
-
-	useEffect(() => {
-		if (role == 3) {
-			if (state.source.Source.length === 0) {
-				getAllSource()
-			}
-			if (state.learningNeed.LearningNeed.length === 0) {
-				getAllLearningNeed()
-			}
-			if (state.purpose.Purpose.length === 0) {
-				getAllPurpose()
-			}
-			if (state.saler.Saler.length === 0) {
-				getAllSale()
-			}
-		}
-	}, [])
-
 	const getRoleStaff = async () => {
 		try {
 			const res = await permissionApi.getRoleStaff()
@@ -220,6 +202,23 @@ const Student: FC<IPersonnel> = (props) => {
 	}
 
 	useEffect(() => {
+		if (role == 3) {
+			if (state.source.Source.length === 0) {
+				getAllSource()
+			}
+			if (state.learningNeed.LearningNeed.length === 0) {
+				getAllLearningNeed()
+			}
+			if (state.purpose.Purpose.length === 0) {
+				getAllPurpose()
+			}
+			if (state.saler.Saler.length === 0) {
+				getAllSale()
+			}
+		}
+	}, [])
+
+	useEffect(() => {
 		getRoleStaff()
 	}, [])
 
@@ -244,8 +243,25 @@ const Student: FC<IPersonnel> = (props) => {
 				getUsers(apiParameters)
 				return response
 			}
+			setLoading(false)
 		} catch (error) {
 			ShowNoti('error', error.message)
+			setLoading(false)
+		}
+	}
+
+	async function reverserUser(studentId) {
+		setLoading(true)
+		try {
+			const response = await userInformationApi.reverse(studentId)
+			if (response.status === 200) {
+				getUsers(apiParameters)
+				ShowNostis.success(response.data.message)
+			}
+			setLoading(false)
+		} catch (error) {
+			ShowNoti('error', error.message)
+			setLoading(false)
 		}
 	}
 
@@ -355,10 +371,10 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'Gender',
 			render: (value, record) => (
 				<>
-					{value == 0 && <span className="tag yellow">Khác</span>}
-					{value == 1 && <span className="tag blue">Nam</span>}
-					{value == 2 && <span className="tag green">Nữ</span>}
-					{value == 3 && <span className="tag yellow">Khác</span>}
+					{value == 0 && <span className="tag yellow w-full text-center">Khác</span>}
+					{value == 1 && <span className="tag blue w-full text-center">Nam</span>}
+					{value == 2 && <span className="tag green w-full text-center">Nữ</span>}
+					{value == 3 && <span className="tag yellow w-full text-center">Khác</span>}
 				</>
 			)
 		},
@@ -367,8 +383,8 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'StatusId',
 			render: (data) => (
 				<>
-					{data == 1 && <span className="tag red">Đã khóa</span>}
-					{data == 0 && <span className="tag blue">Đang hoạt động</span>}
+					{data == 1 && <span className="tag red w-full text-center">Đã khóa</span>}
+					{data == 0 && <span className="tag blue w-full text-center">Đang hoạt động</span>}
 				</>
 			)
 		},
@@ -378,10 +394,10 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'LearningStatus',
 			render: (data, record) => (
 				<>
-					{data === 1 && <span className="tag yellow">{record.LearningStatusName}</span>}
-					{data === 2 && <span className="tag blue">{record.LearningStatusName}</span>}
-					{data === 3 && <span className="tag green">{record.LearningStatusName}</span>}
-					{data === 4 && <span className="tag red">{record.LearningStatusName}</span>}
+					{data === 1 && <span className="tag yellow w-full text-center">{record.LearningStatusName}</span>}
+					{data === 2 && <span className="tag blue w-full text-center">{record.LearningStatusName}</span>}
+					{data === 3 && <span className="tag green w-full text-center">{record.LearningStatusName}</span>}
+					{data === 4 && <span className="tag red w-full text-center">{record.LearningStatusName}</span>}
 				</>
 			)
 		},
@@ -392,7 +408,7 @@ const Student: FC<IPersonnel> = (props) => {
 			fixed: 'right',
 			render: (data, item) => {
 				return (
-					<div className="flex justify-center items-center">
+					<div className="flex justify-start items-center">
 						<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.Id}`}>
 							<ButtonEye
 								className="mr-[8px]"
@@ -431,7 +447,27 @@ const Student: FC<IPersonnel> = (props) => {
 							/>
 						)}
 						{isAdmin() && (
-							<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
+							<>
+								<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
+							</>
+						)}
+						{role == 3 && isAdmin() && item.LearningStatus !== 1 && (
+							<Popconfirm
+								title={
+									item.LearningStatus === 4
+										? 'Xác nhận hủy bảo lưu?'
+										: 'Học viên sẽ bị xóa ra khỏi tất cả lớp để bảo lưu thông tin học tập, xác nhận?'
+								}
+								onConfirm={() => {
+									reverserUser(item.UserInformationId)
+								}}
+								// onCancel={cancel}
+								okText={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
+								cancelText="Hủy"
+								okButtonProps={{ loading: loading }}
+							>
+								<IconButton tooltip={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'} icon="reserved" type="button" color="purple" />
+							</Popconfirm>
 						)}
 					</div>
 				)

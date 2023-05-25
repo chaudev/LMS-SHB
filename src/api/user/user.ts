@@ -19,14 +19,6 @@ export const userInformationApi = {
 		return instance.get<IApiResultData<IUserInformation[]>>('/api/Staff', { params: params })
 	},
 
-	getRole(roleType) {
-		return instance.get<IApiResultData<IRole[]>>('/api/GetRole', {
-			params: {
-				style: roleType // 0 lấy tất cả, 1 lấy nhân viên
-			}
-		})
-	},
-
 	getAll(params: IUserInputGetall) {
 		return instance.get<IApiResultData<IUserResponse[]>>(url, {
 			params
@@ -35,11 +27,7 @@ export const userInformationApi = {
 	getByID(ID) {
 		return instance.get<IApiResultData<IUserResponse>>(`${url}/${ID}`)
 	},
-	getAllParams(params) {
-		return instance.get<IApiResultData<IUserInformation[]>>('/api/UserInformation', {
-			params
-		})
-	},
+
 	add(data) {
 		return instance.post(url, data)
 	},
@@ -49,15 +37,15 @@ export const userInformationApi = {
 	delete(data) {
 		return instance.delete(`${url}/${data}`)
 	},
+	reverse(studentId) {
+		return instance.put(`${url}/reserve/${studentId}`)
+	},
 	importUser(data) {
 		let fData = new FormData()
 		fData.append('File', data)
 		return instance.post(`${url}/ImportStudent`, fData, {
 			headers: { 'Content-Type': 'multipart/form-data' }
 		})
-	},
-	checkExistUserName(data: any) {
-		return instance.post('/api/check-exist-username', data)
 	},
 
 	// profile template
@@ -104,7 +92,6 @@ export const accountApi = {
 	}
 }
 
-
 export const roleApi = {
 	getRole(roleType) {
 		return instance.get<IApiResultData<IRole[]>>('/api/GetRole', {
@@ -114,4 +101,3 @@ export const roleApi = {
 		})
 	}
 }
-

@@ -5,7 +5,7 @@ import MainLayout from '~/common/components/MainLayout'
 import Student from '~/common/pages/Info-Course/Student'
 import { ShowNoti } from '~/common/utils'
 
-const PersonnelPage = () => {
+const StudentPage = () => {
 	const [allowed, setAllow] = useState<any>()
 
 	useEffect(() => {
@@ -26,6 +26,6 @@ const PersonnelPage = () => {
 	return <Student role={3} allowRegister={allowed} reFresh={getAllow} />
 }
 
-PersonnelPage.Layout = MainLayout
+StudentPage.Layout = MainLayout
 
-export default PersonnelPage
+export default StudentPage

@@ -108,7 +108,7 @@ const StudentInClassPage = () => {
 				{item?.ClassType !== 3 && (
 					<>
 						<ChangeClass item={item} onRefresh={getData} />
-						<ReserveForm item={item} onRefresh={getData} />
+						{/* <ReserveForm item={item} onRefresh={getData} /> */}
 					</>
 				)}
 			</div>
