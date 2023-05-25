@@ -123,6 +123,7 @@ const PaymentManagementPage = () => {
 			formDate = moment(listFilter.date[0].toDate()).format('YYYY-MM-DD')
 			toDate = moment(listFilter.date[1].toDate()).format('YYYY-MM-DD')
 		}
+		
 		const params = {
 			pageIndex: 1,
 			...filters,
@@ -194,10 +195,11 @@ const PaymentManagementPage = () => {
 			width: 180,
 			render: (value, item) => (
 				<p className="font-[600] text-[#E53935]">
-					{value == 1 && <span className="tag blue">{item?.TypeName}</span>}
-					{value == 2 && <span className="tag green">{item?.TypeName}</span>}
-					{value == 3 && <span className="tag yellow">{item?.TypeName}</span>}
-					{value == 4 && <span className="tag gray">{item?.TypeName}</span>}
+					{value == 1 && <span className="tag blue w-full text-center">{item?.TypeName}</span>}
+					{value == 2 && <span className="tag green w-full text-center">{item?.TypeName}</span>}
+					{value == 3 && <span className="tag yellow w-full text-center">{item?.TypeName}</span>}
+					{value == 4 && <span className="tag gray w-full text-center">{item?.TypeName}</span>}
+					{value == 5 && <span className="tag blue w-full text-center">{item?.TypeName}</span>}
 				</p>
 			)
 		},

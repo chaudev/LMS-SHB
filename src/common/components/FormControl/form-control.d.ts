@@ -66,6 +66,7 @@ type IFormSelectField = {
 	suffix?: element
 	allowClear?:boolean
 	hidden?:boolean
+	initialValue?:any
 }
 
 type ISelectOptionList = {

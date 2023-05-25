@@ -32,6 +32,7 @@ interface IListData {
 
 const MajorsRegistrationPage = () => {
 	const router = useRouter()
+	const { studentId } = router.query
 	const [form] = Form.useForm()
 	const StudentId = Form.useWatch('StudentId', form)
 	const MajorsId = Form.useWatch('MajorsId', form)
@@ -109,8 +110,38 @@ const MajorsRegistrationPage = () => {
 
 			SetListOption(templOption)
 			setListData(templData)
+
+			if (studentId) {
+				form.setFieldValue('StudentId', Number(studentId))
+			}
+
 			setLoading('')
 		} catch (error) {
+			ShowNostis.error(error.message)
+			setLoading('')
+		}
+	}
+
+	const getAllMajorsRegistrationAvailble = async () => {
+		try {
+			const response = await majorsRegistrationApi.getAllMajorsRegistrationAvailble()
+			let templOption = { ...listOption }
+			let templData = { ...listData }
+			if (response.status === 200) {
+				let templ = []
+				response.data.data.map((item, index) => {
+					templ.push({
+						title: item.StudentName + ' - ' + item.StudentCode,
+						value: item.StudentId
+					})
+				})
+				templData.students = response.data.data
+				templOption.students = templ
+				setListData(templData)
+				SetListOption(templOption)
+			}
+		} catch (error) {
+			ShowNostis.error(error.message)
 			setLoading('')
 		}
 	}
@@ -130,6 +161,7 @@ const MajorsRegistrationPage = () => {
 				}
 				form.setFieldValue('Type', Number(detail.Type))
 				form.setFieldValue('Percent', detail.Percent)
+				form.setFieldValue('Paid', null)
 			}
 			setPaymentTypeDetail(response.data.data)
 			setLoading('')
@@ -139,8 +171,9 @@ const MajorsRegistrationPage = () => {
 	}
 
 	useEffect(() => {
+		getAllMajorsRegistrationAvailble()
 		initPage()
-	}, [])
+	}, [studentId])
 
 	useEffect(() => {
 		if (StudentId) {
@@ -162,7 +195,13 @@ const MajorsRegistrationPage = () => {
 					okText: 'Chuyển ngành',
 					cancelText: 'Hủy',
 					onOk: () => {
-						router.push('/majors/change-majors/')
+						// router.push('/majors/change-majors/')
+						router.push({
+							pathname: '/majors/change-majors/',
+							query: {
+								studentId: student.StudentId
+							}
+						})
 					}
 				})
 				form.setFieldValue('StudentId', '')
@@ -193,6 +232,7 @@ const MajorsRegistrationPage = () => {
 			form.setFieldValue('Percent', '')
 			form.setFieldValue('countTotal', '')
 			form.setFieldValue('Type', '')
+			form.setFieldValue('Paid', '')
 		}
 	}, [PaymentTypeId])
 
@@ -222,6 +262,7 @@ const MajorsRegistrationPage = () => {
 			const response = await majorsRegistrationApi.majorsRegistration(payload)
 			if (response.status === 200) {
 				ShowNostis.success(response.data.message)
+				await getAllMajorsRegistrationAvailble()
 			}
 			form.resetFields()
 			setLoading('')
@@ -246,13 +287,15 @@ const MajorsRegistrationPage = () => {
 				<div className="grid grid-cols-1 w800:grid-cols-2 gap-3">
 					<div className="d-flex flex-col gap-3">
 						<Card title="Thông tin học viên" className="col-span-1">
-							<SelectField
-								className="col-span-2"
-								name={'StudentId'}
-								label="Chọn học viên"
-								optionList={listOption.students}
-								rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}
-							/>
+							{listOption.students.length > 0 && (
+								<SelectField
+									className="col-span-2"
+									name={'StudentId'}
+									label="Chọn học viên"
+									optionList={listOption.students}
+									rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}
+								/>
+							)}
 							<div className="d-flex flex-col gap-3">{getInformation()}</div>
 						</Card>
 						<Card title="Ngành học" className="col-span-1">

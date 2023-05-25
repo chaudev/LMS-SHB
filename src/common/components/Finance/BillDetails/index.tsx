@@ -8,6 +8,8 @@ import { ShowNostis } from '~/common/utils'
 import { parseToMoney } from '~/common/utils/common'
 
 const BillDetails = ({ bill }) => {
+	console.log('bill', bill)
+
 	const [totalPage, setTotalPage] = React.useState(1)
 	const [data, setData] = React.useState(null)
 	const [filters, setFilter] = React.useState({ PageSize: PAGE_SIZE, PageIndex: 1, Search: '' })
@@ -21,6 +23,7 @@ const BillDetails = ({ bill }) => {
 			const res = await billApi.getBillDetail(bill?.Id)
 			if (res.status == 200) {
 				setData(res.data.data)
+
 				setTotalPage(res.data.totalRow)
 			} else {
 				setData(null)
@@ -67,6 +70,27 @@ const BillDetails = ({ bill }) => {
 			dataIndex: 'ProgramName',
 			width: 130,
 			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+		}
+	]
+	
+	const tuitionPaymentColums = [
+		{
+			title: 'Mô tả',
+			dataIndex: 'Description',
+			width: 130,
+			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+		},
+		// {
+		// 	title: 'Giá tiền',
+		// 	dataIndex: 'Price',
+		// 	width: 116,
+		// 	render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}</p>
+		// },
+		{
+			title: 'Tổng số tiền',
+			dataIndex: 'TotalPrice',
+			width: 116,
+			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}</p>
 		}
 	]
 
@@ -117,6 +141,8 @@ const BillDetails = ({ bill }) => {
 			? [...type1Colums, ...defaultColumns]
 			: bill?.Type == 2
 			? [...type2Colums, ...defaultColumns]
+			: bill?.Type == 5
+			? tuitionPaymentColums
 			: [...type3Colums, ...defaultColumns]
 
 	return (

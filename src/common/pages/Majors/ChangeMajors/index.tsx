@@ -33,6 +33,8 @@ interface IListData {
 
 const ChangeMajorsPage = () => {
 	const router = useRouter()
+	const { studentId } = router.query
+
 	const [form] = Form.useForm()
 	const StudentId = Form.useWatch('StudentId', form)
 	const MajorsId = Form.useWatch('MajorsId', form)
@@ -112,6 +114,9 @@ const ChangeMajorsPage = () => {
 
 			SetListOption(templOption)
 			setListData(templData)
+			if (studentId) {
+				form.setFieldValue('StudentId', Number(studentId))
+			}
 			setLoading('')
 		} catch (error) {
 			setLoading('')
@@ -133,6 +138,7 @@ const ChangeMajorsPage = () => {
 				}
 				form.setFieldValue('Type', Number(detail.Type))
 				form.setFieldValue('Percent', detail.Percent)
+				form.setFieldValue('Paid', null)
 			}
 			setPaymentTypeDetail(response.data.data)
 			setLoading('')
@@ -147,6 +153,9 @@ const ChangeMajorsPage = () => {
 			const response = await majorsRegistrationApi.getTuitionInOldMajors(StudentId)
 			if (response.status === 200) {
 				setTuitionInOld(response.data.data)
+			}
+			if (response.status === 204) {
+				setTuitionInOld(0)
 			}
 			setLoading('')
 		} catch (error) {
@@ -180,7 +189,7 @@ const ChangeMajorsPage = () => {
 
 	useEffect(() => {
 		initPage()
-	}, [])
+	}, [studentId])
 
 	useEffect(() => {
 		if (StudentId) {
@@ -203,7 +212,12 @@ const ChangeMajorsPage = () => {
 					okText: 'Đăng ký ngành học',
 					cancelText: 'Hủy',
 					onOk: () => {
-						router.push('/majors/registration/')
+						router.push({
+							pathname: '/majors/registration/',
+							query: {
+								studentId: student.StudentId
+							}
+						})
 					}
 				})
 				form.setFieldValue('StudentId', '')
@@ -237,6 +251,7 @@ const ChangeMajorsPage = () => {
 			form.setFieldValue('Percent', '')
 			form.setFieldValue('countTotal', '')
 			form.setFieldValue('Type', '')
+			form.setFieldValue('Paid', '')
 		}
 	}, [PaymentTypeId])
 
@@ -266,6 +281,8 @@ const ChangeMajorsPage = () => {
 			if (response.status === 200) {
 				ShowNostis.success(response.data.message)
 				form.resetFields()
+				setOldMajors(null)
+				setTuitionInOld(0)
 			}
 
 			setLoading('')
@@ -280,11 +297,7 @@ const ChangeMajorsPage = () => {
 			const templ = listData.students.find((value) => {
 				return value.StudentId == StudentId
 			})
-			return (
-				<>
-					<CardInfomation templ={templ} />
-				</>
-			)
+			return <CardInfomation templ={templ} />
 		}, [StudentId])
 
 	return (
