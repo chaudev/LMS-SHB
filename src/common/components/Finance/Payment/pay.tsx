@@ -89,6 +89,7 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 				setVisible(false)
 				form.resetFields()
 			}
+			setLoading(false)
 		} catch (error) {
 			ShowNostis.error(error?.message)
 		} finally {
@@ -105,6 +106,7 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 				setVisible(false)
 				form.resetFields()
 			}
+			setLoading(false)
 		} catch (error) {
 			ShowNostis.error(error?.message)
 		} finally {
@@ -148,6 +150,8 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 						name="Paid"
 						placeholder="Số tiền thanh toán"
 						className="col-span-2"
+						rules={formRequired}
+						isRequired
 					/>
 
 					<Form.Item className="col-span-2" name="PaymentAppointmentDate" label="Ngày thanh toán tiếp theo" rules={formNoneRequired}>
