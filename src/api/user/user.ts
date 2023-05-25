@@ -55,7 +55,10 @@ export const userInformationApi = {
 
 	updateProfileTemplateItem(params: IUpdateUserProfileTemplate) {
 		return instance.put<IApiResultData<IUserProfileTemplateItem>>(url + '/profile/', params)
-	}
+	},
+	checkExistUserName(data: any) {
+		return instance.post('/api/check-exist-username', data)
+	},
 }
 
 export const uploadImageApi = {
