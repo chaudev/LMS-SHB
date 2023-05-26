@@ -1,6 +1,5 @@
 import moment from 'moment'
 import React, { useState } from 'react'
-import PrimaryTable from '../Primary/Table'
 import ExpandTable from '../Primary/Table/ExpandTable'
 import PrimaryTag from '../Primary/Tag'
 
