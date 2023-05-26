@@ -26,6 +26,8 @@ import { TranscriptPage } from './TranscriptPage'
 import Router from 'next/router'
 import Head from 'next/head'
 import appConfigs from '~/appConfig'
+import { TbReportAnalytics } from 'react-icons/tb'
+import { StudentReport } from './Details/Report'
 
 const itemsAdmin = [
 	'Lịch học',
@@ -34,6 +36,7 @@ const itemsAdmin = [
 	'Tài liệu',
 	'Điểm danh',
 	'Bảng điểm',
+	'Báo cáo',
 	'Điểm danh giáo viên',
 	'Phản hồi buổi học',
 	'Thông báo'
@@ -73,10 +76,12 @@ const MenuClass = () => {
 			case 5:
 				return <TranscriptPage />
 			case 6:
-				return <RollUpTeacherPage />
+				return <StudentReport />
 			case 7:
-				return <LessonFeedbackPage />
+				return <RollUpTeacherPage />
 			case 8:
+				return <LessonFeedbackPage />
+			case 9:
 				return <NotificationInClassPage />
 			default:
 				return <CalendarClassEdit />
@@ -124,16 +129,22 @@ const MenuClass = () => {
 			case 6:
 				return (
 					<div className="label-tab">
-						<FiUserCheck className="mr-3" size={20} /> <span>{item}</span>
+						<TbReportAnalytics className="mr-3" size={20} /> <span>{item}</span>
 					</div>
 				)
 			case 7:
 				return (
 					<div className="label-tab">
-						<VscFeedback className="mr-3" size={20} /> <span>{item}</span>
+						<FiUserCheck className="mr-3" size={20} /> <span>{item}</span>
 					</div>
 				)
 			case 8:
+				return (
+					<div className="label-tab">
+						<VscFeedback className="mr-3" size={20} /> <span>{item}</span>
+					</div>
+				)
+			case 9:
 				return (
 					<div className="label-tab">
 						<IoNotificationsOutline className="mr-3" size={20} /> <span>{item}</span>
@@ -393,7 +404,7 @@ const MenuClass = () => {
 				defaultActiveKey="0"
 				tabPosition="left"
 				activeKey={(Router.query?.menu || 0) + ''}
-				onChange={(event: any) => Router.push({ query: { ...Router?.query, menu: event } })}
+				onChange={(event: any) => Router.replace({ query: { ...Router?.query, menu: event } })}
 				items={getTabItems().items.map((item, index) => {
 					return {
 						label: getTabItems().label(item, index),

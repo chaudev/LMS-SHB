@@ -21,7 +21,7 @@ a {
 * {
 	box-sizing: border-box;
 }
-.border-none{
+.border-none {
 	border-style: none !important;
 }
 .loading-blue {
@@ -588,6 +588,12 @@ button {
 	}
 }
 
+.none-ant-border {
+	.ant-input-affix-wrapper {
+		border-style: none !important;
+	}
+}
+
 .ant-input-search .ant-input-group .ant-input-affix-wrapper:not(:last-child) {
 	border-top-left-radius: 6px;
 	border-bottom-left-radius: 6px;
@@ -759,5 +765,11 @@ button {
 		@media screen and (max-width: 768px) {
 			padding-left: 0px !important;
 		}
+	}
+}
+
+.hide-pani {
+	.ant-pagination {
+		display: none !important;
 	}
 }
