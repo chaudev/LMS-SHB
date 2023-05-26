@@ -1,46 +1,31 @@
-import { Col, Row, Card, Select, Form } from 'antd'
-import React, { useEffect, useMemo, useState } from 'react'
-import dynamic from 'next/dynamic'
-import StatisticOverviewAdmin from '~/common/components/Dashboard/StatisticOverviewAdmin'
-import { useDispatch, useSelector } from 'react-redux'
+import { Card, Select, Form } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
-import StatisticOverviewTeacher from '~/common/components/Dashboard/StatisticOverviewTeacher'
-import ListWorkshop from '~/common/components/Dashboard/ListWorkshop'
-import StatisticOverviewStudent from '~/common/components/Dashboard/StatisticOverviewStudent'
 import moment from 'moment'
-import { ShowNoti } from '~/common/utils'
-import { notificationApi } from '~/api/notification'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { getAll } from '~/store/notificateReducer'
-import { dashboardApi } from '~/api/dashboard'
-import StatisticByMonthAdmin from '~/common/components/Dashboard/StatisticByMonthAdmin'
-import { seminarApi } from '~/api/seminar'
-import LearningProgress from '~/common/components/Dashboard/LearningProgress'
-import PrimaryButton from '~/common/components/Primary/Button'
 import { branchApi } from '~/api/branch'
-
 import { IoAnalytics } from 'react-icons/io5'
-import RestApi from '~/api/RestApi'
 import StatisticTop5Course from '~/common/components/Dashboard/StatisticTop5Course'
 import { staticsticalApi } from '~/api/statistic'
 import StatisticStudentByAge from '~/common/components/Dashboard/StatisticStudentByAge'
 import StatisticPositiveAndNegativeChart from '~/common/components/Dashboard/StatisticPositiveAndNegativeChart'
 import StatisticPie from '~/common/components/Dashboard/StatisticPie'
-import { RiMoneyDollarCircleLine, RiUser6Line } from 'react-icons/ri'
+import { RiMoneyDollarCircleLine } from 'react-icons/ri'
 import { HiArrowNarrowDown, HiOutlineUser } from 'react-icons/hi'
 import { GiEvilBook } from 'react-icons/gi'
 import { TbArrowNarrowUp, TbPencil } from 'react-icons/tb'
-import { TiArrowUpThick } from 'react-icons/ti'
 import { StatisticClassNew } from '~/common/components/Dashboard/StatisticClassNew'
 import IconButton from '~/common/components/Primary/IconButton'
 import StatisticPieRateTeacher from '~/common/components/Dashboard/StatisticPieRateTeacher'
 import { StatisticRateTeacher } from '~/common/components/Dashboard/StatisticRateTeacher'
 import { StatisticPointStudent } from '~/common/components/Dashboard/StatisticPointStudent'
-import { classApi } from '~/api/class'
-import { feedbackApi } from '~/api/feedback'
 import { ListFeedback } from '~/common/components/Dashboard/ListFeedback'
 import { feedbackStudentApi } from '~/api/feedbacks-student'
 import { userInformationApi } from '~/api/user'
+import DashboardStudents from './Student'
+import StudentByAttenance from './Student/ByAttenance'
+import { PrimaryTooltip } from '~/common/components'
 
 const dataYear = [
 	{
@@ -80,15 +65,12 @@ const dataYear = [
 		label: '2015'
 	}
 ]
+
 const Dashboard = () => {
-	const dispatch = useDispatch()
 	const [form] = Form.useForm()
-	const [type, setType] = useState('offline')
+
 	const user = useSelector((state: RootState) => state.user.information)
-	const listTodoApi = {
-		branchIds: '',
-		year: moment().year()
-	}
+	const listTodoApi = { branchIds: '', year: moment().year() }
 
 	const listTodoApiOverView = {
 		branchIds: '',
@@ -119,6 +101,8 @@ const Dashboard = () => {
 	const [todoFeedback, setTodoFeedback] = useState(initialFeedback)
 	const [feedback, setFeedback] = useState([])
 	const [totalFeedback, setTotalFeedback] = useState(0)
+
+	// ----------------------------------------------------------------
 
 	const getAllBranch = async () => {
 		try {
@@ -390,16 +374,15 @@ const Dashboard = () => {
 
 	return (
 		<div className="w-[100%] mx-auto dashboard">
-			<div className="flex justify-between mb-4">
-				<p className="title">Xin chào, {user.FullName}</p>
+			<StudentByAttenance />
+
+			<div className="flex justify-between my-4">
+				{/* <p className="title">Xin chào, {user.FullName}</p> */}
+				<div></div>
 				<Form form={form}>
-					<div className="flex items-center pr-4">
+					<div className="flex items-center">
 						<Form.Item name="student" className="w-[200px] mr-2">
-							{user?.RoleId == 8 ? (
-								<Select onChange={handleChangeStudent} options={student} className="w-[200px] h-[36px] mr-2"></Select>
-							) : (
-								''
-							)}
+							{user?.RoleId == 8 && <Select onChange={handleChangeStudent} options={student} className="w-[200px] h-[36px] mr-2"></Select>}
 						</Form.Item>
 
 						<Form.Item name="branchIds" className="w-[200px]">
@@ -412,25 +395,23 @@ const Dashboard = () => {
 									))}
 							</Select>
 						</Form.Item>
-						<IconButton
-							color="red"
-							icon="reset"
-							type="button"
-							onClick={() => {
-								setTodoApi(listTodoApi)
-								setTodoApiOverView(listTodoApiOverView)
-								form.resetFields()
-							}}
-							tooltip="Reset bộ lọc"
-						/>
+
+						<PrimaryTooltip id="the-tip-01" content="Reset" place="left">
+							<IconButton
+								color="red"
+								icon="reset"
+								type="button"
+								onClick={() => {
+									setTodoApi(listTodoApi)
+									setTodoApiOverView(listTodoApiOverView)
+									form.resetFields()
+								}}
+								className="!mr-[0px]"
+							/>
+						</PrimaryTooltip>
 					</div>
 				</Form>
 			</div>
-
-			{/* <div className="grid grid-cols-12 gap-4">
-				{dataStaticsOverview &&
-					dataStaticsOverview.map((item) => <Dashboard.CardItem item={item} key={Date.now() + Math.random() * 1000} />)}
-			</div>*/}
 
 			<div className="dashboard-content">
 				{statisticOverview?.length > 0 &&
@@ -478,6 +459,8 @@ const Dashboard = () => {
 					))}
 			</div>
 
+			<DashboardStudents />
+
 			<div className="flex justify-end mt-4">
 				<Select
 					onChange={(e) => {
@@ -486,7 +469,7 @@ const Dashboard = () => {
 					}}
 					options={dataYear}
 					className="w-[100px] h-[36px] mr-2"
-				></Select>
+				/>
 			</div>
 			{user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
 				<>

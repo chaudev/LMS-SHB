@@ -1,7 +1,5 @@
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { studentAssessmentApi } from '~/api/student-assessment'
 import { transcriptApi } from '~/api/transcript'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { RootState } from '~/store'

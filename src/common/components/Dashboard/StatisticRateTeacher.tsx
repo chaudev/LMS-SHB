@@ -1,17 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-	Area,
-	AreaChart,
-	CartesianGrid,
-	ComposedChart,
-	Legend,
-	Line,
-	LineChart,
-	ResponsiveContainer,
-	Tooltip,
-	XAxis,
-	YAxis
-} from 'recharts'
+import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 export const StatisticRateTeacher = (props) => {
 	const { data, titleBar, type } = props
@@ -45,19 +33,6 @@ export const StatisticRateTeacher = (props) => {
 	return (
 		<>
 			<ResponsiveContainer width="100%" height={400}>
-				{/* <LineChart width={500} height={500} data={data}>
-					<CartesianGrid stroke="#f5f5f5" />
-					{hideXAxis ? <XAxis hide dataKey="Name" /> : <XAxis dataKey="Name" />}
-					<YAxis />
-					<Tooltip />
-					<Legend content={renderLegend} />
-					<Line
-						type="monotone"
-						name={titleBar || 'Thông kê khóa học có nhiều sinh viên nhất'}
-						dataKey="Value"
-						stroke={type == 1 ? '#0262DB' : '#D44141'}
-					/>
-				</LineChart> */}
 				<AreaChart
 					width={500}
 					height={400}
