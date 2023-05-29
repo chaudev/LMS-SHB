@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Card } from 'antd'
-// import { useWrap } from '~/src/context/wrap'
 import EmptyData from '~/common/components/EmptyData'
 
 const NestedTable = React.memo((props: any) => {
-	// const { getTitlePage } = useWrap()
 	const [dataSource, setDataSource] = useState([])
 	const [activeIndex, setActiveIndex] = useState(null)
+
+	useEffect(() => {
+		let dataClone = [...props.dataSource]
+		dataClone.forEach((item, index) => {
+			item.key = index.toString()
+		})
+		setDataSource(dataClone)
+	}, [props.dataSource])
 
 	const selectRow = (record) => {
 		const selectedRowKeys = []
@@ -25,19 +31,6 @@ const NestedTable = React.memo((props: any) => {
 		}
 	}
 
-	useEffect(() => {
-		// if (props.TitlePage) {
-		// 	getTitlePage(props.TitlePage)
-		// }
-		if (props.dataSource && props.dataSource.length > 0) {
-			let dataClone = [...props.dataSource]
-			dataClone.forEach((item, index) => {
-				item.key = index.toString()
-			})
-			setDataSource(dataClone)
-		}
-	}, [props.dataSource])
-
 	return (
 		<>
 			<div className="nested-table">
@@ -53,7 +46,7 @@ const NestedTable = React.memo((props: any) => {
 					{dataSource.length > 0 && (
 						<Table
 							className={props.addClass && props.addClass}
-							loading={props.loading?.type == 'GET_ALL' && props.loading?.status}
+							loading={(props.loading?.type == 'GET_ALL' && props.loading?.status) || !!props?.loading}
 							bordered={props.haveBorder ? props.haveBorder : false}
 							scroll={{ x: 'max-content' }}
 							columns={props.columns}

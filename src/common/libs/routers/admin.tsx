@@ -77,6 +77,13 @@ export const AdminChildMenu = [
 				Route: '/dashboard',
 				Icon: '',
 				Text: 'Thống kê'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-teaching',
+				Route: '/statistic-teaching',
+				Icon: '',
+				Text: 'Thống kê giảng dạy'
 			}
 		]
 	},
