@@ -222,16 +222,14 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 											{item?.Type !== 3 ? (
 												<Link href={returnPathName(item)}>
 													<Tooltip title={item?.Name}>
-														<a className="font-medium hover:underline">{item.Name}</a>
+														<p className="font-medium hover:underline cursor-pointer hover:text-tw-primary	">{item.Name}</p>
 													</Tooltip>
 												</Link>
 											) : (
 												<Link href={handleTutoring(item)}>
-													<a>
-														<Tooltip title={item?.Name}>
-															<a className="font-medium hover:underline">{item.Name}</a>
-														</Tooltip>
-													</a>
+													<Tooltip title={item?.Name}>
+														<p className="font-medium hover:underline cursor-pointer hover:text-tw-primary">{item.Name}</p>
+													</Tooltip>
 												</Link>
 											)}
 										</div>

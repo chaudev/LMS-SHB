@@ -24,7 +24,14 @@ const initialParamsStudent = { pageIndex: 1, pageSize: PAGE_SIZE, FullName: '', 
 
 const initialFilter = [
 	{
-		name: 'Type',
+		name: 'date',
+		title: 'Từ ngày - đến ngày',
+		col: 'col-span-2',
+		type: 'date-range',
+		value: null
+	},
+	{
+		name: 'type',
 		title: 'Loại phiếu',
 		type: 'select',
 		col: 'col-span-2',
@@ -54,6 +61,7 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 			let res = await paymentSessionApi.getAll(todoApi)
 			if (res.status == 200) {
 				// @ts-ignore
+
 				setDataStatistical({ income: res.data.totalIncome, expense: res.data.totalExpense, revenue: res.data.totalRevenue })
 				setDataSource(res.data.data)
 				setTotalPage(res.data.totalRow)
@@ -87,7 +95,7 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 							Người tạo: <span>{item.CreatedBy}</span>
 						</p>
 						<p className="table-row-sub-text">
-							Thời gian: <span> {moment(item.CreatedOn).format('DD/MM/YYY HH:mm')}</span>
+							Thời gian: <span> {moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</span>
 						</p>
 					</>
 				)
@@ -188,7 +196,7 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 			let res = await userInformationApi.getAll(todoStudentOption)
 			if (res.status == 200) {
 				let temp = []
-				res.data.data.forEach((item) => temp.push({ title: `${item.FullName}-${item.UserCode}`, value: item.UserInformationId }))
+				res.data.data.forEach((item) => temp.push({ title: `${item.FullName} - ${item.UserCode}`, value: item.UserInformationId }))
 				setStudentOption(temp)
 			}
 		} catch (error) {
@@ -217,7 +225,7 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 				tempOption.branch = temp
 
 				tempFilter.push({
-					name: 'BranchIds',
+					name: 'branchIds',
 					title: 'Chi nhánh',
 					type: 'select',
 					col: 'col-span-2',
@@ -257,12 +265,16 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 	}
 
 	const handleFilter = (data) => {
-		setTodoApi({
+		const params = {
+			pageIndex: 1,
 			...todoApi,
-			...data,
-			FromDate: data?.Created?.[0] ? Math.round(new Date(data?.Created?.[0]).setHours(0, 0, 0) / 1000) : null,
-			ToDate: data?.Created?.[1] ? Math.round(new Date(data?.Created?.[1]).setHours(23, 59, 59, 999) / 1000) : null
-		})
+			userId: data.userId,
+			branchIds: data.branchIds,
+			fromDate: data.date ? moment(data.date[0].toDate()).format('YYYY-MM-DD') : null,
+			toDate: data.date ? moment(data.date[1].toDate()).format('YYYY-MM-DD') : null
+		}
+
+		setTodoApi(params)
 	}
 
 	const onSubmit = async (data) => {
@@ -316,31 +328,42 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 	}
 
 	return (
-		<>
-			<PrimaryTable
-				columns={columns}
-				data={dataSource}
-				total={totalPage}
-				onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
-				loading={isLoading}
-				Extra={
-					<IncomeExpenseManagementModalCRUD
-						mode="add"
-						handleSearchForOptionList={handleSearchForOptionList}
-						handleLoadOnScrollForOptionList={handleLoadOnScrollForOptionList}
-						onSubmit={onSubmit}
-						optionStudent={optionStudent}
-						dataOption={optionList}
+		<PrimaryTable
+			columns={columns}
+			data={dataSource}
+			total={totalPage}
+			onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
+			loading={isLoading}
+			Extra={
+				<IncomeExpenseManagementModalCRUD
+					mode="add"
+					handleSearchForOptionList={handleSearchForOptionList}
+					handleLoadOnScrollForOptionList={handleLoadOnScrollForOptionList}
+					onSubmit={onSubmit}
+					optionStudent={optionStudent}
+					dataOption={optionList}
+				/>
+			}
+			TitleCard={
+				<div className="flex items-center justify-between w-full">
+					<FilterBaseVer2
+						handleFilter={handleFilter}
+						dataFilter={[
+							...filterList,
+							{
+								name: 'userId',
+								title: 'Học viên',
+								type: 'select',
+								col: 'col-span-2',
+								optionList: optionStudent
+							}
+						]}
+						handleReset={() => setTodoApi({ ...initialParams })}
 					/>
-				}
-				TitleCard={
-					<div className="flex items-center justify-between w-full">
-						<FilterBaseVer2 handleFilter={handleFilter} dataFilter={filterList} handleReset={() => setTodoApi({ ...initialParams })} />
-					</div>
-				}
-			>
-				{dataSource && renderStatistical()}
-			</PrimaryTable>
-		</>
+				</div>
+			}
+		>
+			{dataSource && renderStatistical()}
+		</PrimaryTable>
 	)
 }

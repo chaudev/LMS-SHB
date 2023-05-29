@@ -134,9 +134,9 @@ const Center = () => {
 		},
 		{
 			title: 'Chức năng',
-			width: 160,
+			width: 170,
 			fixed: 'right',
-			responsive: ['md'],
+			// responsive: ['md'],
 			render: (text, data, index) => (
 				<>
 					<Link
@@ -145,28 +145,7 @@ const Center = () => {
 							query: { slug: `${data.Id}` }
 						}}
 					>
-						<IconButton type="button" icon="eye" color="blue" tooltip={'Xem phòng'} />
-					</Link>
-
-					{isAdmin() ? <CenterForm dataArea={dataArea} rowData={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} /> : ''}
-
-					{isAdmin() ? <DeleteTableRow text={data.Name} handleDelete={() => handleDeleteBranch(data.Id)} /> : ''}
-				</>
-			)
-		},
-		{
-			title: 'Chức năng',
-			width: 160,
-			responsive: ['xs'],
-			render: (text, data, index) => (
-				<>
-					<Link
-						href={{
-							pathname: '/options/center/rooms-detail',
-							query: { slug: `${data.Id}` }
-						}}
-					>
-						<IconButton type="button" icon="eye" color="blue" tooltip={'Xem phòng'} />
+						<IconButton type="button" icon="eye" color="orange" tooltip={'Xem phòng'} />
 					</Link>
 
 					{isAdmin() ? <CenterForm dataArea={dataArea} rowData={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} /> : ''}

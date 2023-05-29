@@ -198,7 +198,6 @@ const UserProfileTemplate = () => {
 								form.setFieldsValue(null)
 								setProfileItem(null)
 							}}
-							loading={loading.type === 'UPDATE_PROFILE' && loading.status === true}
 							icon="cancel"
 							background="orange"
 						>

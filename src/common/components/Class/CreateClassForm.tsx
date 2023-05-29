@@ -484,7 +484,7 @@ const CreateClassForm = (props) => {
 						</div>
 						<div className="relative">
 							<button className="absolute top-0 right-0 z-10 -translate-x-2/4" type="button" onClick={handleAddListTimeFrame}>
-								<AiFillPlusCircle size={22} />
+								<AiFillPlusCircle size={22} color='#002456' />
 							</button>
 							<Form.Item label="Khung thời gian" className="mb-0">
 								{!!listTimeFrames &&
@@ -496,7 +496,7 @@ const CreateClassForm = (props) => {
 													className="absolute top-0 right-0 z-10"
 													onClick={() => handleRemoveListTimeFrame(timeFrame.Id)}
 												>
-													<AiFillMinusCircle size={22} />
+													<AiFillMinusCircle size={22} color='#002456' />
 												</button>
 												<div className="row">
 													<div className="col-md-6 col-12">

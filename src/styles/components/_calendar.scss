@@ -21,17 +21,29 @@
 		.fc-toolbar {
 			.fc-toolbar-chunk {
 				.fc-button {
-					@apply bg-[#002456];
+					@apply bg-[#002456] hover:bg-[#C94A4F] focus:bg-[#002456] border-none;
+				}
+				.fc-button:enabled:hover{
+					@apply bg-[#002456] hover:bg-[#C94A4F] focus:bg-[#002456] border-none;
 				}
 				.fc-today-button {
-					@apply font-medium;
+					@apply font-medium border-none;
+					background: #002456 !important
+				
+				
+				}
+				.fc-button:disabled  {
+					@apply border-none;
+				}
+				.fc-button-primary{
+					@apply  border-none;
 				}
 				.fc-button-group {
 					button.fc-button {
-						@apply font-medium;
+						@apply font-medium ;
 					}
 					button.fc-button-active {
-						@apply bg-[#002456];
+						@apply bg-[#002456] hover:bg-[#C94A4F] border-none;
 					}
 				}
 			}

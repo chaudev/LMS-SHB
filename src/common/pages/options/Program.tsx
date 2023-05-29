@@ -230,7 +230,7 @@ const Programs = () => {
 	const columns = [
 		{
 			title: 'Chuyên môn',
-			width: 200,
+
 			dataIndex: 'GradeName',
 			render: (text) => {
 				return <p className="font-weight-black">{text}</p>
@@ -246,7 +246,7 @@ const Programs = () => {
 		{
 			title: 'Tên chương trình',
 			dataIndex: 'Name',
-			width: 170,
+			minWidth: 150,
 			...FilterColumn('Name', onSearch, handleReset, 'text'),
 			render: (text) => {
 				return <p className="font-weight-primary">{text}</p>
@@ -266,12 +266,12 @@ const Programs = () => {
 		// },
 		{
 			title: 'Người tạo',
-			width: 110,
+
 			dataIndex: 'ModifiedBy'
 		},
 		{
 			title: 'Ngày tạo',
-			width: 150,
+
 			dataIndex: 'ModifiedOn',
 			render: (date: any) => moment(date).format('DD/MM/YYYY')
 		},
@@ -279,7 +279,7 @@ const Programs = () => {
 			title: 'Chức năng',
 			fixed: 'right',
 			align: 'right',
-			responsive: ['md'],
+			with: 200,
 			render: (value, data, index) => (
 				<>
 					<Link
@@ -288,33 +288,7 @@ const Programs = () => {
 							query: { slug: data.Id, name: data.Name }
 						}}
 					>
-						<IconButton icon="eye" color="blue" type="button" tooltip="Chi tiết chương trình" />
-					</Link>
-
-					<ProgramAddTeacherForm rowData={data} />
-
-					{userInformation && userInformation?.RoleId !== 2 && (
-						<>
-							<ProgramForm rowData={data} specialize={specialize} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
-							<DeleteTableRow text={`chương trình ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
-						</>
-					)}
-				</>
-			)
-		},
-		{
-			title: 'Chức năng',
-			align: 'right',
-			responsive: ['xs'],
-			render: (value, data, index) => (
-				<>
-					<Link
-						href={{
-							pathname: '/options/program/program-detail',
-							query: { slug: data.Id, name: data.Name }
-						}}
-					>
-						<IconButton icon="eye" color="blue" type="button" tooltip="Chi tiết chương trình" />
+						<IconButton icon="eye" color="orange" type="button" tooltip="Chi tiết chương trình" />
 					</Link>
 
 					<ProgramAddTeacherForm rowData={data} />

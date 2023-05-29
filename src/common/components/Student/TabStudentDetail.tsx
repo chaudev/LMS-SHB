@@ -576,7 +576,8 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 							onClick={() => updateUserInfo('OfficeId', OfficeId)}
 							loading={isLoading === 'OfficeId'}
 						/>
-					</div><Divider />
+					</div>
+					<Divider />
 					<div className="d-flex justify-between items-center">
 						<SelectField
 							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
@@ -591,7 +592,8 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 							onClick={() => updateUserInfo('ProfileStatusId', ProfileStatusId)}
 							loading={isLoading === 'ProfileStatusId'}
 						/>
-					</div><Divider />
+					</div>
+					<Divider />
 					<div className="d-flex justify-between items-center">
 						<SelectField
 							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
@@ -606,7 +608,8 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 							onClick={() => updateUserInfo('ForeignLanguageId', ForeignLanguageId)}
 							loading={isLoading === 'ForeignLanguageId'}
 						/>
-					</div><Divider />
+					</div>
+					<Divider />
 					<div className="d-flex justify-between items-center">
 						<SelectField
 							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
@@ -621,7 +624,8 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 							onClick={() => updateUserInfo('PartnerId', PartnerId)}
 							loading={isLoading === 'PartnerId'}
 						/>
-					</div><Divider />
+					</div>
+					<Divider />
 					<div className="d-flex justify-between items-center">
 						<SelectField
 							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
@@ -636,7 +640,8 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 							onClick={() => updateUserInfo('ProcessId', ProcessId)}
 							loading={isLoading === 'ProcessId'}
 						/>
-					</div><Divider />
+					</div>
+					<Divider />
 					<div className="d-flex justify-between items-center">
 						<SelectField
 							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"

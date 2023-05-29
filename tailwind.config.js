@@ -91,7 +91,7 @@ module.exports = {
 			'tw-disable': '#cacaca',
 			'tw-black': '#000000',
 			'tw-yellow': '#FFBA0A',
-			'tw-blue': '#1986da',
+			'tw-blue': '#005DE0',
 			'tw-orange': '#ff7c38',
 			'tw-red': '#e21b1b',
 			'tw-green': '#38853b',
