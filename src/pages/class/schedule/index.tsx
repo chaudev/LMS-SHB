@@ -22,7 +22,7 @@ import { userInformationApi } from '~/api/user/user'
 
 const Schedule = () => {
 	const thisCalendar = useRef(null)
-	const branch = useSelector((state: RootState) => state?.branch?.Branch)
+	const branch = useSelector((state: RootState) => state.branch.Branch)
 	const [teachers, setTeachers] = useState([])
 	const [listSchedule, setListSchedule] = useState([])
 	const [timeStamp, setTimeStamp] = useState(0)
@@ -87,23 +87,23 @@ const Schedule = () => {
 
 	useEffect(() => {
 		if (isAdmin() || isManager() || isAcademic()) {
-			// getAllTeacher()
+			getAllTeacher()
 		}
 	}, [])
 
 	useEffect(() => {
 		if ((isAdmin() || isManager() || isAcademic()) && branch.length === 0) {
-			// getAllBranch()
+			getAllBranch()
 		}
 	}, [branch])
 
 	useEffect(() => {
 		if (!!paramsSearch.from && !!paramsSearch.to) {
-			// getAllSchedule(paramsSearch)
+			getAllSchedule(paramsSearch)
 		}
 	}, [paramsSearch])
 
-	const userInformation = useSelector((state: RootState) => state?.user?.information)
+	const userInformation = useSelector((state: RootState) => state.user.information)
 
 	function isAdmin() {
 		return userInformation?.RoleId == 1
@@ -128,14 +128,14 @@ const Schedule = () => {
 	return (
 		<div className="wrapper-class-schedule wrapper-calendar">
 			<Card
-			// extra={
-			// 	(isAdmin() || isManager() || isAcademic()) && (
-			// 		<PopoverSearch setParamsSearch={setParamsSearch} teachers={teachers} isLoading={isLoading} />
-			// 	)
-			// }
+				extra={
+					(isAdmin() || isManager() || isAcademic()) && (
+						<PopoverSearch setParamsSearch={setParamsSearch} teachers={teachers} isLoading={isLoading} />
+					)
+				}
 			>
 				<FullCalendar
-					// ref={thisCalendar}
+					ref={thisCalendar}
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 					initialView="dayGridMonth"
 					droppable={true}
@@ -143,12 +143,12 @@ const Schedule = () => {
 					selectMirror={true}
 					weekends={true}
 					events={listSchedule}
-					// eventsSet={(data) => setTimeStamp(new Date().getTime())}
-					// eventChange={(data) => console.log('DATA: ', data)}
-					// datesSet={(data) => {
-					// 	let DATA_GET = { ...paramsSearch, from: moment(data.start).format(), to: moment(data.end).format() }
-					// 	setParamsSearch(DATA_GET)
-					// }}
+					eventsSet={(data) => setTimeStamp(new Date().getTime())}
+					eventChange={(data) => console.log('DATA: ', data)}
+					datesSet={(data) => {
+						let DATA_GET = { ...paramsSearch, from: moment(data.start).format(), to: moment(data.end).format() }
+						setParamsSearch(DATA_GET)
+					}}
 					locale="vi"
 					headerToolbar={{ start: 'prev today next', center: 'title', end: 'dayGridMonth,timeGridWeek' }}
 					buttonText={{ today: 'Hôm nay', month: 'Tháng', week: 'Tuần', day: 'Ngày' }}
@@ -156,7 +156,7 @@ const Schedule = () => {
 					titleFormat={{ month: 'numeric', year: 'numeric', day: 'numeric' }}
 					dayHeaderFormat={{ weekday: 'long' }}
 					firstDay={1}
-					// eventContent={(eventInfo) => <ScheduleCalendar dataRow={eventInfo} onRefresh={getAllSchedule} />}
+					eventContent={(eventInfo) => <ScheduleCalendar dataRow={eventInfo} onRefresh={getAllSchedule} />}
 				/>
 
 				<div className="wrapper-status">
