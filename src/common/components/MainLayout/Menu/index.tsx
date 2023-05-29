@@ -344,7 +344,7 @@ const PrimaryMenu: FC<IMainMenu> = ({ isOpen, openMenuMobile, funcMenuMobile, re
 
 			<div className={`menu-child  ${!isOpen && `close-app  ${isHover.status ? 'hover-open' : ''} `}`}>
 				<div className="app-header-logo flex items-center justify-center">
-					<a href="/">
+					<a className='d-flex justify-center items-center' href="/">
 						<img className={isOpen ? 'logo-img h-[40px]' : 'logo-img-none'} src="/images/logo-2.jpg" />
 					</a>
 				</div>
@@ -391,7 +391,7 @@ const PrimaryMenu: FC<IMainMenu> = ({ isOpen, openMenuMobile, funcMenuMobile, re
 													const isActive = subitem?.Route == pathname
 													return (
 														<Menu.Item
-															className={`${isActive ? '!text-[#1b73e8] bg-[#ecf2fd]' : ''}`}
+															className={`${isActive ? '!text-[#002456] bg-[#ecf2fd]' : ''}`}
 															key={`sub-menu-${subitem?.Key}`}
 															icon={typeof subitem.Icon == 'string' ? ReactHtmlParser(subitem.Icon) : subitem.Icon}
 														>

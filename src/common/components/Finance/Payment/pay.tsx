@@ -122,7 +122,7 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 		<>
 			{isEdit && (
 				<PrimaryTooltip id={`pay-${defaultData?.Code}`} place="left" content="Thanh toán">
-					<div onClick={openEdit} className="px-[4px] cursor-pointer text-[#1E88E5] active:text-[#186fbc]">
+					<div onClick={openEdit} className="px-[4px] cursor-pointer text-[#002456] active:text-[#186fbc]">
 						<FaMoneyBill size={22} />
 					</div>
 				</PrimaryTooltip>

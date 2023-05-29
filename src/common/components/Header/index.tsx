@@ -171,7 +171,7 @@ function Header({ isOpenMenu, isOpen, funcMenuMobile, openMenuMobile }: IHeader)
 	return (
 		<header className={`app-header ${openMenuMobile ? 'mobile' : ''}`}>
 			<div className={`app-header-logo ${!isOpen ? 'close-app' : countOpen > 0 ? 'open' : 'open-no-ani'}`}>
-				<a href="/">
+				<a href="/" className='d-flex items-center justify-center'>
 					<img className={isOpen ? 'logo-img' : 'logo-img-none'} src="/images/logo-2.jpg"></img>
 				</a>
 			</div>
@@ -179,11 +179,13 @@ function Header({ isOpenMenu, isOpen, funcMenuMobile, openMenuMobile }: IHeader)
 			<div className={`app-header-inner ${!isOpen && 'close-app'}`}>
 				<div className="right">
 					<div className="box-menu desktop" onClick={() => isOpenMenu()}>
-						<div className="icon-action">{!isOpen ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}</div>
+						<div className="icon-action">{!isOpen ? <MenuUnfoldOutlined color="#002456" /> : <MenuFoldOutlined color="#002456" />}</div>
 					</div>
 
 					<div className="box-menu mobile" onClick={() => funcMenuMobile()}>
-						<div className="icon-action">{!openMenuMobile ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}</div>
+						<div className="icon-action">
+							{!openMenuMobile ? <MenuUnfoldOutlined color="#002456" /> : <MenuFoldOutlined color="#002456" />}
+						</div>
 					</div>
 				</div>
 

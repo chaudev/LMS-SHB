@@ -107,7 +107,7 @@ const PaymentApprovePage = () => {
 		{
 			title: 'Họ tên',
 			dataIndex: 'FullName',
-			render: (text) => <p className="font-semibold text-[#1b73e8]">{text}</p>
+			render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
 		},
 		{
 			width: 120,

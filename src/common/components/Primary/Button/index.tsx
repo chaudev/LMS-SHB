@@ -21,7 +21,7 @@ const PrimaryButton: FC<IPrimaryButton> = (props) => {
 				return 'bg-[#4CAF50] hover:bg-[#449a48] focus:bg-[#38853b]'
 			}
 			if (background == 'blue') {
-				return 'bg-[#0A89FF] hover:bg-[#157ddd] focus:bg-[#1576cf]'
+				return 'bg-[#002456] hover:bg-[#157ddd] focus:bg-[#1576cf]'
 			}
 			if (background == 'red') {
 				return '!bg-[#C94A4F] hover:!bg-[#b43f43] focus:!bg-[#9f3136]'
@@ -33,7 +33,7 @@ const PrimaryButton: FC<IPrimaryButton> = (props) => {
 				return 'bg-[#000] hover:bg-[#191919] focus:bg-[#313131]'
 			}
 			if (background == 'primary') {
-				return 'bg-[#1b73e8] hover:bg-[#1369da] focus:bg-[#1b73e8]'
+				return 'bg-[#002456] hover:bg-[#1369da] focus:bg-[#002456]'
 			}
 			if (background == 'disabled') {
 				return 'bg-[#cacaca] hover:bg-[#bababa] focus:bg-[#acacac] cursor-not-allowed'

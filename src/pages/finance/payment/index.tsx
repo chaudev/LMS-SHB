@@ -151,7 +151,7 @@ const PaymentManagementPage = () => {
 			title: 'Người thanh toán',
 			dataIndex: 'FullName',
 			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		},
 		{
 			title: 'Mã khuyến mãi',
@@ -207,7 +207,7 @@ const PaymentManagementPage = () => {
 			title: 'Người tạo',
 			dataIndex: 'ModifiedBy',
 			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		},
 		{
 			title: 'Ngày',

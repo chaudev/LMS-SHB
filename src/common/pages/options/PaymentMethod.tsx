@@ -35,7 +35,7 @@ const PaymentMethodPage = () => {
 			dataIndex: 'Name',
 			key: 'Name',
 			render: (value) => {
-				return <div className="font-[600] text-[#1E88E5]">{value}</div>
+				return <div className="font-[600] text-[#002456]">{value}</div>
 			}
 		},
 		{

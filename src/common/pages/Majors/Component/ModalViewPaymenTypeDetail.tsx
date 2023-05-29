@@ -24,7 +24,7 @@ const ModalViewPaymenTypeDetail = ({ paymentType, paymentTypeDetail = [], Paymen
 			{paymentTypeDetail && paymentTypeDetail.length > 0 && (
 				<Tooltip title="Xem chi tiết">
 					&nbsp;&nbsp;
-					<AiOutlineExclamationCircle className="cursor-pointer" onClick={showModal} size={16} color="#1b73e8" />
+					<AiOutlineExclamationCircle className="cursor-pointer" onClick={showModal} size={16} color="#002456" />
 				</Tooltip>
 			)}
 			<Modal

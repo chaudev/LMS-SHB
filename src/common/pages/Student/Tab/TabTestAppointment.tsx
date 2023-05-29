@@ -45,7 +45,7 @@ export const TabTestAppointment: React.FC<ITabTestAppointment> = ({ StudentDetai
 			title: 'Người tư vấn',
 			width: 180,
 			dataIndex: 'SaleName',
-			render: (text) => <p className="font-semibold text-[#1b73e8]">{text}</p>
+			render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
 		},
 		{
 			title: 'Listening',
