@@ -14,8 +14,8 @@ export const statisticalStudentApi = {
 	GetByLearningStatus() {
 		return instance.get<IApiResultData<any>>(url + 'GetByLearningStatus', {})
 	},
-	GetByAttenance() {
-		return instance.get<IApiResultData<any>>(url + 'GetByAttenance', {})
+	GetByAttenance(params) {
+		return instance.get<IApiResultData<any>>(url + 'GetByAttenance', { params })
 	},
 	GetStatisticalStudentAmountByAge() {
 		return instance.get<IApiResultData<any>>(url + 'GetStatisticalStudentAmountByLevel', {})
