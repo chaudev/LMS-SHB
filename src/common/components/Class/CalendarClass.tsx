@@ -298,7 +298,7 @@ const CalenderClass = () => {
 				title="Sắp xếp lịch học"
 				extra={
 					<>
-						{/* <div className="wrapper-btn-create-class-desktop flex-all-center gap-3">
+						<div className="wrapper-btn-create-class-desktop flex-all-center gap-3">
 							<CreateClassForm refPopoverWrapperBtn={refPopoverWrapperBtn} isOnline onSubmit={onSubmit} />
 							<CreateClassForm refPopoverWrapperBtn={refPopoverWrapperBtn} onSubmit={onSubmit} />
 							{listCalendar.length > 0 ? (
@@ -331,12 +331,12 @@ const CalenderClass = () => {
 									dataChangeSchedule={dataChangeSchedule}
 								/>
 							</>
-						)} */}
+						)}
 					</>
 				}
 			>
 				<FullCalendar
-					// ref={thisCalendar}
+					ref={thisCalendar}
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 					initialView="dayGridMonth"
 					droppable={true}
@@ -367,28 +367,28 @@ const CalenderClass = () => {
 					titleFormat={{ month: 'numeric', year: 'numeric', day: 'numeric' }}
 					dayHeaderFormat={{ weekday: 'long' }}
 					firstDay={1}
-					// eventContent={(eventInfo) => (
-					// 	<ChangeScheduleClass
-					// 		dataRow={eventInfo}
-					// 		checkTeacherAvailable={checkTeacherAvailable}
-					// 		checkRoomAvailable={checkRoomAvailable}
-					// 		getAllTeacherByBranchAndProgram={getAllTeacherByBranchAndProgram}
-					// 		handleChangeInfo={handleChangeInfo}
-					// 	/>
-					// )}
-					// eventClick={(eventClickInfo) => {
-					// 	dispatch(
-					// 		setPrevSchedule({
-					// 			...eventClickInfo.event.extendedProps,
-					// 			start: moment(eventClickInfo.event.start).format(),
-					// 			end: moment(eventClickInfo.event.end).format(),
-					// 			title: eventClickInfo.event.title
-					// 		})
-					// 	)
-					// }}
-					// eventDrop={(eventDropInfo) => {
-					// 	handleEventDrop(eventDropInfo)
-					// }}
+					eventContent={(eventInfo) => (
+						<ChangeScheduleClass
+							dataRow={eventInfo}
+							checkTeacherAvailable={checkTeacherAvailable}
+							checkRoomAvailable={checkRoomAvailable}
+							getAllTeacherByBranchAndProgram={getAllTeacherByBranchAndProgram}
+							handleChangeInfo={handleChangeInfo}
+						/>
+					)}
+					eventClick={(eventClickInfo) => {
+						dispatch(
+							setPrevSchedule({
+								...eventClickInfo.event.extendedProps,
+								start: moment(eventClickInfo.event.start).format(),
+								end: moment(eventClickInfo.event.end).format(),
+								title: eventClickInfo.event.title
+							})
+						)
+					}}
+					eventDrop={(eventDropInfo) => {
+						handleEventDrop(eventDropInfo)
+					}}
 				/>
 			</Card>
 			{loadingCalendar && (
