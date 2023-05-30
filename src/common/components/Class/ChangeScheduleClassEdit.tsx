@@ -391,11 +391,16 @@ const ChangeScheduleClassEdit = (props) => {
 					setIsModalOpen({ open: false, id: null })
 					dispatch(setShowModalEdit({ open: false, id: null }))
 				}}
+				centered
+				bodyStyle={{
+					maxHeight: '80vh',
+					overflow: 'auto'
+				}}
 				footer={
 					<PrimaryButton
 						disable={loadingCalendar}
 						icon="save"
-						background="blue"
+						background="primary"
 						type="button"
 						onClick={form.submit}
 						loading={loadingCalendar}

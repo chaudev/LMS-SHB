@@ -55,12 +55,14 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 		{
 			title: 'Mã',
 			width: 100,
-			dataIndex: 'Code'
+			dataIndex: 'Code',
+			className: 'font-weight-primary'
 		},
 		{
 			title: 'Tổng thanh toán',
 			width: 150,
 			dataIndex: 'TotalPrice',
+			classNanme:'font-weight-green',
 			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{

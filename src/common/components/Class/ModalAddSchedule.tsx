@@ -115,7 +115,12 @@ const ModalAddSchedule = (props) => {
 			<Modal
 				title="Thêm buổi học"
 				open={openModalAdd}
+				centered
 				onCancel={_cancel}
+				bodyStyle={{
+					maxHeight:'80vh',
+					overflow:'auto'
+				}}
 				footer={<ModalFooter loading={isLoading} onOK={form.submit} onCancel={_cancel} />}
 			>
 				<Form className="grid grid-cols-2 gap-x-4" form={form} layout="vertical" onFinish={onSubmit}>

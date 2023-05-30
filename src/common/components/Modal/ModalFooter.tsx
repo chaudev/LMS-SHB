@@ -5,6 +5,7 @@ import { AiOutlineCloseCircle, AiOutlineSave } from 'react-icons/ai'
 import { VscSignOut } from 'react-icons/vsc'
 import RestApi from '~/api/RestApi'
 import { ShowNostis } from '~/common/utils'
+import PrimaryButton from '../Primary/Button'
 
 interface IProps {
 	buttonFull?: boolean
@@ -44,13 +45,19 @@ const ModalFooter = (props: IProps) => {
 				</Popconfirm>
 			)}
 			{!isEdit && (
-				<Button className={`${buttonFull && 'flex-1'}`} style={{ background: '#ff595e' }} onClick={onCancel}>
-					<AiOutlineCloseCircle className="text-[18px] mr-2" /> Huỷ
-				</Button>
+				// <Button className={`${buttonFull && 'flex-1'}`} style={{ background: '#ff595e' }} onClick={onCancel}>
+				// 	<AiOutlineCloseCircle className="text-[18px] mr-2" /> Huỷ
+				// </Button>
+					<PrimaryButton type="button" onClick={onCancel} loading={loading} background="red" className="w-full" icon="cancel">
+				Huỷ
+				</PrimaryButton>
 			)}
-			<Button className={buttonFull ? 'flex-1' : ''} onClick={onOK} style={{ background: '#0a89ff' }} loading={loading}>
+			{/* <Button className={buttonFull ? 'flex-1' : ''} onClick={onOK} style={{ background: '#002456' }} loading={loading}>
 				<AiOutlineSave className="text-[18px] mr-2" /> {isEdit ? 'Chỉnh sửa' : 'Lưu'}
-			</Button>
+			</Button> */}
+			<PrimaryButton type="button" onClick={onOK} loading={loading} background="primary" className="w-full" icon="save">
+				{isEdit ? 'Chỉnh sửa' : 'Lưu'}
+			</PrimaryButton>
 		</div>
 	)
 }

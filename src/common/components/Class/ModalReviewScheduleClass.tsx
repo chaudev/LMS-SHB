@@ -45,7 +45,7 @@ const ModalReviewScheduleClass = (props) => {
 				title="Thông tin lớp học"
 				open={isModalOpen}
 				onCancel={() => setIsModalOpen(false)}
-				centered
+				centered 
 				footer={
 					<PrimaryButton background="blue" icon="save" type="button" onClick={handleSubmit} loading={isLoading} disable={isLoading}>
 						Lưu

@@ -93,6 +93,7 @@ const ModalAddScheduleEdit = (props) => {
 				title="Thêm buổi học"
 				open={openModalAdd}
 				onCancel={_cancel}
+				centered
 				footer={<ModalFooter loading={isLoading} onOK={form.submit} onCancel={_cancel} />}
 			>
 				<Form form={form} layout="vertical" onFinish={onSubmit}>

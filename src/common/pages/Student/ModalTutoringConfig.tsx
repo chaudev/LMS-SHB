@@ -76,7 +76,7 @@ export const ModalTutoringConfig: React.FC<IModalTutoringConfig> = ({ dataRow, o
 							loading={isLoading}
 							onClick={() => form.submit()}
 							className="ml-2"
-							background="blue"
+							background="primary"
 							icon="save"
 							type="button"
 							children="Lưu"

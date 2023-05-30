@@ -15,6 +15,7 @@ type IApiResultData<T = any> = {
 	totalRow: number
 	listLevel: Array
 	isDone: boolean
+	rateCompleted?: string
 }
 
 type IApiResultAcc<T = any> = {
@@ -34,7 +35,7 @@ type IBaseApi<T> = {
 type IApiResultDetail<T = any> = {
 	data: T
 }
-type IApiResultCreate <T = any> = {
-	data: T,
+type IApiResultCreate<T = any> = {
+	data: T
 	message: string
 }
