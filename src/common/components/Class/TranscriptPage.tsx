@@ -369,7 +369,10 @@ export const TranscriptPage = () => {
 									<ModalTranscript
 										mode="delete"
 										Id={transcriptId}
-										onRefresh={() => getTranscriptByClass(currentClassDetails?.Id)}
+										onRefresh={() => {
+											getTranscriptByClass(currentClassDetails?.Id)
+											setDataTable([])
+										}}
 										setTranscriptId={setTranscriptId}
 									/>
 								</div>
