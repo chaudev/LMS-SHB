@@ -44,14 +44,31 @@ const InputNote = ({ value, onChange, index }) => {
 	)
 }
 
-const initFilter = { pageSize: PAGE_SIZE, pageIndex: 1, year: null, month: null }
-
 export const StudentReport = () => {
 	const user = useSelector((state: RootState) => state.user.information)
 	const [loading, setLoading] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [dataTable, setDataTable] = useState([])
 	const [transcriptId, setTranscriptId] = useState(null)
+
+	function subtractOneMonthFromDate() {
+		// Kiểm tra đầu vào là kiểu Date hoặc chuỗi ngày hợp lệ
+
+		let date = new Date()
+
+		// Trừ đi 1 tháng
+		date.setMonth(date.getMonth() - 1)
+
+		// Trả về ngày đã được trừ đi 1 tháng
+		return date
+	}
+
+	const initFilter = {
+		pageSize: PAGE_SIZE,
+		pageIndex: 1,
+		year: moment(subtractOneMonthFromDate()).format('YYYY'),
+		month: moment(subtractOneMonthFromDate()).format('MM')
+	}
 
 	const [filter, setFilter] = useState(initFilter)
 
@@ -398,6 +415,7 @@ export const StudentReport = () => {
 					<div className="flex items-center">
 						<div className="antd-custom-wrap">
 							<DatePicker
+								defaultValue={moment(subtractOneMonthFromDate())}
 								className="w-[160px]"
 								placeholder="Chọn tháng, năm"
 								picker="month"
