@@ -68,6 +68,8 @@ const PrimaryTable: FC<IPrimaryTable> = (props) => {
 				item.key = index.toString()
 			})
 			setDataSource(dataClone)
+		} else {
+			setDataSource([])
 		}
 	}, [data])
 
