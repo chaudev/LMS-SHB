@@ -31,6 +31,7 @@ import { ButtonEye, ButtonPending } from '~/common/components/TableButton'
 import { PrimaryTooltip } from '~/common/components'
 import Filters from '~/common/components/Student/Filters'
 import IconButton from '~/common/components/Primary/IconButton'
+import Link from 'next/link'
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
@@ -410,15 +411,16 @@ const Student: FC<IPersonnel> = (props) => {
 				return (
 					<div className="flex justify-start items-center">
 						<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.Id}`}>
-							<ButtonEye
-								className="mr-[8px]"
-								onClick={() => {
-									router.push({
-										pathname: '/info-course/student/detail',
-										query: { StudentID: item.UserInformationId }
-									})
+							<Link
+								href={{
+									pathname: '/info-course/student/detail',
+									query: { StudentID: item?.StudentId }
 								}}
-							/>
+							>
+								<a>
+									<ButtonEye />
+								</a>
+							</Link>
 						</PrimaryTooltip>
 
 						{role !== 3 && isAdmin() && (

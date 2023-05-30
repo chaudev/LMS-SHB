@@ -172,7 +172,8 @@ export const SalaryPage = () => {
 			title: 'Lương giảng dạy',
 			width: 150,
 			dataIndex: 'TeachingSalary',
-			render: (text, item) => <ModalTeachingDetail dataRow={item} />
+			render: (text) => <>{parseToMoney(text)}₫</>
+			// render: (text, item) => <ModalTeachingDetail dataRow={item} />
 		},
 		{
 			title: 'Lương tổng',
@@ -187,6 +188,7 @@ export const SalaryPage = () => {
 				if (isSaler() || isAcademic() || isTeacher()) return ''
 				return (
 					<div className="flex items-center">
+						 <ModalTeachingDetail dataRow={item} />
 						<ModalSalaryCRUD mode="edit" onRefresh={() => getSalary(apiParameters)} dataRow={item} />
 					</div>
 				)

@@ -113,7 +113,6 @@ const RefundForm: FC<IRefund> = ({ isEdit, onRefresh, item }) => {
 			StudentId: item?.StudentId
 		}
 
-
 		!isEdit && post(DATA_SUBMIT)
 		isEdit && edit(DATA_SUBMIT)
 	}
@@ -175,6 +174,7 @@ const RefundForm: FC<IRefund> = ({ isEdit, onRefresh, item }) => {
 				width={500}
 				title="Hoàn tiền"
 				open={visible}
+				centered
 				onCancel={toggle}
 				footer={<ModalFooter loading={loading} onCancel={toggle} onOK={submitForm} />}
 			>

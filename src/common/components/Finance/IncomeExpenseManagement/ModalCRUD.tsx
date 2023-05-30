@@ -108,6 +108,7 @@ export default function IncomeExpenseManagementModalCRUD(props: IIncomeExpenseMa
 				onCancel={() => onClose()}
 				title={mode == 'add' ? 'Thêm phiếu' : mode == 'edit' ? 'Cập nhật phiếu' : 'Xóa phiếu'}
 				width={mode != 'delete' ? 800 : 400}
+				centered
 			>
 				<Form form={form} layout="vertical" onFinish={_onSubmit}>
 					<div className="grid grid-cols-2 gap-x-4 antd-custom-wrap">

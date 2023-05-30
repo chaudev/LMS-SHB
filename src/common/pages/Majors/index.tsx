@@ -8,8 +8,8 @@ import { parseToMoney } from '~/common/utils/common'
 import IconButton from '~/common/components/Primary/IconButton'
 import { useRouter } from 'next/router'
 import { nanoid } from '@reduxjs/toolkit'
-import { Input, Tag } from 'antd'
-
+import { Input, Tag, Tooltip } from 'antd'
+ 
 export const MajorsPage = () => {
 	const router = useRouter()
 	const init = { pageIndex: 1, pageSize: PAGE_SIZE, search: null }
@@ -68,12 +68,16 @@ export const MajorsPage = () => {
 			width: 180,
 			dataIndex: 'StatusName',
 			render: (text, item) => <span className={`tag ${item.Status == 1 ? 'blue' : 'yellow'}`}>{text}</span>
- 		},
+		},
 		{
 			title: 'Mô tả',
 			width: 200,
 			dataIndex: 'Description',
-			render: (text) => <p className="">{text}</p>
+			render: (text, item) => (
+				<Tooltip title={text} >
+					<p className="max-w-[150px] in-3-line">{text}</p>
+				</Tooltip>
+			)
 		},
 		{
 			title: 'Thao tác',

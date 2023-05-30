@@ -234,7 +234,7 @@ export default function RefundPage(props: IRefundPageProps) {
 						fixed: 'left',
 						render: (text, item) => (
 							<>
-								<p className="table-row-main-text text-primary">{text}</p>
+								<p className="font-weight-primary">{text}</p>
 								<p className="table-row-sub-text">
 									Trung tâm: <span className="text-black">{item.BranchName}</span>
 								</p>
@@ -288,16 +288,21 @@ export default function RefundPage(props: IRefundPageProps) {
 						fixed: 'right',
 						render: (text, item) => (
 							<>
-								<ModalRefundCRUD
-									mode="edit"
-									dataRow={item}
-									isLoading={isLoading.type == 'SUBMIT' && isLoading.status}
-									onSubmit={_onSubmit}
-									optionStudent={optionStudent}
-									dataOption={optionList}
-									handleSearchForOptionList={handleSearchForOptionList}
-									handleLoadOnScrollForOptionList={handleLoadOnScrollForOptionList}
-								/>
+								{item.Status == 2 || item.Status == 3 ? (
+									''
+								) : (
+									<ModalRefundCRUD
+										mode="edit"
+										dataRow={item}
+										isLoading={isLoading.type == 'SUBMIT' && isLoading.status}
+										onSubmit={_onSubmit}
+										optionStudent={optionStudent}
+										dataOption={optionList}
+										handleSearchForOptionList={handleSearchForOptionList}
+										handleLoadOnScrollForOptionList={handleLoadOnScrollForOptionList}
+									/>
+								)}
+
 								<ModalRefundCRUD
 									mode="delete"
 									dataRow={item}

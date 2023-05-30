@@ -218,6 +218,10 @@ const CustomerAdviseForm = React.memo((props: any) => {
 				onCancel={toggle}
 				footer={null}
 				width={800}
+				bodyStyle={{
+					maxHeight: '80vh',
+					overflow: 'auto'
+				}}
 				centered
 			>
 				<div className="container-fluid">

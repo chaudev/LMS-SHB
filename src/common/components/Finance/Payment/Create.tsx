@@ -149,6 +149,7 @@ const PaymentForm: FC<IPaymentForm> = ({ isEdit, onRefresh, item }) => {
 				width={500}
 				title="Tạo phiên thanh toán"
 				open={visible}
+				centered
 				onCancel={toggle}
 				footer={<ModalFooter loading={loading} onCancel={toggle} onOK={submitForm} />}
 			>

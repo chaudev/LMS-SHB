@@ -3,9 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { salaryConfigApi } from '~/api/salary'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import FilterTable from '~/common/utils/table-filter'
-import CCSearch from '../../components/CCSearch'
-import { ModalSalaryConfigCRUD } from './ModalSalaryConfigCRUD'
+  import { ModalSalaryConfigCRUD } from './ModalSalaryConfigCRUD'
 import { Input } from 'antd'
 const initParameters = { fullName: '', userCode: '', pageIndex: 1, pageSize: PAGE_SIZE, search: '' }
 export const SalaryConfigPage = () => {
@@ -69,6 +67,7 @@ export const SalaryConfigPage = () => {
 		{
 			title: 'Mức lương',
 			dataIndex: 'Value',
+			width:150,
 			render: (text) => <div className="font-[600] text-[#388E3C]">{Intl.NumberFormat('ja-JP').format(text)}₫</div>
 		},
 		{
@@ -78,7 +77,8 @@ export const SalaryConfigPage = () => {
 		},
 		{
 			title: 'Ghi chú',
-			dataIndex: 'Note'
+			dataIndex: 'Note',
+			width:200,
 		},
 		{
 			fixed: 'right',

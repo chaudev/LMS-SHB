@@ -157,6 +157,12 @@ export const ModalSalaryCRUD: React.FC<IModalSalary> = ({ dataRow, onRefresh, mo
 				title={mode === 'edit' ? 'Cập nhật lương' : 'Tính lương thủ công '}
 				open={visible}
 				onCancel={onClose}
+				centered
+				bodyStyle={{
+					maxHeight: '80vh',
+					overflow:'auto'
+				}}
+				wrapClassName="chau-custom-scrollbar"
 				footer={
 					<>
 						<PrimaryButton onClick={() => onClose()} background="red" icon="cancel" type="button">

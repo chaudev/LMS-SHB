@@ -92,7 +92,16 @@ const StudentInClassPage = () => {
 		return (
 			<div className="flex item-center">
 				<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.Id}`}>
-					<ButtonEye onClick={() => viewStudentDetails(item)} className="" />
+					<Link
+						href={{
+							pathname: '/info-course/student/detail',
+							query: { StudentID: item?.StudentId }
+						}}
+					>
+						<a>
+							<ButtonEye />
+						</a>
+					</Link>
 				</PrimaryTooltip>
 
 				{item?.ClassType !== 3 && (

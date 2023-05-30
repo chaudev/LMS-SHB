@@ -2,6 +2,7 @@ import { Modal } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { staffSalaryApi } from '~/api/staff-salary'
+import IconButton from '~/common/components/Primary/IconButton'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { parseToMoney } from '~/common/utils/common'
@@ -85,9 +86,10 @@ export const ModalTeachingDetail: React.FC<IModalTeachingDetail> = ({ dataRow })
 
 	return (
 		<>
-			<button onClick={() => onOpen()}>
-				<span className="tag green w-[100px]">{dataRow ? parseToMoney(dataRow?.TeachingSalary) : 0}₫</span>
-			</button>
+			{/* <button onClick={() => onOpen()}>
+				<span className="tag green w-[100px]">{₫</span>
+			</button> */}
+			<IconButton tooltip='Xem chi tiết lương giảng dạy' icon='eye' type="button" color="orange" onClick={() => onOpen()}></IconButton>
 			<Modal title="Chi tiết lương giáo viên" open={visible} onCancel={onClose} footer={null} width={1200}>
 				<PrimaryTable data={dataTable} columns={columns} />
 			</Modal>

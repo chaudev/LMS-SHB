@@ -91,9 +91,9 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 			render: (text, item) => {
 				return (
 					<>
-						<p className="table-row-main-text text-primary">{text}</p>
+						<p className="font-weight-primary">{text}</p>
 						<p className="table-row-sub-text ">
-							Mã HV: <span className="text-black">{item.UserCode}</span>
+							<span className="text-black">{item.UserCode}</span>
 						</p>
 					</>
 				)
@@ -106,7 +106,7 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 			render: (text, item) => {
 				return (
 					<>
-						<p className="table-row-main-text text-primary">{text}</p>
+						<p className="font-weight-primary">{text}</p>
 						<p className="table-row-sub-text">
 							Người tạo: <span className="text-black">{item.CreatedBy}</span>
 						</p>

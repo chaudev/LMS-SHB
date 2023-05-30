@@ -16,6 +16,7 @@ import { ButtonEye } from '~/common/components/TableButton'
 import { AddToClass, RefundForm } from '~/common/components/Student/Reserved'
 import { userInfoColumn } from '~/common/libs/columns/user-info'
 import Filters from '~/common/components/Student/Filters'
+import Link from 'next/link'
 
 const initFilters = { PageSize: PAGE_SIZE, PageIndex: 1, Search: '' }
 
@@ -66,7 +67,16 @@ const ChangedPage = () => {
 		return (
 			<div className="flex item-center">
 				<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.Id}`}>
-					<ButtonEye onClick={() => viewStudentDetails(item)} />
+					<Link
+						href={{
+							pathname: '/info-course/student/detail',
+							query: { StudentID: item?.StudentId }
+						}}
+					>
+						<a>
+							<ButtonEye />
+						</a>
+					</Link>
 				</PrimaryTooltip>
 
 				{item?.Status == 1 && (
