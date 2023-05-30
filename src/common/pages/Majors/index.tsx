@@ -67,9 +67,8 @@ export const MajorsPage = () => {
 			title: 'Trạng thái',
 			width: 180,
 			dataIndex: 'StatusName',
-			render: (text, item) => <span className={`tag ${item.Status == 1 ? 'blue' : 'yellow'}  w-full text-center `}>{text}</span>
-			// <Tag color={item.Status == 1 ? '#002456' : '#FFBA0A'}></Tag>
-		},
+			render: (text, item) => <span className={`tag ${item.Status == 1 ? 'blue' : 'yellow'}`}>{text}</span>
+ 		},
 		{
 			title: 'Mô tả',
 			width: 200,

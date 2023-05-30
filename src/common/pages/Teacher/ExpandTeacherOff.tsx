@@ -127,11 +127,11 @@ const ExpandTeacherOff = ({ item }) => {
 			render: (status, data) => {
 				switch (status) {
 					case 1:
-						return <p className="w-full text-center tag gray">{data.StatusName}</p>
+						return <p className="tag gray">{data.StatusName}</p>
 					case 2:
-						return <p className="w-full text-center tag green">{data.StatusName}</p>
+						return <p className="tag green">{data.StatusName}</p>
 					case 3:
-						return <p className="w-full text-center tag red">{data.StatusName}</p>
+						return <p className="tag red">{data.StatusName}</p>
 				}
 			}
 		}
