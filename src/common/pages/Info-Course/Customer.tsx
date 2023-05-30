@@ -377,7 +377,7 @@ const CustomerAdvisory = () => {
 			width: 160,
 			title: 'Họ tên',
 			dataIndex: 'FullName',
-			render: (text) => <p className="font-semibold">{text}</p>
+			render: (text) => <p className="font-weight-primary">{text}</p>
 		},
 		{
 			width: 160,
@@ -393,17 +393,16 @@ const CustomerAdvisory = () => {
 			width: 160,
 			title: 'Trạng thái',
 			dataIndex: 'CustomerStatusId',
-			align: 'center',
 			render: (id, data) => {
 				switch (id) {
 					case 1:
-						return <p className="font-semibold w-full tag red">{data.CustomerStatusName}</p>
+						return <p className="font-semibold tag red">{data.CustomerStatusName}</p>
 						break
 					case 2:
-						return <p className="font-semibold w-full tag blue">{data.CustomerStatusName}</p>
+						return <p className="font-semibold tag blue">{data.CustomerStatusName}</p>
 						break
 					default:
-						return <p className="font-semibold w-full tag green">{data.CustomerStatusName}</p>
+						return <p className="font-semibold tag green">{data.CustomerStatusName}</p>
 						break
 				}
 			}

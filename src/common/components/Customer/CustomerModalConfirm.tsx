@@ -23,7 +23,7 @@ const CustomerModalConfirm = (props) => {
 					>
 						Hủy
 					</PrimaryButton>
-					<PrimaryButton type="button" onClick={() => (onSubmit(dataSubmit), setConfirmExistCustomer(false))} background="blue" icon="save">
+					<PrimaryButton type="button" onClick={() => (onSubmit(dataSubmit), setConfirmExistCustomer(false))} background="primary" icon="save">
 						Tạo
 					</PrimaryButton>
 				</>

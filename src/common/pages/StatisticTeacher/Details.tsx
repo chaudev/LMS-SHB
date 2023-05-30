@@ -43,7 +43,7 @@ const TeacherStatisticDetails = (props) => {
 		{
 			title: 'Lớp',
 			dataIndex: 'ClassName',
-			className: 'font-[500] max-w-[250px]'
+			className: 'font-weight-primary max-w-[250px]'
 		},
 		{
 			title: 'Phòng học',

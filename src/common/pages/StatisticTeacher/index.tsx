@@ -32,7 +32,7 @@ const StatisticTeacher = () => {
 			render: (text, item) => (
 				<>
 					<p className="font-weight-primary">{text}</p>
-					<p className="text-[14px]">{item?.UserCode}</p>
+					<p className="text-[14px] font-[600] text-gray">{item?.UserCode}</p>
 				</>
 			)
 		},
@@ -41,8 +41,12 @@ const StatisticTeacher = () => {
 			dataIndex: 'FullName',
 			render: (text, item) => (
 				<>
-					<p className="font-[600]">Điện thoại: {item?.Mobile}</p>
-					<p className="text-[14px]">Email: {item?.Email}</p>
+					<p className="text-[14px]  text-gray">
+						Điện thoại: <span className="font-[600]">{item?.Mobile}</span>
+					</p>
+					<p className="text-[14px] text-gray">
+						Email: <span className="font-[600]">{item?.Email}</span>
+					</p>
 				</>
 			)
 		},

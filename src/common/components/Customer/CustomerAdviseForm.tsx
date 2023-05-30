@@ -365,7 +365,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 
 						<div className="row mt-3">
 							<div className="col-12 flex-all-center">
-								<PrimaryButton background="blue" type="submit" icon="save" disable={isLoading} loading={isLoading}>
+								<PrimaryButton background="primary" type="submit" icon="save" disable={isLoading} loading={isLoading}>
 									Lưu
 								</PrimaryButton>
 							</div>
