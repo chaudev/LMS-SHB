@@ -188,7 +188,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 									)}
 									<div>
 										<span className={`font-[500] text-[gray] inline-block w-2/6`}>Số tiền:</span>
-										<span className={`text-[${color}]`}>{parseToMoney(item.Price)} VND</span>
+										<span className={`text-[${color}]`}>{parseToMoney(item.Price)}₫</span>
 									</div>
 									<div className="d-flex">
 										<span className="font-[500] text-[gray] inline-block w-2/6">Trạng thái:</span>

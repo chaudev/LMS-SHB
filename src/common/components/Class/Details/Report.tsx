@@ -42,9 +42,12 @@ const InputNote = ({ value, onChange, index }) => {
 	)
 }
 
-const initFilter = { pageSize: PAGE_SIZE, pageIndex: 1, year: null, month: null }
-
 export const StudentReport = () => {
+	let today = new Date()
+	let initMonth = moment(today).add(-1, 'months').format('MM')
+	let initYear = moment(today).add(-1, 'months').format('YYYY')
+	const initFilter = { pageSize: PAGE_SIZE, pageIndex: 1, year: initYear, month: initMonth }
+
 	const user = useSelector((state: RootState) => state.user.information)
 	const [loading, setLoading] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
@@ -61,6 +64,8 @@ export const StudentReport = () => {
 		if (filter?.year) {
 			getStudentPointRecord()
 		}
+		console.log('filter',filter);
+		
 	}, [filter])
 
 	const getStudentPointRecord = async () => {
@@ -375,6 +380,7 @@ export const StudentReport = () => {
 								placeholder="Chọn tháng, năm"
 								picker="month"
 								format="MM/YYYY"
+								defaultValue={moment(today, 'MM/YYYY').add(-1, 'month')}
 								onChange={(event) => setSelectedDate(!event ? event : moment(event))}
 							/>
 						</div>

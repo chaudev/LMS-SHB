@@ -32,7 +32,7 @@ const IconButton: FC<IIconButton> = (props) => {
 			return 'bg-[#000] hover:bg-[#191919] focus:bg-[#313131]'
 		}
 		if (background == 'primary') {
-			return 'bg-[#002456] hover:bg-[#C94A4F] focus:bg-[#002456]'
+			return 'bg-[#002456] hover:bg-[#002456] focus:bg-[#002456]'
 		}
 		if (background == 'disabled') {
 			return 'bg-[#cacaca] hover:bg-[#bababa] focus:bg-[#acacac] cursor-not-allowed'

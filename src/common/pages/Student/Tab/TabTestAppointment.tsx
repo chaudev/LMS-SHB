@@ -81,7 +81,7 @@ export const TabTestAppointment: React.FC<ITabTestAppointment> = ({ StudentDetai
 			title: 'Học phí tư vấn',
 			width: 180,
 			dataIndex: 'Tuitionfee',
-			render: (text) => <div className="text-right">{parseToMoney(text)}</div>
+			render: (text) => <div className="text-right">{parseToMoney(text)}₫</div>
 		},
 		{
 			title: 'Trung tâm',

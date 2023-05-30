@@ -187,7 +187,7 @@ const RefundForm: FC<IRefund> = ({ isEdit, onRefresh, item }) => {
 								<div className="font-[600] inline-flex">Mã:</div> {item?.UserCode}
 							</div>
 							<div className="w-full in-1-line font-[400] text-[14px]">
-								<div className="font-[600] inline-flex">Số tiền đăng ký:</div> {parseToMoney(item?.Price)}
+								<div className="font-[600] inline-flex">Số tiền đăng ký:</div> {parseToMoney(item?.Price)}₫
 							</div>
 						</div>
 

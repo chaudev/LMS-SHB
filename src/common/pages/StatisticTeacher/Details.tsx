@@ -69,11 +69,21 @@ const TeacherStatisticDetails = (props) => {
 		{
 			title: 'Trạng thái',
 			dataIndex: 'TeachingStatus',
+			window:100,
+		
 			render: (text, item) => {
 				if (text == 1) {
-					return <PrimaryTag color="green">{item?.TeachingStatusName}</PrimaryTag>
+					return (
+						<PrimaryTag width="w-full" className="justify-center" color="green">
+							{item?.TeachingStatusName}
+						</PrimaryTag>
+					)
 				}
-				return <PrimaryTag color="red">{item?.TeachingStatusName}</PrimaryTag>
+				return (
+					<PrimaryTag width="w-full" className="justify-center" color="red">
+						{item?.TeachingStatusName}
+					</PrimaryTag>
+				)
 			}
 		}
 	]

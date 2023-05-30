@@ -117,20 +117,21 @@ const ExpandTeacherOff = ({ item }) => {
 			dataIndex: 'TeachingFee',
 			key: 'TeachingFee',
 			width: 130,
-			render: (text, data) => <span className="font-[600] text-[#43A047]">{parseToMoney(text)}</span>
+			render: (text, data) => <span className="font-[600] text-[#43A047]">{parseToMoney(text)}₫</span>
 		},
 		{
 			title: 'Trạng thái',
 			dataIndex: 'Status',
 			key: 'Status',
+			width:150,
 			render: (status, data) => {
 				switch (status) {
 					case 1:
-						return <p className="tag gray">{data.StatusName}</p>
+						return <p className="w-full text-center tag gray">{data.StatusName}</p>
 					case 2:
-						return <p className="tag green">{data.StatusName}</p>
+						return <p className="w-full text-center tag green">{data.StatusName}</p>
 					case 3:
-						return <p className="tag red">{data.StatusName}</p>
+						return <p className="w-full text-center tag red">{data.StatusName}</p>
 				}
 			}
 		}

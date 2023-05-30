@@ -79,14 +79,14 @@ export const ModalTeachingDetail: React.FC<IModalTeachingDetail> = ({ dataRow })
 			title: 'Lương buổi học',
 			width: 100,
 			dataIndex: 'TeachingFee',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		}
 	]
 
 	return (
 		<>
 			<button onClick={() => onOpen()}>
-				<span className="tag green w-[100px]">{dataRow ? parseToMoney(dataRow?.TeachingSalary) : 0}</span>
+				<span className="tag green w-[100px]">{dataRow ? parseToMoney(dataRow?.TeachingSalary) : 0}₫</span>
 			</button>
 			<Modal title="Chi tiết lương giáo viên" open={visible} onCancel={onClose} footer={null} width={1200}>
 				<PrimaryTable data={dataTable} columns={columns} />

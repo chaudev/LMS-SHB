@@ -104,7 +104,9 @@ export const ListStudentInClass = () => {
 						title: 'Loại',
 						width: 150,
 						dataIndex: 'TypeName',
-						render: (text, item) => <PrimaryTag color={item?.Type == 1 ? 'green' : 'red'} children={text} />
+						render: (text, item) => (
+							<PrimaryTag width="w-full" className="justify-center" color={item?.Type == 1 ? 'green' : 'red'} children={text} />
+						)
 					},
 					{
 						title: 'Cảnh báo',

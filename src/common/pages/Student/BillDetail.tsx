@@ -81,13 +81,13 @@ export const BillDetail: React.FC<IBillDetail> = ({ dataRow }) => {
 			title: 'Giá tiền',
 			dataIndex: 'Price',
 			width: 116,
-			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}</p>
+			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
 		},
 		{
 			title: 'Tổng số tiền',
 			dataIndex: 'TotalPrice',
 			width: 116,
-			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}</p>
+			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
 		},
 		{
 			title: 'Số lượng',

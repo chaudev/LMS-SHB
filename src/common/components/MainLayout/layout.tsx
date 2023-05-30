@@ -136,7 +136,6 @@ function Layout({ children, home }: { children: React.ReactNode; home?: boolean 
 			setBreadcrumbs(temp)
 		}
 	}, [mainMenu, path, childrenMenu])
-	console.log(breadcrumbs)
 
 	return (
 		<div className="app">

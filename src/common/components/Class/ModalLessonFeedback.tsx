@@ -117,7 +117,7 @@ export const ModalLessonFeedback: React.FC<IModalLessonFeedback> = ({ mode, data
 							loading={isLoading}
 							onClick={() => form.submit()}
 							className="ml-2"
-							background="blue"
+							background="primary"
 							icon={mode !== 'delete' ? 'save' : 'remove'}
 							type="button"
 							children={mode !== 'delete' ? 'Lưu' : 'Xóa'}

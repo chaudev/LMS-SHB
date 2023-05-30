@@ -67,7 +67,7 @@ const MajorsStudentPage = () => {
 		{
 			title: 'Giá tiền',
 			dataIndex: 'TotalPrice',
-			render: (text) => <p>{parseToMoney(text)} VND</p>
+			render: (text) => <p>{parseToMoney(text)}₫</p>
 		},
 		{
 			width: 100,

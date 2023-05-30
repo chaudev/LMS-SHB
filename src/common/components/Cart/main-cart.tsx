@@ -415,13 +415,13 @@ const MainCart = () => {
 								{appliedDiscount?.Type == 1 && (
 									<div className="flex items-center">
 										<div className="font-[600] mr-[4px]">Giá trị: </div>
-										<div>{parseToMoney(appliedDiscount?.Value)}</div>
+										<div>{parseToMoney(appliedDiscount?.Value)}₫</div>
 									</div>
 								)}
 
 								<div className="flex items-center">
 									<div className="font-[600] mr-[4px]">Tối đa: </div>
-									<div>{parseToMoney(appliedDiscount?.MaxDiscount)}</div>
+									<div>{parseToMoney(appliedDiscount?.MaxDiscount)}₫</div>
 								</div>
 								<div onClick={() => setAppliedDiscount(null)} className="cart-btn-remove-discount">
 									<PrimaryTooltip id="tip-2023" content="Bỏ áp dụng" place="top">
@@ -433,12 +433,12 @@ const MainCart = () => {
 
 						{!!getDiscountValue() && (
 							<>
-								<h4 className="cart-text-total">Tổng tiền: {parseToMoney(getTotalPrice().totalPrice)}</h4>
-								<h4 className="cart-text-total text-[#1c73e8]">Khuyến mãi: {parseToMoney(getDiscountValue())}</h4>
+								<h4 className="cart-text-total">Tổng tiền: {parseToMoney(getTotalPrice().totalPrice)}₫</h4>
+								<h4 className="cart-text-total text-[#1c73e8]">Khuyến mãi: {parseToMoney(getDiscountValue())}₫</h4>
 							</>
 						)}
 
-						<h4 className="cart-text-total">Số tiền thanh toán: {parseToMoney(getTotalPrice().totalPrice - getDiscountValue())}</h4>
+						<h4 className="cart-text-total">Số tiền thanh toán: {parseToMoney(getTotalPrice().totalPrice - getDiscountValue())}₫</h4>
 
 						<PrimaryButton
 							disable={loadingUpdate?.Status || loading || isEmptyCart()}

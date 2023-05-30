@@ -105,7 +105,7 @@ const CustomerAdvisoryMailAll = () => {
 					<InputTextField name="Title" label="Tiêu đề" />
 					<EditorField name="Content" label="Nội dung" onChangeEditor={(value) => form.setFieldsValue({ Content: value })} />
 					<div className="antd-custom-wrap ant-form-item-label flex items-center justify-between">
-						<PrimaryButton background="blue" type="submit" icon="send">
+						<PrimaryButton background="primary" type="submit" icon="send">
 							Gửi
 						</PrimaryButton>
 					</div>

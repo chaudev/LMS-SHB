@@ -67,7 +67,7 @@ const ReportForm: FC<TReportForm> = (props) => {
 				Extra="Nhận xét của GVCN"
 				TitleCard={
 					<div className="w-full">
-						<PrimaryButton onClick={handleOpenEdit} icon="edit" type="button" background="blue">
+						<PrimaryButton onClick={handleOpenEdit} icon="edit" type="button" background="primary">
 							Cập nhật
 						</PrimaryButton>
 					</div>

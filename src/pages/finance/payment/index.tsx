@@ -156,27 +156,27 @@ const PaymentManagementPage = () => {
 			title: 'Giảm giá',
 			width: 150,
 			dataIndex: 'Reduced',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 
 		{
 			title: 'Tổng số tiền',
 			dataIndex: 'TotalPrice',
 			width: 116,
-			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}</p>
+			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
 		},
 
 		{
 			title: 'Đã thanh toán',
 			dataIndex: 'Paid',
 			width: 126,
-			render: (value, item) => <p className="font-[600] text-[#388E3C]">{parseToMoney(value)}</p>
+			render: (value, item) => <p className="font-[600] text-[#388E3C]">{parseToMoney(value)}₫</p>
 		},
 		{
 			title: 'Chưa thanh toán',
 			dataIndex: 'Debt',
 			width: 140,
-			render: (value, item) => <p className="font-[600] text-[#E53935]">{parseToMoney(value)}</p>
+			render: (value, item) => <p className="font-[600] text-[#E53935]">{parseToMoney(value)}₫</p>
 		},
 		// {
 		// 	title: 'Phương thức',

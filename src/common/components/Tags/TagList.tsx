@@ -6,6 +6,7 @@ import { ShowNoti } from '~/common/utils'
 import DeleteTableRow from '../Elements/DeleteTableRow'
 import InputTextField from '../FormControl/InputTextField'
 import NestedTable from '../NestedTable'
+import PrimaryButton from '../Primary/Button'
 
 const PAGE_SIZE = 3
 
@@ -116,12 +117,14 @@ function TagList(props) {
 			<Modal footer={null} title="Thêm ghi chú" open={isModalVisible} onOk={handleOk} onCancel={handleCancel} width={400} centered>
 				<Form layout="vertical" form={form} onFinish={handleAddTag}>
 					<InputTextField placeholder="Nhập từ khoá " name="Name" label="Từ khoá" isRequired />
-
-					<div className="mt-3 text-center">
+					<PrimaryButton type="submit" background="primary" icon="save" loading={loading}>
+						Lưu
+					</PrimaryButton>
+					{/* <div className="mt-3 text-center">
 						<button type="submit" className="btn btn-primary w-100">
 							Lưu {loading && <Spin className="loading-base" />}
 						</button>
-					</div>
+					</div> */}
 				</Form>
 			</Modal>
 			<div className="row">

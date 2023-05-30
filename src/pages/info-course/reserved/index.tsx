@@ -127,7 +127,7 @@ const ReservedPage = () => {
 			title: 'Số tiền bảo lưu',
 			dataIndex: 'Price',
 			width: 130,
-			render: (value, item) => <p className="font-[600] text-[#1976D2]">{parseToMoney(value)}</p>
+			render: (value, item) => <p className="font-[600] text-[#1976D2]">{parseToMoney(value)}₫</p>
 		},
 		{
 			title: 'Trạng thái',

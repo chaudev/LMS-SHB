@@ -113,10 +113,10 @@ const StudentForm = (props) => {
 						</div>
 					</div>
 					<div className="row">
-						<div className="col-md-6 col-12">
+						<div className="col-12">
 							<SelectField name="TeacherId" label="Giáo viên test" placeholder="Chọn giáo viên" optionList={listTeacher} />
 						</div>
-						<div className="col-md-6 col-12">
+						<div className="col-12">
 							<SelectField
 								name="Type"
 								disabled
@@ -130,7 +130,7 @@ const StudentForm = (props) => {
 						</div>
 					</div>
 					<div className="row">
-						<div className="col-md-6 col-12">
+						<div className="col-12">
 							<DatePickerField
 								format="DD/MM/YYYY HH:mm"
 								name="Time"
@@ -147,7 +147,7 @@ const StudentForm = (props) => {
 						)}
 					</div>
 					<div className="flex-all-center">
-						<PrimaryButton background="blue" icon="save" type="submit" disable={isLoading} loading={isLoading}>
+						<PrimaryButton background="primary" icon="save" type="submit" disable={isLoading} loading={isLoading}>
 							Lưu
 						</PrimaryButton>
 					</div>

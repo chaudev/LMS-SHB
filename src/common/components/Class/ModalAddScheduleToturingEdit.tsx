@@ -198,7 +198,7 @@ const ModalAddScheduleToturingEdit = (props) => {
 				}}
 				footer={
 					<>
-						<PrimaryButton disable={isLoading} loading={isLoading} background="blue" icon="save" type="button" onClick={form.submit}>
+						<PrimaryButton disable={isLoading} loading={isLoading} background="primary" icon="save" type="button" onClick={form.submit}>
 							Lưu
 						</PrimaryButton>
 					</>

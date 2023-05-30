@@ -86,11 +86,10 @@ export const ModalTranscript: React.FC<IModalTranscript> = ({ mode, Id, onRefres
 		<>
 			{mode == 'add' && (
 				<>
-					<PrimaryButton className="!hidden w1300:!flex" background="blue" type="button" icon="add" onClick={onOpen}>
+					<PrimaryButton className="!hidden w1300:!flex" background="primary" type="button" icon="add" onClick={onOpen}>
 						Thêm đợt thi
 					</PrimaryButton>
-
-					<PrimaryButton className="!flex w1300:!hidden" background="blue" type="button" icon="add" onClick={onOpen} />
+					<PrimaryButton className="!flex w1300:!hidden" background="primary" type="button" icon="add" onClick={onOpen} />
 				</>
 			)}
 
@@ -99,7 +98,6 @@ export const ModalTranscript: React.FC<IModalTranscript> = ({ mode, Id, onRefres
 					<PrimaryButton className="!hidden w1150:!flex" background="red" type="button" icon="remove" onClick={onOpen}>
 						Xóa đợt thi
 					</PrimaryButton>
-
 					<PrimaryButton className="!flex w1150:!hidden" background="red" type="button" icon="remove" onClick={onOpen} />
 				</>
 			)}
@@ -117,7 +115,7 @@ export const ModalTranscript: React.FC<IModalTranscript> = ({ mode, Id, onRefres
 							loading={isLoading}
 							onClick={() => form.submit()}
 							className="ml-2"
-							background="blue"
+							background="primary"
 							icon={mode !== 'delete' ? 'save' : 'remove'}
 							type="button"
 							children={mode !== 'delete' ? 'Xác nhận' : 'Xóa'}

@@ -408,7 +408,7 @@ const CreateClassForm = (props) => {
 				width={800}
 				footer={
 					<>
-						<PrimaryButton background="blue" type="button" icon="save" onClick={form.submit} disable={isLoading} loading={isLoading}>
+						<PrimaryButton background="primary" type="button" icon="save" onClick={form.submit} disable={isLoading} loading={isLoading}>
 							Thêm vào lịch
 						</PrimaryButton>
 					</>

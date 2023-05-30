@@ -182,7 +182,7 @@ const ModalViewStudyRouteTemplate: React.FC<IModalViewStudyRouteTemplate> = ({ o
 														<span className="font-[500] ">Người tạo:</span> {item?.CreatedBy}
 													</p>
 													<p>
-														<span className="font-[500]">Ngày tạo:</span> {moment(item?.CreatedOn).format('DD-MM-YYYY HH:mm A')}
+														<span className="font-[500]">Ngày tạo:</span> {moment(item?.CreatedOn).format('DD-MM-YYYY HH:MM')}
 													</p>
 													<p>
 														<span className="font-[500]">Ghi chú:</span> {item?.Note}

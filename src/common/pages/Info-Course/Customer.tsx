@@ -397,13 +397,13 @@ const CustomerAdvisory = () => {
 			render: (id, data) => {
 				switch (id) {
 					case 1:
-						return <p className="font-semibold tag red">{data.CustomerStatusName}</p>
+						return <p className="font-semibold w-full tag red">{data.CustomerStatusName}</p>
 						break
 					case 2:
-						return <p className="font-semibold tag blue">{data.CustomerStatusName}</p>
+						return <p className="font-semibold w-full tag blue">{data.CustomerStatusName}</p>
 						break
 					default:
-						return <p className="font-semibold tag green">{data.CustomerStatusName}</p>
+						return <p className="font-semibold w-full tag green">{data.CustomerStatusName}</p>
 						break
 				}
 			}

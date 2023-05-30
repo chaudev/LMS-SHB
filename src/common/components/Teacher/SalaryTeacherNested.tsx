@@ -74,7 +74,7 @@ const SalaryTeacherNested = (props) => {
 		{
 			title: 'Thưởng',
 			dataIndex: 'Bonus',
-			render: (price, record: ITeacherSalary) => <p>{parseToMoney(price)}</p>
+			render: (price, record: ITeacherSalary) => <p>{parseToMoney(price)}₫</p>
 		},
 		{
 			title: 'Ghi Chú',
@@ -96,7 +96,7 @@ const SalaryTeacherNested = (props) => {
 		{
 			title: 'Trừ Tạm Ứng',
 			dataIndex: 'AdvanceSalary',
-			render: (price, record: ITeacherSalary) => <p>{parseToMoney(price)}</p>
+			render: (price, record: ITeacherSalary) => <p>{parseToMoney(price)}₫</p>
 		},
 		{
 			title: 'Lương Tháng',
@@ -111,7 +111,7 @@ const SalaryTeacherNested = (props) => {
 		{
 			title: 'Lương Tổng',
 			dataIndex: 'TotalSalary',
-			render: (price, record: ITeacherSalary) => <p>{parseToMoney(price)}</p>
+			render: (price, record: ITeacherSalary) => <p>{parseToMoney(price)}₫</p>
 		}
 	]
 

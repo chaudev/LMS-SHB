@@ -230,7 +230,6 @@ const Programs = () => {
 	const columns = [
 		{
 			title: 'Chuyên môn',
-
 			dataIndex: 'GradeName',
 			render: (text) => {
 				return <p className="font-weight-black">{text}</p>
@@ -288,7 +287,9 @@ const Programs = () => {
 							query: { slug: data.Id, name: data.Name }
 						}}
 					>
-						<IconButton icon="eye" color="orange" type="button" tooltip="Chi tiết chương trình" />
+						<a>
+							<IconButton icon="eye" color="orange" type="button" tooltip="Chi tiết chương trình" />
+						</a>
 					</Link>
 
 					<ProgramAddTeacherForm rowData={data} />

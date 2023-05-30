@@ -58,7 +58,7 @@ const SalaryOfTeacherDetail = ({ price, record }) => {
 		{
 			title: 'Lương buổi học',
 			dataIndex: 'SalaryOfLesson',
-			render: (price, record) => <p style={{ width: 120 }}>{parseToMoney(price)}</p>
+			render: (price, record) => <p style={{ width: 120 }}>{parseToMoney(price)}₫</p>
 		}
 	]
 
@@ -90,7 +90,7 @@ const SalaryOfTeacherDetail = ({ price, record }) => {
 				}}
 			>
 				<Tooltip title="Xem chi tiết">
-					<button className="custom-btn-shit">{parseToMoney(price)}</button>
+					<button className="custom-btn-shit">{parseToMoney(price)}₫</button>
 				</Tooltip>
 			</button>
 

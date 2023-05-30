@@ -17,11 +17,11 @@ function CardOldMajors({ oldMajors, tuitionInOld }) {
 								</div>
 								<div>
 									<span className="font-[500] text-[gray] inline-block w-2/5">Số tiền đã đóng</span>:
-									<span className="text-[green]"> {parseToMoney(oldMajors.Paid)} VND</span>
+									<span className="text-[green]"> {parseToMoney(oldMajors.Paid)}₫</span>
 								</div>
 								<div>
 									<span className="font-[500] text-[gray] inline-block w-2/5">Số tiền phát sinh</span>:
-									<span className="text-[orange]"> {parseToMoney(tuitionInOld)} VND</span>
+									<span className="text-[orange]"> {parseToMoney(tuitionInOld)}₫</span>
 								</div>
 								<div>
 									<span className="font-[500] text-[gray] inline-block w-2/5">Ghi chú</span>: {oldMajors.Note}

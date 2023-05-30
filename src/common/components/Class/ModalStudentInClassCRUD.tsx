@@ -197,10 +197,10 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 							loading={isLoading}
 							onClick={() => form.submit()}
 							className="ml-2"
-							background="blue"
+							background={mode == 'delete' ? 'transparent' : mode == 'edit' ? 'primary' : 'green'}
 							icon={mode !== 'delete' ? 'save' : 'remove'}
 							type="button"
-							children={mode !== 'delete' ? 'Lưu' : 'Xóa'}
+							children={mode == 'delete' ? 'Xóa' : mode == 'edit' ? 'Cập nhật' : 'Thêm'}
 						/>
 					</>
 				}

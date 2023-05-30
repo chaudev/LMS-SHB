@@ -56,7 +56,7 @@ export const TabDiscountHistory: React.FC<ITabBill> = ({ StudentDetail }) => {
 			title: 'Tiền khuyến mãi',
 			width: 150,
 			dataIndex: 'Reduced',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 
 		{

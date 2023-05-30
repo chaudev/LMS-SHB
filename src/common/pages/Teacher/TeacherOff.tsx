@@ -98,14 +98,15 @@ const TeacherOff = () => {
 			onFilter: (value: string, record) => {
 				return record.Status === value
 			},
+			width:150,
 			render: (status, data) => {
 				switch (status) {
 					case 1:
-						return <p className="tag red">{data.StatusName}</p>
+						return <p className="w-full text-center tag red">{data.StatusName}</p>
 					case 2:
-						return <p className="tag blue">{data.StatusName}</p>
+						return <p className="w-full text-center tag blue">{data.StatusName}</p>
 					case 3:
-						return <p className="tag gray">{data.StatusName}</p>
+						return <p className="w-full text-center tag gray">{data.StatusName}</p>
 				}
 			}
 		},
@@ -157,6 +158,7 @@ const TeacherOff = () => {
 		{
 			title: 'Trạng thái',
 			dataIndex: 'Status',
+			width:150,
 			key: 'Status',
 			filters: [
 				{
@@ -178,11 +180,11 @@ const TeacherOff = () => {
 			render: (status, data) => {
 				switch (status) {
 					case 1:
-						return <p className="tag red">{data.StatusName}</p>
+						return <p className="tag red text-center w-full">{data.StatusName}</p>
 					case 2:
-						return <p className="tag blue">{data.StatusName}</p>
+						return <p className="tag blue text-center w-full">{data.StatusName}</p>
 					case 3:
-						return <p className="tag gray">{data.StatusName}</p>
+						return <p className="tag gray text-center w-full">{data.StatusName}</p>
 				}
 			}
 		},

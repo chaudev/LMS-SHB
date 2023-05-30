@@ -463,6 +463,10 @@ const CreateUser: FC<ICreateNew> = (props) => {
 				centered
 				title={isEdit ? 'Cập nhật thông tin' : isChangeInfo ? 'Thay đổi thông tin' : 'Thêm người dùng mới'}
 				width={800}
+				bodyStyle={{
+					maxHeight: '80vh',
+					overflow:'auto'
+				}}
 				open={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={
@@ -471,17 +475,17 @@ const CreateUser: FC<ICreateNew> = (props) => {
 							Huỷ
 						</PrimaryButton>
 						{!isChangeInfo && (
-							<PrimaryButton loading={loading} onClick={() => form.submit()} className="ml-2" background="blue" icon="save" type="button">
+							<PrimaryButton loading={loading} onClick={() => form.submit()} className="ml-2" background="primary" icon="save" type="button">
 								Lưu
 							</PrimaryButton>
 						)}
 						{!!isChangeInfo && (defaultData.RoleId == 1 || defaultData.RoleId == 2) && (
-							<PrimaryButton loading={loading} onClick={() => form.submit()} className="ml-2" background="blue" icon="save" type="button">
+							<PrimaryButton loading={loading} onClick={() => form.submit()} className="ml-2" background="primary" icon="save" type="button">
 								Lưu
 							</PrimaryButton>
 						)}
 						{!!isChangeInfo && defaultData.RoleId == 3 && (
-							<PrimaryButton loading={loading} onClick={() => form.submit()} className="ml-2" background="blue" icon="save" type="button">
+							<PrimaryButton loading={loading} onClick={() => form.submit()} className="ml-2" background="primary" icon="save" type="button">
 								Gửi yêu cầu thay đổi
 							</PrimaryButton>
 						)}

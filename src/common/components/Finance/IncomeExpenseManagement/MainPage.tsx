@@ -84,36 +84,40 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 
 	const columns = [
 		{
-			width: 270,
-			title: 'Trung tâm',
-			dataIndex: 'BranchName',
+			title: 'Học viên',
+			width: 220,
+			dataIndex: 'FullName',
+			fixed: 'left',
 			render: (text, item) => {
 				return (
 					<>
-						<p className="table-row-main-text">{text}</p>
-						<p className="table-row-sub-text">
-							Người tạo: <span>{item.CreatedBy}</span>
-						</p>
-						<p className="table-row-sub-text">
-							Thời gian: <span> {moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</span>
+						<p className="table-row-main-text text-primary">{text}</p>
+						<p className="table-row-sub-text ">
+							Mã HV: <span className="text-black">{item.UserCode}</span>
 						</p>
 					</>
 				)
 			}
 		},
 		{
-			title: 'Học viên',
-			width: 220,
-			dataIndex: 'FullName',
+			width: 270,
+			title: 'Trung tâm',
+			dataIndex: 'BranchName',
 			render: (text, item) => {
 				return (
 					<>
-						<p className="table-row-main-text">{text}</p>
-						<p className="table-row-sub-text">Mã HV: {item.UserCode}</p>
+						<p className="table-row-main-text text-primary">{text}</p>
+						<p className="table-row-sub-text">
+							Người tạo: <span className="text-black">{item.CreatedBy}</span>
+						</p>
+						<p className="table-row-sub-text">
+							Thời gian: <span className="text-black"> {moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</span>
+						</p>
 					</>
 				)
 			}
 		},
+
 		{
 			title: 'Giá trị',
 			width: 250,
@@ -122,10 +126,10 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 				return (
 					<>
 						<p className={`table-row-main-text ${item.Type == 1 ? 'text-tw-green' : 'text-tw-red'} !font-[600]`}>
-							{_format.numberToPrice(text)} VND
+							{_format.numberToPrice(text)}₫
 						</p>
 						<p className="table-row-sub-text">
-							Phương thức: <span className="table-row-main-text">{item.PaymentMethodName}</span>
+							Phương thức: <span className="table-row-main-text text-black">{item.PaymentMethodName}</span>
 						</p>
 					</>
 				)

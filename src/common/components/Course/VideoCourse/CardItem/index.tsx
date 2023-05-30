@@ -121,7 +121,7 @@ const VideoItem = (props) => {
 			<div className="p-3">
 				<p className="video-name">{Item.Name}</p>
 
-				{!!Item?.Price && <div className="video-price text-[#E64A19]">{parseToMoney(Item.Price)}</div>}
+				{!!Item?.Price && <div className="video-price text-[#E64A19]">{parseToMoney(Item.Price)}₫</div>}
 				{!Item?.Price && <div className="video-price text-[#1976D2]">Miễn phí</div>}
 
 				<div className="all-center">

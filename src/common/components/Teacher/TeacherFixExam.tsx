@@ -73,7 +73,7 @@ const TeacherFixExam = ({ price, record }) => {
 				}}
 			>
 				<Tooltip title="Xem chi tiết">
-					<button className="custom-btn-shit-2">{parseToMoney(price)}</button>
+					<button className="custom-btn-shit-2">{parseToMoney(price)}₫</button>
 				</Tooltip>
 			</button>
 

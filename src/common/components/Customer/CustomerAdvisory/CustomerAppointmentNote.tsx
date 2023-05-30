@@ -114,7 +114,7 @@ const CustomerAppointmentNote = (props) => {
 						{/* <button type="submit" className="btn btn-primary w-100">
 							Lưu {isLoading && <Spin className="loading-base" />}
 						</button> */}
-						<PrimaryButton background="blue" icon="save" type="submit" disable={isLoading} loading={isLoading}>
+						<PrimaryButton background="primary" icon="save" type="submit" disable={isLoading} loading={isLoading}>
 							Lưu
 						</PrimaryButton>
 					</div>

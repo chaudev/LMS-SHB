@@ -61,25 +61,25 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 			title: 'Tổng thanh toán',
 			width: 150,
 			dataIndex: 'TotalPrice',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
 			title: 'Giảm giá',
 			width: 150,
 			dataIndex: 'Reduced',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
 			title: 'Đã thanh toán',
 			width: 150,
 			dataIndex: 'Paid',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
 			title: 'Số tiền còn lại',
 			width: 150,
 			dataIndex: 'Debt',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
 			title: 'Hình thức',

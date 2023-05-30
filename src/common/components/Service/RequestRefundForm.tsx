@@ -105,7 +105,7 @@ function RequestRefundsForm(props) {
 															<ul className="list">
 																<li className="price">
 																	Giá:
-																	{c.Price && <span>{parseToMoney(c.Price)} VNĐ</span>}
+																	{c.Price && <span>{parseToMoney(c.Price)}₫</span>}
 																</li>
 																<li className="date-start">
 																	Ngày bắt đầu:

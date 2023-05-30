@@ -50,7 +50,7 @@ const StudentAdvisoryMail = (props) => {
 				<title>{appConfigs.appName} | Danh sách khách hàng</title>
 			</Head>
 
-			<IconButton onClick={showModal} icon="send" type="button" color="blue" tooltip="Gửi thông báo cá nhân" />
+			<IconButton onClick={showModal} icon="send" type="button" color="primary" tooltip="Gửi thông báo cá nhân" />
 
 			<Modal footer={null} title={'Gửi mail'} visible={isModalVisible} onCancel={handleCancel} width={1400} centered>
 				<Form form={form} layout="vertical" onFinish={onSubmit}>

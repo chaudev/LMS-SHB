@@ -148,14 +148,14 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 				onCancel={onClose}
 				footer={
 					<>
-						<PrimaryButton onClick={() => onClose()} background="red" icon="cancel" type="button">
+						<PrimaryButton onClick={() => onClose()} className='btn-outline' background="transparent" icon="cancel" type="button">
 							Huỷ
 						</PrimaryButton>
 						<PrimaryButton
 							loading={isLoading}
 							onClick={() => form.submit()}
 							className="ml-2"
-							background="blue"
+							background={mode == 'delete' ? 'red' : mode == 'add' ? 'green' : 'primary'}
 							icon={mode == 'delete' ? 'remove' : mode == 'add' ? 'add' : 'save'}
 							type="button"
 							children={mode == 'delete' ? 'Xóa' : mode == 'add' ? 'Thêm mới' : 'Cập nhật'}
@@ -206,11 +206,11 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 												optionList={[
 													{
 														value: 1,
-														title: 'Mở khóa học'
+														title: 'Đang mở'
 													},
 													{
 														value: 2,
-														title: 'Đóng khóa học'
+														title: 'Đang đóng'
 													}
 												]}
 											/>

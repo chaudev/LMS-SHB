@@ -93,8 +93,8 @@ const SpeacializeForm = React.memo((props: any) => {
 						</div>
 						<div className="row ">
 							<div className="col-12">
-								<PrimaryButton background="blue" type="submit" icon="save" loading={isLoading} disable={isLoading} className="w-full">
-									Lưu
+								<PrimaryButton background="primary" type="submit" icon="save" loading={isLoading} disable={isLoading} className="w-full">
+									rowDataLưu
 								</PrimaryButton>
 							</div>
 						</div>

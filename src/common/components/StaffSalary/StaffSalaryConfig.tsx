@@ -1,12 +1,12 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Form, Input, Modal, Spin, Tooltip } from 'antd'
+import { Form, Input, Modal, Tooltip } from 'antd'
 import React, { useState } from 'react'
 import { Edit } from 'react-feather'
 // import { useForm } from 'react-hook-form'
-import { MdAddCircleOutline, MdSave } from 'react-icons/md'
+import { MdAddCircleOutline } from 'react-icons/md'
 // import * as yup from 'yup'
 import SelectField from '~/common/components/FormControl/SelectField'
 import InputMoneyField from '~/common/components/FormControl/InputNumberField'
+import PrimaryButton from '../Primary/Button'
 
 const StaffSalaryConfig = (props) => {
 	const { roles, dataStaff, showAdd, setUpdateSalary, rowData, setParamsRole, _onSubmitStaff, showIcon, isLoading } = props
@@ -148,15 +148,14 @@ const StaffSalaryConfig = (props) => {
 						{/*  */}
 						<div className="row ">
 							<div className="col-12">
-								<button
+								<PrimaryButton
 									type="submit"
-									className="btn btn-primary w-100"
-									disabled={props.isLoading.type == 'ADD_DATA' && props.isLoading.status}
+									icon="save"
+									background="primary"
+									loading={props.isLoading.type == 'ADD_DATA' && props.isLoading.status}
 								>
-									<MdSave size={18} className="mr-2" />
 									Lưu
-									{props.isLoading.type == 'ADD_DATA' && props.isLoading.status && <Spin className="loading-base" />}
-								</button>
+								</PrimaryButton>
 							</div>
 						</div>
 					</Form>

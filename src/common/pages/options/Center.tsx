@@ -105,18 +105,20 @@ const Center = () => {
 
 	const columns = [
 		{
+			title: 'Tên trung tâm',
+			dataIndex: 'Name',
+			width: 200,
+			fixed:'left',
+			...FilterColumn('Name', onSearch, handleReset, 'text'),
+			render: (value) => <span className="text-primary font-medium">{value}</span>
+		},
+		{
 			title: 'Mã trung tâm',
 			width: 150,
 			dataIndex: 'Code',
 			...FilterColumn('Code', onSearch, handleReset, 'text')
 		},
-		{
-			title: 'Tên trung tâm',
-			dataIndex: 'Name',
-			width: 200,
-			...FilterColumn('Name', onSearch, handleReset, 'text'),
-			render: (value) => <span className="text-primary font-medium">{value}</span>
-		},
+		
 		{
 			title: 'Địa chỉ',
 			width: 150,

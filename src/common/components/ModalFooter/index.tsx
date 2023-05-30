@@ -36,7 +36,7 @@ const ModalFooter: FC<IModalFooter> = (props) => {
 					onClick={() => !!onOK && onOK()}
 					type="button"
 					icon="save"
-					background="blue"
+					background="primary"
 				>
 					{okText || 'Lưu'}
 				</PrimaryButton>

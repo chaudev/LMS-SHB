@@ -65,7 +65,7 @@ export const LessonFeedbackPage = () => {
 
 				<Timeline mode="left">
 					{dataTable?.map((item, index) => (
-						<Timeline.Item label={moment(item?.CreatedOn).format('DD-MM-YYYY HH:mm A')} key={index} dot={<FcClock />}>
+						<Timeline.Item label={moment(item?.CreatedOn).format('DD-MM-YYYY HH:MM')} key={index} dot={<FcClock />}>
 							<div className="flex justify-between">
 								<p>
 									{item?.Note} - {item?.CreatedBy}

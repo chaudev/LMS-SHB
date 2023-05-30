@@ -42,7 +42,7 @@ const PrimaryButton: FC<IPrimaryButton> = (props) => {
 				return 'bg-[#FF9800] hover:bg-[#f49302] focus:bg-[#f49302] cursor-not-allowed'
 			}
 			if (background == 'transparent') {
-				return 'bg-[] hover:bg-[] focus:bg-[]'
+				return 'bg-[#fff] hover:bg-[] focus:bg-[]'
 			}
 		}
 	}

@@ -177,7 +177,7 @@ const AddToClass: FC<IAddToClass> = ({ isEdit, onRefresh, item }) => {
 											{!thisClass?.Fit && <div className="text-[#e011116c]">{thisClass?.Note}</div>}
 										</div>
 										<div className="hiddens ant-select-dropdown-by-chau">
-											<div className="text-[12px]">Giá: {parseToMoney(thisClass?.Price)}</div>
+											<div className="text-[12px]">Giá: {parseToMoney(thisClass?.Price)}₫</div>
 											<div className="text-[12px]">Học viên: {parseToMoney(thisClass?.StudentQuantity)}</div>
 										</div>
 									</Select.Option>

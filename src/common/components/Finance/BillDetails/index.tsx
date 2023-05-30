@@ -72,7 +72,7 @@ const BillDetails = ({ bill }) => {
 			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
 		}
 	]
-	
+
 	const tuitionPaymentColums = [
 		{
 			title: 'Mô tả',
@@ -90,7 +90,7 @@ const BillDetails = ({ bill }) => {
 			title: 'Tổng số tiền',
 			dataIndex: 'TotalPrice',
 			width: 116,
-			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}</p>
+			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
 		}
 	]
 
@@ -99,13 +99,13 @@ const BillDetails = ({ bill }) => {
 			title: 'Giá tiền',
 			dataIndex: 'Price',
 			width: 116,
-			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}</p>
+			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
 		},
 		{
 			title: 'Tổng số tiền',
 			dataIndex: 'TotalPrice',
 			width: 116,
-			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}</p>
+			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
 		},
 		{
 			title: 'Số lượng',
@@ -150,15 +150,19 @@ const BillDetails = ({ bill }) => {
 			<div>
 				<div className="font-[600]">Ghi chú:</div> {bill?.Note}
 			</div>
-			<div className="w-[1300px]">
-				<PrimaryTable
-					current={filters.PageIndex}
-					total={totalPage && totalPage}
-					onChangePage={(page: number) => setFilter({ ...filters, PageIndex: page })}
-					data={data}
-					columns={columns}
-				/>
-			</div>
+			{bill.Type != 4 ? (
+				<div className="w-[1300px]">
+					<PrimaryTable
+						current={filters.PageIndex}
+						total={totalPage && totalPage}
+						onChangePage={(page: number) => setFilter({ ...filters, PageIndex: page })}
+						data={data}
+						columns={columns}
+					/>
+				</div>
+			) : (
+				''
+			)}
 		</>
 	)
 }

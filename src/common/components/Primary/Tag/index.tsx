@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 const PrimaryTag: FC<IPrimaryTag> = (props) => {
-	const { color, children, className } = props
+	const { color, children, className, width = 'w-auto' } = props
 
 	function getBG() {
 		if (color == 'green') {
@@ -29,13 +29,13 @@ const PrimaryTag: FC<IPrimaryTag> = (props) => {
 
 	function getColor() {
 		if (color == 'green') {
-			return 'text-white '
+			return 'text-white'
 		}
 		if (color == 'blue') {
-			return 'text-white '
+			return 'text-white'
 		}
 		if (color == 'red') {
-			return 'text-white '
+			return 'text-white'
 		}
 		if (color == 'yellow') {
 			return 'text-black'
@@ -48,7 +48,7 @@ const PrimaryTag: FC<IPrimaryTag> = (props) => {
 		}
 	}
 
-	return <div className={`rounded-lg px-3 py-1 w-auto inline-flex items-center ${getBG()} ${getColor()} ${className}`}>{children}</div>
+	return <div className={`rounded-lg px-3 py-1  inline-flex items-center text-[500] ${getBG()} ${getColor()} ${width} ${className}`}>{children}</div>
 }
 
 export default PrimaryTag

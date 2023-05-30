@@ -53,22 +53,23 @@ export const SalaryConfigPage = () => {
 		{
 			title: 'Chức vụ',
 			dataIndex: 'RoleId',
+			width:150,
 			render: (value, item) => (
 				<>
-					{value == 1 && <span className="tag green">{item?.RoleName}</span>}
-					{value == 2 && <span className="tag blue">{item?.RoleName}</span>}
-					{value == 4 && <span className="tag yellow">{item?.RoleName}</span>}
-					{value == 5 && <span className="tag blue-weight">{item?.RoleName}</span>}
-					{value == 6 && <span className="tag gray">{item?.RoleName}</span>}
-					{value == 7 && <span className="tag gray">{item?.RoleName}</span>}
-					{value == 8 && <span className="tag gray">{item?.RoleName}</span>}
+					{value == 1 && <span className="w-full text-center tag green">{item?.RoleName}</span>}
+					{value == 2 && <span className="w-full text-center tag blue">{item?.RoleName}</span>}
+					{value == 4 && <span className="w-full text-center tag yellow">{item?.RoleName}</span>}
+					{value == 5 && <span className="w-full text-center tag blue-weight">{item?.RoleName}</span>}
+					{value == 6 && <span className="w-full text-center tag gray">{item?.RoleName}</span>}
+					{value == 7 && <span className="w-full text-center tag gray">{item?.RoleName}</span>}
+					{value == 8 && <span className="w-full text-center tag gray">{item?.RoleName}</span>}
 				</>
 			)
 		},
 		{
 			title: 'Mức lương',
 			dataIndex: 'Value',
-			render: (text) => <div className="font-[600] text-[#388E3C]">{Intl.NumberFormat('ja-JP').format(text)}</div>
+			render: (text) => <div className="font-[600] text-[#388E3C]">{Intl.NumberFormat('ja-JP').format(text)}₫</div>
 		},
 		{
 			title: 'Thêm lúc',

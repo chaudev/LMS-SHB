@@ -138,7 +138,7 @@ export const SalaryPage = () => {
 			title: 'Thưởng',
 			width: 80,
 			dataIndex: 'Bonus',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
 			title: 'Ghi chú',
@@ -160,13 +160,13 @@ export const SalaryPage = () => {
 			title: 'Trừ tạm ứng',
 			width: 150,
 			dataIndex: 'Deduction',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
 			title: 'Lương cơ bản',
 			width: 150,
 			dataIndex: 'BasicSalary',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
 			title: 'Lương giảng dạy',
@@ -178,7 +178,7 @@ export const SalaryPage = () => {
 			title: 'Lương tổng',
 			width: 150,
 			dataIndex: 'TotalSalary',
-			render: (text) => <>{parseToMoney(text)}</>
+			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
 			title: '',

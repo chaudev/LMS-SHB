@@ -96,7 +96,7 @@ function GroupForm(props) {
 						<AiOutlinePlus size={18} className="mr-2" />
 						<div>Tạo nhóm</div>
 					</div> */}
-					<PrimaryButton className="w-full  mt-1 d-flex items-center" type="button" icon="add" background="blue">
+					<PrimaryButton className="w-full  mt-1 d-flex items-center" type="button" icon="add" background="primary">
 						Tạo nhóm
 					</PrimaryButton>
 				</>

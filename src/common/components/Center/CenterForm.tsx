@@ -140,11 +140,26 @@ const CenterForm = React.memo((props: any) => {
 				title={rowData ? 'Cập nhật trung tâm' : 'Thêm trung tâm'}
 				open={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
-				footer={null}
+				footer={
+					<PrimaryButton loading={isLoading} type="button" onClick={form.submit} background="primary" icon="save">
+						Lưu
+					</PrimaryButton>
+				}
 				centered={true}
+				bodyStyle={{
+					maxHeight: '80vh',
+					overflow: 'auto'
+				}}
 			>
 				<div className="container-fluid">
-					<Form form={form} layout="vertical" onFinish={handleSubmit}>
+					<Form
+						form={form}
+						layout="vertical"
+						onFinish={handleSubmit}
+						onError={(error) => {
+							console.log(error)
+						}}
+					>
 						<div className="row">
 							<div className="col-12">
 								<InputTextField isRequired name="Code" label="Mã trung tâm" rules={[yupSync]} />
@@ -197,9 +212,6 @@ const CenterForm = React.memo((props: any) => {
 								<SelectField name="WardId" label="Phường/Xã" optionList={dataWard} />
 							</div>
 						</div>
-						<button className="btn btn-primary w-100" type="submit" disabled={isLoading}>
-							<MdSave size={18} className="mr-2" /> Lưu {isLoading && <Spin className="loading-base" />}
-						</button>
 					</Form>
 				</div>
 			</Modal>

@@ -60,7 +60,7 @@ export const ModalTutoringConfig: React.FC<IModalTutoringConfig> = ({ dataRow, o
 					onOpen()
 				}}
 			>
-				<IconButton type="button" icon={'edit'} color="green" className="Sửa" tooltip="Sửa" />
+				<IconButton type="button" icon={'edit'} color="primary" className="Sửa" tooltip="Sửa" />
 			</div>
 
 			<Modal

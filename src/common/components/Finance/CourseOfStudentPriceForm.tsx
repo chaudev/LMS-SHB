@@ -13,6 +13,7 @@ import TextBoxField from '~/common/components/FormControl/TextBoxField'
 import NumberFormat from 'react-number-format'
 import InputNumberField from '~/common/components/FormControl/InputNumberField'
 import { MdAddCircleOutline, MdSave } from 'react-icons/md'
+import PrimaryButton from '../Primary/Button'
 
 function CourseOfStudentPriceForm(props) {
 	const [isModalVisible, setIsModalVisible] = useState(false)
@@ -110,11 +111,14 @@ function CourseOfStudentPriceForm(props) {
 								<TextBoxField name="Note" label="Ghi chú" placeholder="Thêm ghi chú" rows={4} />
 							</div>
 							<div className="col-12 mt-5">
-								<button type="submit" className="btn btn-primary w-100" disabled={isLoading.type === 'ADD_DATA' && isLoading.status}>
-									<MdSave size={18} className="mr-2" />
+								<PrimaryButton type="submit" background="primary" icon="save" loading={isLoading.type === 'ADD_DATA' && isLoading.status}>
 									Lưu
+								</PrimaryButton> 	
+								{/* <button type="submit" className="btn btn-primary w-100" disabled={isLoading.type === 'ADD_DATA' && isLoading.status}>
+									<MdSave size={18} className="mr-2" />
+								
 									{isLoading.type === 'ADD_DATA' && isLoading.status && <Spin className="loading-base" />}
-								</button>
+								</button> */}
 							</div>
 						</div>
 					</Form>

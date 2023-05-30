@@ -90,20 +90,12 @@ export default function RefundPage(props: IRefundPageProps) {
 		return theInformation?.RoleId == 4
 	}
 
-	function isStdent() {
-		return theInformation?.RoleId == 3
-	}
-
 	function isSaler() {
 		return theInformation?.RoleId == 5
 	}
 
 	function isAccountant() {
 		return theInformation?.RoleId == 6
-	}
-
-	function isAcademic() {
-		return theInformation?.RoleId == 7
 	}
 
 	const getListRefund = async () => {
@@ -239,11 +231,16 @@ export default function RefundPage(props: IRefundPageProps) {
 						title: 'Tên học viên',
 						width: 200,
 						dataIndex: 'FullName',
+						fixed: 'left',
 						render: (text, item) => (
 							<>
-								<p className="table-row-main-text">{text}</p>
-								<p className="table-row-sub-text">{item.BranchName}</p>
-								<p className="table-row-sub-text">Ngày tạo: {moment(item.CreatedOn).format('DD/MM/YYYY')}</p>
+								<p className="table-row-main-text text-primary">{text}</p>
+								<p className="table-row-sub-text">
+									Trung tâm: <span className="text-black">{item.BranchName}</span>
+								</p>
+								<p className="table-row-sub-text">
+									Ngày tạo: <span className="text-black">{moment(item.CreatedOn).format('DD/MM/YYYY')}</span>
+								</p>
 							</>
 						)
 					},
@@ -251,21 +248,19 @@ export default function RefundPage(props: IRefundPageProps) {
 						title: 'Số tiền yêu cầu',
 						width: 200,
 						dataIndex: 'Price',
-						render: (text, item) => <p className="font-[600] text-[#D32F2F]">{_format.numberToPrice(text)} VND</p>
+						render: (text, item) => <p className="font-[600] text-[#D32F2F]">{_format.numberToPrice(text)}₫</p>
 					},
 					{
 						title: 'Loại yêu cầu',
-						width: 150,
+						width: 200,
 						dataIndex: 'TypeName',
 						render: (text, item) => (
-							<>
-								<p className="font-[600] text-[#E53935]">
-									{item.Type == 1 && <span className="tag blue">{text}</span>}
-									{item.Type == 2 && <span className="tag green">{text}</span>}
-									{item.Type == 3 && <span className="tag yellow">{text}</span>}
-									{item.Type == 4 && <span className="tag gray">{text}</span>}
-								</p>
-							</>
+							<p className="font-[600] text-[#E53935]">
+								{item.Type == 1 && <PrimaryTag children={text} color={`blue`} />}
+								{item.Type == 2 && <PrimaryTag children={text} color={`green`} />}
+								{item.Type == 3 && <PrimaryTag children={text} color={`yellow`} />}
+								{item.Type == 4 && <PrimaryTag children={text} color={`disabled`} />}
+							</p>
 						)
 					},
 					{
@@ -280,18 +275,17 @@ export default function RefundPage(props: IRefundPageProps) {
 					},
 					{
 						title: 'Trạng thái',
-						width: 200,
+						width: 150,
 						dataIndex: 'StatusName',
 						render: (text, item) => (
-							<>
-								<PrimaryTag children={text} color={`${item.Status == 1 ? 'disabled' : item?.Status == 2 ? 'green' : 'red'}`} />
-							</>
+							<PrimaryTag children={text} color={`${item.Status == 1 ? 'disabled' : item?.Status == 2 ? 'green' : 'red'}`} />
 						)
 					},
 					{
 						title: '',
-						width: 100,
+						width: 120,
 						dataIndex: 'Action',
+						fixed: 'right',
 						render: (text, item) => (
 							<>
 								<ModalRefundCRUD
@@ -335,7 +329,7 @@ export default function RefundPage(props: IRefundPageProps) {
 						title: 'Số tiền yêu cầu',
 						width: 200,
 						dataIndex: 'Price',
-						render: (text, item) => <div className="font-[600] text-[#D32F2F]">{_format.numberToPrice(text)} VND</div>
+						render: (text, item) => <div className="font-[600] text-[#D32F2F]">{_format.numberToPrice(text)}₫</div>
 					},
 					{
 						title: 'Loại yêu cầu',
@@ -364,7 +358,7 @@ export default function RefundPage(props: IRefundPageProps) {
 					},
 					{
 						title: 'Trạng thái',
-						width: 200,
+						width: 150,
 						dataIndex: 'StatusName',
 						render: (text, item) => (
 							<>
@@ -419,7 +413,7 @@ export default function RefundPage(props: IRefundPageProps) {
 				columns={columns}
 				Extra={
 					<>
-						<div className="custom-footer-table">Tổng: {totalMoney ? _format.numberToPrice(totalMoney) : 0} VND</div>
+						<div className="custom-footer-table">Tổng: {totalMoney ? _format.numberToPrice(totalMoney) : 0}₫</div>
 						{(isAdmin() || isManager() || isAccountant() || isSaler() || isTeacher()) && (
 							<ModalRefundCRUD
 								dataOption={optionList}
