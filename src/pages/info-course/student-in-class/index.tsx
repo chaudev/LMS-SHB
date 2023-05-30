@@ -139,9 +139,9 @@ const StudentInClassPage = () => {
 			width: 120,
 			render: (value, item) => (
 				<p className="font-[600] text-[#E53935]">
-					{value == 1 && <span className="tag green  w-full text-center">{item?.TypeName}</span>}
-					{value == 2 && <span className="tag yellow  w-full text-center">{item?.TypeName}</span>}
-					{value == 3 && <span className="tag blue  w-full text-center">{item?.TypeName}</span>}
+					{value == 1 && <span className="tag green">{item?.TypeName}</span>}
+					{value == 2 && <span className="tag yellow">{item?.TypeName}</span>}
+					{value == 3 && <span className="tag blue">{item?.TypeName}</span>}
 				</p>
 			)
 		},
@@ -151,9 +151,9 @@ const StudentInClassPage = () => {
 			width: 110,
 			render: (value, item) => (
 				<p className="font-[600] text-[#E53935]">
-					{value == 1 && <span className="tag green w-full text-center">{item?.ClassTypeName}</span>}
-					{value == 2 && <span className="tag yellow w-full  text-center">{item?.ClassTypeName}</span>}
-					{value == 3 && <span className="tag blue w-full  text-center">{item?.ClassTypeName}</span>}
+					{value == 1 && <span className="tag green">{item?.ClassTypeName}</span>}
+					{value == 2 && <span className="tag yellow">{item?.ClassTypeName}</span>}
+					{value == 3 && <span className="tag blue">{item?.ClassTypeName}</span>}
 				</p>
 			)
 		},

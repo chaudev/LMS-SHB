@@ -282,13 +282,13 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'RoleId',
 			render: (value, item) => (
 				<>
-					{value == 1 && <span className="tag green w-full text-center">{item?.RoleName}</span>}
-					{value == 2 && <span className="tag blue  w-full text-center">{item?.RoleName}</span>}
-					{value == 4 && <span className="tag yellow  w-full text-center">{item?.RoleName}</span>}
-					{value == 5 && <span className="tag blue-weight  w-full text-center">{item?.RoleName}</span>}
-					{value == 6 && <span className="tag gray  w-full text-center">{item?.RoleName}</span>}
-					{value == 7 && <span className="tag gray  w-full text-center">{item?.RoleName}</span>}
-					{value == 8 && <span className="tag gray  w-full text-center">{item?.RoleName}</span>}
+					{value == 1 && <span className="tag green">{item?.RoleName}</span>}
+					{value == 2 && <span className="tag blue ">{item?.RoleName}</span>}
+					{value == 4 && <span className="tag yellow ">{item?.RoleName}</span>}
+					{value == 5 && <span className="tag blue-weight ">{item?.RoleName}</span>}
+					{value == 6 && <span className="tag gray ">{item?.RoleName}</span>}
+					{value == 7 && <span className="tag gray ">{item?.RoleName}</span>}
+					{value == 8 && <span className="tag gray ">{item?.RoleName}</span>}
 				</>
 			)
 		},
@@ -297,8 +297,8 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'StatusId',
 			render: (data) => (
 				<>
-					{data == 1 && <span className="tag red  w-full text-center">Đã khóa</span>}
-					{data == 0 && <span className="tag blue  w-full text-center">Đang hoạt động</span>}
+					{data == 1 && <span className="tag red">Đã khóa</span>}
+					{data == 0 && <span className="tag blue">Đang hoạt động</span>}
 				</>
 			)
 		},
@@ -371,10 +371,10 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'Gender',
 			render: (value, record) => (
 				<>
-					{value == 0 && <span className="tag yellow w-full text-center">Khác</span>}
-					{value == 1 && <span className="tag blue w-full text-center">Nam</span>}
-					{value == 2 && <span className="tag green w-full text-center">Nữ</span>}
-					{value == 3 && <span className="tag yellow w-full text-center">Khác</span>}
+					{value == 0 && <span className="tag yellow">Khác</span>}
+					{value == 1 && <span className="tag blue">Nam</span>}
+					{value == 2 && <span className="tag green">Nữ</span>}
+					{value == 3 && <span className="tag yellow">Khác</span>}
 				</>
 			)
 		},
@@ -383,8 +383,8 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'StatusId',
 			render: (data) => (
 				<>
-					{data == 1 && <span className="tag red w-full text-center">Đã khóa</span>}
-					{data == 0 && <span className="tag blue w-full text-center">Đang hoạt động</span>}
+					{data == 1 && <span className="tag red">Đã khóa</span>}
+					{data == 0 && <span className="tag blue">Đang hoạt động</span>}
 				</>
 			)
 		},
@@ -394,10 +394,10 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'LearningStatus',
 			render: (data, record) => (
 				<>
-					{data === 1 && <span className="tag yellow w-full text-center">{record.LearningStatusName}</span>}
-					{data === 2 && <span className="tag blue w-full text-center">{record.LearningStatusName}</span>}
-					{data === 3 && <span className="tag green w-full text-center">{record.LearningStatusName}</span>}
-					{data === 4 && <span className="tag red w-full text-center">{record.LearningStatusName}</span>}
+					{data === 1 && <span className="tag yellow">{record.LearningStatusName}</span>}
+					{data === 2 && <span className="tag blue">{record.LearningStatusName}</span>}
+					{data === 3 && <span className="tag green">{record.LearningStatusName}</span>}
+					{data === 4 && <span className="tag red">{record.LearningStatusName}</span>}
 				</>
 			)
 		},

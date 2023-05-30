@@ -420,10 +420,10 @@ export default function ServiceAppointmentTest(props) {
 			dataIndex: 'Status',
 			render: (status, data) => {
 				if (status === 1) {
-					return <p className="tag red w-full text-center">{data.StatusName}</p>
+					return <p className="tag red">{data.StatusName}</p>
 				}
 				if (status === 2) {
-					return <p className="tag blue w-full text-center">{data.StatusName}</p>
+					return <p className="tag blue">{data.StatusName}</p>
 				}
 			}
 		},

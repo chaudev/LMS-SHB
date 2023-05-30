@@ -74,13 +74,13 @@ const TeacherStatisticDetails = (props) => {
 			render: (text, item) => {
 				if (text == 1) {
 					return (
-						<PrimaryTag width="w-full" className="justify-center" color="green">
+						<PrimaryTag  className="justify-center" color="green">
 							{item?.TeachingStatusName}
 						</PrimaryTag>
 					)
 				}
 				return (
-					<PrimaryTag width="w-full" className="justify-center" color="red">
+					<PrimaryTag  className="justify-center" color="red">
 						{item?.TeachingStatusName}
 					</PrimaryTag>
 				)
