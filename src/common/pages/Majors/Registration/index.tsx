@@ -9,7 +9,7 @@ import InputTextField from '~/common/components/FormControl/InputTextField'
 import SelectField from '~/common/components/FormControl/SelectField'
 import TextBoxField from '~/common/components/FormControl/TextBoxField'
 import PrimaryButton from '~/common/components/Primary/Button'
-import { ShowNostis } from '~/common/utils'
+import { ShowNostis, log } from '~/common/utils'
 import { removeCommas } from '~/common/utils/super-functions'
 import ModalViewPaymenTypeDetail from '../Component/ModalViewPaymenTypeDetail'
 import CardInfomation from '../Component/CardInfomation'
@@ -49,7 +49,7 @@ const MajorsRegistrationPage = () => {
 
 	const [modal, contextHolder] = Modal.useModal()
 
-	const [listOption, SetListOption] = useState<IListOption>(initValue)
+	const [listOption, setListOption] = useState<IListOption>(initValue)
 	const [listData, setListData] = useState<IListData>(initValue)
 
 	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL'>('')
@@ -73,8 +73,9 @@ const MajorsRegistrationPage = () => {
 			setLoading('GET_ALL')
 			let templOption = { students: [], majors: [], gift: [], payment: [] }
 			let templData = { students: [], majors: [], gift: [], payment: [] }
+
 			const [students, majors, gift, paymentType] = await Promise.all([
-				majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
+				await majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
 				majorsApi.getAll({ pageSize: 9999, pageIndex: 1, status: 1 }),
 				giftApi.getAll({ pageSize: 9999, pageIndex: 1 }),
 				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 })
@@ -82,15 +83,17 @@ const MajorsRegistrationPage = () => {
 
 			if (students.status === 200) {
 				let templ = []
-				students.data.data.map((item, index) => {
+				students.data.data.map((item: any, index) => {
+					const nameAndId = item.StudentName + ' - ' + item.StudentCode
 					templ.push({
-						title: item.StudentName + ' - ' + item.StudentCode,
+						title: item?.MajorsName ? nameAndId + ' - Ngành: ' + item?.MajorsName : nameAndId,
 						value: item.StudentId
 					})
 				})
 				templOption.students = templ
 				templData.students = students.data.data
 			}
+
 			if (majors.status === 200) {
 				let templ = formatOption(majors.data.data)
 
@@ -108,7 +111,7 @@ const MajorsRegistrationPage = () => {
 				templData.payment = paymentType.data.data
 			}
 
-			SetListOption(templOption)
+			setListOption(templOption)
 			setListData(templData)
 
 			if (studentId) {
@@ -138,7 +141,7 @@ const MajorsRegistrationPage = () => {
 				templData.students = response.data.data
 				templOption.students = templ
 				setListData(templData)
-				SetListOption(templOption)
+				setListOption(templOption)
 			}
 		} catch (error) {
 			ShowNostis.error(error.message)
@@ -195,7 +198,6 @@ const MajorsRegistrationPage = () => {
 					okText: 'Chuyển ngành',
 					cancelText: 'Hủy',
 					onOk: () => {
-						// router.push('/majors/change-majors/')
 						router.push({
 							pathname: '/majors/change-majors/',
 							query: {
