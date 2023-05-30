@@ -105,7 +105,7 @@ export const ModalTranscript: React.FC<IModalTranscript> = ({ mode, Id, onRefres
 			<Modal
 				title={mode === 'add' ? 'Thêm đợt thi mới' : mode === 'edit' ? 'Cập nhật đợt thi' : 'Xác nhận xóa'}
 				open={visible}
-				onCancel={onClose}
+				onCancel={onClose} 	centered
 				footer={
 					<>
 						<PrimaryButton onClick={() => onClose()} background="red" icon="cancel" type="button">

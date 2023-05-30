@@ -229,13 +229,6 @@ const Programs = () => {
 	// COLUMN
 	const columns = [
 		{
-			title: 'Chuyên môn',
-			dataIndex: 'GradeName',
-			render: (text) => {
-				return <p className="font-weight-black">{text}</p>
-			}
-		},
-		{
 			title: 'Mã chương trình',
 			width: 170,
 			dataIndex: 'Code',
@@ -249,6 +242,13 @@ const Programs = () => {
 			...FilterColumn('Name', onSearch, handleReset, 'text'),
 			render: (text) => {
 				return <p className="font-weight-primary">{text}</p>
+			}
+		},
+		{
+			title: 'Chuyên môn',
+			dataIndex: 'GradeName',
+			render: (text) => {
+				return <p className="font-weight-black">{text}</p>
 			}
 		},
 		// {

@@ -46,7 +46,7 @@ const PaymentPage = () => {
 		{
 			title: 'Người cấp',
 			dataIndex: 'CreatedBy',
-			render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
+			render: (text) => <p className="">{text}</p>
 		},
 		{
 			title: 'Chức năng',

@@ -104,9 +104,18 @@ const QuestionForm = (props) => {
 								<TextBoxField isRequired rules={[yupSync]} label="Nội dung trả lời" name="Answer" />
 							</div>
 
-							<div className="col-12">
-								<PrimaryButton className="w-full" icon="save" background="blue" type="submit" disable={isLoading} loading={isLoading}>
+							<div className="d-flex justify-center">
+								{/* <PrimaryButton className="w-full" icon="save" background="blue" type="submit" disable={isLoading} loading={isLoading}>
 									Lưu
+								</PrimaryButton> */}
+								<PrimaryButton
+									icon={rowData ? 'save' : 'add'}
+									type="submit"
+									disable={isLoading}
+									loading={isLoading}
+									background={rowData ? 'primary' : 'green'}
+								>
+									{rowData ? 'Lưu' : 'Thêm mới'}
 								</PrimaryButton>
 							</div>
 						</div>

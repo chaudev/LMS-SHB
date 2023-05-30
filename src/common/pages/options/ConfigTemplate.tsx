@@ -37,7 +37,8 @@ const ConfigTemplate = () => {
 	const columns = [
 		{
 			title: 'Mẫu',
-			dataIndex: 'TypeName'
+			dataIndex: 'TypeName',
+			className:'font-weight-primary'
 		},
 		{
 			title: 'Chức năng',
@@ -51,29 +52,15 @@ const ConfigTemplate = () => {
 							query: { slug: record.Type }
 						}}
 					>
-						<IconButton icon="eye" color="blue" type="button" tooltip="Xem chi tiết" />
+						<a>
+							<IconButton icon="eye" color="orange" type="button" tooltip="Xem chi tiết" />
+						</a>
 					</Link>
 				</>
 			)
 		}
 	]
 
-	const expandedRowRender = (text) => {
-		return <p className="invoice-content pt-5">{ReactHtmlParser(text.Content)}</p>
-	}
-
-	return (
-		<>
-			{/* <TitlePage title="Mẫu" /> */}
-			<PrimaryTable
-				loading={isLoading}
-				data={dataTable}
-				columns={columns}
-				// currentPage={filters.pageIndex}
-				total={totalPage}
-				// getPagination={getPagination}
-			/>
-		</>
-	)
+	return <PrimaryTable loading={isLoading} data={dataTable} columns={columns} total={totalPage} />
 }
 export default ConfigTemplate

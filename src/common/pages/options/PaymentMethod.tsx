@@ -27,7 +27,7 @@ const PaymentMethodPage = () => {
 			key: 'Thumbnail',
 			width: 110,
 			render: (image) => {
-				return <img src={image} alt="Thumbnail" className="w-[100px] h-[100px] rounded-[6px] shadow-md" />
+				return <img src={image} alt="Thumbnail" className="w-[100px] h-auto rounded-[6px] shadow-md" />
 			}
 		},
 		{
@@ -61,6 +61,7 @@ const PaymentMethodPage = () => {
 			key: '',
 			align: 'center',
 			width: 100,
+			fixed: 'right',
 			render: (data) => {
 				return (
 					<>
@@ -91,7 +92,7 @@ const PaymentMethodPage = () => {
 
 	return (
 		<div>
-			<PrimaryTable columns={columns} data={paymentMethod} />
+			<PrimaryTable columns={columns} data={paymentMethod} TitleCard="Danh sách phương thức thanh toán" />
 		</div>
 	)
 }

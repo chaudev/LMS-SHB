@@ -32,7 +32,11 @@ const ProgramAddTeacherForm = (props) => {
 		{
 			title: 'Tên giáo viên',
 			width: 300,
-			dataIndex: 'TeacherName'
+			className:"font-weight-primary",
+			dataIndex: 'TeacherName',
+			// render: (text) => {
+			// 	return <p >{text}</p>
+			// }
 		},
 		{
 			title: 'Giảng dạy',

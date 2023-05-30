@@ -95,7 +95,7 @@ const StudyTime = () => {
 			title: 'Ca học',
 			dataIndex: 'Name',
 			key: 'name',
-			render: (value) => <span className="text-primary weight-600">{value}</span>
+			render: (value) => <span className="font-weight-primary">{value}</span>
 		},
 		{
 			title: 'Thời gian (phút)',
@@ -119,7 +119,8 @@ const StudyTime = () => {
 		},
 		{
 			title: 'Chức năng',
-			align: 'right',
+			align: 'center',
+			width: 120,
 			render: (text, data, index) => (
 				<>
 					<StudyTimeForm rowData={data} getDataSource={getDataSource} />

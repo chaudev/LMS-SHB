@@ -54,8 +54,12 @@ const PaymentMethodForm = (props) => {
 				open={openModal}
 				onCancel={() => setOpenModal(false)}
 				title="Cập nhật"
+				bodyStyle={{
+					maxHeight:'80vh',
+					overflow:'auto'
+				}}
 				footer={
-					<PrimaryButton type="button" icon="save" background="blue" onClick={form.submit} disable={isLoading} loading={isLoading}>
+					<PrimaryButton type="button" icon="save" background="primary" onClick={form.submit} disable={isLoading} loading={isLoading}>
 						Lưu
 					</PrimaryButton>
 				}

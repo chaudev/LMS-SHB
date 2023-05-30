@@ -38,7 +38,7 @@ export const OfficePage = () => {
 			title: 'Văn phòng',
 			width: 150,
 			dataIndex: 'Name',
-			render: (name) => <span className="font-[700]">{name}</span>
+			render: (name) => <span className="font-weight-primary">{name}</span>
 		},
 		{
 			title: 'Địa chỉ',

@@ -181,7 +181,9 @@ const Dashboard = () => {
 			dataIndex: 'Name',
 			key: 'Name',
 			width: 350,
-			render: (name) => <span className="font-medium">{name}</span>
+			className: 'font-weight-primary'
+
+			// render: (name) => <span className="font-medium">{name}</span>
 		},
 		{
 			title: 'Trạng thái',

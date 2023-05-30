@@ -13,7 +13,6 @@ const DayOff = () => {
 	const [dayOffList, setDayOffList] = useState<IDayOff[]>([])
 	const [isLoading, setIsLoading] = useState(false)
 	const [totalPage, setTotalPage] = useState(null)
-	const { information: userInformation } = useSelector((state: RootState) => state.user)
 	const todoListApi = { pageIndex: 1, pageSize: PAGE_SIZE }
 	const [todoApi, setTodoApi] = useState(todoListApi)
 
@@ -81,7 +80,7 @@ const DayOff = () => {
 		{
 			title: 'Ngày nghỉ',
 			dataIndex: 'Name',
-			render: (text) => <p className="font-weight-black text-primary">{text}</p>
+			render: (text) => <p className="font-weight-primary">{text}</p>
 
 		},
 		{

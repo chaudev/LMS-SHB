@@ -547,13 +547,13 @@ export const AdminChildMenu = [
 						Text: 'Hình thức thanh toán',
 						Icon: ''
 					},
-					{
-						ItemType: 'single',
-						Key: '/options/tags',
-						Route: '/options/tags',
-						Text: 'Danh mục từ khoá',
-						Icon: ''
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/tags',
+					// 	Route: '/options/tags',
+					// 	Text: 'Danh mục từ khoá',
+					// 	Icon: ''
+					// },
 					{
 						ItemType: 'single',
 						Key: '/options/payment-pemission',
@@ -636,8 +636,8 @@ export const AdminChildMenu = [
 					},
 					{
 						ItemType: 'single',
-						Key: '/options/visaStatus',
-						Route: '/options/visaStatus',
+						Key: '/options/visa-status',
+						Route: '/options/visa-status',
 						Text: 'Tình trạng Visa',
 						Icon: ''
 					},

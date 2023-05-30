@@ -80,7 +80,7 @@ const IdiomsForm = React.memo((props: any) => {
 
 			<Modal
 				width={500}
-				title={<>{rowData ? 'Cập nhật' : 'Thêm mới'}</>}
+				title={<>{rowData ? 'Cập nhật Câu thành ngữ' : 'Thêm câu thành ngữ'}</>}
 				open={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}
@@ -102,8 +102,14 @@ const IdiomsForm = React.memo((props: any) => {
 						</div>
 						<div className="row">
 							<div className="col-12 text-center">
-								<PrimaryButton className="w-full" type="submit" background="blue" icon="save" disable={isLoading} loading={isLoading}>
-									Lưu
+								<PrimaryButton
+									icon={rowData ? 'save' : 'add'}
+									type="submit"
+									disable={isLoading}
+									loading={isLoading}
+									background={rowData ? 'primary' : 'green'}
+								>
+									{rowData ? 'Cập nhật' : 'Thêm mới'}
 								</PrimaryButton>
 							</div>
 						</div>

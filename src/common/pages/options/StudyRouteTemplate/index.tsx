@@ -60,7 +60,7 @@ const StudyRouteTemplatePage = () => {
 		{
 			title: 'Tên',
 			dataIndex: 'Name',
-			render: (text) => <>{text}</>
+			className: 'font-weight-primary'
 		},
 		{
 			width: 200,

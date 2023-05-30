@@ -144,6 +144,7 @@ export const ModalGiftCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen }
 				title={mode === 'add' ? 'Thêm mới' : mode === 'edit' ? 'Cập nhật' : 'Xác nhận xóa'}
 				open={visible}
 				onCancel={onClose}
+				centered 
 				footer={
 					<>
 						<PrimaryButton onClick={() => onClose()} background="red" icon="cancel" type="button">
@@ -153,10 +154,10 @@ export const ModalGiftCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen }
 							loading={isLoading}
 							onClick={() => form.submit()}
 							className="ml-2"
-							background="blue"
-							icon={mode !== 'delete' ? 'save' : 'remove'}
+							background={mode == 'delete' ? 'red' : mode == 'edit' ? 'primary' : 'green'}
+							icon={mode == 'delete' ? 'remove' : mode == 'edit' ? 'save' : 'add'}
 							type="button"
-							children={mode !== 'delete' ? 'Lưu' : 'Xóa'}
+							children={mode == 'delete' ? 'Xóa' : mode == 'edit' ? 'Cập nhật' : 'Thêm mới'}
 						/>
 					</>
 				}

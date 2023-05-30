@@ -51,7 +51,8 @@ function TagsPage() {
 		{
 			title: 'Tên',
 			dataIndex: 'Name',
-			render: (text) => <p className="font-weight-black">{text}</p>
+			className: 'font-weight-primary'
+			// render: (text) => <p className="font-weight-black">{text}</p>
 		},
 		{
 			title: 'Dạng',

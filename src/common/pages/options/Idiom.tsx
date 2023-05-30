@@ -33,6 +33,7 @@ const Idioms = () => {
 		{
 			title: 'Người tạo',
 			dataIndex: 'CreatedBy',
+			width: 150,
 			render: (value) => <div>{value}</div>
 		},
 		{
@@ -42,6 +43,7 @@ const Idioms = () => {
 		},
 		{
 			title: 'Người sửa',
+			width: 150,
 			dataIndex: 'ModifiedBy',
 			render: (value) => <div>{value}</div>
 		},

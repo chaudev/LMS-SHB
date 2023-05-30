@@ -31,7 +31,7 @@ const JobsList = () => {
 		{
 			title: 'Công việc',
 			dataIndex: 'Name',
-			render: (text) => <p className="font-weight-black">{text}</p>
+			render: (text) => <p className="font-weight-primary">{text}</p>
 		},
 		{ title: 'Người tạo', width: 200, dataIndex: 'ModifiedBy' },
 		{
@@ -42,6 +42,7 @@ const JobsList = () => {
 
 		{
 			title: '',
+			width:120,
 			render: (data) => {
 				return (
 					<>

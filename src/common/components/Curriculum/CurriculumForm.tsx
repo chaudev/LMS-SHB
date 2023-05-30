@@ -119,7 +119,7 @@ const CurriculumForm = (props: any) => {
 						</div>
 						<div className="row ">
 							<div className="col-12 mt-3 flex-all-center">
-								<PrimaryButton type="submit" background="blue" icon="save">
+								<PrimaryButton type="submit" background="primary" icon="save">
 									Lưu
 								</PrimaryButton>
 							</div>

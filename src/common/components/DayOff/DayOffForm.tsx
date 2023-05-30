@@ -103,12 +103,19 @@ const DayOffForm = (props) => {
 								/>
 							</div>
 						</div>
-						<div className="row">
-							<div className="col-12">
-								<PrimaryButton icon="save" className="w-full" type="submit" background="blue" disable={isLoading} loading={isLoading}>
+						<div className="d-flex justify-center">
+							{/* <PrimaryButton icon="save" className="w-full" type="submit" background="blue" disable={isLoading} loading={isLoading}>
 									Lưu
-								</PrimaryButton>
-							</div>
+								</PrimaryButton> */}
+							<PrimaryButton
+								icon={dataRow ? 'save' : 'add'}
+								type="submit"
+								disable={isLoading}
+								loading={isLoading}
+								background={dataRow ? 'primary' : 'green'}
+							>
+								{dataRow ? 'Cập nhật' : 'Thêm mới'}
+							</PrimaryButton>
 						</div>
 					</Form>
 				</div>

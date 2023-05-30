@@ -97,7 +97,7 @@ const RoomForm = (props: any) => {
 						</div>
 						<div className="row ">
 							<div className="col-12 mt-3 flex-all-center">
-								<PrimaryButton type="submit" background="blue" icon="save" disable={isLoading} loading={isLoading}>
+								<PrimaryButton type="submit" background="primary" icon="save" disable={isLoading} loading={isLoading}>
 									Lưu
 								</PrimaryButton>
 							</div>

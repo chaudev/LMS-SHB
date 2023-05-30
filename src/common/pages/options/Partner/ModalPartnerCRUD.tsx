@@ -143,7 +143,7 @@ export const ModalPartnerCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpe
 			<Modal
 				title={mode === 'add' ? 'Thêm mới' : mode === 'edit' ? 'Cập nhật' : 'Xác nhận xóa'}
 				open={visible}
-				onCancel={onClose}
+				onCancel={onClose}	centered
 				footer={
 					<>
 						<PrimaryButton onClick={() => onClose()} background="red" icon="cancel" type="button">

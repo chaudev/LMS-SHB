@@ -46,7 +46,7 @@ export const GiftPage = () => {
 			title: 'Quà tặng',
 			width: 180,
 			dataIndex: 'Name',
-			render: (text) => <p className="font-[700]">{text}</p>
+			render: (text) => <p className="font-weight-primary">{text}</p>
 		},
 		{
 			title: 'Mô tả',
@@ -67,16 +67,14 @@ export const GiftPage = () => {
 		}
 	]
 	return (
-		<>
-			<PrimaryTable
-				loading={loading}
-				total={totalItems}
-				onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
-				TitleCard={<h1 className="text-2xl font-medium">Danh sách quà tặng</h1>}
-				data={data}
-				columns={columns}
-				Extra={<ModalGiftCRUD mode="add" onRefresh={() => getData(todoApi)} />}
-			/>
-		</>
+		<PrimaryTable
+			loading={loading}
+			total={totalItems}
+			onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
+			TitleCard={<h1 className="text-2xl font-medium">Danh sách quà tặng</h1>}
+			data={data}
+			columns={columns}
+			Extra={<ModalGiftCRUD mode="add" onRefresh={() => getData(todoApi)} />}
+		/>
 	)
 }

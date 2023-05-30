@@ -63,12 +63,10 @@ function TagForm(props) {
 								<InputTextField placeholder="Tên danh mục " name="Name" label="Tên Danh mục" isRequired rules={[yupSync]} />
 							</div>
 						</div>
-						<div className="row">
-							<div className="col-12">
-								<PrimaryButton className="w-full" icon="save" background="blue" type="submit" disable={isLoading} loading={isLoading}>
-									Lưu
-								</PrimaryButton>
-							</div>
+						<div className="d-flex justify-center">
+							<PrimaryButton icon="add" background="green" type="submit" disable={isLoading} loading={isLoading}>
+								Thêm mới
+							</PrimaryButton>
 						</div>
 					</Form>
 				</div>

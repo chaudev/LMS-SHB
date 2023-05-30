@@ -67,7 +67,7 @@ const PaymentPerForm = (props) => {
 						</div>
 						<div className="row">
 							<div className="col-12">
-								<PrimaryButton className="w-full" icon="save" background="blue" type="submit" disable={isLoading} loading={isLoading}>
+								<PrimaryButton className="w-full" icon="save" background="primary" type="submit" disable={isLoading} loading={isLoading}>
 									Lưu
 								</PrimaryButton>
 							</div>

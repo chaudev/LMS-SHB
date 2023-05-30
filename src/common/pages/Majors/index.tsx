@@ -53,7 +53,9 @@ export const MajorsPage = () => {
 			title: 'Tên',
 			width: 180,
 			dataIndex: 'Name',
-			render: (text) => <p className="font-[700]">{text}</p>
+			className: 'font-weight-primary'
+
+			// render: (text) => <p className="font-[700]">{text}</p>
 		},
 		{
 			title: 'Giá',

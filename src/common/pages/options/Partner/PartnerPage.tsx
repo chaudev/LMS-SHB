@@ -37,7 +37,9 @@ export const PartnerPage = () => {
 			title: 'Tên',
 			width: 180,
 			dataIndex: 'Name',
-			render: (text) => <p className="font-[700]">{text}</p>
+			className: 'font-weight-primary'
+
+			// render: (text) => <p className="font-weight-primary">{text}</p>
 		},
 		{
 			title: 'Điện thoại',
@@ -67,6 +69,7 @@ export const PartnerPage = () => {
 			title: 'Thao tác',
 			dataIndex: 'Action',
 			width: 50,
+			fexed:'right',
 			render: (text, item) => (
 				<div className="flex items-center">
 					<ModalPartnerCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />

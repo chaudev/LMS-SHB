@@ -37,7 +37,7 @@ const GeneralNotificationUserReceiver = (props) => {
 	}
 	return (
 		<>
-			<IconButton color="blue" tooltip="Danh sách người nhận" onClick={showModal} icon="eye" type="button" />
+			<IconButton color="orange" tooltip="Danh sách người nhận" onClick={showModal} icon="eye" type="button" />
 			<Modal
 				title="Danh sách người nhận"
 				open={isModalOpen}

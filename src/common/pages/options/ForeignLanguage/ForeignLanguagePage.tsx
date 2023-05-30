@@ -40,7 +40,7 @@ export const ForeignLanguagePage = () => {
 			title: 'Tình trạng',
 			width: 180,
 			dataIndex: 'Name',
-			render: (text) => <p className="font-[700]">{text}</p>
+			render: (text) => <p className="font-weight-primary">{text}</p>
 		},
 		{
 			title: 'Thao tác',

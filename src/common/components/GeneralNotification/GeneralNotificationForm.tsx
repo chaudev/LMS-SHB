@@ -178,7 +178,7 @@ const GeneralNotificationForm = (props) => {
 								<label className="!ml-2">Gửi mail</label>
 							</Form.Item>
 						</div>
-						<PrimaryButton background="blue" type="submit" icon="save" disable={isLoading} loading={isLoading}>
+						<PrimaryButton background="green" type="submit" icon="add" disable={isLoading} loading={isLoading}>
 							Tạo ngay
 						</PrimaryButton>
 					</div>

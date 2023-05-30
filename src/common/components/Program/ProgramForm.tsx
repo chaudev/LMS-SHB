@@ -92,16 +92,6 @@ const ProgramForm = React.memo((props: any) => {
 								/>
 							</div>
 
-							{/* <div className="col-md-6 col-12">
-								<InputNumberField
-									className="w-full"
-									placeholder="Nhập học phí"
-									name="Price"
-									label="Học phí"
-									rules={[{ required: true, message: 'Bạn không được để trống' }]}
-								/>
-							</div> */}
-
 							<div className="col-12">
 								<EditorField
 									id={rowData?.Id}
@@ -115,7 +105,7 @@ const ProgramForm = React.memo((props: any) => {
 
 						<div className="row">
 							<div className="col-12 text-center">
-								<PrimaryButton icon="save" type="submit" disable={isLoading} loading={isLoading} background="blue">
+								<PrimaryButton icon="save" type="submit" disable={isLoading} loading={isLoading} background="primary">
 									Lưu
 								</PrimaryButton>
 							</div>

@@ -429,13 +429,13 @@ export const ManagerChildMenu = [
 						Text: 'Câu hỏi thường gặp',
 						Icon: ''
 					},
-					{
-						ItemType: 'single',
-						Key: '/options/tags',
-						Route: '/options/tags',
-						Text: 'Danh mục từ khoá',
-						Icon: ''
-					}
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/tags',
+					// 	Route: '/options/tags',
+					// 	Text: 'Danh mục từ khoá',
+					// 	Icon: ''
+					// }
 				]
 			}
 		]

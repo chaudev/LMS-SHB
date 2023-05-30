@@ -111,7 +111,7 @@ const Specialize = () => {
 			dataIndex: 'Name',
 			width: 250,
 			...FilterColumn('Name', onSearch, handleReset, 'text'),
-			render: (value) => <span className="text-primary weight-600">{value}</span>
+			render: (value) => <span className="font-weight-primary">{value}</span>
 		},
 		{
 			title: 'Tạo ngày',
@@ -122,7 +122,7 @@ const Specialize = () => {
 			width: 250,
 			title: 'Người tạo',
 			dataIndex: 'CreatedBy',
-			className: 'font-[600]'
+			// className: 'font-[600]'
 		},
 		{
 			title: 'Chức năng',

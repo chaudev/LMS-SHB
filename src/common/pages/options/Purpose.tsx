@@ -63,7 +63,7 @@ const Purpose = () => {
 			title: 'Mục đích học',
 			dataIndex: 'Name',
 			render: (text) => {
-				return <p className="font-[600] text-[#1976D2]">{text}</p>
+				return <p className="font-weight-primary">{text}</p>
 			}
 		},
 		{
@@ -79,6 +79,7 @@ const Purpose = () => {
 		},
 		{
 			title: '',
+			width:120,
 			render: (record) => (
 				<>
 					<PurposeForm rowData={record} getDataTable={getDataTable} />

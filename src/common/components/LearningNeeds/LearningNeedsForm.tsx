@@ -93,8 +93,14 @@ const LearningNeedsForm = (props) => {
 						</div>
 
 						<div className="col-12 flex-all-center">
-							<PrimaryButton icon="save" type="submit" disable={isLoading} loading={isLoading} background="blue">
-								Lưu
+							<PrimaryButton
+								icon={record ? 'save' : 'add'}
+								type="submit"
+								disable={isLoading}
+								loading={isLoading}
+								background={record ? 'primary' : 'green'}
+							>
+								{record ? 'Cập nhật' : 'Thêm mới'}
 							</PrimaryButton>
 						</div>
 					</div>

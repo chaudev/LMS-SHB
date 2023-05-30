@@ -172,6 +172,7 @@ export const ModalSalaryTutoringConfigCRUD: React.FC<IModalSalary> = ({ mode, da
 				title={mode === 'add' ? 'Thêm lương nhân viên' : mode === 'edit' ? 'Cập nhật lương nhân viên' : 'Xác nhận xóa'}
 				open={visible}
 				onCancel={onClose}
+				centered
 				footer={
 					<>
 						<PrimaryButton onClick={() => onClose()} background="red" icon="cancel" type="button">

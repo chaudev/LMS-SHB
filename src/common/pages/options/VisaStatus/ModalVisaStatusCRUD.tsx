@@ -140,20 +140,20 @@ export const ModalVisaStatusCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, set
 			<Modal
 				title={mode === 'add' ? 'Thêm mới' : mode === 'edit' ? 'Cập nhật' : 'Xác nhận xóa'}
 				open={visible}
-				onCancel={onClose}
+				onCancel={onClose} 	centered
 				footer={
 					<>
-						<PrimaryButton onClick={() => onClose()} background="red" icon="cancel" type="button">
+						<PrimaryButton onClick={() => onClose()} background="transparent" icon="cancel" type="button">
 							Huỷ
 						</PrimaryButton>
 						<PrimaryButton
 							loading={isLoading}
 							onClick={() => form.submit()}
 							className="ml-2"
-							background="blue"
-							icon={mode !== 'delete' ? 'save' : 'remove'}
+							background={mode === 'add' ? 'green' : mode === 'edit' ? 'primary' : 'red'}
+							icon={mode === 'add' ? 'add' : mode === 'edit' ? 'save' : 'remove'}
 							type="button"
-							children={mode !== 'delete' ? 'Lưu' : 'Xóa'}
+							children={mode === 'add' ? 'Thêm mới' : mode === 'edit' ? 'Cập nhật' : 'Xóa'}
 						/>
 					</>
 				}

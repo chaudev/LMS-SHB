@@ -1,5 +1,6 @@
 import { nanoid } from '@reduxjs/toolkit'
 import { Form, Input, Modal, Popconfirm } from 'antd'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { paymentTypeApi } from '~/api/option/payment-type'
@@ -63,12 +64,11 @@ const PaymentTypePage = () => {
 		{
 			title: 'Tên',
 			dataIndex: 'Name',
-			render: (text) => <>{text}</>
+			className: 'font-weight-primary'
 		},
 		{
 			title: 'Số lần',
-			dataIndex: 'Times',
-			render: (text) => <>{text}</>
+			dataIndex: 'Times'
 		},
 		{
 			width: 200,
@@ -105,17 +105,26 @@ const PaymentTypePage = () => {
 							tooltip="Cập nhật hình thức thanh toán"
 							type="button"
 							icon="edit"
-							color="primary"
-						></IconButton>
-						<IconButton
-							onClick={() => {
-								router.push({ pathname: '/options/payment-type/detail', query: { slug: item.Id, key: nanoid(), name: item.Name } })
-							}}
-							tooltip="Xem chi tiết hình thức thanh toán"
-							type="button"
-							icon="eye"
 							color="yellow"
 						></IconButton>
+						<Link
+							href={{
+								pathname: '/options/payment-type/detail',
+								query: { slug: item.Id, key: nanoid(), name: item.Name }
+							}}
+						>
+							<a>
+								<IconButton
+									// onClick={() => {
+									// 	router.push({ pathname: '/options/payment-type/detail', query: { slug: item.Id, key: nanoid(), name: item.Name } })
+									// }}
+									tooltip="Xem chi tiết hình thức thanh toán"
+									type="button"
+									icon="eye"
+									color="yellow"
+								></IconButton>
+							</a>
+						</Link>
 					</div>
 				)
 			}

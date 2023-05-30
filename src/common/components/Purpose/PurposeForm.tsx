@@ -102,7 +102,7 @@ const PurposeForm = (props) => {
 									Lưu
 									{isLoading && <Spin className="loading-base" />}
 								</button> */}
-								<PrimaryButton className="w-full" background="blue" icon="save" type="submit" disable={isLoading} loading={isLoading}>
+								<PrimaryButton className="w-full" background="primary" icon="save" type="submit" disable={isLoading} loading={isLoading}>
 									Lưu
 								</PrimaryButton>
 							</div>

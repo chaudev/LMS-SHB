@@ -98,9 +98,15 @@ const CustomerSupplier = (props) => {
 						</div>
 						<div className="row ">
 							<div className="col-12 flex-all-center">
-								<PrimaryButton icon="save" type="submit" background="blue" disable={isLoading} loading={isLoading}>
-									Lưu
-								</PrimaryButton>
+							<PrimaryButton
+								icon={rowData ? 'save' : 'add'}
+								type="submit"
+								disable={isLoading}
+								loading={isLoading}
+								background={rowData ? 'primary' : 'green'}
+							>
+								{rowData ? 'Cập nhật' : 'Thêm mới'}
+							</PrimaryButton>
 							</div>
 						</div>
 					</Form>

@@ -107,7 +107,7 @@ export const ModalLessonFeedback: React.FC<IModalLessonFeedback> = ({ mode, data
 			<Modal
 				title={mode === 'add' ? 'Thêm phản hồi' : 'Xác nhận xóa'}
 				open={visible}
-				onCancel={onClose}
+				onCancel={onClose} 	centered
 				footer={
 					<>
 						<PrimaryButton onClick={() => onClose()} background="red" icon="cancel" type="button">

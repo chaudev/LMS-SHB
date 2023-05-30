@@ -53,7 +53,7 @@ const LearningNeeds = () => {
 			title: 'Nhu cầu học',
 			dataIndex: 'Name',
 			render: (text) => {
-				return <p className="font-semibold text-primary">{text}</p>
+				return <p className="font-weight-primary">{text}</p>
 			}
 		},
 		{

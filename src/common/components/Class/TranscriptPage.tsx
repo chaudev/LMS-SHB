@@ -189,7 +189,7 @@ export const TranscriptPage = () => {
 			width: 200,
 			render: (text, item) => (
 				<>
-					<p className="text-primary font-[600]">{text}</p>
+					<p className="font-weight-primary">{text}</p>
 					<p className="text-[14px]">{item?.StudentCode}</p>
 				</>
 			)

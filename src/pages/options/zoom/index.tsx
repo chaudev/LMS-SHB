@@ -77,7 +77,8 @@ const ZoomConfigsPage = () => {
 			title: 'Tên',
 			dataIndex: 'Name',
 			width: 180,
-			className: 'font-[500] text-[#1976D2]'
+			className: 'font-weight-primary'
+
 		},
 		{
 			title: 'AccountId',

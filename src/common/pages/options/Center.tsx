@@ -110,7 +110,7 @@ const Center = () => {
 			width: 200,
 			fixed:'left',
 			...FilterColumn('Name', onSearch, handleReset, 'text'),
-			render: (value) => <span className="text-primary font-medium">{value}</span>
+			render: (value) => <span className="font-weight-primary">{value}</span>
 		},
 		{
 			title: 'Mã trung tâm',

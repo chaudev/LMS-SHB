@@ -82,11 +82,15 @@ const JobForm = (props: any) => {
 							<div className="col-12">
 								<InputTextField placeholder="Nghề nghiệp" name="Name" label="Nghề nghiệp" isRequired rules={[yupSync]} />
 							</div>
-						</div>
-						<div className="row">
-							<div className="col-12">
-								<PrimaryButton className="w-full" icon="save" background="blue" type="submit" disable={isLoading} loading={isLoading}>
-									Lưu
+							<div className="col-12 flex-all-center">
+								<PrimaryButton
+									icon={rowData ? 'save' : 'add'}
+									type="submit"
+									disable={isLoading}
+									loading={isLoading}
+									background={rowData ? 'primary' : 'green'}
+								>
+									{rowData ? 'Cập nhật' : 'Thêm mới'}
 								</PrimaryButton>
 							</div>
 						</div>

@@ -177,7 +177,7 @@ export const ModalStudyRoute: React.FC<IModalStudyRoute> = ({ mode, onRefresh, d
 			)}
 
 			<Modal
-			centered
+				centered
 				title={mode === 'add' ? 'Thêm lộ trình' : mode === 'edit' ? 'Cập nhật lộ trình' : 'Xác nhận xóa'}
 				open={visible}
 				onCancel={onClose}

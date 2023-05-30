@@ -117,9 +117,12 @@ function TagList(props) {
 			<Modal footer={null} title="Thêm ghi chú" open={isModalVisible} onOk={handleOk} onCancel={handleCancel} width={400} centered>
 				<Form layout="vertical" form={form} onFinish={handleAddTag}>
 					<InputTextField placeholder="Nhập từ khoá " name="Name" label="Từ khoá" isRequired />
-					<PrimaryButton type="submit" background="primary" icon="save" loading={loading}>
-						Lưu
-					</PrimaryButton>
+					<div className="d-flex justify-center">
+						<PrimaryButton type="submit" background="primary" icon="save" loading={loading}>
+							Lưu
+						</PrimaryButton>
+					</div>
+
 					{/* <div className="mt-3 text-center">
 						<button type="submit" className="btn btn-primary w-100">
 							Lưu {loading && <Spin className="loading-base" />}

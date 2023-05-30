@@ -105,8 +105,14 @@ const StudyTimeForm = (props: IStudyTimeForm) => {
 						</div>
 						<div className="row ">
 							<div className="col-12 flex-all-center">
-								<PrimaryButton icon="save" type="submit" disable={isLoading} loading={isLoading} background="blue">
-									Lưu
+								<PrimaryButton
+									icon={rowData ? 'save' : 'add'}
+									type="submit"
+									disable={isLoading}
+									loading={isLoading}
+									background={rowData ? 'primary' : 'green'}
+								>
+									{rowData ? 'Lưu' : 'Thêm mới'}
 								</PrimaryButton>
 							</div>
 						</div>

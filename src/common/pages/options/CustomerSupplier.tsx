@@ -62,19 +62,22 @@ const CustomerSupplier = () => {
 		{
 			title: 'Tên nguồn',
 			dataIndex: 'Name',
-			render: (text) => <p className="font-weight-black text-primary">{text}</p>
+			render: (text) => <p className="font-weight-primary">{text}</p>
 		},
 		{
 			title: 'Thay đổi bởi',
-			dataIndex: 'ModifiedBy'
+			dataIndex: 'ModifiedBy',
+			render: (text) => <p className="">{text}</p>
+
 		},
 		{
 			title: 'Thay đổi lúc',
 			dataIndex: 'ModifiedOn',
-			render: (date) => <p className="font-weight-primary">{moment(date).format('DD/MM/YYYY')}</p>
+			render: (date) => <p className="">{moment(date).format('DD/MM/YYYY')}</p>
 		},
 		{
 			title: 'Chức năng',
+			width: 120,
 			render: (record) => (
 				<>
 					<CustomerSupplierForm rowData={record} getDataTable={getDataTable} />

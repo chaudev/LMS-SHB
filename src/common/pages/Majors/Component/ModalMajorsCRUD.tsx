@@ -145,7 +145,7 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 			<Modal
 				title={mode === 'add' ? 'Thêm mới' : mode === 'edit' ? 'Cập nhật' : 'Xác nhận xóa'}
 				open={visible}
-				onCancel={onClose}
+				onCancel={onClose} 	centered
 				footer={
 					<>
 						<PrimaryButton onClick={() => onClose()} className='btn-outline' background="transparent" icon="cancel" type="button">

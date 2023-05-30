@@ -30,7 +30,11 @@ const FormProfileTemplate = ({ form, handleCreateUpdate, isModalOpen = { type: '
 				<PrimaryButton onClick={onCancelModal} className="text-white" type="button" icon="cancel" background="orange">
 					Hủy
 				</PrimaryButton>
-				<PrimaryButton type="submit" icon={isModalOpen.type === 'CREATE' ? 'add' : 'edit'} background="blue">
+				<PrimaryButton
+					type="submit"
+					icon={isModalOpen.type === 'CREATE' ? 'add' : 'edit'}
+					background={isModalOpen.type === 'CREATE' ? 'green' : 'primary'}
+				>
 					{isModalOpen.type === 'CREATE' ? 'Thêm thông tin' : 'Cập nhật thông tin'}
 				</PrimaryButton>
 			</div>
