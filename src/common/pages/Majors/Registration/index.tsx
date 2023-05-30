@@ -1,4 +1,4 @@
-import { Card, Form, Modal, Spin } from 'antd'
+import { Card, Form, Modal, Select, Spin } from 'antd'
 import React, { useEffect, useMemo, useState } from 'react'
 import { giftApi } from '~/api/gift'
 import { majorsApi } from '~/api/majors/majors'
@@ -16,6 +16,7 @@ import CardInfomation from '../Component/CardInfomation'
 import { ISelectOptionList } from '~/common/components/FormControl/form-control'
 import { optionPaymentType } from '~/common/constant/PaymentType'
 import { useRouter } from 'next/router'
+import Avatar from '~/common/components/Avatar'
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -52,6 +53,8 @@ const MajorsRegistrationPage = () => {
 	const [listOption, setListOption] = useState<IListOption>(initValue)
 	const [listData, setListData] = useState<IListData>(initValue)
 
+	log.Yellow('listOption students: ', listOption?.students)
+
 	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL'>('')
 
 	const [paymentTypeDetail, setPaymentTypeDetail] = useState<IPaymentTypeDetail[]>([])
@@ -85,10 +88,7 @@ const MajorsRegistrationPage = () => {
 				let templ = []
 				students.data.data.map((item: any, index) => {
 					const nameAndId = item.StudentName + ' - ' + item.StudentCode
-					templ.push({
-						title: item?.MajorsName ? nameAndId + ' - Ngành: ' + item?.MajorsName : nameAndId,
-						value: item.StudentId
-					})
+					templ.push(item)
 				})
 				templOption.students = templ
 				templData.students = students.data.data
@@ -290,16 +290,39 @@ const MajorsRegistrationPage = () => {
 					<div className="d-flex flex-col gap-3">
 						<Card title="Thông tin học viên" className="col-span-1">
 							{listOption.students.length > 0 && (
-								<SelectField
-									className="col-span-2"
-									name={'StudentId'}
-									label="Chọn học viên"
-									optionList={listOption.students}
-									rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}
-								/>
+								// <SelectField
+								// 	className="col-span-2"
+								// 	name={'StudentId'}
+								// 	label="Chọn học viên"
+								// 	optionList={listOption.students}
+								// 	rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}
+								// />
+
+								<Form.Item name={'StudentId'} label="Chọn học viên" rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}>
+									<Select>
+										{listOption.students.map((item: any, index) => {
+											return (
+												<Select.Option value={item?.StudentId} key={item?.StudentId}>
+													<div className="selected-option">{item?.StudentName}</div>
+													<div className="select-option-propdown">
+														<Avatar uri={item?.Avatar} className="w-[32px] h-[32px] rounded-full" />
+														<div className="ml-[8px]">
+															<div className="font-[500]">
+																{item?.StudentName} - {item?.StudentCode}
+															</div>
+															{item?.MajorsName && <div>Ngành: {item?.MajorsName}</div>}
+														</div>
+													</div>
+												</Select.Option>
+											)
+										})}
+									</Select>
+								</Form.Item>
 							)}
+
 							<div className="d-flex flex-col gap-3">{getInformation()}</div>
 						</Card>
+
 						<Card title="Ngành học" className="col-span-1">
 							<SelectField
 								className="col-span-2"
@@ -308,6 +331,7 @@ const MajorsRegistrationPage = () => {
 								optionList={listOption.majors}
 								rules={[{ required: true, message: 'Vui lòng ngành học' }]}
 							/>
+
 							<InputNumberField
 								name="TotalPrice"
 								label="Giá ngành học"
@@ -316,6 +340,7 @@ const MajorsRegistrationPage = () => {
 							<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
 						</Card>
 					</div>
+
 					<Card title="Thanh toán" className="col-span-1 ">
 						<SelectField
 							className="col-span-2"
