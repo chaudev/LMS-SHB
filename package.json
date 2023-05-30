@@ -9,6 +9,10 @@
 		"lint": "next lint",
 		"export": "next build && next export"
 	},
+	"engines": {
+		"node": "16.x",
+		"npm": "please-use-yarn"
+	},
 	"dependencies": {
 		"@fullcalendar/core": "^6.0.0",
 		"@fullcalendar/daygrid": "^6.0.0",

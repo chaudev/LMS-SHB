@@ -11,6 +11,7 @@ import { RootState } from '~/store'
 import InputTextField from '../FormControl/InputTextField'
 import IconButton from '../Primary/IconButton'
 import PrimaryTable from '../Primary/Table'
+import StudentByAttenance from './ByAttenance'
 
 const InputNote = ({ value, onChange, index }) => {
 	const [note, setNote] = useState('')
@@ -226,8 +227,11 @@ export const RollUpPage = () => {
 			)
 		}
 	]
+
 	return (
 		<>
+			<StudentByAttenance />
+
 			<PrimaryTable
 				loading={loading}
 				total={totalRow}

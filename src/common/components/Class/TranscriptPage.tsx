@@ -1,4 +1,4 @@
-import { Input, Select } from 'antd'
+import { Input, Select, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { transcriptApi } from '~/api/transcript'
@@ -7,6 +7,8 @@ import { RootState } from '~/store'
 import PrimaryButton from '../Primary/Button'
 import PrimaryTable from '../Primary/Table'
 import { ModalTranscript } from './ModalTranscript'
+import moment from 'moment'
+import PrimaryTooltip from '../PrimaryTooltip'
 
 const InputNote = ({ value, onChange, index }) => {
 	const [note, setNote] = useState('')
@@ -351,14 +353,20 @@ export const TranscriptPage = () => {
 
 							<div className="antd-custom-wrap">
 								<Select
-									className="w-[140px] ml-tw-4 custom-select-transcript"
+									className="w-[150px] ml-tw-4 custom-select-transcript"
 									onChange={(val) => setTranscriptId(val)}
 									placeholder="Chọn đợt thi"
 									value={transcriptId}
 								>
-									{dataTranscript?.map((item, index) => (
+									{dataTranscript?.map((item: any, index) => (
 										<Select.Option key={index} value={item.value}>
-											{item.title}
+											<Tooltip
+												placement="left"
+												id={`sel-${item?.Id}`}
+												title={`${item.title} - ${moment(item?.CreatedOn).format('DD/MM/YYYY')}`}
+											>
+												{item.title} - {moment(item?.CreatedOn).format('DD/MM/YYYY')}
+											</Tooltip>
 										</Select.Option>
 									))}
 								</Select>
@@ -369,7 +377,10 @@ export const TranscriptPage = () => {
 									<ModalTranscript
 										mode="delete"
 										Id={transcriptId}
-										onRefresh={() => getTranscriptByClass(currentClassDetails?.Id)}
+										onRefresh={() => {
+											getTranscriptByClass(currentClassDetails?.Id)
+											setDataTable([])
+										}}
 										setTranscriptId={setTranscriptId}
 									/>
 								</div>

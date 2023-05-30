@@ -1,4 +1,4 @@
-import { DatePicker, Input, Select } from 'antd'
+import { DatePicker, Input, Popconfirm, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { transcriptApi } from '~/api/transcript'
@@ -17,6 +17,8 @@ import IconButton from '../../Primary/IconButton'
 import { BsFillFileEarmarkPdfFill } from 'react-icons/bs'
 import PrimaryTooltip from '../../PrimaryTooltip'
 import BaseLoading from '../../BaseLoading'
+import { Trash2 } from 'react-feather'
+import { IoClose } from 'react-icons/io5'
 
 const InputNote = ({ value, onChange, index }) => {
 	const [note, setNote] = useState('')
@@ -53,6 +55,25 @@ export const StudentReport = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [dataTable, setDataTable] = useState([])
 	const [transcriptId, setTranscriptId] = useState(null)
+
+	function subtractOneMonthFromDate() {
+		// Kiểm tra đầu vào là kiểu Date hoặc chuỗi ngày hợp lệ
+
+		let date = new Date()
+
+		// Trừ đi 1 tháng
+		date.setMonth(date.getMonth() - 1)
+
+		// Trả về ngày đã được trừ đi 1 tháng
+		return date
+	}
+
+	const initFilter = {
+		pageSize: PAGE_SIZE,
+		pageIndex: 1,
+		year: moment(subtractOneMonthFromDate()).format('YYYY'),
+		month: moment(subtractOneMonthFromDate()).format('MM')
+	}
 
 	const [filter, setFilter] = useState(initFilter)
 
@@ -141,6 +162,23 @@ export const StudentReport = () => {
 		}
 	}, [currentClassDetails?.Id])
 
+	const handleDelete = async (data) => {
+		try {
+			setIsLoading(true)
+			const res = await studentPointRecordApi.delete(data)
+			if (res.status === 200) {
+				ShowNoti('success', res.data.message)
+				getStudentPointRecord()
+				setIsLoading(false)
+			}
+		} catch (error) {
+			ShowNoti('error', error.message)
+			setIsLoading(true)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
 	const columns = [
 		{
 			title: 'Học viên',
@@ -168,14 +206,22 @@ export const StudentReport = () => {
 			width: 100,
 			dataIndex: 'PassOrFail',
 			render: (text, item) => (
-				<>
+				<div className="flex items-center">
+					<PrimaryTooltip className="w-full px-[8px]" place="left" content="Xoá" id={`remove-sc-${item?.Id}`}>
+						<Popconfirm placement="left" title="Xoá báo cáo này?" onConfirm={() => handleDelete(item?.Id)}>
+							<div className="w-[24px] cursor-pointer h-[24px] flex items-center justify-center text-[#C94A4F] hover:text-[#b43f43] focus:text-[#9f3136]">
+								<IoClose size={22} />
+							</div>
+						</Popconfirm>
+					</PrimaryTooltip>
+
 					<PrimaryTooltip place="left" id={`tooltip-${item?.Id}`} content="Xuất file">
 						<div onClick={() => handleExportFile(item)} className="w-[24px] cursor-pointer h-[24px] flex items-center justify-center">
 							{exporting != item?.Id && <BsFillFileEarmarkPdfFill size={18} color="#1E88E5" />}
 							{exporting == item?.Id && <BaseLoading.Blue />}
 						</div>
 					</PrimaryTooltip>
-				</>
+				</div>
 			)
 		}
 	]
@@ -376,6 +422,7 @@ export const StudentReport = () => {
 					<div className="flex items-center">
 						<div className="antd-custom-wrap">
 							<DatePicker
+								defaultValue={moment(subtractOneMonthFromDate())}
 								className="w-[160px]"
 								placeholder="Chọn tháng, năm"
 								picker="month"

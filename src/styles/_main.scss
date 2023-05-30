@@ -773,3 +773,26 @@ button {
 		display: none !important;
 	}
 }
+
+.ant-select {
+	.ant-select-selection-item {
+		.selected-option {
+			display: block !important;
+		}
+		.select-option-propdown {
+			display: none !important;
+		}
+	}
+}
+
+.ant-select-dropdown {
+	.ant-select-item-option-content {
+		.selected-option {
+			display: none !important;
+		}
+		.select-option-propdown {
+			display: flex !important;
+			align-items: center;
+		}
+	}
+}

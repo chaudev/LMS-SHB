@@ -10,7 +10,7 @@ const StudentByAttenance = () => {
 	const [learningStatus, setLearningStatus] = useState([])
 
 	useEffect(() => {
-		handleGetByAttenance()
+		// handleGetByAttenance()
 		handleGetByLearningStatus()
 	}, [])
 
@@ -25,16 +25,16 @@ const StudentByAttenance = () => {
 		}
 	}
 
-	const handleGetByAttenance = async () => {
-		try {
-			const res = await statisticalStudentApi.GetByAttenance()
-			if (res.status == 200) {
-				setAttenance(res.data.data)
-			}
-		} catch (error) {
-			console.log('error', error)
-		}
-	}
+	// const handleGetByAttenance = async () => {
+	// 	try {
+	// 		const res = await statisticalStudentApi.GetByAttenance()
+	// 		if (res.status == 200) {
+	// 			setAttenance(res.data.data)
+	// 		}
+	// 	} catch (error) {
+	// 		console.log('error', error)
+	// 	}
+	// }
 
 	const icons = [
 		<FaCalendarDay size={24} color="#fff" />,
@@ -76,7 +76,7 @@ const StudentByAttenance = () => {
 	return (
 		<>
 			<div className="grid grid-cols-1 w500:grid-cols-2 w1100:grid-cols-3 gap-4">
-				{attenance?.map((item, index) => (
+				{/* {attenance?.map((item, index) => (
 					<div className="shadow-sm bg-[#fff] flex items-center rounded-[12px] p-[16px] col-span-1">
 						<div
 							className="w-[50px] h-[50px] rounded-[12px] flex items-center justify-center shadow-sm"
@@ -89,7 +89,7 @@ const StudentByAttenance = () => {
 							<div className="font-[500] text-[18px]">{item?.StudentAmount}</div>
 						</div>
 					</div>
-				))}
+				))} */}
 
 				{[{ Name: 'Đang học' }, { Name: 'Bảo lưu' }, { Name: 'Dừng học' }]?.map((item, index) => (
 					<div className="shadow-sm bg-[#fff] flex items-center rounded-[12px] p-[16px] col-span-1">
