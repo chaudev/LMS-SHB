@@ -57,7 +57,7 @@ export const TabClassListHistory: React.FC<ITabClassListHistory> = ({ StudentDet
 						<List.Item.Meta
 							title={
 								<>
-									<p className="font-medium text-[#1b73e8]">{item?.ClassName}</p>
+									<p className="font-medium text-[#002456]">{item?.ClassName}</p>
 								</>
 							}
 							description={

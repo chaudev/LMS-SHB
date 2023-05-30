@@ -116,24 +116,18 @@ const PaymentManagementPage = () => {
 		}
 	}
 	const handleFilter = (listFilter) => {
-		let formDate = null
-		let toDate = null
+		console.log('listFilter', listFilter)
 
-		if (listFilter.date) {
-			formDate = moment(listFilter.date[0].toDate()).format('YYYY-MM-DD')
-			toDate = moment(listFilter.date[1].toDate()).format('YYYY-MM-DD')
-		}
-		
 		const params = {
 			pageIndex: 1,
 			...filters,
-			// ...listFilter,
 			studentIds: listFilter.studentIds,
 			branchIds: listFilter.branchIds,
-			formDate: formDate,
-			toDate: toDate
+			fromDate: listFilter.date ? moment(listFilter.date[0].toDate()).format('YYYY-MM-DD') : null,
+			toDate: listFilter.date ? moment(listFilter.date[1].toDate()).format('YYYY-MM-DD') : null
 		}
-		console.log(params)
+		console.log('filters ', filters)
+		console.log('params ', params)
 
 		setFilter(params)
 	}
@@ -151,7 +145,7 @@ const PaymentManagementPage = () => {
 			title: 'Người thanh toán',
 			dataIndex: 'FullName',
 			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		},
 		{
 			title: 'Mã khuyến mãi',
@@ -207,7 +201,7 @@ const PaymentManagementPage = () => {
 			title: 'Người tạo',
 			dataIndex: 'ModifiedBy',
 			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		},
 		{
 			title: 'Ngày',

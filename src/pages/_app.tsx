@@ -30,6 +30,8 @@ import { GoogleAnalytics } from 'nextjs-google-analytics'
 
 const gaMeasurementId = 'G-KXHWW4100Q'
 
+
+
 function App({ Component, pageProps }: AppProps & IViewProps) {
 	const Layout = Component.Layout || ((props) => <>{props.children}</>)
 	const breadcrumb = Component.breadcrumb || ''
@@ -37,7 +39,16 @@ function App({ Component, pageProps }: AppProps & IViewProps) {
 	useEffect(() => {
 		checkInternet()
 	}, [])
-
+	ConfigProvider.config({
+		prefixCls: 'custom',
+		theme: {
+			primaryColor: '#002456',
+			errorColor: '#ff4d4f',
+			warningColor: '#faad14',
+			successColor: '#52c41a',
+			infoColor: '#1890ff'
+		}
+	})
 	return (
 		<>
 			<GoogleAnalytics trackPageViews gaMeasurementId={gaMeasurementId} />
@@ -46,7 +57,7 @@ function App({ Component, pageProps }: AppProps & IViewProps) {
 
 			<StoreProvider store={store}>
 				<AuthProvider>
-					<ConfigProvider locale={locale}>
+					<ConfigProvider locale={locale} >
 						<ToastifyContainer />
 						<Layout breadcrumb={breadcrumb}>
 							<Component {...pageProps} />

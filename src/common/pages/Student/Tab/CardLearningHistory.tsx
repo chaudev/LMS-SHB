@@ -55,7 +55,7 @@ const CardLearningHistory: React.FC<ICardLearningHistory> = ({ majorsId, student
 									<Card.Meta
 										description={
 											<div className="d-flex flex-col gap-3  radius-lg">
-												<span className={`text-base	text-[#1890ff]`}>{moment(item.CreatedOn).format('HH:MM DD/MM/YYYY')}</span>
+												<span className={`text-base	text-[#002456]`}>{moment(item.CreatedOn).format('HH:MM DD/MM/YYYY')}</span>
 												<span className={`text-[black]`}>{item.Description}</span>
 											</div>
 										}

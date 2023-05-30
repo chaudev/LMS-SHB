@@ -419,7 +419,7 @@ export default function RefundPage(props: IRefundPageProps) {
 				columns={columns}
 				Extra={
 					<>
-						<div className="custom-footer-table">Tổng: {_format.numberToPrice(totalMoney)} VND</div>
+						<div className="custom-footer-table">Tổng: {totalMoney ? _format.numberToPrice(totalMoney) : 0} VND</div>
 						{(isAdmin() || isManager() || isAccountant() || isSaler() || isTeacher()) && (
 							<ModalRefundCRUD
 								dataOption={optionList}

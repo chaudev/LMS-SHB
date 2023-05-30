@@ -81,6 +81,7 @@ export const MajorsPage = () => {
 				<div className="flex items-center">
 					<ModalMajorsCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
 					<ModalMajorsCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
+
 					<IconButton
 						type="button"
 						icon={'eye'}

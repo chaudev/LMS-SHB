@@ -80,7 +80,9 @@ const DayOff = () => {
 	const columns = [
 		{
 			title: 'Ngày nghỉ',
-			dataIndex: 'Name'
+			dataIndex: 'Name',
+			render: (text) => <p className="font-weight-black text-primary">{text}</p>
+
 		},
 		{
 			title: 'Từ ngày',

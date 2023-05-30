@@ -40,7 +40,7 @@ const ScoreModal = (props) => {
 
 	return (
 		<>
-			<IconButton tooltip="Nhập điểm thủ công" icon="edit3" onClick={() => setVisible(true)} type="button" color="black" />
+			<IconButton tooltip="Nhập điểm thủ công" icon="edit3" onClick={() => setVisible(true)} type="button" color="primary" />
 
 			<Modal
 				className="wrap-score"

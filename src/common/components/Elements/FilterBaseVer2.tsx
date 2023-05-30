@@ -101,7 +101,6 @@ export default function FilterBaseVer2(props: IProps) {
 			<Form form={form} layout="vertical" onFinish={onSubmit}>
 				<div className="grid grid-cols-2 gap-x-2 antd-custom-wrap">
 					{dataFilter.map((item, index) => fieldOfFilter(item, index))}
-
 					<div className="col-span-2 flex justify-end">
 						<Form.Item className="mb-0">
 							<PrimaryButton
@@ -112,7 +111,6 @@ export default function FilterBaseVer2(props: IProps) {
 								icon="reset"
 								onClick={onReset}
 							/>
-
 							<PrimaryButton background="blue" type="submit" children={<span>Tìm kiếm</span>} icon="search" />
 						</Form.Item>
 					</div>

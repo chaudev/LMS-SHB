@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
 import ShowMore from '../ShowMore'
 import CreateNews from './Create'
+import moment from 'moment'
 
 const ButtonPost: FC<TNewType> = (props) => {
 	const { onClick, title, icon, loading, activated } = props
@@ -32,7 +33,7 @@ const ButtonPost: FC<TNewType> = (props) => {
 			) : (
 				icon
 			)}
-			<span style={{ color: activated ? '#1E88E5' : '#000' }}>{title}</span>
+			<span style={{ color: activated ? '#002456' : '#000' }}>{title}</span>
 		</div>
 	)
 }
@@ -177,7 +178,7 @@ const NewsItem: FC<{ item: TNews; index: number; onRefresh: Function }> = (props
 							</div>
 							<div className="flex row-center">
 								{!!RoleName && <div className={`cc-news-post-role ${RoleName == 'Admin' ? 'is-admin' : ''}`}>{RoleName}</div>}
-								<PrimaryTooltip place="left" id={`since-${Id}`} content={CreatedOn}>
+								<PrimaryTooltip place="left" id={`since-${Id}`} content={moment(CreatedOn).format('HH:MM DD/MM/YYYY')}>
 									<div className="cc-news-post-since hover:underline">{getTimeSince(CreatedOn)}</div>{' '}
 								</PrimaryTooltip>
 							</div>
@@ -253,7 +254,7 @@ const NewsItem: FC<{ item: TNews; index: number; onRefresh: Function }> = (props
 					<div className="cc-news-likes">
 						{!!details?.TotalLike && (
 							<>
-								<AiFillLike size={20} className="mr-[8px] text-[#1E88E5]" />
+								<AiFillLike size={20} className="mr-[8px] text-[#002456]" />
 								<div className="number-of-likes">{getLiked(details, user.UserInformationId).text}</div>
 							</>
 						)}
@@ -271,7 +272,7 @@ const NewsItem: FC<{ item: TNews; index: number; onRefresh: Function }> = (props
 						loading={loadingLike}
 						activated={!!details?.IsLike}
 						icon={
-							!!details?.IsLike ? <AiFillLike size={18} className="mr-[8px] text-[#1E88E5]" /> : <BiLike size={18} className="mr-[8px]" />
+							!!details?.IsLike ? <AiFillLike size={18} className="mr-[8px] text-[#002456]" /> : <BiLike size={18} className="mr-[8px]" />
 						}
 					/>
 
@@ -295,7 +296,7 @@ const NewsItem: FC<{ item: TNews; index: number; onRefresh: Function }> = (props
 										{loadingComment ? (
 											<BaseLoading.Blue />
 										) : (
-											<FaTelegramPlane size={20} color={!currentComment ? '#0000003d' : '#1E88E5'} className="ml-[-2px]" />
+											<FaTelegramPlane size={20} color={!currentComment ? '#0000003d' : '#002456'} className="ml-[-2px]" />
 										)}
 									</div>
 								</div>

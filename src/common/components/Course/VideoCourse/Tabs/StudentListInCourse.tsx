@@ -101,7 +101,7 @@ export default function StudentListInCourse(props: Props) {
 			title: 'Học viên',
 			dataIndex: 'FullName',
 			align: 'left',
-			render: (text, data) => <div className="font-[600] text-[#1b73e8]">{text}</div>
+			render: (text, data) => <div className="font-[600] text-[#002456]">{text}</div>
 		},
 		{
 			title: 'Email',

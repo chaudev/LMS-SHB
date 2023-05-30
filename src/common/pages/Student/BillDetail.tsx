@@ -42,13 +42,13 @@ export const BillDetail: React.FC<IBillDetail> = ({ dataRow }) => {
 			title: 'Lớp',
 			dataIndex: 'ClassName',
 			width: 130,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		},
 		{
 			title: 'Chương trình học',
 			dataIndex: 'ProgramName',
 			width: 130,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		}
 	]
 
@@ -57,7 +57,7 @@ export const BillDetail: React.FC<IBillDetail> = ({ dataRow }) => {
 			title: 'Sản phẩm',
 			dataIndex: 'ProductName',
 			width: 130,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		}
 	]
 
@@ -66,13 +66,13 @@ export const BillDetail: React.FC<IBillDetail> = ({ dataRow }) => {
 			title: 'Giáo trình',
 			dataIndex: 'CurriculumName',
 			width: 130,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		},
 		{
 			title: 'Chương trình học',
 			dataIndex: 'ProgramName',
 			width: 130,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		}
 	]
 

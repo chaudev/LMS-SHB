@@ -1,14 +1,14 @@
 import { Spin, Tooltip } from 'antd'
 import { FC, useRef } from 'react'
-import { Edit, LogIn, Trash, X, FileMinus, Edit3, Book, Trash2 } from 'react-feather'
+import { Edit, LogIn, X, FileMinus, Edit3, Book, Trash2 } from 'react-feather'
 import { AiOutlineCheckCircle, AiOutlineEye, AiOutlineInfoCircle, AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { BiReset } from 'react-icons/bi'
 import { CgAddR, CgFileDocument } from 'react-icons/cg'
 import { FaChalkboardTeacher } from 'react-icons/fa'
-import { FiArrowDownCircle, FiArrowUpCircle, FiEdit, FiMenu, FiMoreVertical, FiPrinter, FiSave, FiSend, FiTrash2 } from 'react-icons/fi'
+import { FiArrowDownCircle, FiArrowUpCircle, FiMenu, FiMoreVertical, FiPrinter, FiSave, FiSend } from 'react-icons/fi'
 import { HiOutlineFilter } from 'react-icons/hi'
-import { MdOutlineCancel, MdOutlineMoney, MdPendingActions } from 'react-icons/md'
-import { RiExchangeLine, RiReservedLine } from 'react-icons/ri'
+import { MdOutlineCancel, MdPendingActions } from 'react-icons/md'
+import { RiExchangeLine } from 'react-icons/ri'
 import { TbDownload, TbReportMoney, TbSchool, TbUpload } from 'react-icons/tb'
 import { VscRootFolderOpened } from 'react-icons/vsc'
 
@@ -20,7 +20,7 @@ const IconButton: FC<IIconButton> = (props) => {
 			return 'bg-[#4CAF50] hover:bg-[#449a48] focus:bg-[#38853b]'
 		}
 		if (background == 'blue') {
-			return 'bg-[#0A89FF] hover:bg-[#157ddd] focus:bg-[#1576cf]'
+			return 'bg-[#005DE0] hover:bg-[#0A70FF] focus:bg-[#005DE0]'
 		}
 		if (background == 'red') {
 			return 'bg-[#C94A4F] hover:bg-[#b43f43] focus:bg-[#9f3136]'
@@ -32,7 +32,7 @@ const IconButton: FC<IIconButton> = (props) => {
 			return 'bg-[#000] hover:bg-[#191919] focus:bg-[#313131]'
 		}
 		if (background == 'primary') {
-			return 'bg-[#ab1d38] hover:bg-[#9a1b33] focus:bg-[#85172c]'
+			return 'bg-[#002456] hover:bg-[#C94A4F] focus:bg-[#002456]'
 		}
 		if (background == 'disabled') {
 			return 'bg-[#cacaca] hover:bg-[#bababa] focus:bg-[#acacac] cursor-not-allowed'
@@ -54,7 +54,7 @@ const IconButton: FC<IIconButton> = (props) => {
 			return 'text-[#4CAF50] hover:text-[#449a48] focus:text-[#38853b]'
 		}
 		if (color == 'blue') {
-			return 'text-[#0A89FF] hover:text-[#157ddd] focus:text-[#1576cf]'
+			return 'text-[#005DE0] hover:text-[#0A70FF] focus:text-[#005DE0]'
 		}
 		if (color == 'red') {
 			return 'text-[#C94A4F] hover:text-[#b43f43] focus:text-[#9f3136]'
@@ -66,7 +66,7 @@ const IconButton: FC<IIconButton> = (props) => {
 			return 'text-[#000] hover:text-[#191919] focus:text-[#313131]'
 		}
 		if (color == 'primary') {
-			return 'text-[#1b73e8] hover:text-[#1369da] focus:text-[#1b73e8]'
+			return 'text-[#002456] hover:text-[#00337A] focus:text-[#002456]'
 		}
 		if (color == 'disabled') {
 			return 'text-[#cacaca] hover:text-[#bababa] focus:text-[#acacac] cursor-not-allowed'

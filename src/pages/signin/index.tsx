@@ -43,6 +43,8 @@ function SignInx({ csrfToken }) {
 			const response = await userApi.login(data)
 			if (response.status == 200) {
 				playWithToken(response?.data, dispatch)
+				ShowNoti('success', response.data.message)
+				console.log('setErrorLogin')
 			}
 		} catch (error) {
 			setErrorLogin(error?.message)

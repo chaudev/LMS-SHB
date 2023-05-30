@@ -54,7 +54,7 @@ const DonationHistorytPage = () => {
 			title: 'Học viên',
 			dataIndex: 'FullName',
 			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		},
 		{
 			title: 'Loại',
@@ -79,7 +79,7 @@ const DonationHistorytPage = () => {
 			title: 'Người tặng',
 			dataIndex: 'ModifiedBy',
 			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		}
 	]
 

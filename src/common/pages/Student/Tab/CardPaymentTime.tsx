@@ -37,6 +37,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 	const [paymentTimes, setPaymentTimes] = useState<IPaymentTimes[]>([])
 	const [loading, setLoading] = useState<string>('')
 	const [progress, setProgress] = useState<number>(0)
+	const [isCheckUpdate, setIsCheckUpdate] = useState<boolean>(false)
 
 	const getPaymentTime = async () => {
 		try {
@@ -51,6 +52,15 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 			if (ressponse.status === 200) {
 				form.setFieldValue('Items', ressponse.data.data)
 				setPaymentTimes(ressponse.data.data)
+
+				const isCheck = ressponse.data.data.filter((item) => item.Status < 2)
+
+				console.log('isCheck', isCheck)
+				if (isCheck.length === 0) {
+					setIsCheckUpdate(true)
+				} else {
+					setIsCheckUpdate(false)
+				}
 			}
 			setLoading('')
 		} catch (error) {
@@ -60,7 +70,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 	}
 
 	useEffect(() => {
-		if ((!!majorsId && panels && panels.includes(majorsId)) && paymentTimes.length === 0) {
+		if (!!majorsId && panels && panels.includes(majorsId) && paymentTimes.length === 0) {
 			getPaymentTime()
 		}
 	}, [majorsId, panels])
@@ -126,6 +136,10 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 			ShowNostis.error(error.message)
 		}
 	}
+	console.log(
+		'userInformation && userInformation.RoleId & isCheckUpdate === true ',
+		userInformation && userInformation.RoleId != '3' && !isCheckUpdate
+	)
 
 	return (
 		<Card
@@ -133,7 +147,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 			title="Đợt thanh toán"
 			extra={
 				<>
-					{userInformation && userInformation.RoleId != '3' ? (
+					{userInformation && userInformation.RoleId != '3' && !isCheckUpdate  ? (
 						<PrimaryButton onClick={showModal} icon="edit" background="blue" type="button">
 							Cập nhật
 						</PrimaryButton>

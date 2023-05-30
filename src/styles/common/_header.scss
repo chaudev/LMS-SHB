@@ -42,7 +42,7 @@
 			}
 		}
 		.logo-img {
-			@apply w-[80%] h-[80%] transition-all duration-[0.3s];
+			@apply w-[50%] h-[50%] transition-all duration-[0.3s];
 		}
 		.logo-img-none {
 			@apply w-0 transition-all duration-[0.3s];
@@ -101,7 +101,7 @@
 				@apply leading-[0] cursor-pointer w-[40px] h-[40px] flex justify-center items-center rounded-[7px] bg-tw-white transition-all duration-[0.3s];
 				i,
 				svg {
-					@apply text-tw-blue text-[20px] transition-all duration-[0.3s];
+					@apply text-[#002456] text-[20px] transition-all duration-[0.3s];
 				}
 			}
 		}

@@ -62,7 +62,7 @@ const CustomerSupplier = () => {
 		{
 			title: 'Tên nguồn',
 			dataIndex: 'Name',
-			render: (text) => <p className="font-weight-black">{text}</p>
+			render: (text) => <p className="font-weight-black text-primary">{text}</p>
 		},
 		{
 			title: 'Thay đổi bởi',

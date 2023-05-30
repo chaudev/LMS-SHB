@@ -19,7 +19,7 @@ const MenuContext: FC<{ onDelete: Function; data: any; onEdit: Function; showEdi
 				<>
 					<div className="cc-hr my-[4px] mx-[4px]" />
 					<div className="cc-comment-menu-item" onClick={() => onEdit()}>
-						<FaEdit className="text-[#1E88E5] ml-[2px]" size={18} />
+						<FaEdit className="text-[#002456] ml-[2px]" size={18} />
 						<span>Chỉnh sửa</span>
 					</div>
 				</>

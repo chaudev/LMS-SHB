@@ -8,6 +8,7 @@ import { ShowNostis } from '~/common/utils'
 import RestApi from '~/api/RestApi'
 import { UploadFileApi } from '~/api/common/upload-image'
 import { MdSettings } from 'react-icons/md'
+import PrimaryButton from '../../Primary/Button'
 
 function GroupForm(props) {
 	const { onRefresh, defaultData, isEdit = false } = props
@@ -90,10 +91,15 @@ function GroupForm(props) {
 	return (
 		<>
 			{!isEdit && (
-				<div onClick={() => setVisible(true)} className={`btn-create-group`}>
-					<AiOutlinePlus size={18} className="mr-2" />
-					<div>Tạo nhóm</div>
-				</div>
+				<>
+					{/* <div onClick={() => setVisible(true)} className={`btn-create-group`}>
+						<AiOutlinePlus size={18} className="mr-2" />
+						<div>Tạo nhóm</div>
+					</div> */}
+					<PrimaryButton className="w-full  mt-1 d-flex items-center" type="button" icon="add" background="blue">
+						Tạo nhóm
+					</PrimaryButton>
+				</>
 			)}
 
 			{!!isEdit && (
@@ -122,7 +128,7 @@ function GroupForm(props) {
 			>
 				<Form form={form} className="grid grid-cols-2 gap-x-4 " layout="vertical" onFinish={onFinish} autoComplete="on">
 					<Form.Item label="Ảnh bìa" name="Background" className="col-span-2">
-						<div {...getRootProps()} className={`cc-form-new-group-item border-[${isDragActive ? '#1890ff' : '#d9d9d9'}]  `}>
+						<div {...getRootProps()} className={`cc-form-new-group-item border-[${isDragActive ? '#002456' : '#d9d9d9'}]  `}>
 							<input {...getInputProps()} />
 
 							{files[0]?.preview || defaultData ? (
