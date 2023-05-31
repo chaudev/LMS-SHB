@@ -50,7 +50,7 @@ const CardLearningHistory: React.FC<ICardLearningHistory> = ({ majorsId, student
 				<Timeline className="p-3">
 					{learningHistorys.map((item) => {
 						return (
-							<Timeline.Item color="blue" key={item.Id} dot={<BsClockHistory size={22} />}>
+							<Timeline.Item color="blue" key={item.Id} dot={<BsClockHistory size={22} color='#002456' />}>
 								<Card>
 									<Card.Meta
 										description={

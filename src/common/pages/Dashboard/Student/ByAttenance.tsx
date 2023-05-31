@@ -19,6 +19,8 @@ const StudentByAttenance = () => {
 			const res = await statisticalStudentApi.GetByLearningStatus()
 			if (res.status == 200) {
 				setLearningStatus(res.data.data)
+				console.log('res.data.data',res.data.data);
+				
 			}
 		} catch (error) {
 			console.log('error', error)

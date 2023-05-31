@@ -15,7 +15,7 @@ type IApiResultData<T = any> = {
 	totalRow: number
 	listLevel: Array
 	isDone: boolean
-	rateCompleted?: string
+	rateCompleted?: nummber
 }
 
 type IApiResultAcc<T = any> = {

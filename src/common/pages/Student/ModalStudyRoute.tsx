@@ -190,7 +190,7 @@ export const ModalStudyRoute: React.FC<IModalStudyRoute> = ({ mode, onRefresh, d
 							loading={isLoading}
 							onClick={() => form.submit()}
 							className="ml-2"
-							background="blue"
+							background="primary"
 							icon={mode !== 'delete' ? 'save' : 'remove'}
 							type="button"
 							children={mode !== 'delete' ? 'Lưu' : 'Xóa'}

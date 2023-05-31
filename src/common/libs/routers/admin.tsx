@@ -311,13 +311,13 @@ export const AdminChildMenu = [
 			// 	Route: '/class/register',
 			// 	Text: 'Đăng ký học'
 			// },
-			{
-				TypeItem: 'single',
-				Key: '/class/tutoring-config',
-				Icon: '',
-				Route: '/class/tutoring-config',
-				Text: 'Cấu hình thời gian đặt lịch'
-			}
+			// {
+			// 	TypeItem: 'single',
+			// 	Key: '/class/tutoring-config',
+			// 	Icon: '',
+			// 	Route: '/class/tutoring-config',
+			// 	Text: 'Cấu hình thời gian đặt lịch'
+			// }
 			// {
 			// 	TypeItem: 'single',
 			// 	Key: '/class/zoom-rooms',

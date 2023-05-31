@@ -410,11 +410,11 @@ const Student: FC<IPersonnel> = (props) => {
 			render: (data, item) => {
 				return (
 					<div className="flex justify-start items-center">
-						<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.Id}`}>
+						<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.UserInformationId}`}>
 							<Link
 								href={{
 									pathname: '/info-course/student/detail',
-									query: { StudentID: item?.StudentId }
+									query: { StudentID: item?.UserInformationId }
 								}}
 							>
 								<a>

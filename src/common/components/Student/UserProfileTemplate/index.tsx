@@ -17,6 +17,7 @@ const UserProfileTemplate = () => {
 	const [profileTemplate, setProfileTemplate] = useState([])
 	const [profileItem, setProfileItem] = useState<IUserProfileTemplateItem | null>(null)
 	const [textUpdate, setTextUpdate] = useState<IUserProfileTemplateItem[]>([])
+	const [rateCompleted, setRateCompleted] = useState<number>(0)
 
 	const getAllProfileTemplate = async () => {
 		try {
@@ -25,6 +26,7 @@ const UserProfileTemplate = () => {
 			if (response.status === 200) {
 				setTextUpdate(response.data.data)
 				setProfileTemplate(response.data.data)
+				setRateCompleted(response.data.rateCompleted)
 			}
 			if (response.status === 204) {
 				setProfileTemplate([])
@@ -88,6 +90,15 @@ const UserProfileTemplate = () => {
 			}
 
 			await UpdateProfileTemplate(payload)
+			const response = await userInformationApi.getAllProfileTemplate(String(StudentID))
+			if (response.status === 200) {
+				setTextUpdate(response.data.data)
+				setProfileTemplate(response.data.data)
+				setRateCompleted(response.data.rateCompleted)
+			}
+			if (response.status === 204) {
+				setProfileTemplate([])
+			}
 			setLoading({ type: '', status: false })
 			onCancelModal()
 		} catch (error) {
@@ -104,12 +115,12 @@ const UserProfileTemplate = () => {
 	return (
 		<>
 			<Divider>
-				<h2 className="py-4 font-[600] text-center">Thông tin Thêm</h2>
+				<h2 className="py-4 font-[600] text-center">Thông tin thêm (đã hoàn thành {rateCompleted}%)</h2>
 			</Divider>
 			{loading.type === 'GET_ALL' && loading.status === true ? (
 				<Skeleton></Skeleton>
 			) : (
-				<div className="grid  pt-4">
+				<div className="grid pt-4">
 					{profileTemplate.map((item, index) => {
 						return (
 							<React.Fragment key={item.Id}>

@@ -22,7 +22,7 @@ const HeaderPanalMajors = ({ majorsName, status, statusName, paymentTypeName, gi
 			</div>
 			<div className="d-flex">
 				<span className="font-[500] text-[gray] inline-block w-2/6">Trạng thái</span>
-				<Tag color={status == 1 ? 'blue' : ''} className="font-[500] d-flex justify-center">
+				<Tag color={status == 1 ? 'green' : 'blue'} className="font-[500] d-flex justify-center">
 					{statusName}
 				</Tag>
 			</div>
