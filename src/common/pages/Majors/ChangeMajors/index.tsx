@@ -301,93 +301,101 @@ const ChangeMajorsPage = () => {
 		}, [StudentId])
 
 	return (
-		<Spin spinning={loading === 'GET_ALL'}>
-			{contextHolder}
+		<div className="d-flex justify-center">
+			<div className="w-full max-w-[1200px]">
+				<Spin spinning={loading === 'GET_ALL'}>
+					{contextHolder}
 
-			<Form form={form} layout="vertical" onFinish={_onFinish}>
-				<div className="grid grid-cols-1 w800:grid-cols-2 gap-3">
-					<div className="d-flex flex-col gap-3">
-						<Card title="Thông tin học viên" className="col-span-1">
-							<SelectField
-								className="col-span-2"
-								name={'StudentId'}
-								label="Chọn học viên"
-								optionList={listOption.students}
-								rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}
-							/>
+					<Form form={form} layout="vertical" onFinish={_onFinish}>
+						<div className="grid grid-cols-1 w800:grid-cols-2 gap-3 ">
 							<div className="d-flex flex-col gap-3">
-								{getInformation()} <CardOldMajors oldMajors={oldMajors} tuitionInOld={tuitionInOld} />
-							</div>
-						</Card>
-						<Card title="Thay đổi ngành học" className="col-span-1">
-							<SelectField
-								className="col-span-2"
-								name={'MajorsId'}
-								label="Chọn ngành học"
-								optionList={listOption.majors}
-								rules={[
-									{
-										required: true,
-										message: 'Vui lòng chọn ngành học'
-									},
-									{
-										validator: async (_, id) => {
-											if (id == oldMajors.MajorsId) {
-												return Promise.reject(new Error('Ngành học mới phải khác ngành học hiện tại'))
-											}
-										}
-									}
-								]}
-							/>
-							<InputNumberField
-								name="TotalPrice"
-								label="Giá ngành học"
-								rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
-							/>
-							<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
-						</Card>
-					</div>
-					<Card title="Thanh toán" className="col-span-1 ">
-						<SelectField
-							className="col-span-2"
-							name={'PaymentTypeId'}
-							isLoading={loading === 'PAYMENT_DETAIL'}
-							label={
-								<div className="d-flex items-center">
-									Hình thức thanh toán
-									<ModalViewPaymenTypeDetail
-										paymentType={listOption.payment}
-										PaymentTypeId={PaymentTypeId}
-										paymentTypeDetail={paymentTypeDetail}
+								<Card title="Thông tin học viên" className="col-span-1">
+									<SelectField
+										className="col-span-2"
+										name={'StudentId'}
+										label="Chọn học viên"
+										optionList={listOption.students}
+										rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}
 									/>
-								</div>
-							}
-							optionList={listOption.payment}
-							rules={[{ required: true, message: 'Vui lòng chọn hình thức thanh toán' }]}
-						/>
-						<SelectField
-							className="col-span-2"
-							hidden={Type === 1 ? false : true}
-							name={'Type'}
-							label="Loại thanh toán"
-							disabled
-							optionList={optionPaymentType}
-						/>
-						<InputTextField name="Percent" label="Phần trăm" disabled hidden={Type === 1 ? false : true} />
-						<InputNumberField name="countTotal" disabled={true} hidden={Type === 1 ? false : true} label="Số tiền phải đóng" />
-						<InputNumberField name="Paid" hidden={Type != 1 ? true : false} label="Thanh toán" />
-						<SelectField className="col-span-2" name={'GiftId'} label="Quà tặng" optionList={listOption.gift} />
-						<TextBoxField name="Note" label={'Ghi chú'} />
+									<div className="d-flex flex-col gap-3">
+										{getInformation()} <CardOldMajors oldMajors={oldMajors} tuitionInOld={tuitionInOld} />
+									</div>
+								</Card>
+								<Card title="Thay đổi ngành học" className="col-span-1">
+									<SelectField
+										className="col-span-2"
+										name={'MajorsId'}
+										label="Chọn ngành học"
+										optionList={listOption.majors}
+										rules={[
+											{
+												required: true,
+												message: 'Vui lòng chọn ngành học'
+											},
+											{
+												validator: async (_, id) => {
+													if (oldMajors) {
+														if (id == oldMajors.MajorsId) {
+															return Promise.reject(new Error('Ngành học mới phải khác ngành học hiện tại'))
+														}
+													} else {
+														return Promise.reject(new Error('Vui lòng chọn học viên'))
+													}
+												}
+											}
+										]}
+									/>
+									<InputNumberField
+										name="TotalPrice"
+										label="Giá ngành học"
+										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
+									/>
+									<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
+								</Card>
+							</div>
+							<Card title="Thanh toán" className="col-span-1 ">
+								<SelectField
+									className="col-span-2"
+									name={'PaymentTypeId'}
+									isLoading={loading === 'PAYMENT_DETAIL'}
+									label={
+										<div className="d-flex items-center">
+											Hình thức thanh toán
+											<ModalViewPaymenTypeDetail
+												paymentType={listOption.payment}
+												PaymentTypeId={PaymentTypeId}
+												paymentTypeDetail={paymentTypeDetail}
+											/>
+										</div>
+									}
+									optionList={listOption.payment}
+									rules={[{ required: true, message: 'Vui lòng chọn hình thức thanh toán' }]}
+								/>
+								<SelectField
+									className="col-span-2"
+									hidden={Type === 1 ? false : true}
+									name={'Type'}
+									label="Loại thanh toán"
+									disabled
+									optionList={optionPaymentType}
+								/>
+								<InputTextField name="Percent" label="Phần trăm" disabled hidden={Type === 1 ? false : true} />
+								<InputNumberField name="countTotal" disabled={true} hidden={Type === 1 ? false : true} label="Số tiền phải đóng" />
+								<InputNumberField name="Paid" hidden={Type != 1 ? true : false} label="Thanh toán" />
+								<SelectField className="col-span-2" name={'GiftId'} label="Quà tặng" optionList={listOption.gift} />
+								<TextBoxField name="Note" label={'Ghi chú'} />
 
-						<div className="d-flex justify-center mt-3">
-							<PrimaryButton type="submit" icon="exchange" loading={loading === 'CREATE'} background="green">
-								Chuyển ngành
-							</PrimaryButton>
+								<div className="d-flex justify-center mt-3">
+									<PrimaryButton type="submit" icon="exchange" loading={loading === 'CREATE'} background="green">
+										Chuyển ngành
+									</PrimaryButton>
+								</div>
+							</Card>
 						</div>
-					</Card>
-				</div>
-			</Form>
-		</Spin>
+					</Form>
+				</Spin>
+			</div>
+		</div>
 	)
 }
 

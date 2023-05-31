@@ -63,8 +63,8 @@ const ChangePassword = () => {
 	}
 
 	return (
-		<div className="change-password">
-			<Card className="cp-container">
+		<div className="change-password d-flex justify-center">
+			<Card className="cp-container w-full">
 				<div className="cp-main">
 					<div className="cp-left">
 						<Card className="w-full">

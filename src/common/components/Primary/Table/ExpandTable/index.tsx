@@ -2,6 +2,7 @@ import { Card, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { GiPayMoney, GiReceiveMoney, GiTakeMyMoney } from 'react-icons/gi'
 import EmptyData from '~/common/components/EmptyData'
+import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { _format } from '~/common/utils'
 
 const ExpandTable = (props) => {
@@ -144,7 +145,7 @@ const ExpandTable = (props) => {
 							dataSource={dataSource}
 							size="middle"
 							pagination={{
-								pageSize: 30,
+								pageSize: props.pageSize ? props.pageSize : PAGE_SIZE,
 								pageSizeOptions: ['30'],
 								onShowSizeChange: onShowSizeChange,
 								total: props.totalPage && props.totalPage,

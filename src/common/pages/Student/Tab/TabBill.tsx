@@ -47,23 +47,20 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 
 	const columns = [
 		{
-			title: 'Ngày tạo',
-			width: 100,
-			dataIndex: 'CreatedOn',
-			render: (text) => <>{moment(text).format('DD/MM/YYYY')}</>
-		},
-		{
 			title: 'Mã',
-			width: 100,
 			dataIndex: 'Code',
-			className: 'font-weight-primary'
+			width: 100
 		},
 		{
-			title: 'Tổng thanh toán',
+			title: 'Người thanh toán',
+			dataIndex: 'FullName',
+			width: 220,
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
+		},
+		{
+			title: 'Mã khuyến mãi',
 			width: 150,
-			dataIndex: 'TotalPrice',
-			classNanme:'font-weight-green',
-			render: (text) => <>{parseToMoney(text)}₫</>
+			dataIndex: 'DiscountCode'
 		},
 		{
 			title: 'Giảm giá',
@@ -71,48 +68,79 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 			dataIndex: 'Reduced',
 			render: (text) => <>{parseToMoney(text)}₫</>
 		},
+
+		{
+			title: 'Tổng số tiền',
+			dataIndex: 'TotalPrice',
+			width: 116,
+			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
+		},
+
 		{
 			title: 'Đã thanh toán',
-			width: 150,
 			dataIndex: 'Paid',
-			render: (text) => <>{parseToMoney(text)}₫</>
+			width: 126,
+			render: (value, item) => <p className="font-[600] text-[#388E3C]">{parseToMoney(value)}₫</p>
 		},
 		{
-			title: 'Số tiền còn lại',
-			width: 150,
+			title: 'Chưa thanh toán',
 			dataIndex: 'Debt',
-			render: (text) => <>{parseToMoney(text)}₫</>
+			width: 140,
+			render: (value, item) => <p className="font-[600] text-[#E53935]">{parseToMoney(value)}₫</p>
 		},
-		{
-			title: 'Hình thức',
-			width: 150,
-			dataIndex: 'PaymentMethodName'
-		},
+		// {
+		// 	title: 'Phương thức',
+		// 	dataIndex: 'PaymentMethodName',
+		// 	width: 130
+		// },
 		{
 			title: 'Loại',
-			width: 150,
-			dataIndex: 'TypeName'
+			dataIndex: 'Type',
+			width: 180,
+			render: (value, item) => (
+				<p className="font-[600] text-[#E53935]">
+					{value == 1 && <span className="tag blue">{item?.TypeName}</span>}
+					{value == 2 && <span className="tag green">{item?.TypeName}</span>}
+					{value == 3 && <span className="tag yellow">{item?.TypeName}</span>}
+					{value == 4 && <span className="tag gray">{item?.TypeName}</span>}
+					{value == 5 && <span className="tag blue">{item?.TypeName}</span>}
+				</p>
+			)
 		},
 		{
-			title: 'Ngày hẹn thanh toán',
-			width: 180,
+			title: 'Người tạo',
+			dataIndex: 'ModifiedBy',
+			width: 220,
+			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
+		},
+		{
+			title: 'Ngày',
+			dataIndex: 'ModifiedOn',
+			width: 160,
+			render: (value, item) => <p>{moment(value).format('DD/MM/YYYY HH:mm')}</p>
+		},
+		{
+			title: 'Kỳ tiếp theo',
 			dataIndex: 'PaymentAppointmentDate',
-			render: (text) => <>{text ? moment(text).format('DD/MM/YYYY') : ''}</>
-		},
-		{
-			title: 'Ngày hoàn thành',
-			width: 180,
-			dataIndex: 'CompleteDate',
-			render: (text) => <>{text ? moment(text).format('DD/MM/YYYY') : ''}</>
+			width: 130,
+			render: (value, item) => <p>{!!value ? moment(value).format('DD/MM/YYYY') : ''}</p>
 		}
+		// {
+		// 	title: '',
+		// 	dataIndex: 'Type',
+		// 	fixed: 'right',
+		// 	width: 60,
+		// 	render: (value, item) => (
+		// 		<div className="flex item-center">
+		// 			<PayForm isEdit defaultData={item} onRefresh={getData} />
+		// 			{item?.Debt < 0 && <RefundForm onRefresh={getData} item={item} />}
+		// 		</div>
+		// 	)
+		// }
 	]
 
 	const expandedRowRender = (data) => {
-		return (
-			<>
-				<BillDetail dataRow={data} />
-			</>
-		)
+		return <BillDetail dataRow={data} />
 	}
 	const getPagination = (pageNumber: number) => {
 		pageIndex = pageNumber

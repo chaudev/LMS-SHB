@@ -77,6 +77,10 @@ export const StudentReport = () => {
 
 	const [loadingData, setLoadingData] = useState<boolean>(false)
 
+	const [creating, setCreating] = useState<boolean>(false)
+
+	const [selectedDate, setSelectedDate] = useState(moment(subtractOneMonthFromDate()))
+
 	useEffect(() => {
 		if (filter?.year) {
 			getStudentPointRecord()
@@ -220,9 +224,6 @@ export const StudentReport = () => {
 			)
 		}
 	]
-
-	const [creating, setCreating] = useState<boolean>(false)
-	const [selectedDate, setSelectedDate] = useState(null)
 
 	useEffect(() => {
 		if (!selectedDate) setFilter({ ...filter, year: null, month: null })

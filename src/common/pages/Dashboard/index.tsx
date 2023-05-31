@@ -70,6 +70,15 @@ const Dashboard = () => {
 	const [form] = Form.useForm()
 
 	const user = useSelector((state: RootState) => state.user.information)
+
+	const isRole = {
+		admin: user.RoleId == 1,
+		student: user.RoleId == 3,
+		teacher: user.RoleId == 2,
+		academic: user.RoleId == 7,
+		manager: user.RoleId == 4
+	}
+
 	const listTodoApi = { branchIds: '', year: moment().year() }
 
 	const listTodoApiOverView = {
@@ -374,7 +383,7 @@ const Dashboard = () => {
 
 	return (
 		<div className="w-[100%] mx-auto dashboard">
-			<StudentByAttenance />
+			{isRole.admin || isRole.academic || isRole.manager ? <StudentByAttenance /> : ''}
 
 			<div className="flex justify-between my-4">
 				{/* <p className="title">Xin chào, {user.FullName}</p> */}
@@ -460,17 +469,21 @@ const Dashboard = () => {
 			</div>
 
 			<DashboardStudents />
+			{!isRole.student ? (
+				<div className="flex justify-end mt-4">
+					<Select
+						onChange={(e) => {
+							setTodoApi((pre) => ({ ...pre, year: e }))
+							setTodoApiOverView((pre) => ({ ...pre, year: e }))
+						}}
+						options={dataYear}
+						className="w-[100px] h-[36px] mr-2"
+					/>
+				</div>
+			) : (
+				''
+			)}
 
-			<div className="flex justify-end mt-4">
-				<Select
-					onChange={(e) => {
-						setTodoApi((pre) => ({ ...pre, year: e }))
-						setTodoApiOverView((pre) => ({ ...pre, year: e }))
-					}}
-					options={dataYear}
-					className="w-[100px] h-[36px] mr-2"
-				/>
-			</div>
 			{user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
 				<>
 					{user.RoleId != 7 ? (

@@ -301,7 +301,7 @@ const ChangeScheduleClass = (props) => {
 						disable={loadingCalendar}
 						loading={loadingCalendar}
 						icon="save"
-						background="blue"
+						background="primary"
 						type="button"
 						onClick={form.submit}
 					>

@@ -176,6 +176,7 @@ const IconButton: FC<IIconButton> = (props) => {
 		if (icon == 'reserved') {
 			return <MdPendingActions size={!!size ? size : 20} />
 		}
+		
 	}
 
 	const _onClick = (event) => {

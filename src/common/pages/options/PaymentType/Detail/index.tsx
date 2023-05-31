@@ -126,7 +126,8 @@ const PaymentDetailPage = () => {
 	}
 
 	return (
-		<Card>
+		<div className='d-flex justify-center'>
+	<Card className='w-full max-w-[1200px]'>
 			<Spin spinning={loading === 'INIT_PAGE'}>
 				<Form form={form} onFinish={_onFinish} layout="vertical">
 					<Divider>Hình thức thanh toán</Divider>
@@ -237,6 +238,9 @@ const PaymentDetailPage = () => {
 				</Form>
 			</Spin>
 		</Card>
+
+		</div>
+	
 	)
 }
 

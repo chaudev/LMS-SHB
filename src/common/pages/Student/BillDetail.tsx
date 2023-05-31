@@ -18,6 +18,8 @@ export const BillDetail: React.FC<IBillDetail> = ({ dataRow }) => {
 			setLoading(true)
 			const res = await billApi.getBillDetail(Id)
 			if (res.status === 200) {
+				console.log(res)
+
 				setDataTable(res.data.data)
 				setLoading(false)
 			}
@@ -75,7 +77,26 @@ export const BillDetail: React.FC<IBillDetail> = ({ dataRow }) => {
 			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		}
 	]
-
+	const tuitionPaymentColums = [
+		{
+			title: 'Mô tả',
+			dataIndex: 'Description',
+			width: 130,
+			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
+		},
+		// {
+		// 	title: 'Giá tiền',
+		// 	dataIndex: 'Price',
+		// 	width: 116,
+		// 	render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}</p>
+		// },
+		{
+			title: 'Tổng số tiền',
+			dataIndex: 'TotalPrice',
+			width: 116,
+			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
+		}
+	]
 	const defaultColumns = [
 		{
 			title: 'Giá tiền',
@@ -123,7 +144,20 @@ export const BillDetail: React.FC<IBillDetail> = ({ dataRow }) => {
 			? [...type1Colums, ...defaultColumns]
 			: dataRow?.Type == 2
 			? [...type2Colums, ...defaultColumns]
+			: dataRow?.Type == 5
+			? tuitionPaymentColums
 			: [...type3Colums, ...defaultColumns]
 
-	return <NestedTable loading={loading} addClass="basic-header" dataSource={dataTable} columns={columns} haveBorder={true} />
+	return (
+		<>
+			<div>
+				<div className="font-[600]">Ghi chú:</div> {dataRow?.Note}
+			</div>
+			{dataRow.Type != 4 ? (
+				<NestedTable loading={loading} addClass="basic-header" dataSource={dataTable} columns={columns} haveBorder={true} />
+			) : (
+				''
+			)}
+		</>
+	)
 }

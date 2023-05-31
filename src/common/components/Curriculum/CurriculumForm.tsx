@@ -110,7 +110,7 @@ const CurriculumForm = (props: any) => {
 								<InputNumberField
 									placeholder="Nhập thời gian buổi học"
 									className="w-full"
-									label="Thời gian buổi học"
+									label="Thời gian buổi học(phút)"
 									name="Time"
 									isRequired
 									rules={[yupSync]}

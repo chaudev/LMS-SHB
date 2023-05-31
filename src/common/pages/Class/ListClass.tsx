@@ -111,6 +111,7 @@ const ListClass = () => {
 			}
 			if (res.status === 204) {
 				setListClass([])
+				setTotalRow(0)
 			}
 		} catch (err) {
 			ShowNoti('error', err.message)
@@ -231,7 +232,7 @@ const ListClass = () => {
 		})
 	}
 
-	const showTotal = () => totalRow && <div className="font-weight-black">Tổng cộng: {totalRow}</div>
+	const showTotal = () => <div className="font-weight-black">Tổng cộng: {totalRow ? totalRow : 0}</div>
 
 	const hanskeChangeTab = (val) => {
 		setTabStatus(val)

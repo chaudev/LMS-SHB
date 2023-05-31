@@ -88,8 +88,13 @@ const StudyRouteTemplateDetailPage = () => {
 	}
 
 	return (
-		<Card title={name ? name : ''} extra={<ModalActionStudyRouteTemplateDetail mode="CREATE" onRefresh={getAllStudyTemplateDetail} />}>
-			<Spin spinning={loading === 'GET_ALL'}>
+		<div className="d-flex justify-center">
+			<Card
+				className="w-full max-w-[1200px]"
+				title={name ? name : ''}
+				loading={loading === 'GET_ALL'}
+				extra={<ModalActionStudyRouteTemplateDetail mode="CREATE" onRefresh={getAllStudyTemplateDetail} />}
+			>
 				<Timeline mode="left">
 					{studyTemplateDetail.length > 0 && studyTemplateDetail ? (
 						studyTemplateDetail.map((item, index) => {
@@ -140,8 +145,8 @@ const StudyRouteTemplateDetailPage = () => {
 						<Empty description={<span>Chưa có chương trình học!</span>} />
 					)}
 				</Timeline>
-			</Spin>
-		</Card>
+			</Card>
+		</div>
 	)
 }
 

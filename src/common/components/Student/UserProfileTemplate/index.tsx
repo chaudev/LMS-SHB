@@ -1,4 +1,4 @@
-import { Divider, Form, Modal, Skeleton, Tag } from 'antd'
+import { Divider, Form, Modal, Progress, Skeleton, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import SelectField from '../../FormControl/SelectField'
 import PrimaryButton from '../../Primary/Button'
@@ -115,12 +115,17 @@ const UserProfileTemplate = () => {
 	return (
 		<>
 			<Divider>
-				<h2 className="py-4 font-[600] text-center">Thông tin thêm (đã hoàn thành {rateCompleted}%)</h2>
+				<h2 className="py-3 font-[600] text-center">Thông tin thêm</h2>
 			</Divider>
 			{loading.type === 'GET_ALL' && loading.status === true ? (
 				<Skeleton></Skeleton>
 			) : (
-				<div className="grid pt-4">
+				<div className=" ">
+					<div className='w-full mb-4'>
+					<Progress percent={rateCompleted} />
+					</div>
+
+				
 					{profileTemplate.map((item, index) => {
 						return (
 							<React.Fragment key={item.Id}>

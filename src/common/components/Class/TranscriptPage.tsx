@@ -304,6 +304,7 @@ export const TranscriptPage = () => {
 						<Select
 							onChange={(val) => handleChangeStatus(val, index)}
 							value={item?.PassOrFail}
+							disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
 							allowClear
 							className="primary-input !h-[34px] w-[100px]"
 							placeholder="Chọn"

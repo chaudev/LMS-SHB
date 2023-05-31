@@ -129,7 +129,7 @@ const CalenderClass = () => {
 			GradeId: dataChangeSchedule.GradeId,
 			MaxQuantity: dataChangeSchedule.MaxQuantity,
 			Name: dataChangeSchedule.Name,
-			Price: dataChangeSchedule.Price,
+			Price: dataChangeSchedule.Price ? dataChangeSchedule.Price : 0,// theo yêu cầu của api
 			ProgramId: dataChangeSchedule.ProgramId,
 			StartDay: moment(dataChangeSchedule.StartDay).format(),
 			TeacherId: dataChangeSchedule.TeacherId,

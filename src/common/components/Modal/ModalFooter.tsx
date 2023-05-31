@@ -36,20 +36,23 @@ const ModalFooter = (props: IProps) => {
 	}
 
 	return (
-		<div className="flex items-center gap-1">
+		<div className="flex items-center gap-2">
 			{isEdit && (
 				<Popconfirm title="Bạn có chắc muốn xoá group hay không ?" onConfirm={handleConfirm}>
-					<Button className={`${buttonFull && 'flex-1'}`} style={{ background: '#ff595e' }} loading={isLoading}>
+					{/* <Button className={`w-full ${buttonFull && 'flex-1'}`} style={{ background: '#ff595e' }} loading={isLoading}>
 						<VscSignOut className="text-[18px] mr-2" /> Xoá Nhóm
-					</Button>
+					</Button> */}
+					<PrimaryButton type="button" onClick={onCancel} loading={loading} background="red" className="w-full" icon="remove">
+						Xoá Nhóm
+					</PrimaryButton>
 				</Popconfirm>
 			)}
 			{!isEdit && (
 				// <Button className={`${buttonFull && 'flex-1'}`} style={{ background: '#ff595e' }} onClick={onCancel}>
 				// 	<AiOutlineCloseCircle className="text-[18px] mr-2" /> Huỷ
 				// </Button>
-					<PrimaryButton type="button" onClick={onCancel} loading={loading} background="red" className="w-full" icon="cancel">
-				Huỷ
+				<PrimaryButton type="button" onClick={onCancel} loading={loading} background="red" className="w-full" icon="cancel">
+					Huỷ
 				</PrimaryButton>
 			)}
 			{/* <Button className={buttonFull ? 'flex-1' : ''} onClick={onOK} style={{ background: '#002456' }} loading={loading}>

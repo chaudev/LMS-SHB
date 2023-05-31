@@ -101,13 +101,13 @@ export const ManagerChildMenu = [
 				Icon: '',
 				Text: 'Quản lý thu chi'
 			},
-			{
-				TypeItem: 'single',
-				Key: '/finance/payment-approve',
-				Route: '/finance/payment-approve',
-				Icon: '',
-				Text: 'Duyệt thanh toán'
-			},
+			// {
+			// 	TypeItem: 'single',
+			// 	Key: '/finance/payment-approve',
+			// 	Route: '/finance/payment-approve',
+			// 	Icon: '',
+			// 	Text: 'Duyệt thanh toán'
+			// },
 			{
 				TypeItem: 'single',
 				Key: '/finance/refund',
@@ -200,20 +200,20 @@ export const ManagerChildMenu = [
 				Text: 'Danh sách nhân viên',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/users/teacher/teacher-off',
-				Route: '/users/teacher/teacher-off',
-				Text: 'Duyệt lịch nghỉ',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/users/salary',
-				Route: '/users/salary',
-				Text: 'Bảng lương',
-				Icon: ''
-			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/users/teacher/teacher-off',
+			// 	Route: '/users/teacher/teacher-off',
+			// 	Text: 'Duyệt lịch nghỉ',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/users/salary',
+			// 	Route: '/users/salary',
+			// 	Text: 'Bảng lương',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{

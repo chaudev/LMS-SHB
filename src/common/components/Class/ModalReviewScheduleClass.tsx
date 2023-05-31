@@ -7,10 +7,10 @@ import { AiOutlineFieldTime } from 'react-icons/ai'
 import { HiOutlineArrowRight } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
 import { setDataChangeSchedule, setListCalendar, setPrevSchedule, setRoom, setShowModal, setTeacher } from '~/store/classReducer'
 import PrimaryButton from '../Primary/Button'
+import { _format } from '~/common/utils'
 
 const ModalReviewScheduleClass = (props) => {
 	const { handleCreateClass, isLoading } = props
@@ -47,7 +47,7 @@ const ModalReviewScheduleClass = (props) => {
 				onCancel={() => setIsModalOpen(false)}
 				centered 
 				footer={
-					<PrimaryButton background="blue" icon="save" type="button" onClick={handleSubmit} loading={isLoading} disable={isLoading}>
+					<PrimaryButton background="primary" icon="save" type="button" onClick={handleSubmit} loading={isLoading} disable={isLoading}>
 						Lưu
 					</PrimaryButton>
 				}
@@ -79,7 +79,7 @@ const ModalReviewScheduleClass = (props) => {
 					</div> */}
 					<div className="col-md-6 col-12 mb-3">
 						<p className="font-medium">Lương/buổi:</p>
-						<span>{dataChangeSchedule.TeachingFee}</span>
+						<span>{_format.numberToPrice(dataChangeSchedule.TeachingFee)}₫</span>
 					</div>
 					<div className="col-md-6 col-12 mb-3">
 						<p className="font-medium">Số học viên tối đa:</p>

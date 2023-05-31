@@ -77,7 +77,7 @@ const UpdateClassForm = (props) => {
 				onCancel={() => setIsModalOpen(false)}
 				centered
 				footer={
-					<PrimaryButton background="blue" icon="save" type="button" onClick={form.submit} loading={isLoading} disable={isLoading}>
+					<PrimaryButton background="primary" icon="save" type="button" onClick={form.submit} loading={isLoading} disable={isLoading}>
 						Lưu
 					</PrimaryButton>
 				}

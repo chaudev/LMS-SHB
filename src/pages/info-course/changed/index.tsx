@@ -100,7 +100,7 @@ const ChangedPage = () => {
 					<PrimaryTooltip className="flex items-center" id={`old-class-${item?.Id}`} content={'Xem lớp: ' + value} place="top">
 						<a
 							href={`/class/list-class/detail/?class=${item.OldClassId}`}
-							className="max-w-[150px] in-1-line cursor-pointer font-[500] text-[#1976D2] hover:text-[#1968b7] hover:underline"
+							className="max-w-[150px] in-1-line cursor-pointer font-weight-primary hover:text-[#1968b7] hover:underline"
 						>
 							{value}
 						</a>
@@ -118,7 +118,7 @@ const ChangedPage = () => {
 					<PrimaryTooltip className="flex items-center" id={`new-class-${item?.Id}`} content={'Xem lớp: ' + value} place="top">
 						<a
 							href={`/class/list-class/detail/?class=${item.NewClassId}`}
-							className="max-w-[150px] in-1-line cursor-pointer font-[500] text-[#1976D2] hover:text-[#1968b7] hover:underline"
+							className="max-w-[150px] in-1-line cursor-pointer font-weight-primary hover:text-[#1968b7] hover:underline"
 						>
 							{value}
 						</a>
@@ -143,7 +143,7 @@ const ChangedPage = () => {
 			title: 'Người tạo',
 			dataIndex: 'CreatedBy',
 			width: 200,
-			render: (value, item) => <p className="font-[600] text-[#1976D2]">{value}</p>
+			// render: (value, item) => <p className="font-[600] text-[#1976D2]">{value}</p>
 		},
 		{
 			title: '',

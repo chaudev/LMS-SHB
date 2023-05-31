@@ -1,4 +1,4 @@
-import { Collapse, Spin } from 'antd'
+import { Collapse, Empty, Spin } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
@@ -105,8 +105,8 @@ const TabMajors: React.FC<TabMajors> = () => {
 	return (
 		<Spin spinning={loading === 'GET_ALL'}>
 			<div className="d-flex flex-col gap-3">
-				{majors &&
-					majors.map((item) => ( 	
+				{majors && majors.length > 0 ? (
+					majors.map((item) => (
 						<Collapse
 							key={item.Id}
 							bordered={false}
@@ -141,7 +141,10 @@ const TabMajors: React.FC<TabMajors> = () => {
 								</div>
 							</Collapse.Panel>
 						</Collapse>
-					))}
+					))
+				) : (
+					<Empty description="Không có dữ liệu"></Empty>
+				)}
 			</div>
 		</Spin>
 	)

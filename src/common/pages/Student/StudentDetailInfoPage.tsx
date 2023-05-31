@@ -175,7 +175,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						</div>
 					</div>
 					<div className="body">
-						<Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+						<Tabs destroyInactiveTabPane defaultActiveKey="1" items={items} onChange={onChange} />
 					</div>
 				</div>
 			</div>

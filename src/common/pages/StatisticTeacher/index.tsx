@@ -5,23 +5,33 @@ import { ShowNostis } from '~/common/utils'
 import TeacherStatisticDetails from './Details'
 import Head from 'next/head'
 import appConfigs from '~/appConfig'
+import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
+
+const initParamters = { pageSize: PAGE_SIZE, pageIndex: 1 }
 
 const StatisticTeacher = () => {
 	const [data, setData] = useState([])
+	const [totalPage, setTotalPage] = React.useState(1)
+	const [filters, setFilter] = React.useState(initParamters)
+
 	const [loading, setLoading] = useState<boolean>(true)
 
 	useEffect(() => {
 		getData()
-	}, [])
+	}, [filters])
 
 	async function getData() {
 		try {
+			setLoading(true)
 			const res = await statisticalTeacherApi.getAll()
 			if (res.status == 200) {
 				setData(res.data.data)
+				setTotalPage(res.data.totalRow)
 			}
+			setLoading(false)
 		} catch (error) {
 			ShowNostis.error(error?.message)
+			setLoading(false)
 		}
 	}
 
@@ -83,12 +93,16 @@ const StatisticTeacher = () => {
 				<title>{`${appConfigs.appName} - Thống kê giảng dạy`}</title>
 			</Head>
 			<ExpandTable
+				pageSize={filters.pageSize}
+				currentPage={filters.pageIndex}
 				className="shadow-sm"
 				loading={loading}
 				TitleCard="Thống kê giảng dạy"
 				dataSource={data}
 				columns={columns}
+				totalPage={totalPage}
 				expandable={expandedRowRender}
+				getPagination={(page: number) => setFilter({ ...filters, pageIndex: page })}
 			/>
 		</>
 	)

@@ -155,7 +155,7 @@ export default function FeedbackDetailPage(props: IFeedbackDetailPageProps) {
 								<div className="w-full flex justify-center">
 									<div className="flex justify-start items-center gap-4">
 										<Rate
-											className="bg-[blue]"
+											// className="bg-[blue]"
 											style={{ marginBottom: -6 }}
 											defaultValue={dataSource?.StarRating}
 											onChange={(data) => handleRating(data)}

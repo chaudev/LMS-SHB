@@ -1,4 +1,4 @@
-import { Card, Empty, Spin, Timeline } from 'antd'
+import { Card, Empty, Spin, Timeline, Tooltip } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { FcClock } from 'react-icons/fc'
@@ -144,12 +144,16 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 											<div className="flex items-center gap-1">
 												{index !== 0 && (
 													<div className="icon   cursor-pointer" onClick={() => handleMoveItem(index, item, 'up')}>
-														<ImMoveUp size={22} color="#0068ac" />
+														<Tooltip title={'Di chuyển lên trên'}>
+															<ImMoveUp size={22} color="#0068ac" />
+														</Tooltip>
 													</div>
 												)}
 												{index + 1 < dataTable.length && (
 													<div className="icon  cursor-pointer" onClick={() => handleMoveItem(index, item, 'down')}>
-														<ImMoveDown size={22} color="#007134" />
+														<Tooltip title={'Di chuyển xuống dưới'}>
+															<ImMoveDown size={22} color="#007134" />
+														</Tooltip>
 													</div>
 												)}
 												<ModalStudyRoute mode="edit" onRefresh={() => getStudentStudyRoute(apiParameters)} dataRow={item} />

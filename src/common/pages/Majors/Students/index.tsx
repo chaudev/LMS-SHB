@@ -1,10 +1,14 @@
 import { Input } from 'antd'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { majorsRegistrationApi } from '~/api/majors/registration'
+import { PrimaryTooltip } from '~/common/components'
 import Avatar from '~/common/components/Avatar'
+import IconButton from '~/common/components/Primary/IconButton'
 import PrimaryTable from '~/common/components/Primary/Table'
 import Filters from '~/common/components/Student/Filters'
+import { ButtonEye } from '~/common/components/TableButton'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNostis } from '~/common/utils'
 import { parseToMoney } from '~/common/utils/common'
@@ -92,6 +96,24 @@ const MajorsStudentPage = () => {
 			title: 'Phương Thức thanh toán',
 			dataIndex: 'PaymentTypeName',
 			render: (text) => <p>{text}</p>
+		},
+		{
+			width: 60,
+			title: '',
+			fixed: 'right',
+			dataIndex: '',
+			render: (text, item) => (
+				<Link
+					href={{
+						pathname: '/majors/change-majors/',
+						query: { studentId: item?.StudentId }
+					}}
+				>
+					<a>
+						<IconButton tooltip="Thay đổi ngành học" type="button" icon="exchange" color="primary" />
+					</a>
+				</Link>
+			)
 		}
 	]
 	return (

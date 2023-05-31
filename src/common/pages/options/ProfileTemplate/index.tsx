@@ -140,107 +140,114 @@ const ProfileTemplatePage = () => {
 		form.resetFields()
 	}
 	return (
-		<Card>
-			<div>
-				<Divider>
-					<h2 className="py-4 font-[600] text-center">Thông tin cá nhân</h2>
-				</Divider>
-				<div className="grid grid-cols-1 gap-1">
-					{fakeDataUser.map((item, index) => (
-						<>
-							<div className="grid grid-cols-4 gap-4 items-center">
-								<div className="col-span-1   font-[500]">{item.key}</div>
-								<div className="col-span-3">{item.value}</div>
-							</div>
-							<Divider />
-						</>
-					))}
-				</div>
-				<Divider className="font-[600]">
-					<h2 className="py-4 font-[600] text-center">Thông tin Thêm</h2>
-				</Divider>
-				{!!loading.status && loading.type === 'GET_ALL' ? (
-					<Skeleton></Skeleton>
-				) : (
-					<div className="grid gap-3">
-						<DragDropContext onDragEnd={handleDragEnd}>
-							<Droppable droppableId={`profile-template`}>
-								{(provided) => {
-									return (
-										<div className="" {...provided.droppableProps} ref={provided.innerRef}>
-											{profileTemplates.map((item, index) => {
-												return (
-													<Draggable key={`index-${index}`} draggableId={`ItemCurriculum${item.Id}`} index={index}>
-														{(providedDrag, snip) => {
-															return (
-																<div
-																	className=""
-																	{...providedDrag.draggableProps}
-																	{...providedDrag.dragHandleProps}
-																	ref={providedDrag.innerRef}
-																>
-																	<div key={index} className="grid grid-cols-4 gap-2">
-																		<div className="col-span-4  font-[500]">{item.Name}</div>
-																		<div className="col-span-2">
-																			<Tag className="rounded-full px-2  cursor-pointer" color={item.Type == 1 ? 'blue' : 'green'}>
-																				<div className="d-flex items-center px-2">{item.Type === 1 ? 'Văn bản' : 'Lựa chọn'}</div>
-																			</Tag>
-																		</div>
-																		<div className="col-span-2 d-flex justify-end">
-																			<IconButton
-																				type="button"
-																				icon="edit"
-																				color="green"
-																				onClick={() => {
-																					openModalUpdate(item)
-																				}}
-																				className=""
-																				tooltip="Cập nhật thông tin"
-																			/>
-																			<Popconfirm
-																				title="Bạn có chắc muốn xóa thông tin này?"
-																				okText="Có"
-																				cancelText="Hủy"
-																				onConfirm={() => deleteItemProfileTemplate(item)}
-																			>
+		<div className="d-flex justify-center">
+			<Card className=" w-full max-w-[1200px] ">
+				<div className='w1000:px-3'>
+					<Divider>
+						<h2 className="py-4 font-[600] text-center">Thông tin cá nhân</h2>
+					</Divider>
+					<div className="grid grid-cols-1 gap-1">
+						{fakeDataUser.map((item, index) => (
+							<>
+								<div className="grid grid-cols-4 gap-4 items-center">
+									<div className="col-span-1   font-[500]">{item.key}</div>
+									<div className="col-span-3">{item.value}</div>
+								</div>
+								<Divider />
+							</>
+						))}
+					</div>
+					<Divider className="font-[600]">
+						<h2 className="py-4 font-[600] text-center">Thông tin Thêm</h2>
+					</Divider>
+					{!!loading.status && loading.type === 'GET_ALL' ? (
+						<Skeleton></Skeleton>
+					) : (
+						<div className="grid gap-3">
+							<DragDropContext onDragEnd={handleDragEnd}>
+								<Droppable droppableId={`profile-template`}>
+									{(provided) => {
+										return (
+											<div className="" {...provided.droppableProps} ref={provided.innerRef}>
+												{profileTemplates.map((item, index) => {
+													return (
+														<Draggable key={`index-${index}`} draggableId={`ItemCurriculum${item.Id}`} index={index}>
+															{(providedDrag, snip) => {
+																return (
+																	<div
+																		className=""
+																		{...providedDrag.draggableProps}
+																		{...providedDrag.dragHandleProps}
+																		ref={providedDrag.innerRef}
+																	>
+																		<div key={index} className="grid grid-cols-4 gap-2">
+																			<div className="col-span-4  font-[500]">{item.Name}</div>
+																			<div className="col-span-2">
+																				<Tag className="rounded-full px-2  cursor-pointer" color={item.Type == 1 ? 'blue' : 'green'}>
+																					<div className="d-flex items-center px-2">{item.Type === 1 ? 'Văn bản' : 'Lựa chọn'}</div>
+																				</Tag>
+																			</div>
+																			<div className="col-span-2 d-flex justify-end">
 																				<IconButton
 																					type="button"
-																					icon="remove"
-																					color="red"
-																					onClick={() => {}}
+																					icon="edit"
+																					color="green"
+																					onClick={() => {
+																						openModalUpdate(item)
+																					}}
 																					className=""
-																					tooltip="Xóa Thông tin này"
+																					tooltip="Cập nhật thông tin"
 																				/>
-																			</Popconfirm>
+																				<Popconfirm
+																					title="Bạn có chắc muốn xóa thông tin này?"
+																					okText="Có"
+																					cancelText="Hủy"
+																					onConfirm={() => deleteItemProfileTemplate(item)}
+																				>
+																					<IconButton
+																						type="button"
+																						icon="remove"
+																						color="red"
+																						onClick={() => {}}
+																						className=""
+																						tooltip="Xóa Thông tin này"
+																					/>
+																				</Popconfirm>
+																			</div>
 																		</div>
+																		<Divider></Divider>
 																	</div>
-																	<Divider></Divider>
-																</div>
-															)
-														}}
-													</Draggable>
-												)
-											})}
-										</div>
-									)
-								}}
-							</Droppable>
-						</DragDropContext>
-						<PrimaryButton onClick={() => openModalCreate()} type="button" icon="add" background="blue">
-							Thêm thông tin
-						</PrimaryButton>
-					</div>
-				)}
-			</div>
-			<Modal
-				onCancel={onCancelModal}
-				title={isModalOpen.type === 'CREATE' ? 'Thêm thông tin' : 'Cập nhật thông tin'}
-				open={isModalOpen.status}
-				footer={null}
-			>
-				<FormProfileTemplate form={form} handleCreateUpdate={handleCreateUpdate} isModalOpen={isModalOpen} onCancelModal={onCancelModal} />
-			</Modal>
-		</Card>
+																)
+															}}
+														</Draggable>
+													)
+												})}
+											</div>
+										)
+									}}
+								</Droppable>
+							</DragDropContext>
+							<PrimaryButton onClick={() => openModalCreate()} type="button" icon="add" background="blue">
+								Thêm thông tin
+							</PrimaryButton>
+						</div>
+					)}
+				</div>
+				<Modal
+					onCancel={onCancelModal}
+					title={isModalOpen.type === 'CREATE' ? 'Thêm thông tin' : 'Cập nhật thông tin'}
+					open={isModalOpen.status}
+					footer={null}
+				>
+					<FormProfileTemplate
+						form={form}
+						handleCreateUpdate={handleCreateUpdate}
+						isModalOpen={isModalOpen}
+						onCancelModal={onCancelModal}
+					/>
+				</Modal>
+			</Card>
+		</div>
 	)
 }
 

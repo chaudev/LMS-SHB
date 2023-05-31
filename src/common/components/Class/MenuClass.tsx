@@ -42,7 +42,7 @@ const itemsAdmin = [
 	'Thông báo'
 ]
 
-const itemsStudent = ['Lịch học', 'Các buổi học', 'Tài liệu', 'Bảng điểm', 'Điểm danh bằng QR']
+const itemsStudent = ['Lịch học', 'Các buổi học', 'Tài liệu', 'Bảng điểm']
 
 const itemsTeacher = [
 	'Lịch học',
@@ -55,7 +55,9 @@ const itemsTeacher = [
 	'Phản hồi buổi học',
 	'Thông báo'
 ]
-const itemsParent = ['Lịch học', 'Các buổi học', 'Điểm danh', 'Bảng điểm']
+const itemsParent = ['Lịch học', 'Các buổi học',
+ 'Điểm danh',
+  'Bảng điểm']
 
 const MenuClass = () => {
 	const user = useSelector((state: RootState) => state.user.information)
