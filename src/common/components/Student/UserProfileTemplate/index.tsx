@@ -8,11 +8,14 @@ import { useRouter } from 'next/router'
 import { userInformationApi } from '~/api/user/user'
 import { ShowNostis } from '~/common/utils'
 import { FiChevronDown } from 'react-icons/fi'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 const UserProfileTemplate = () => {
 	const router = useRouter()
 	const [form] = Form.useForm()
 	const { StudentID } = router.query
+	const userInfomation = useSelector((state: RootState) => state.user.information)
 	const [loading, setLoading] = useState<{ type: string; status: boolean }>({ type: '', status: false })
 	const [profileTemplate, setProfileTemplate] = useState([])
 	const [profileItem, setProfileItem] = useState<IUserProfileTemplateItem | null>(null)
@@ -111,6 +114,10 @@ const UserProfileTemplate = () => {
 		form.setFieldsValue(null)
 		setProfileItem(null)
 	}
+	const isDisable = () => {
+		// ko cho giáo  viên + học viên cập nhật thông tin thêm này
+		return userInfomation.RoleId == '3' || userInfomation.RoleId == '3'
+	}
 
 	return (
 		<>
@@ -121,11 +128,10 @@ const UserProfileTemplate = () => {
 				<Skeleton></Skeleton>
 			) : (
 				<div className=" ">
-					<div className='w-full mb-4'>
-					<Progress percent={rateCompleted} />
+					<div className="w-full mb-4">
+						<Progress percent={rateCompleted} />
 					</div>
 
-				
 					{profileTemplate.map((item, index) => {
 						return (
 							<React.Fragment key={item.Id}>
@@ -134,8 +140,11 @@ const UserProfileTemplate = () => {
 									<div className="col-span-4  d-flex justify-start tablet:justify-end items-start">
 										{item.Type !== 1 ? (
 											<Tag
-												className="rounded-full	px-2 cursor-pointer"
+												className={`rounded-full	px-2 ${!isDisable() ? '' : 'cursor-pointer'}`}
 												onClick={() => {
+													if (!isDisable()) {
+														return
+													}
 													form.setFieldsValue(item)
 													setProfileItem(item)
 												}}
@@ -149,6 +158,7 @@ const UserProfileTemplate = () => {
 											<div className="d-flex w-full justify-between items-start">
 												<TextArea
 													value={textUpdate[index].Value}
+													disabled={!isDisable()}
 													onChange={(e) => {
 														let newValue = []
 														textUpdate.forEach((i) => {

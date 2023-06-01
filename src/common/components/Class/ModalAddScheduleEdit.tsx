@@ -121,7 +121,7 @@ const ModalAddScheduleEdit = (props) => {
 								return (
 									<Select.Option disabled={!item.Fit} key={item.TeacherId} value={item.TeacherId}>
 										<div className="flex items-center justify-between w-full">
-											{item.TeacherName}
+											{item.TeacherName + ' - ' + item.TeacherCode}
 											{!item.Fit ? (
 												<Tooltip placement="right" title={item.Note}>
 													<AiOutlineWarning className="text-tw-red" />

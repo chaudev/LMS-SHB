@@ -115,7 +115,7 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 		try {
 			const res = await classApi.deleteClass(Id)
 			if (res.status === 200) {
-				setTodoApi(listTodoApi)
+				// setTodoApi(listTodoApi)
 				setIsModalOpen({ id: Id, open: false })
 				getAllClass()
 				ShowNoti('success', res.data.message)

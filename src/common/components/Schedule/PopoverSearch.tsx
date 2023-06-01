@@ -58,13 +58,13 @@ const PopoverSearch = (props) => {
 						</Form.Item>
 					</div>
 					<div className="col-span-2 mt-2">
-						<button disabled={isLoading} type="submit" className="btn btn-primary" style={{ marginRight: '10px' }}>
-							<MdSearch size={18} className="mr-1" />
-							Kiểm tra {isLoading && <Spin className="loading-base ml-2" />}
-						</button>
 						<button type="button" className="light btn btn-secondary" style={{ marginRight: '10px' }} onClick={onReset}>
 							<MdOutlineRestore size={18} className="mr-1" />
 							Khôi phục
+						</button>
+						<button disabled={isLoading} type="submit" className="btn btn-primary" style={{ marginRight: '10px' }}>
+							<MdSearch size={18} className="mr-1" />
+							Kiểm tra {isLoading && <Spin className="loading-base ml-2" />}
 						</button>
 					</div>
 				</div>

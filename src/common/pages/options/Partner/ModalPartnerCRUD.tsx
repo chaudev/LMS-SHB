@@ -153,7 +153,7 @@ export const ModalPartnerCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpe
 							loading={isLoading}
 							onClick={() => form.submit()}
 							className="ml-2"
-							background="blue"
+							background="primary"
 							icon={mode !== 'delete' ? 'save' : 'remove'}
 							type="button"
 							children={mode !== 'delete' ? 'Lưu' : 'Xóa'}
@@ -183,8 +183,8 @@ export const ModalPartnerCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpe
 									</div>
 									<div className="col-span-2">
 										<InputTextField
-											isRequired
-											rules={[{ required: true, message: 'Bạn không được để trống!' }]}
+											// isRequired
+											// rules={[{ required: true, message: 'Bạn không được để trống!' }]}
 											label="Điện thoại"
 											name="Mobile"
 											placeholder="Nhập số điện thoại"
@@ -192,8 +192,8 @@ export const ModalPartnerCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpe
 									</div>
 									<div className="col-span-2">
 										<InputTextField
-											isRequired
-											rules={[{ required: true, message: 'Bạn không được để trống!' }]}
+											// isRequired
+											// rules={[{ required: true, message: 'Bạn không được để trống!' }]}
 											label="Email"
 											name="Email"
 											placeholder="Nhập email"

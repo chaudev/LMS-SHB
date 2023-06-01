@@ -27,7 +27,7 @@ import { setPurpose } from '~/store/purposeReducer'
 import { setSaler } from '~/store/salerReducer'
 import { useRouter } from 'next/router'
 import { userInfoColumn } from '~/common/libs/columns/user-info'
-import { ButtonEye, ButtonPending } from '~/common/components/TableButton'
+import { ButtonEye } from '~/common/components/TableButton'
 import { PrimaryTooltip } from '~/common/components'
 import Filters from '~/common/components/Student/Filters'
 import IconButton from '~/common/components/Primary/IconButton'
@@ -423,7 +423,7 @@ const Student: FC<IPersonnel> = (props) => {
 							</Link>
 						</PrimaryTooltip>
 
-						{role !== 3 && isAdmin() && (
+						{role !== 3 && (isAdmin() || isManage()) && (
 							<CreateUser
 								isEdit
 								roleStaff={roleStaff}
@@ -434,7 +434,7 @@ const Student: FC<IPersonnel> = (props) => {
 							/>
 						)}
 
-						{role == 3 && isAdmin() && (
+						{role == 3 && (isAdmin() || isManage()) && (
 							<CreateUser
 								isEdit
 								roleStaff={roleStaff}
@@ -448,29 +448,35 @@ const Student: FC<IPersonnel> = (props) => {
 								isStudent={true}
 							/>
 						)}
-						{isAdmin() && (
+						{(isAdmin() || isManage()) && (
 							<>
 								<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
 							</>
 						)}
-						{role == 3 && isAdmin() && item.LearningStatus !== 1 && (
-							<Popconfirm
-								title={
-									item.LearningStatus === 4
-										? 'Xác nhận hủy bảo lưu?'
-										: 'Học viên sẽ bị xóa ra khỏi tất cả lớp để bảo lưu thông tin học tập, xác nhận?'
-								}
-								onConfirm={() => {
-									reverserUser(item.UserInformationId)
-								}}
-								// onCancel={cancel}
-								okText={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
-								cancelText="Hủy"
-								okButtonProps={{ loading: loading }}
-							>
-								<IconButton tooltip={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'} icon="reserved" type="button" color="purple" />
-							</Popconfirm>
-						)}
+						{(role == 3 && isAdmin()) ||
+							(isManage() && item.LearningStatus !== 1 && (
+								<Popconfirm
+									title={
+										item.LearningStatus === 4
+											? 'Xác nhận hủy bảo lưu?'
+											: 'Học viên sẽ bị xóa ra khỏi tất cả lớp để bảo lưu thông tin học tập, xác nhận?'
+									}
+									onConfirm={() => {
+										reverserUser(item.UserInformationId)
+									}}
+									// onCancel={cancel}
+									okText={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
+									cancelText="Hủy"
+									okButtonProps={{ loading: loading }}
+								>
+									<IconButton
+										tooltip={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
+										icon="reserved"
+										type="button"
+										color="purple"
+									/>
+								</Popconfirm>
+							))}
 					</div>
 				)
 			}
@@ -507,6 +513,9 @@ const Student: FC<IPersonnel> = (props) => {
 
 	function isAccountant() {
 		return userInformation?.RoleId == 6
+	}
+	function isManage() {
+		return userInformation?.RoleId == 4
 	}
 
 	function isAcademic() {
@@ -546,7 +555,7 @@ const Student: FC<IPersonnel> = (props) => {
 				}
 				Extra={
 					<>
-						{role == 3 && (isAdmin() || isManager() || isAcademic()) && (
+						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
 							<PrimaryButton
 								loading={loadingAllow}
 								className="mr-2 btn-block-registration"
@@ -559,7 +568,7 @@ const Student: FC<IPersonnel> = (props) => {
 							</PrimaryButton>
 						)}
 
-						{role == 3 && (isAdmin() || isManager() || isAcademic()) && (
+						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
 							<PrimaryButton
 								className="mr-2 btn-download"
 								type="button"
@@ -571,7 +580,9 @@ const Student: FC<IPersonnel> = (props) => {
 							</PrimaryButton>
 						)}
 
-						{role == 3 && isAdmin() && <ImportStudent className="mr-1 btn-import" onFetchData={() => getUsers(apiParameters)} />}
+						{role == 3 && (isAdmin() || isManage()) && (
+							<ImportStudent className="mr-1 btn-import" onFetchData={() => getUsers(apiParameters)} />
+						)}
 
 						<Popover
 							placement="bottomLeft"
@@ -646,7 +657,7 @@ const Student: FC<IPersonnel> = (props) => {
 							</PrimaryButton>
 						</Popover>
 
-						{role == 3 && (isAdmin() || isManager() || isAcademic()) && (
+						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
 							<CreateUser
 								roleStaff={roleStaff}
 								source={source}
@@ -659,7 +670,7 @@ const Student: FC<IPersonnel> = (props) => {
 							/>
 						)}
 
-						{role !== 3 && (isAdmin() || isManager() || isAcademic()) && (
+						{role !== 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
 							<CreateUser roleStaff={roleStaff} className="btn-create" onRefresh={() => getUsers(apiParameters)} isStudent={false} />
 						)}
 					</>

@@ -1,4 +1,4 @@
-import { Card, Collapse, Form, Skeleton, Upload, UploadProps } from 'antd'
+import { Card, Collapse, Empty, Form, Skeleton, Upload, UploadProps } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { curriculumDetailApi } from '~/api/curriculum-detail'
@@ -168,28 +168,37 @@ const CurriculumDetail = () => {
 					</>
 				}
 			>
-				<DragDropContext onDragEnd={handleDragEnd}>
-					<Droppable droppableId={`CurriculumID-${router.query.name}`}>
-						{(provided) => {
-							return (
-								<div className="" {...provided.droppableProps} ref={provided.innerRef}>
-									{dataSource.list.map((item, index) => (
-										<Draggable key={item.Id} draggableId={`ItemCurriculum${item.Id}`} index={index}>
-											{(providedDrag, snip) => {
-												return (
-													<div className="" {...providedDrag.draggableProps} {...providedDrag.dragHandleProps} ref={providedDrag.innerRef}>
-														<CurriculumDetailList item={item} onRendering={getCurriculumNoLoading} />
-													</div>
-												)
-											}}
-										</Draggable>
-									))}
-									{provided.placeholder}
-								</div>
-							)
-						}}
-					</Droppable>
-				</DragDropContext>
+				{dataSource && dataSource.list.length === 0 ? (
+					<Empty />
+				) : (
+					<DragDropContext onDragEnd={handleDragEnd}>
+						<Droppable droppableId={`CurriculumID-${router.query.name}`}>
+							{(provided) => {
+								return (
+									<div className="" {...provided.droppableProps} ref={provided.innerRef}>
+										{dataSource.list.map((item, index) => (
+											<Draggable key={item.Id} draggableId={`ItemCurriculum${item.Id}`} index={index}>
+												{(providedDrag, snip) => {
+													return (
+														<div
+															className=""
+															{...providedDrag.draggableProps}
+															{...providedDrag.dragHandleProps}
+															ref={providedDrag.innerRef}
+														>
+															<CurriculumDetailList item={item} onRendering={getCurriculumNoLoading} />
+														</div>
+													)
+												}}
+											</Draggable>
+										))}
+										{provided.placeholder}
+									</div>
+								)
+							}}
+						</Droppable>
+					</DragDropContext>
+				)}
 			</Card>
 		</div>
 	)

@@ -117,8 +117,8 @@ const Schedule = () => {
 		return userInformation?.RoleId == 4
 	}
 
-	function isStdent() {
-		return userInformation?.RoleId == 3
+	function isAccountant() {
+		return userInformation?.RoleId == 6
 	}
 
 	function isAcademic() {
@@ -129,7 +129,7 @@ const Schedule = () => {
 		<div className="wrapper-class-schedule wrapper-calendar">
 			<Card
 				extra={
-					(isAdmin() || isManager() || isAcademic()) && (
+					(isAdmin() || isManager() || isAcademic() || isAccountant() || isTeacher()) && (
 						<PopoverSearch setParamsSearch={setParamsSearch} teachers={teachers} isLoading={isLoading} />
 					)
 				}

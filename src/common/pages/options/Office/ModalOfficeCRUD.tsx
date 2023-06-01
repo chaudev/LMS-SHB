@@ -181,8 +181,8 @@ export const ModalOfficeCRUD: React.FC<I> = ({ mode, dataRow, onRefresh }) => {
 
 									<div className="col-span-2">
 										<InputTextField
-											isRequired
-											rules={[{ required: true, message: 'Bạn không được để trống!' }]}
+											// isRequired
+											// rules={[{ required: true, message: 'Bạn không được để trống!' }]} theo yêu cầu
 											label="Điện thoại"
 											name="Mobile"
 											placeholder="Nhập số điện thoại"
@@ -190,8 +190,8 @@ export const ModalOfficeCRUD: React.FC<I> = ({ mode, dataRow, onRefresh }) => {
 									</div>
 									<div className="col-span-2">
 										<InputTextField
-											isRequired
-											rules={[{ required: true, message: 'Bạn không được để trống!' }]}
+											// isRequired
+											// rules={[{ required: true, message: 'Bạn không được để trống!' }]} theo yêu cầu
 											label="Email"
 											name="Email"
 											placeholder="Nhập email"

@@ -26,6 +26,8 @@ const ProgramDetail = () => {
 	const getAllCurriculum = async () => {
 		try {
 			setIsLoading(true)
+			console.log('todoApi', todoApi)
+
 			const res = await curriculumApi.getAll(todoApi)
 			if (res.status === 200) {
 				setListCurriculum(res.data.data)
@@ -57,7 +59,7 @@ const ProgramDetail = () => {
 		try {
 			const res = await curriculumApi.delete(id)
 			if (res.status === 200) {
-				setTodoApi(listTodoApi)
+				setTodoApi({ ...todoApi, programId: slug })
 				ShowNoti('success', res.data.message)
 				getAllCurriculum()
 				return res
@@ -94,7 +96,12 @@ const ProgramDetail = () => {
 			width: '150px',
 			render: (text, data) => (
 				<>
-					<CurriculumForm onRefresh={() => getAllCurriculum()} dataRow={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
+					<CurriculumForm
+						onRefresh={() => getAllCurriculum()}
+						dataRow={data}
+						setTodoApi={setTodoApi}
+						listTodoApi={{ ...listTodoApi, programId: slug }}
+					/>
 					<IconButton
 						color="blue"
 						type="button"
@@ -110,7 +117,12 @@ const ProgramDetail = () => {
 							})
 						}}
 					/>
-					<DeleteTableRow text={data.Name} handleDelete={() => handleDelete(data.Id)} />
+					<DeleteTableRow
+						text={data.Name}
+						handleDelete={() => handleDelete(data.Id)}
+						setTodoApi={setTodoApi}
+						listTodoApi={{ ...listTodoApi, programId: slug }}
+					/>
 				</>
 			)
 		}
@@ -123,7 +135,9 @@ const ProgramDetail = () => {
 				data={listCurriculum}
 				loading={isLoading}
 				onChangePage={(event: number) => setTodoApi({ ...listTodoApi, pageIndex: event })}
-				Extra={<CurriculumForm onRefresh={() => getAllCurriculum()} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />}
+				Extra={
+					<CurriculumForm onRefresh={() => getAllCurriculum()} setTodoApi={setTodoApi} listTodoApi={{ ...listTodoApi, programId: slug }} />
+				}
 				TitleCard={
 					<>
 						Chương trình:<span className="ml-2 text-tw-primary">{name}</span>

@@ -57,7 +57,7 @@ const DayOffForm = (props) => {
 		} catch (err) {
 			ShowNoti('error', err.message)
 		} finally {
-			setIsLoading(true)
+			setIsLoading(false)
 		}
 	}
 

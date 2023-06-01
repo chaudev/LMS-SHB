@@ -18,30 +18,30 @@ type ILoginForm = {
 function LoginForm(props: ILoginForm) {
 	const [form] = Form.useForm()
 
-	const [visible, setVisible] = useState(false)
+	// const [visible, setVisible] = useState(false)
 
-	const [trialUsers, setTrialUsers] = useState([])
+	// const [trialUsers, setTrialUsers] = useState([])
 
-	function removeFullNameContainingChau(arr) {
-		return arr.filter((person) => !person.FullName.includes('Châu') && !person.FullName.includes('Chau'))
-	}
+	// function removeFullNameContainingChau(arr) {
+	// 	return arr.filter((person) => !person.FullName.includes('Châu') && !person.FullName.includes('Chau'))
+	// }
 
-	const getListAccount = async () => {
-		try {
-			const res = await userApi.getListAccount()
-			if (res.status === 200) {
-				setTrialUsers(removeFullNameContainingChau(res.data.data))
-			} else {
-				setTrialUsers([])
-			}
-		} catch (error) {
-		} finally {
-		}
-	}
+	// const getListAccount = async () => {
+	// 	try {
+	// 		const res = await userApi.getListAccount()
+	// 		if (res.status === 200) {
+	// 			setTrialUsers(removeFullNameContainingChau(res.data.data))
+	// 		} else {
+	// 			setTrialUsers([])
+	// 		}
+	// 	} catch (error) {
+	// 	} finally {
+	// 	}
+	// }
 
-	useEffect(() => {
-		getListAccount()
-	}, [])
+	// useEffect(() => {
+	// 	getListAccount()
+	// }, [])
 
 	const _submit = async (data) => {
 		props?.onSubmit(data)

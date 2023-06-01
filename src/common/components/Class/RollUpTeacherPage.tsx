@@ -9,6 +9,7 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import { classApi } from '~/api/class'
 import moment from 'moment'
 import { ShowNoti } from '~/common/utils'
+import PrimaryTag from '../Primary/Tag'
 
 export const RollUpTeacherPage = () => {
 	const user = useSelector((state: RootState) => state.user.information)
@@ -125,10 +126,18 @@ export const RollUpTeacherPage = () => {
 				}
 
 				if (text != 0) {
-					return 'Đã điểm danh'
+					return (
+						<PrimaryTag color="green" className="font-semibold	">
+							Đã điểm danh
+						</PrimaryTag>
+					)
 				}
 
-				return 'Chưa điểm danh'
+				return (
+					<PrimaryTag color="yellow" className="font-semibold	">
+						Chưa điểm danh
+					</PrimaryTag>
+				)
 			}
 		}
 	]

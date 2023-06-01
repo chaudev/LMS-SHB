@@ -232,8 +232,9 @@ const Programs = () => {
 			title: 'Mã chương trình',
 			width: 170,
 			dataIndex: 'Code',
+			className:'font-weight-black',
 			...FilterColumn('Code', onSearch, handleReset, 'text'),
-			render: (value) => <span className="weight-600">{value}</span>
+			// render: (value) => <span className="weight-600">{value}</span>
 		},
 		{
 			title: 'Tên chương trình',

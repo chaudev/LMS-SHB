@@ -76,6 +76,9 @@ export default function FeedbackBlock(props: IFeedbackBlockProps) {
 			if (res.status == 200) {
 				setDataSource(res.data.data)
 			}
+			if (res.status == 204) {
+				setDataSource([])
+			}
 		} catch (error) {
 			ShowNoti('error', error.message)
 		} finally {

@@ -1,4 +1,4 @@
-import { Card, Form, Modal, Spin } from 'antd'
+import { Card, Form, Modal, Select, Spin } from 'antd'
 import React, { useEffect, useMemo, useState } from 'react'
 import { giftApi } from '~/api/gift'
 import { majorsApi } from '~/api/majors/majors'
@@ -17,12 +17,15 @@ import { ISelectOptionList } from '~/common/components/FormControl/form-control'
 import { optionPaymentType } from '~/common/constant/PaymentType'
 import CardOldMajors from '../Component/CardOldMajors'
 import { useRouter } from 'next/router'
+import Avatar from '~/common/components/Avatar'
+import { paymentMethodsApi } from '~/api/payment-method'
 
 interface IListOption {
 	students: ISelectOptionList[]
 	majors: ISelectOptionList[]
 	gift: ISelectOptionList[]
 	payment: ISelectOptionList[]
+	paymentMethod: ISelectOptionList[]
 }
 interface IListData {
 	students: IMajorsRegistrationAvailble[]
@@ -46,7 +49,8 @@ const ChangeMajorsPage = () => {
 		students: [],
 		majors: [],
 		gift: [],
-		payment: []
+		payment: [],
+		paymentMethod: []
 	}
 
 	const [modal, contextHolder] = Modal.useModal()
@@ -75,13 +79,14 @@ const ChangeMajorsPage = () => {
 	const initPage = async () => {
 		try {
 			setLoading('GET_ALL')
-			let templOption = { students: [], majors: [], gift: [], payment: [] }
+			let templOption = { students: [], majors: [], gift: [], payment: [], paymentMethod: [] }
 			let templData = { students: [], majors: [], gift: [], payment: [] }
-			const [students, majors, gift, paymentType] = await Promise.all([
-				majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
+			const [students, majors, gift, paymentType, paymentMethod] = await Promise.all([
+				await majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
 				majorsApi.getAll({ pageSize: 9999, pageIndex: 1, status: 1 }),
 				giftApi.getAll({ pageSize: 9999, pageIndex: 1 }),
-				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 })
+				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 }),
+				paymentMethodsApi.getAll({ pageSize: 9999, pageIndex: 1 })
 			])
 
 			if (students.status === 200) {
@@ -110,6 +115,11 @@ const ChangeMajorsPage = () => {
 				let templ = formatOption(paymentType.data.data)
 				templOption.payment = templ
 				templData.payment = paymentType.data.data
+			}
+			if (paymentMethod.status === 200) {
+				let templ = formatOption(paymentMethod.data.data)
+				templOption.paymentMethod = templ
+				templData.payment = paymentMethod.data.data
 			}
 
 			SetListOption(templOption)
@@ -310,13 +320,33 @@ const ChangeMajorsPage = () => {
 						<div className="grid grid-cols-1 w800:grid-cols-2 gap-3 ">
 							<div className="d-flex flex-col gap-3">
 								<Card title="Thông tin học viên" className="col-span-1">
-									<SelectField
+									{/* <SelectField
 										className="col-span-2"
 										name={'StudentId'}
 										label="Chọn học viên"
 										optionList={listOption.students}
 										rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}
-									/>
+									/> */}
+									<Form.Item name={'StudentId'} label="Chọn học viên" rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}>
+										<Select>
+											{listData.students.map((item: IMajorsRegistrationAvailble, index) => {
+												return (
+													<Select.Option value={item?.StudentId} label={item?.StudentName} key={item?.StudentId}>
+														<div className="selected-option">{item?.StudentName}</div>
+														<div className="select-option-propdown">
+															<Avatar uri={item?.Avatar} className="w-[32px] h-[32px] rounded-full" />
+															<div className="ml-[8px]">
+																<div className="font-[500]">
+																	{item?.StudentName} - {item?.StudentCode}
+																</div>
+																{item?.MajorsName && <div>Ngành: {item?.MajorsName}</div>}
+															</div>
+														</div>
+													</Select.Option>
+												)
+											})}
+										</Select>
+									</Form.Item>
 									<div className="d-flex flex-col gap-3">
 										{getInformation()} <CardOldMajors oldMajors={oldMajors} tuitionInOld={tuitionInOld} />
 									</div>
@@ -379,9 +409,19 @@ const ChangeMajorsPage = () => {
 									disabled
 									optionList={optionPaymentType}
 								/>
+
 								<InputTextField name="Percent" label="Phần trăm" disabled hidden={Type === 1 ? false : true} />
 								<InputNumberField name="countTotal" disabled={true} hidden={Type === 1 ? false : true} label="Số tiền phải đóng" />
 								<InputNumberField name="Paid" hidden={Type != 1 ? true : false} label="Thanh toán" />
+								<SelectField
+									className="col-span-2"
+									hidden={Type === 1 ? false : true}
+									name={'PaymentMethodId'}
+									label="Phương thức thanh toán"
+									isRequired
+									rules={[{ required: Type === 1 ? true : false, message: 'Vui lòng chọn phương thức thanh toán' }]}
+									optionList={listOption.paymentMethod}
+								/>
 								<SelectField className="col-span-2" name={'GiftId'} label="Quà tặng" optionList={listOption.gift} />
 								<TextBoxField name="Note" label={'Ghi chú'} />
 

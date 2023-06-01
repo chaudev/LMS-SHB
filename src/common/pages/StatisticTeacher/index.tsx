@@ -37,7 +37,7 @@ const StatisticTeacher = () => {
 
 	const columns = [
 		{
-			title: 'Học viên',
+			title: 'Giáo viên',
 			dataIndex: 'FullName',
 			render: (text, item) => (
 				<>

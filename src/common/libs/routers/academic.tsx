@@ -163,14 +163,14 @@ export const AcademicChildMenu = [
 				Route: '/info-course/student/warning',
 				Text: 'Cảnh báo học viên',
 				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/feedbacks',
+				Route: '/info-course/feedbacks',
+				Text: 'Phản hồi học viên',
+				Icon: ''
 			}
-			// {
-			// 	ItemType: 'single',
-			// 	Key: '/info-course/feedbacks',
-			// 	Route: '/info-course/feedbacks',
-			// 	Text: 'Phản hồi học viên',
-			// 	Icon: ''
-			// }
 		]
 	},
 	{
@@ -244,13 +244,13 @@ export const AcademicChildMenu = [
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
 			},
-			{
-				TypeItem: 'single',
-				Key: '/class/register',
-				Icon: '',
-				Route: '/class/register',
-				Text: 'Đăng ký học'
-			}
+			// {
+			// 	TypeItem: 'single',
+			// 	Key: '/class/register',
+			// 	Icon: '',
+			// 	Route: '/class/register',
+			// 	Text: 'Đăng ký học'
+			// }
 		]
 	},
 	{

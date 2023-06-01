@@ -17,12 +17,14 @@ import { ISelectOptionList } from '~/common/components/FormControl/form-control'
 import { optionPaymentType } from '~/common/constant/PaymentType'
 import { useRouter } from 'next/router'
 import Avatar from '~/common/components/Avatar'
+import { paymentMethodsApi } from '~/api/payment-method'
 
 interface IListOption {
 	students: ISelectOptionList[]
 	majors: ISelectOptionList[]
 	gift: ISelectOptionList[]
 	payment: ISelectOptionList[]
+	paymentMethod: ISelectOptionList[]
 }
 interface IListData {
 	students: IMajorsRegistrationAvailble[]
@@ -45,15 +47,14 @@ const MajorsRegistrationPage = () => {
 		students: [],
 		majors: [],
 		gift: [],
-		payment: []
+		payment: [],
+		paymentMethod: []
 	}
 
 	const [modal, contextHolder] = Modal.useModal()
 
 	const [listOption, setListOption] = useState<IListOption>(initValue)
 	const [listData, setListData] = useState<IListData>(initValue)
-
-	log.Yellow('listOption students: ', listOption?.students)
 
 	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL'>('')
 
@@ -74,14 +75,15 @@ const MajorsRegistrationPage = () => {
 	const initPage = async () => {
 		try {
 			setLoading('GET_ALL')
-			let templOption = { students: [], majors: [], gift: [], payment: [] }
+			let templOption = { students: [], majors: [], gift: [], payment: [], paymentMethod: [] }
 			let templData = { students: [], majors: [], gift: [], payment: [] }
 
-			const [students, majors, gift, paymentType] = await Promise.all([
+			const [students, majors, gift, paymentType, paymentMethod] = await Promise.all([
 				await majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
 				majorsApi.getAll({ pageSize: 9999, pageIndex: 1, status: 1 }),
 				giftApi.getAll({ pageSize: 9999, pageIndex: 1 }),
-				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 })
+				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 }),
+				paymentMethodsApi.getAll({ pageSize: 9999, pageIndex: 1 })
 			])
 
 			if (students.status === 200) {
@@ -100,15 +102,23 @@ const MajorsRegistrationPage = () => {
 				templOption.majors = templ
 				templData.majors = majors.data.data
 			}
+
 			if (gift.status === 200) {
 				let templ = formatOption(gift.data.data)
 				templOption.gift = templ
 				templData.gift = gift.data.data
 			}
+
 			if (paymentType.status === 200) {
 				let templ = formatOption(paymentType.data.data)
 				templOption.payment = templ
 				templData.payment = paymentType.data.data
+			}
+
+			if (paymentMethod.status === 200) {
+				let templ = formatOption(paymentMethod.data.data)
+				templOption.paymentMethod = templ
+				templData.payment = paymentMethod.data.data
 			}
 
 			setListOption(templOption)
@@ -140,6 +150,8 @@ const MajorsRegistrationPage = () => {
 				})
 				templData.students = response.data.data
 				templOption.students = templ
+				console.log('templData', templData)
+
 				setListData(templData)
 				setListOption(templOption)
 			}
@@ -258,7 +270,8 @@ const MajorsRegistrationPage = () => {
 				Paid: removeCommas(params.Paid),
 				GiftId: params.GiftId,
 				PaymentTypeId: params.PaymentTypeId,
-				Note: params.Note
+				Note: params.Note,
+				PaymentMethodId: params.PaymentMethodId
 			}
 
 			const response = await majorsRegistrationApi.majorsRegistration(payload)
@@ -291,7 +304,7 @@ const MajorsRegistrationPage = () => {
 						<div className="grid grid-cols-1 w800:grid-cols-2 gap-3">
 							<div className="d-flex flex-col gap-3">
 								<Card title="Thông tin học viên" className="col-span-1">
-									{listOption.students.length > 0 && (
+									{listData.students.length > 0 && (
 										// <SelectField
 										// 	className="col-span-2"
 										// 	name={'StudentId'}
@@ -302,9 +315,9 @@ const MajorsRegistrationPage = () => {
 
 										<Form.Item name={'StudentId'} label="Chọn học viên" rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}>
 											<Select>
-												{listOption.students.map((item: any, index) => {
+												{listData.students.map((item: IMajorsRegistrationAvailble, index) => {
 													return (
-														<Select.Option value={item?.StudentId} key={item?.StudentId}>
+														<Select.Option value={item?.StudentId} label={item?.StudentName} key={item?.StudentId}>
 															<div className="selected-option">{item?.StudentName}</div>
 															<div className="select-option-propdown">
 																<Avatar uri={item?.Avatar} className="w-[32px] h-[32px] rounded-full" />
@@ -369,6 +382,7 @@ const MajorsRegistrationPage = () => {
 									disabled
 									optionList={optionPaymentType}
 								/>
+
 								<InputTextField
 									name="Percent"
 									label="Phần trăm"
@@ -388,6 +402,14 @@ const MajorsRegistrationPage = () => {
 									label="Thanh toán"
 									hidden={Type === 1 ? false : true}
 									// rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
+								/>
+								<SelectField
+									className="col-span-2"
+									hidden={Type === 1 ? false : true}
+									name={'PaymentMethodId'}
+									label="Phương thức thanh toán"
+									rules={[{ required: Type === 1 ? true : false, message: 'Vui lòng chọn phương thức thanh toán' }]}
+									optionList={listOption.paymentMethod}
 								/>
 								<SelectField className="col-span-2" name={'GiftId'} label="Quà tặng" optionList={listOption.gift} />
 								<TextBoxField name="Note" label={'Ghi chú'} />

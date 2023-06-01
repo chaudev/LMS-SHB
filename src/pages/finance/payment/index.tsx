@@ -147,17 +147,17 @@ const PaymentManagementPage = () => {
 			width: 220,
 			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
 		},
-		{
-			title: 'Mã khuyến mãi',
-			width: 150,
-			dataIndex: 'DiscountCode'
-		},
-		{
-			title: 'Giảm giá',
-			width: 150,
-			dataIndex: 'Reduced',
-			render: (text) => <>{parseToMoney(text)}₫</>
-		},
+		// {
+		// 	title: 'Mã khuyến mãi',
+		// 	width: 150,
+		// 	dataIndex: 'DiscountCode'
+		// },
+		// {
+		// 	title: 'Giảm giá',
+		// 	width: 150,
+		// 	dataIndex: 'Reduced',
+		// 	render: (text) => <>{parseToMoney(text)}₫</>
+		// },
 
 		{
 			title: 'Tổng số tiền',

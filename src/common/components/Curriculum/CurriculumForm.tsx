@@ -43,11 +43,13 @@ const CurriculumForm = (props: any) => {
 			}
 			const res = await (dataRow?.Id ? curriculumApi.update(DATA_SUBMIT) : curriculumApi.add(DATA_SUBMIT))
 			if (res.status === 200) {
+				console.log('listTodoApi', listTodoApi)
+
 				setTodoApi(listTodoApi)
 				setIsModalVisible(false)
 				form.resetFields()
 				ShowNoti('success', res.data.message)
-				onRefresh && onRefresh()
+				// onRefresh && await onRefresh()
 			}
 		} catch (err) {
 			ShowNoti('error', err.message)
@@ -80,6 +82,7 @@ const CurriculumForm = (props: any) => {
 				visible={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}
+				destroyOnClose
 			>
 				<div className="container-fluid">
 					<Form form={form} onFinish={onSubmit} layout="vertical">

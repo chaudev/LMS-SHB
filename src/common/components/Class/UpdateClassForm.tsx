@@ -16,6 +16,8 @@ const UpdateClassForm = (props) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [form] = Form.useForm()
 	const [teacher, setTeacher] = useState([])
+
+
 	const onSubmit = async (data) => {
 		setIsLoading(true)
 		try {
@@ -25,7 +27,7 @@ const UpdateClassForm = (props) => {
 			}
 			const res = await classApi.updateClass(DATA_SUBMIT)
 			if (res.status === 200) {
-				setTodoApi(listTodoApi)
+				// setTodoApi(listTodoApi)
 				setIsModalOpen(false)
 				getAllClass && getAllClass()
 				ShowNoti('success', res.data.message)

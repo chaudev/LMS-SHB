@@ -210,7 +210,7 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 													},
 													{
 														value: 2,
-														title: 'Đang đóng'
+														title: 'Đã đóng'
 													}
 												]}
 											/>

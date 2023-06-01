@@ -216,7 +216,13 @@ const CustomerAdviseForm = React.memo((props: any) => {
 				title={rowData ? (isStudent ? 'Chuyển học viên' : 'Cập nhật thông tin khách hàng') : 'Thêm khách hàng'}
 				open={isModalVisible}
 				onCancel={toggle}
-				footer={null}
+				footer={
+					<>
+						<PrimaryButton background="primary" type="button" onClick={form.submit} icon="save" disable={isLoading} loading={isLoading}>
+							Lưu
+						</PrimaryButton>
+					</>
+				}
 				width={800}
 				bodyStyle={{
 					maxHeight: '80vh',
@@ -367,13 +373,11 @@ const CustomerAdviseForm = React.memo((props: any) => {
 							)}
 						</div>
 
-						<div className="row mt-3">
+						{/* <div className="row mt-3">
 							<div className="col-12 flex-all-center">
-								<PrimaryButton background="primary" type="submit" icon="save" disable={isLoading} loading={isLoading}>
-									Lưu
-								</PrimaryButton>
+						
 							</div>
-						</div>
+						</div> */}
 					</Form>
 				</div>
 			</Modal>

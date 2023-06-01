@@ -1,4 +1,4 @@
-import { Modal, Tooltip } from 'antd'
+import { Checkbox, Modal, Spin, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { programApi } from '~/api/program'
@@ -20,6 +20,8 @@ const ProgramAddTeacherForm = (props) => {
 	const [listTeacher, setListTeacher] = useState<ITeacher[]>([])
 	const [totalRow, setTotalRow] = useState(0)
 	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [loading, setLoading] = useState('')
+
 	const columns = [
 		{
 			title: 'Mã giáo viên',
@@ -32,52 +34,52 @@ const ProgramAddTeacherForm = (props) => {
 		{
 			title: 'Tên giáo viên',
 			width: 300,
-			className:"font-weight-primary",
-			dataIndex: 'TeacherName',
-			// render: (text) => {
-			// 	return <p >{text}</p>
-			// }
+			className: 'font-weight-primary',
+			dataIndex: 'TeacherName'
 		},
 		{
-			title: 'Giảng dạy',
+			title: 'Thêm vào chương trình',
 			dataIndex: 'Allow',
 			align: 'center',
+			width: 170,
 			render: (allow, data) => {
-				if (allow) {
-					return (
-						<button className="text-tw-green" onClick={() => handleUpdateAllowTeacher(data)}>
-							<Tooltip title="Cho phép">
-								<AiOutlineCheckCircle size={24} />
-							</Tooltip>
-						</button>
-					)
-				} else {
-					return (
-						<button className="text-tw-red" onClick={() => handleUpdateAllowTeacher(data)}>
-							<Tooltip title="Không cho phép">
-								<AiOutlineCloseCircle size={24} />
-							</Tooltip>
-						</button>
-					)
-				}
+				return (
+					<>
+						{loading == data.TeacherId ? (
+							<Spin></Spin>
+						) : (
+							<Checkbox checked={allow} onChange={() => handleUpdateAllowTeacher(data)}></Checkbox>
+						)}
+					</>
+				)
 			}
 		}
 	]
 
 	const handleUpdateAllowTeacher = async (data) => {
 		try {
+			setLoading(data.TeacherId)
 			const DATA_SUBMIT = {
 				teacherId: data.TeacherId,
 				programId: data.ProgramId
 			}
 			const res = await programApi.updateAllowTeacher(DATA_SUBMIT)
 			if (res.status === 200) {
-				setTodoApi(listTodoApi)
+				const temlp = []
+				listTeacher.forEach((element) => {
+					if (element.TeacherId === data.TeacherId) {
+						temlp.push({ ...element, Allow: element.Allow === true ? false : true })
+					} else {
+						temlp.push(element)
+					}
+				})
+				setListTeacher(temlp)
 				ShowNoti('success', res.data.message)
 			}
-			console.log('Data: ', data)
+			setLoading('')
 		} catch (err) {
 			ShowNoti('error', err.message)
+			setLoading('')
 		}
 	}
 
@@ -98,6 +100,7 @@ const ProgramAddTeacherForm = (props) => {
 			setIsLoading(false)
 		}
 	}
+
 	useEffect(() => {
 		if (isModalOpen) {
 			getAllTeacher()
@@ -105,11 +108,6 @@ const ProgramAddTeacherForm = (props) => {
 	}, [isModalOpen, todoApi])
 	return (
 		<>
-			{/* <button className="btn btn-icon view" onClick={() => setIsModalOpen(true)}>
-				<Tooltip title="Thêm giáo viên">
-					<AiOutlineUsergroupAdd size={20} />
-				</Tooltip>
-			</button> */}
 			<IconButton onClick={() => setIsModalOpen(true)} icon="user-group" type="button" tooltip="Thêm giáo viên" color="green" />
 			<Modal
 				title={

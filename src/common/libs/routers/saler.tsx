@@ -69,13 +69,13 @@ export const SalerChildMenu = [
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
 			},
-			{
-				TypeItem: 'single',
-				Key: '/class/register',
-				Icon: '',
-				Route: '/class/register',
-				Text: 'Đăng ký học'
-			}
+			// {
+			// 	TypeItem: 'single',
+			// 	Key: '/class/register',
+			// 	Icon: '',
+			// 	Route: '/class/register',
+			// 	Text: 'Đăng ký học'
+			// }
 		]
 	},
 	{
@@ -125,7 +125,7 @@ export const SalerChildMenu = [
 				Route: '/info-course/changed',
 				Text: 'Học viên chuyển lớp',
 				Icon: ''
-			}
+			},
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/registration',
@@ -133,13 +133,13 @@ export const SalerChildMenu = [
 			// 	Text: 'Hẹn đăng ký',
 			// 	Icon: ''
 			// }
-			// {
-			// 	ItemType: 'single',
-			// 	Key: '/info-course/feedbacks',
-			// 	Route: '/info-course/feedbacks',
-			// 	Text: 'Phản hồi học viên',
-			// 	Icon: ''
-			// }
+			{
+				ItemType: 'single',
+				Key: '/info-course/feedbacks',
+				Route: '/info-course/feedbacks',
+				Text: 'Phản hồi học viên',
+				Icon: ''
+			}
 		]
 	},
 	{

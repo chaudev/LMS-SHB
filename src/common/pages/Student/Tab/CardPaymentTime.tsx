@@ -147,7 +147,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 			title="Đợt thanh toán"
 			extra={
 				<>
-					{userInformation && userInformation.RoleId != '3' && !isCheckUpdate  ? (
+					{userInformation && userInformation.RoleId != '3' &&userInformation.RoleId != '2'  && !isCheckUpdate  ? (
 						<PrimaryButton onClick={showModal} icon="edit" background="blue" type="button">
 							Cập nhật
 						</PrimaryButton>

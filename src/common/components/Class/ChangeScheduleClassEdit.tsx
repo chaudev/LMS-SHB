@@ -438,7 +438,7 @@ const ChangeScheduleClassEdit = (props) => {
 								return (
 									<Select.Option disabled={!item.Fit} key={item.TeacherId} value={item.TeacherId}>
 										<div className="flex items-center justify-between w-full">
-											{item.TeacherName}
+											{item.TeacherName +" - "+item.TeacherCode}
 											{!item.Fit ? (
 												<Tooltip placement="right" title={!!item.Note ? item.Note : `Giáo viên ${item.TeacherName} bị trùng lịch`}>
 													<AiOutlineWarning className="text-tw-red" />

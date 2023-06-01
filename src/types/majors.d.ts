@@ -39,4 +39,5 @@ type IMajorsRegistrationAvailble = {
 	HasMajors: boolean
 	Email: string
 	Mobile: string
+	MajorsName:String
 }

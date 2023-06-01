@@ -527,7 +527,7 @@ export default function ServiceAppointmentTest(props) {
 					}
 					Extra={
 						<>
-							{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && (
+							{(isAdmin() || isSaler() || isManager() || isAcademic()) && (
 								<StudentForm
 									listStudent={listStudent}
 									listTeacher={listTeacher}

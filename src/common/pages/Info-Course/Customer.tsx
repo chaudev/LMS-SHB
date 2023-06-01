@@ -6,7 +6,6 @@ import FilterTable from '~/common/utils/table-filter'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import CustomerAdviseForm from '~/common/components/Customer/CustomerAdviseForm'
 import CustomerAdvisoryMail from '~/common/components/Customer/CustomerAdvisory/CustomerAdvisoryMail'
-import { SendOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
 import { useDispatch } from 'react-redux'
@@ -74,30 +73,34 @@ const CustomerAdvisory = () => {
 		FullName: null
 	}
 	const router = useRouter()
+	const dispatch = useDispatch()
+
 	const [todoApi, setTodoApi] = useState(listTodoApi)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [dataCustomer, setDataCustomer] = useState<ICustomerAdvise[]>()
 	const [totalRow, setTotalRow] = useState(0)
 	const [isLoading, setIsLoading] = useState(false)
-	const dispatch = useDispatch()
+
+	const refVisiblePopover = useRef(null)
+
 	const state = useSelector((state: RootState) => {
 		return state
 	})
+
 	const userInformation = useSelector((state: RootState) => {
 		return state.user.information
 	})
-	const refVisiblePopover = useRef(null)
 
 	const [dataFilter, setDataFilter] = useState([
 		{
-			name: 'CustomerConsultationStatusID',
+			name: 'customerStatusIds',
 			title: 'Tình trạng tư vấn',
 			col: 'col-md-6 col-12',
 			type: 'select',
 			optionList: null
 		},
 		{
-			name: 'LearningNeedID',
+			name: 'branchIds',
 			title: 'Trung tâm',
 			col: 'col-md-6 col-12',
 			type: 'select',
@@ -184,6 +187,7 @@ const CustomerAdvisory = () => {
 			setIsLoading(false)
 		}
 	}
+
 	const getAllSource = async () => {
 		try {
 			const res = await sourceApi.getAll({ pageSize: 99999 })
@@ -271,6 +275,7 @@ const CustomerAdvisory = () => {
 
 	const handleFilter = (listFilter) => {
 		let newListFilter = { ...listFieldFilter }
+
 		listFilter.forEach((item, index) => {
 			let key = item.name
 			Object.keys(newListFilter).forEach((keyFilter) => {
@@ -279,6 +284,7 @@ const CustomerAdvisory = () => {
 				}
 			})
 		})
+
 		setTodoApi({ ...listTodoApi, ...newListFilter, pageIndex: 1 })
 	}
 
@@ -319,11 +325,7 @@ const CustomerAdvisory = () => {
 	}
 
 	const expandedRowRender = (data) => {
-		return (
-			<>
-				<CustomerAdvisoryNote setTodoApiCustomer={setTodoApi} listTodoApiCustomer={listTodoApi} customerID={data.Id} />
-			</>
-		)
+		return <CustomerAdvisoryNote setTodoApiCustomer={setTodoApi} listTodoApiCustomer={listTodoApi} customerID={data.Id} />
 	}
 
 	useEffect(() => {

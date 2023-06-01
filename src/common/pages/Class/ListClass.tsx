@@ -216,6 +216,7 @@ const ListClass = () => {
 	useEffect(() => {
 		getAllClass()
 	}, [todoApi])
+
 	useEffect(() => {
 		if (students && students?.length > 0) {
 			setTodoApi({ ...todoApi, studentId: students[0].value })
@@ -250,6 +251,9 @@ const ListClass = () => {
 										<FilterBase dataFilter={dataFilter} handleFilter={handleFilter} handleReset={handleReset} />
 									</div>
 									<div className="list-action-button">
+										<div onClick={() => hanskeChangeTab(null)} className={`item ${tabStatus == null ? 'active' : ''}`}>
+											Tất cả
+										</div>
 										<div onClick={() => hanskeChangeTab(1)} className={`item ${tabStatus == 1 ? 'active' : ''}`}>
 											Sắp diễn ra
 										</div>
