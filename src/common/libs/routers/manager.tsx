@@ -207,13 +207,13 @@ export const ManagerChildMenu = [
 			// 	Text: 'Duyệt lịch nghỉ',
 			// 	Icon: ''
 			// },
-			// {
-			// 	ItemType: 'single',
-			// 	Key: '/users/salary',
-			// 	Route: '/users/salary',
-			// 	Text: 'Bảng lương',
-			// 	Icon: ''
-			// }
+			{
+				ItemType: 'single',
+				Key: '/users/salary',
+				Route: '/users/salary',
+				Text: 'Bảng lương',
+				Icon: ''
+			}
 		]
 	},
 	{

@@ -188,8 +188,8 @@ export const SalaryPage = () => {
 				if (isSaler() || isAcademic() || isTeacher()) return ''
 				return (
 					<div className="flex items-center">
-						 <ModalTeachingDetail dataRow={item} />
-						<ModalSalaryCRUD mode="edit" onRefresh={() => getSalary(apiParameters)} dataRow={item} />
+						<ModalTeachingDetail dataRow={item} />
+						{(isAdmin() || isAccountant()) && <ModalSalaryCRUD mode="edit" onRefresh={() => getSalary(apiParameters)} dataRow={item} />}
 					</div>
 				)
 			}
@@ -213,26 +213,28 @@ export const SalaryPage = () => {
 				columns={columns}
 				Extra={
 					<>
-						<div className="mr-2">
-							<ModalSalaryCRUD time={time} mode="salary" onRefresh={() => getSalary(apiParameters)} />
-						</div>
 						{(isAdmin() || isAccountant()) && (
-							<Popconfirm
-								title={`Xác nhận tính lương từ ${moment().subtract(1, 'months').startOf('month').format('DD-MM-YYYY')} đến ${moment()
-									.subtract(1, 'months')
-									.endOf('month')
-									.format('DD-MM-YYYY')}?`}
-								okText="Ok"
-								cancelText="No"
-								onConfirm={handleSalaryClosing}
-							>
-								<button
-									type="button"
-									className={`font-medium none-selection rounded-lg h-[38px] px-3 inline-flex items-center justify-center text-white bg-[#0A89FF] hover:bg-[#157ddd] focus:bg-[#1576cf]`}
+							<>
+								<div className="mr-2">
+									<ModalSalaryCRUD time={time} mode="salary" onRefresh={() => getSalary(apiParameters)} />
+								</div>
+								<Popconfirm
+									title={`Xác nhận tính lương từ ${moment().subtract(1, 'months').startOf('month').format('DD-MM-YYYY')} đến ${moment()
+										.subtract(1, 'months')
+										.endOf('month')
+										.format('DD-MM-YYYY')}?`}
+									okText="Ok"
+									cancelText="No"
+									onConfirm={handleSalaryClosing}
 								>
-									Tính lương tháng trước
-								</button>
-							</Popconfirm>
+									<button
+										type="button"
+										className={`font-medium none-selection rounded-lg h-[38px] px-3 inline-flex items-center justify-center text-white bg-[#0A89FF] hover:bg-[#157ddd] focus:bg-[#1576cf]`}
+									>
+										Tính lương tháng trước
+									</button>
+								</Popconfirm>
+							</>
 						)}
 					</>
 				}

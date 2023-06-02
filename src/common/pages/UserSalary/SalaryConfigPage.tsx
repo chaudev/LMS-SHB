@@ -3,15 +3,46 @@ import React, { useEffect, useState } from 'react'
 import { salaryConfigApi } from '~/api/salary'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-  import { ModalSalaryConfigCRUD } from './ModalSalaryConfigCRUD'
+import { ModalSalaryConfigCRUD } from './ModalSalaryConfigCRUD'
 import { Input } from 'antd'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 const initParameters = { fullName: '', userCode: '', pageIndex: 1, pageSize: PAGE_SIZE, search: '' }
 export const SalaryConfigPage = () => {
+	const state = useSelector((state: RootState) => state)
+	const { information: userInformation } = state.user
 	const [apiParameters, setApiParameters] = useState(initParameters)
 	const [totalRow, setTotalRow] = useState(1)
 	const [dataTable, setDataTable] = useState([])
 	const [loading, setLoading] = useState(false)
 
+	function isAdmin() {
+		return userInformation?.RoleId == 1
+	}
+
+	function isTeacher() {
+		return userInformation?.RoleId == 2
+	}
+
+	function isManager() {
+		return userInformation?.RoleId == 4
+	}
+
+	function isStdent() {
+		return userInformation?.RoleId == 3
+	}
+
+	function isSaler() {
+		return userInformation?.RoleId == 5
+	}
+
+	function isAccountant() {
+		return userInformation?.RoleId == 6
+	}
+
+	function isAcademic() {
+		return userInformation?.RoleId == 7
+	}
 	const getSalaryConfig = async (params) => {
 		try {
 			setLoading(true)
@@ -51,7 +82,7 @@ export const SalaryConfigPage = () => {
 		{
 			title: 'Chức vụ',
 			dataIndex: 'RoleId',
-			width:150,
+			width: 150,
 			render: (value, item) => (
 				<>
 					{value == 1 && <span className="tag green">{item?.RoleName}</span>}
@@ -67,7 +98,7 @@ export const SalaryConfigPage = () => {
 		{
 			title: 'Mức lương',
 			dataIndex: 'Value',
-			width:150,
+			width: 150,
 			render: (text) => <div className="font-[600] text-[#388E3C]">{Intl.NumberFormat('ja-JP').format(text)}₫</div>
 		},
 		{
@@ -78,13 +109,15 @@ export const SalaryConfigPage = () => {
 		{
 			title: 'Ghi chú',
 			dataIndex: 'Note',
-			width:200,
+			width: 200
 		},
 		{
 			fixed: 'right',
 			title: '',
 			dataIndex: 'Action',
 			render: (text, item) => {
+				if (isSaler() || isAcademic() || isTeacher()) return ''
+
 				return (
 					<div className="flex items-center">
 						<ModalSalaryConfigCRUD mode="edit" onRefresh={() => getSalaryConfig(apiParameters)} dataRow={item} />
