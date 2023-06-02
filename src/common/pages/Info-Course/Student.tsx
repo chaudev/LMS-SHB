@@ -453,30 +453,24 @@ const Student: FC<IPersonnel> = (props) => {
 								<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
 							</>
 						)}
-						{(role == 3 && isAdmin()) ||
-							(isManage() && item.LearningStatus !== 1 && (
-								<Popconfirm
-									title={
-										item.LearningStatus === 4
-											? 'Xác nhận hủy bảo lưu?'
-											: 'Học viên sẽ bị xóa ra khỏi tất cả lớp để bảo lưu thông tin học tập, xác nhận?'
-									}
-									onConfirm={() => {
-										reverserUser(item.UserInformationId)
-									}}
-									// onCancel={cancel}
-									okText={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
-									cancelText="Hủy"
-									okButtonProps={{ loading: loading }}
-								>
-									<IconButton
-										tooltip={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
-										icon="reserved"
-										type="button"
-										color="purple"
-									/>
-								</Popconfirm>
-							))}
+						{((role == 3 && isAdmin()) || isManage()) && item.LearningStatus !== 1 && (
+							<Popconfirm
+								title={
+									item.LearningStatus === 4
+										? 'Xác nhận hủy bảo lưu?'
+										: 'Học viên sẽ bị xóa ra khỏi tất cả lớp để bảo lưu thông tin học tập, xác nhận?'
+								}
+								onConfirm={() => {
+									reverserUser(item.UserInformationId)
+								}}
+								// onCancel={cancel}
+								okText={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
+								cancelText="Hủy"
+								okButtonProps={{ loading: loading }}
+							>
+								<IconButton tooltip={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'} icon="reserved" type="button" color="purple" />
+							</Popconfirm>
+						)}
 					</div>
 				)
 			}

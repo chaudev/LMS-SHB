@@ -81,7 +81,7 @@ export const StudentChildMenu = [
 				ItemType: 'single',
 				Key: '/info-course/service-appointment-test',
 				Route: '/info-course/service-appointment-test',
-				Text: 'Thôn tin hẹn test',
+				Text: 'Thông tin hẹn test',
 				Icon: ''
 			},
 			{

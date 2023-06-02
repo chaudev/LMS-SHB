@@ -114,9 +114,10 @@ const UserProfileTemplate = () => {
 		form.setFieldsValue(null)
 		setProfileItem(null)
 	}
+
 	const isDisable = () => {
-		// ko cho giáo  viên + học viên cập nhật thông tin thêm này
-		return userInfomation.RoleId == '3' || userInfomation.RoleId == '3'
+		// ko cho giáo  viên + học viên cập nhật thông tin
+		return userInfomation.RoleId == '2' || userInfomation.RoleId == '3' ? true : false
 	}
 
 	return (
@@ -140,9 +141,9 @@ const UserProfileTemplate = () => {
 									<div className="col-span-4  d-flex justify-start tablet:justify-end items-start">
 										{item.Type !== 1 ? (
 											<Tag
-												className={`rounded-full	px-2 ${!isDisable() ? '' : 'cursor-pointer'}`}
+												className={`rounded-full	px-2 ${'cursor-pointer'}`}
 												onClick={() => {
-													if (!isDisable()) {
+													if (isDisable()) {
 														return
 													}
 													form.setFieldsValue(item)
@@ -158,7 +159,7 @@ const UserProfileTemplate = () => {
 											<div className="d-flex w-full justify-between items-start">
 												<TextArea
 													value={textUpdate[index].Value}
-													disabled={!isDisable()}
+													disabled={isDisable()}
 													onChange={(e) => {
 														let newValue = []
 														textUpdate.forEach((i) => {

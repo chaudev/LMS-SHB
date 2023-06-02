@@ -93,23 +93,27 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 
 	return (
 		<>
+			{/* học viên + Phụ huynh + Giáo viên không được phép chỉnh sửa */}
 			<Card
 				title=""
 				extra={
 					<div className="d-flex gap-3">
-						{user?.RoleId == 3 || user?.RoleId == 8 ? (
+						{user?.RoleId == 3 || user?.RoleId == 8 || user?.RoleId == 2 ? (
 							''
 						) : (
-							<ModalStudyRoute mode="add" onRefresh={() => getStudentStudyRoute(apiParameters)} />
+							<>
+								<ModalStudyRoute mode="add" onRefresh={() => getStudentStudyRoute(apiParameters)} />
+								<ModalViewStudyRouteTemplate
+									status={dataTable.length > 0 ? true : false}
+									onRefresh={() => getStudentStudyRoute(apiParameters)}
+								/>
+							</>
 						)}
-						{user?.RoleId != 3 ? (
-							<ModalViewStudyRouteTemplate
-								status={dataTable.length > 0 ? true : false}
-								onRefresh={() => getStudentStudyRoute(apiParameters)}
-							/>
+						{/* {user?.RoleId != 3 || user?.RoleId != 8 || user?.RoleId != 2 ? (
+						
 						) : (
 							''
-						)}
+						)} */}
 					</div>
 				}
 			>
@@ -138,7 +142,7 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 												<span className="font-[500]">Ghi chú:</span> {item?.Note}
 											</p>
 										</div>
-										{user?.RoleId == 3 || user?.RoleId == 8 ? (
+										{user?.RoleId == 3 || user?.RoleId == 8 || user?.RoleId == 2 ? (
 											''
 										) : (
 											<div className="flex items-center gap-1">

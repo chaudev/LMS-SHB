@@ -45,6 +45,11 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 	const [isModalOpen, setIsModalOpen] = useState({ id: null, open: null })
 	const [showPop, setShowPop] = useState('')
 
+	const isRole = {
+		sale: userInformation.RoleId == 5,
+		student : userInformation.RoleId == 3,
+	}
+
 	const checkStatus = (statusID, statusName) => {
 		const rs = ['gold', 'blue', 'default']
 		return (
@@ -159,58 +164,63 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 								<div className="header">
 									<div className="header-inner">
 										<div className="status">{checkStatus(item.Status, item.StatusName)}</div>
-										<div className="action">
-											<Popover
-												open={showPop == item?.Id}
-												onOpenChange={(event) => setShowPop(event ? item?.Id : '')}
-												placement="left"
-												trigger="click"
-												content={
-													<div>
-														<UpdateClassForm
-															getAllClass={getAllClass}
-															setShowPop={setShowPop}
-															dataRow={item}
-															setTodoApi={setTodoApi}
-															listTodoApi={listTodoApi}
-															academic={academic}
-														/>
-														<DeleteTableRow
-															setShowPop={setShowPop}
-															text={`${item.Name}`}
-															handleDelete={() => handleCheckExistStudentInClass(item.Id)}
-														/>
-														<Modal
-															title="Xác nhận xóa"
-															open={item.Id === isModalOpen.id ? isModalOpen.open : false}
-															onCancel={() => setIsModalOpen({ ...isModalOpen, open: false })}
-															footer={
-																<PrimaryButton
-																	onClick={() => handleDelete(item.Id)}
-																	background="blue"
-																	type="button"
-																	icon="remove"
-																	disable={isLoadingDelete}
-																	loading={isLoadingDelete}
-																>
-																	Xóa
-																</PrimaryButton>
-															}
-														>
-															<p>
-																Lớp học đang có <span className="font-medium text-[#002456]">{item.TotalStudent}</span> học viên. Bạn có
-																chắc muốn xóa?
-															</p>
-														</Modal>
-													</div>
-												}
-												title={null}
-											>
-												<button>
-													<BiDotsHorizontalRounded size={22} color="#fff" />
-												</button>
-											</Popover>
-										</div>
+
+										{isRole.sale||isRole.student ? (
+											''
+										) : (
+											<div className="action">
+												<Popover
+													open={showPop == item?.Id}
+													onOpenChange={(event) => setShowPop(event ? item?.Id : '')}
+													placement="left"
+													trigger="click"
+													content={
+														<div>
+															<UpdateClassForm
+																getAllClass={getAllClass}
+																setShowPop={setShowPop}
+																dataRow={item}
+																setTodoApi={setTodoApi}
+																listTodoApi={listTodoApi}
+																academic={academic}
+															/>
+															<DeleteTableRow
+																setShowPop={setShowPop}
+																text={`${item.Name}`}
+																handleDelete={() => handleCheckExistStudentInClass(item.Id)}
+															/>
+															<Modal
+																title="Xác nhận xóa"
+																open={item.Id === isModalOpen.id ? isModalOpen.open : false}
+																onCancel={() => setIsModalOpen({ ...isModalOpen, open: false })}
+																footer={
+																	<PrimaryButton
+																		onClick={() => handleDelete(item.Id)}
+																		background="blue"
+																		type="button"
+																		icon="remove"
+																		disable={isLoadingDelete}
+																		loading={isLoadingDelete}
+																	>
+																		Xóa
+																	</PrimaryButton>
+																}
+															>
+																<p>
+																	Lớp học đang có <span className="font-medium text-[#002456]">{item.TotalStudent}</span> học viên. Bạn có
+																	chắc muốn xóa?
+																</p>
+															</Modal>
+														</div>
+													}
+													title={null}
+												>
+													<button>
+														<BiDotsHorizontalRounded size={22} color="#fff" />
+													</button>
+												</Popover>
+											</div>
+										)}
 									</div>
 								</div>
 								<div className="image">

@@ -28,6 +28,12 @@ export default function CurriculumDetailListInClass(props: ICurriculumDetailList
 	const [isLoadingSubmit, setIsLoadingSubmit] = useState(false)
 	const userInformation = useSelector((state: RootState) => state.user.information)
 
+	function isStdent() {
+		return userInformation?.RoleId == 3
+	}
+	function isParents() {
+		return userInformation?.RoleId == 8
+	}
 	useEffect(() => {
 		if (item) {
 			setTodoApi({ ...todoApi, CurriculumDetailId: item.Id })
@@ -284,111 +290,204 @@ export default function CurriculumDetailListInClass(props: ICurriculumDetailList
 							genExtra(item)
 						}
 					>
-						<DragDropContext onDragEnd={handleDragEnd}>
-							<Droppable droppableId={`CurriculumDetail${item.Id}`}>
-								{(provided) => {
-									return (
-										<div className="curriculum-filename-contain" {...provided.droppableProps} ref={provided.innerRef}>
-											{dataSource.map((item, index) => (
-												<Draggable key={item.Id} draggableId={`ItemCurriculumDetail${item.Id}`} index={index}>
-													{(providedDrag, snip) => {
-														return (
-															<div
-																className="item"
-																{...providedDrag.draggableProps}
-																{...providedDrag.dragHandleProps}
-																ref={providedDrag.innerRef}
-															>
-																<div className="left">
-																	{getFileIcons(item.FileType, item.FileUrl)}
-																	<div className="texts">
-																		<p>{formatFileName(item.FileName)}</p>
-																		<p className="time">{moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</p>
-																	</div>
-																</div>
-																<div className="right">
-																	<p className="time">{moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</p>
-																	<div className="buttons flex items-center">
-																		{userInformation?.RoleId == '1' ||
-																		userInformation?.RoleId == '2' ||
-																		userInformation?.RoleId == '4' ||
-																		userInformation?.RoleId == '7' ? (
-																			<div className="antd-custom-wrap ml-2">
-																				<IconButton
-																					type="button"
-																					icon="hide"
-																					color={item.IsHide ? 'disabled' : 'green'}
-																					onClick={() => {
-																						handleHideCurriculumDetailInClass('Tailieu', item?.Id)
-																					}}
-																					tooltip={`${item.IsHide ? 'Hiện' : 'Ẩn'} chủ đề`}
-																				/>
-																			</div>
-																		) : (
-																			''
-																		)}
+						{isStdent() || isParents() ? (
+							<>
+								<div className="curriculum-filename-contain">
+									{dataSource.map((item, index) => (
+										<div className="item">
+											<div className="left">
+												{getFileIcons(item.FileType, item.FileUrl)}
+												<div className="texts">
+													<p>{formatFileName(item.FileName)}</p>
+													<p className="time">{moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</p>
+												</div>
+											</div>
+											<div className="right">
+												<p className="time">{moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</p>
+												<div className="buttons flex items-center">
+													{userInformation?.RoleId == '1' ||
+													userInformation?.RoleId == '2' ||
+													userInformation?.RoleId == '4' ||
+													userInformation?.RoleId == '7' ? (
+														<div className="antd-custom-wrap ml-2">
+															<IconButton
+																type="button"
+																icon="hide"
+																color={item.IsHide ? 'disabled' : 'green'}
+																onClick={() => {
+																	handleHideCurriculumDetailInClass('Tailieu', item?.Id)
+																}}
+																tooltip={`${item.IsHide ? 'Hiện' : 'Ẩn'} chủ đề`}
+															/>
+														</div>
+													) : (
+														''
+													)}
 
-																		<IconButton
-																			type="button"
-																			icon="download"
-																			color="blue"
-																			onClick={() => {
-																				window.open(item.FileUrl)
-																			}}
-																			className=""
-																			tooltip="Tải tài liệu này"
-																		/>
-																		{userInformation &&
-																			(userInformation?.RoleId == '1' ||
+													<IconButton
+														type="button"
+														icon="download"
+														color="blue"
+														onClick={() => {
+															window.open(item.FileUrl)
+														}}
+														className=""
+														tooltip="Tải tài liệu này"
+													/>
+													{userInformation &&
+														(userInformation?.RoleId == '1' ||
+															userInformation?.RoleId == '2' ||
+															userInformation?.RoleId == '4' ||
+															userInformation?.RoleId == '7') && (
+															<>
+																<Popconfirm
+																	title="Bạn có chắc muốn xóa tài liệu này?"
+																	okText="Có"
+																	cancelText="Hủy"
+																	onConfirm={() => handleDeleteFile(item)}
+																>
+																	<IconButton
+																		type="button"
+																		icon="remove"
+																		color="red"
+																		onClick={() => {}}
+																		className=""
+																		tooltip="Xóa tài liệu này"
+																	/>
+																</Popconfirm>
+																<Popconfirm
+																	title="Bạn có chắc muốn hoàn thành tài liệu này?"
+																	okText="Có"
+																	cancelText="Hủy"
+																	onConfirm={() => onChangeCheckCompleteFile(item)}
+																	disabled={item.IsComplete}
+																>
+																	<IconButton
+																		type="button"
+																		icon="check"
+																		color={item.IsComplete ? 'green' : 'disabled'}
+																		className=""
+																		tooltip={`${item.IsComplete ? '' : 'Hoàn thành chủ đề này'}`}
+																	/>
+																</Popconfirm>
+															</>
+														)}
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
+							</>
+						) : (
+							<>
+								<DragDropContext onDragEnd={handleDragEnd}>
+									<Droppable droppableId={`CurriculumDetail${item.Id}`}>
+										{(provided) => {
+											return (
+												<div className="curriculum-filename-contain" {...provided.droppableProps} ref={provided.innerRef}>
+													{dataSource.map((item, index) => (
+														<Draggable key={item.Id} draggableId={`ItemCurriculumDetail${item.Id}`} index={index}>
+															{(providedDrag, snip) => {
+																return (
+																	<div
+																		className="item"
+																		{...providedDrag.draggableProps}
+																		{...providedDrag.dragHandleProps}
+																		ref={providedDrag.innerRef}
+																	>
+																		<div className="left">
+																			{getFileIcons(item.FileType, item.FileUrl)}
+																			<div className="texts">
+																				<p>{formatFileName(item.FileName)}</p>
+																				<p className="time">{moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</p>
+																			</div>
+																		</div>
+																		<div className="right">
+																			<p className="time">{moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</p>
+																			<div className="buttons flex items-center">
+																				{userInformation?.RoleId == '1' ||
 																				userInformation?.RoleId == '2' ||
 																				userInformation?.RoleId == '4' ||
-																				userInformation?.RoleId == '7') && (
-																				<>
-																					<Popconfirm
-																						title="Bạn có chắc muốn xóa tài liệu này?"
-																						okText="Có"
-																						cancelText="Hủy"
-																						onConfirm={() => handleDeleteFile(item)}
-																					>
+																				userInformation?.RoleId == '7' ? (
+																					<div className="antd-custom-wrap ml-2">
 																						<IconButton
 																							type="button"
-																							icon="remove"
-																							color="red"
-																							onClick={() => {}}
-																							className=""
-																							tooltip="Xóa tài liệu này"
+																							icon="hide"
+																							color={item.IsHide ? 'disabled' : 'green'}
+																							onClick={() => {
+																								handleHideCurriculumDetailInClass('Tailieu', item?.Id)
+																							}}
+																							tooltip={`${item.IsHide ? 'Hiện' : 'Ẩn'} chủ đề`}
 																						/>
-																					</Popconfirm>
-																					<Popconfirm
-																						title="Bạn có chắc muốn hoàn thành tài liệu này?"
-																						okText="Có"
-																						cancelText="Hủy"
-																						onConfirm={() => onChangeCheckCompleteFile(item)}
-																						disabled={item.IsComplete}
-																					>
-																						<IconButton
-																							type="button"
-																							icon="check"
-																							color={item.IsComplete ? 'green' : 'disabled'}
-																							className=""
-																							tooltip={`${item.IsComplete ? '' : 'Hoàn thành chủ đề này'}`}
-																						/>
-																					</Popconfirm>
-																				</>
-																			)}
+																					</div>
+																				) : (
+																					''
+																				)}
+
+																				<IconButton
+																					type="button"
+																					icon="download"
+																					color="blue"
+																					onClick={() => {
+																						window.open(item.FileUrl)
+																					}}
+																					className=""
+																					tooltip="Tải tài liệu này"
+																				/>
+																				{userInformation &&
+																					(userInformation?.RoleId == '1' ||
+																						userInformation?.RoleId == '2' ||
+																						userInformation?.RoleId == '4' ||
+																						userInformation?.RoleId == '7') && (
+																						<>
+																							<Popconfirm
+																								title="Bạn có chắc muốn xóa tài liệu này?"
+																								okText="Có"
+																								cancelText="Hủy"
+																								onConfirm={() => handleDeleteFile(item)}
+																							>
+																								<IconButton
+																									type="button"
+																									icon="remove"
+																									color="red"
+																									onClick={() => {}}
+																									className=""
+																									tooltip="Xóa tài liệu này"
+																								/>
+																							</Popconfirm>
+																							<Popconfirm
+																								title="Bạn có chắc muốn hoàn thành tài liệu này?"
+																								okText="Có"
+																								cancelText="Hủy"
+																								onConfirm={() => onChangeCheckCompleteFile(item)}
+																								disabled={item.IsComplete}
+																							>
+																								<IconButton
+																									type="button"
+																									icon="check"
+																									color={item.IsComplete ? 'green' : 'disabled'}
+																									className=""
+																									tooltip={`${item.IsComplete ? '' : 'Hoàn thành chủ đề này'}`}
+																								/>
+																							</Popconfirm>
+																						</>
+																					)}
+																			</div>
+																		</div>
 																	</div>
-																</div>
-															</div>
-														)
-													}}
-												</Draggable>
-											))}
-											{provided.placeholder}
-										</div>
-									)
-								}}
-							</Droppable>
-						</DragDropContext>
+																)
+															}}
+														</Draggable>
+													))}
+													{provided.placeholder}
+												</div>
+											)
+										}}
+									</Droppable>
+								</DragDropContext>
+							</>
+						)}
+
 						<>{isUploadFile && <div className="line-loading-file"></div>}</>
 					</Collapse.Panel>
 				</Collapse>

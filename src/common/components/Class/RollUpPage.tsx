@@ -230,7 +230,7 @@ export const RollUpPage = () => {
 
 	return (
 		<>
-			<StudentByAttenance />
+			<StudentByAttenance scheduleId={apiParameters.scheduleId} />
 
 			<PrimaryTable
 				loading={loading}

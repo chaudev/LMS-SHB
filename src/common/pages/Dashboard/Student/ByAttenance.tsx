@@ -6,11 +6,9 @@ import { GiStopwatch } from 'react-icons/gi'
 import { statisticalStudentApi } from '~/api/dashboard/student'
 
 const StudentByAttenance = () => {
-	const [attenance, setAttenance] = useState([])
 	const [learningStatus, setLearningStatus] = useState([])
 
 	useEffect(() => {
-		// handleGetByAttenance()
 		handleGetByLearningStatus()
 	}, [])
 

@@ -53,6 +53,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const [init, setInit] = useState(true)
 
 	const [isLoading, setIsLoading] = useState<string>('')
+
 	const [form] = Form.useForm()
 	const FullName = Form.useWatch('FullName', form)
 	const UserName = Form.useWatch('UserName', form)
@@ -391,7 +392,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'StatusId'}
 					/>
 				</div>
-				<Divider></Divider>
+				<Divider />
 				<div className="d-flex w-full justify-between items-start">
 					<TextBoxField
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"

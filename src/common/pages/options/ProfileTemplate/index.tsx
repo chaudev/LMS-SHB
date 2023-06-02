@@ -1,14 +1,12 @@
-import { Card, Divider, Form, Modal, Popconfirm, Skeleton, Tag } from 'antd'
+import { Card, Divider, Form, Modal, Popconfirm, Skeleton, Tag, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { profileTemplateApi } from '~/api/profile-template'
 import { ShowNostis } from '~/common/utils'
-import { RootState } from '~/store'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import IconButton from '~/common/components/Primary/IconButton'
 import PrimaryButton from '~/common/components/Primary/Button'
 import FormProfileTemplate from './component/FormProfileTemplate'
 import { fakeDataUser } from './component/data'
+import { ImMoveDown, ImMoveUp } from 'react-icons/im'
 
 const ProfileTemplatePage = () => {
 	const [form] = Form.useForm()
@@ -139,10 +137,32 @@ const ProfileTemplatePage = () => {
 		setIsModalOpen({ type: '', status: false })
 		form.resetFields()
 	}
+
+	const handleMoveItem = async (index: number, item: any, type: string) => {
+		const temp = [...profileTemplates]
+		const move = profileTemplates[index]
+
+		if (type == 'up') {
+			temp[index] = profileTemplates[index - 1]
+			temp[index - 1] = move
+
+			let payload = []
+			temp.forEach((item, index) => payload.push({ Index: index + 1, Id: item.Id }))
+			changeIndexProfileTemplate(payload)
+		} else {
+			temp[index] = profileTemplates[index + 1]
+			temp[index + 1] = move
+			let payload = []
+			temp.forEach((item, index) => payload.push({ Index: index + 1, Id: item.Id }))
+			changeIndexProfileTemplate(payload)
+		}
+
+		await setProfileTemplates(temp)
+	}
 	return (
 		<div className="d-flex justify-center">
 			<Card className=" w-full max-w-[1200px] ">
-				<div className='w1000:px-3'>
+				<div className="w1000:px-3">
 					<Divider>
 						<h2 className="py-4 font-[600] text-center">Thông tin cá nhân</h2>
 					</Divider>
@@ -164,70 +184,65 @@ const ProfileTemplatePage = () => {
 						<Skeleton></Skeleton>
 					) : (
 						<div className="grid gap-3">
-							<DragDropContext onDragEnd={handleDragEnd}>
-								<Droppable droppableId={`profile-template`}>
-									{(provided) => {
-										return (
-											<div className="" {...provided.droppableProps} ref={provided.innerRef}>
-												{profileTemplates.map((item, index) => {
-													return (
-														<Draggable key={`index-${index}`} draggableId={`ItemCurriculum${item.Id}`} index={index}>
-															{(providedDrag, snip) => {
-																return (
-																	<div
-																		className=""
-																		{...providedDrag.draggableProps}
-																		{...providedDrag.dragHandleProps}
-																		ref={providedDrag.innerRef}
-																	>
-																		<div key={index} className="grid grid-cols-4 gap-2">
-																			<div className="col-span-4  font-[500]">{item.Name}</div>
-																			<div className="col-span-2">
-																				<Tag className="rounded-full px-2  cursor-pointer" color={item.Type == 1 ? 'blue' : 'green'}>
-																					<div className="d-flex items-center px-2">{item.Type === 1 ? 'Văn bản' : 'Lựa chọn'}</div>
-																				</Tag>
-																			</div>
-																			<div className="col-span-2 d-flex justify-end">
-																				<IconButton
-																					type="button"
-																					icon="edit"
-																					color="green"
-																					onClick={() => {
-																						openModalUpdate(item)
-																					}}
-																					className=""
-																					tooltip="Cập nhật thông tin"
-																				/>
-																				<Popconfirm
-																					title="Bạn có chắc muốn xóa thông tin này?"
-																					okText="Có"
-																					cancelText="Hủy"
-																					onConfirm={() => deleteItemProfileTemplate(item)}
-																				>
-																					<IconButton
-																						type="button"
-																						icon="remove"
-																						color="red"
-																						onClick={() => {}}
-																						className=""
-																						tooltip="Xóa Thông tin này"
-																					/>
-																				</Popconfirm>
-																			</div>
-																		</div>
-																		<Divider></Divider>
-																	</div>
-																)
-															}}
-														</Draggable>
-													)
-												})}
+							<div className="">
+								{profileTemplates.map((item, index) => {
+									return (
+										<div className="">
+											<div key={index} className="grid grid-cols-4 gap-2">
+												<div className="col-span-4  font-[500]">{item.Name}</div>
+												<div className="col-span-2 d-flex items-center">
+													<Tag className="rounded-full px-2  cursor-pointer" color={item.Type == 1 ? 'blue' : 'green'}>
+														<div className="d-flex items-center px-2">{item.Type === 1 ? 'Văn bản' : 'Lựa chọn'}</div>
+													</Tag>
+												</div>
+												<div className="col-span-2 d-flex justify-end">
+													{index !== 0 && (
+														<div className="icon   cursor-pointer px-2 btn-icon" onClick={() => handleMoveItem(index, item, 'up')}>
+															<Tooltip title={'Di chuyển lên trên'}>
+																<ImMoveUp size={22} color="#0068ac" />
+															</Tooltip>
+														</div>
+													)}
+													{index + 1 < profileTemplates.length && (
+														<div className="icon  cursor-pointer px-2 btn-icon" onClick={() => handleMoveItem(index, item, 'down')}>
+															<Tooltip title={'Di chuyển xuống dưới'}>
+																<ImMoveDown size={22} color="#007134" />
+															</Tooltip>
+														</div>
+													)}
+													<IconButton
+														type="button"
+														icon="edit"
+														color="green"
+														onClick={() => {
+															openModalUpdate(item)
+														}}
+														className=""
+														tooltip="Cập nhật thông tin"
+													/>
+													<Popconfirm
+														title="Bạn có chắc muốn xóa thông tin này?"
+														okText="Có"
+														cancelText="Hủy"
+														onConfirm={() => deleteItemProfileTemplate(item)}
+													>
+														<IconButton
+															type="button"
+															icon="remove"
+															color="red"
+															onClick={() => {}}
+															className=""
+															tooltip="Xóa Thông tin này"
+														/>
+													</Popconfirm>
+												</div>
 											</div>
-										)
-									}}
-								</Droppable>
-							</DragDropContext>
-							<PrimaryButton onClick={() => openModalCreate()} type="button" icon="add" background="blue">
+											<Divider></Divider>
+										</div>
+									)
+								})}
+							</div>
+							<PrimaryButton onClick={() => openModalCreate()} type="button" icon="add" background="primary">
 								Thêm thông tin
 							</PrimaryButton>
 						</div>

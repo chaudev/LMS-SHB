@@ -157,7 +157,8 @@ const CurriculumDetail = () => {
 	if (isLoading) {
 		return <Skeleton active />
 	}
-
+	console.log(dataSource.list.length  );
+	
 	return (
 		<div className="curriculum-content-container">
 			<Card

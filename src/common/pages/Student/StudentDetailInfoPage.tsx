@@ -20,12 +20,20 @@ import TabMajors from './Tab/TabMajors'
 export interface IStudentDetailInfoPageProps {}
 
 export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps) {
+	const userInfomation = useSelector((state: RootState) => state.user.information)
 	const [studentDetail, setStudentDetail] = useState<IUserResponse>()
 	const [isVisibleModal, setIsVisibleModal] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const router = useRouter()
 	const [form] = Form.useForm()
 	const userInformation = useSelector((state: RootState) => state.user.information)
+
+	const isRole = {
+		admin: userInfomation.RoleId == 1,
+		teacher: userInfomation.RoleId == 2,
+		student: userInfomation.RoleId == 3,
+		parent: userInfomation.RoleId == 8
+	}
 
 	const getStudentDetail = async () => {
 		try {
@@ -45,7 +53,13 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '1',
 						label: `Chi tiết`,
-						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+						children: (
+							<TabStudentDetail
+							
+								StudentDetail={studentDetail}
+								setStudentDetail={setStudentDetail}
+							/>
+						)
 					},
 					// {
 					// 	key: '2',
@@ -77,7 +91,13 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '1',
 						label: `Chi tiết`,
-						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+						children: (
+							<TabStudentDetail
+								
+								StudentDetail={studentDetail}
+								setStudentDetail={setStudentDetail}
+							/>
+						)
 					},
 					// {
 					// 	key: '2',

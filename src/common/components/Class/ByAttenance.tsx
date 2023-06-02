@@ -7,19 +7,22 @@ import { GiStopwatch } from 'react-icons/gi'
 import { TbCalendarTime } from 'react-icons/tb'
 import { statisticalStudentApi } from '~/api/dashboard/student'
 
-const StudentByAttenance = () => {
+interface IStudentByAttenance {
+	scheduleId: number
+}
+
+const StudentByAttenance: React.FC<IStudentByAttenance> = ({ scheduleId }) => {
 	const [attenance, setAttenance] = useState([])
-	const [learningStatus, setLearningStatus] = useState([])
 
 	useEffect(() => {
 		if (Router.query?.class) {
 			handleGetByAttenance()
 		}
-	}, [Router.query])
+	}, [Router.query, scheduleId])
 
 	const handleGetByAttenance = async () => {
 		try {
-			const res = await statisticalStudentApi.GetByAttenance({ classId: Router.query?.class })
+			const res = await statisticalStudentApi.GetByAttenance({ classId: Router.query?.class, scheduleId: scheduleId })
 			if (res.status == 200) {
 				setAttenance(res.data.data)
 			}
@@ -54,7 +57,6 @@ const StudentByAttenance = () => {
 		if (params == 'Vắng không phép') {
 			return { color: colors[2], icon: icons[2] }
 		}
-
 		if (params == 'Bảo lưu') {
 			return { color: colors[4], icon: icons[3] }
 		}

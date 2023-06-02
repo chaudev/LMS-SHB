@@ -1,4 +1,4 @@
-import { Card } from 'antd'
+import { Card, Empty } from 'antd'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
@@ -13,6 +13,8 @@ export interface IDocumentsPageInClassProps {}
 
 export default function DocumentsPageInClass(props: IDocumentsPageInClassProps) {
 	const router = useRouter()
+
+
 
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -48,6 +50,7 @@ export default function DocumentsPageInClass(props: IDocumentsPageInClassProps) 
 	function isAcademic() {
 		return userInformation?.RoleId == 7
 	}
+	
 
 	const getCurriculumDetail = async (curriculumID) => {
 		setIsLoading(true)
@@ -157,28 +160,40 @@ export default function DocumentsPageInClass(props: IDocumentsPageInClassProps) 
 					</>
 				}
 			>
-				<DragDropContext onDragEnd={handleDragEnd}>
-					<Droppable droppableId={`CurriculumID-${router.query.name}`}>
-						{(provided) => {
-							return (
-								<div className="" {...provided.droppableProps} ref={provided.innerRef}>
-									{dataSource.list.map((item, index) => (
-										<Draggable key={item.Id} draggableId={`ItemCurriculum${item.Id}`} index={index}>
-											{(providedDrag, snip) => {
-												return (
-													<div {...providedDrag.draggableProps} {...providedDrag.dragHandleProps} ref={providedDrag.innerRef}>
-														<CurriculumDetailListInClass item={item} onRendering={getCurriculumNoLoading} />
-													</div>
-												)
-											}}
-										</Draggable>
-									))}
-									{provided.placeholder}
-								</div>
-							)
-						}}
-					</Droppable>
-				</DragDropContext>
+				{dataSource && dataSource.list.length > 0 ? (
+					<>
+						{isStdent() ? (
+							<>
+								{dataSource.list.map((item, index) => (
+									<CurriculumDetailListInClass item={item} onRendering={getCurriculumNoLoading} />
+								))}
+							</>
+						) : (
+							<DragDropContext onDragEnd={handleDragEnd}>
+								<Droppable droppableId={`CurriculumID-${router.query.name}`}>
+									{(provided) => {
+										return (
+											<div className="" {...provided.droppableProps} ref={provided.innerRef}>
+												{dataSource.list.map((item, index) => (
+													<Draggable key={item.Id} draggableId={`ItemCurriculum${item.Id}`} index={index}>
+														{(providedDrag, snip) => {
+															return (
+																<div {...providedDrag.draggableProps} {...providedDrag.dragHandleProps} ref={providedDrag.innerRef}></div>
+															)
+														}}
+													</Draggable>
+												))}
+												{provided.placeholder}
+											</div>
+										)
+									}}
+								</Droppable>
+							</DragDropContext>
+						)}
+					</>
+				) : (
+					<Empty />
+				)}
 			</Card>
 		</div>
 	)

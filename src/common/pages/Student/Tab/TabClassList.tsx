@@ -3,8 +3,8 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { rollUpApi } from '~/api/rollup'
 import { studentInClassApi } from '~/api/student-in-class'
-import PrimaryTable from '~/common/components/Primary/Table'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
+import PrimaryTag from '~/common/components/Primary/Tag'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 
 const { Panel } = Collapse
@@ -72,7 +72,6 @@ export const TabClassList: React.FC<ITabClassList> = ({ StudentDetail }) => {
 			getStudentInClass(apiParameters)
 		}
 	}, [StudentDetail])
-
 	const columns = [
 		{
 			title: 'Ngày',
@@ -92,13 +91,50 @@ export const TabClassList: React.FC<ITabClassList> = ({ StudentDetail }) => {
 		},
 		{
 			title: 'Học lực',
-			width: 150,
-			dataIndex: 'LearningStatusName'
+			width: 180,
+			dataIndex: 'LearningStatusName',
+			// { value: 1, label: 'Giỏi' },
+			// { value: 2, label: 'Khá' },
+			// { value: 3, label: 'Trung bình' },
+			// { value: 4, label: 'Kém' },
+			// { value: 5, label: 'Theo dõi đặc biệt' },
+			// { value: 6, label: 'Có cố gắng' },
+			// { value: 7, label: 'Không cố gắng' },
+			// { value: 8, label: 'Không nhận xét' }
+			render: (text, item) => {
+				// { value: 1, label: 'Giỏi' },
+				// { value: 2, label: 'Khá' },
+				// { value: 3, label: 'Trung bình' },
+				// { value: 4, label: 'Kém' },
+				// { value: 5, label: 'Theo dõi đặc biệt' },
+				// { value: 6, label: 'Có cố gắng' },
+				// { value: 7, label: 'Không cố gắng' },
+				// { value: 8, label: 'Không nhận xét' }
+				let statusColor = ['green', 'blue', 'yellow', 'orange', 'red', 'primary', 'red', 'disabled']
+				return (
+					<PrimaryTag color={statusColor[Number(item.LearningStatus) ? Number(item.LearningStatus) - 1 : 'disabled']}>{text}</PrimaryTag>
+				)
+			}
 		},
 		{
 			title: 'Điểm danh',
+			width: 180,
+			dataIndex: 'StatusName',
+			render: (text, item) => {
+				// { value: 1, label: 'Có mặt' },
+				// { value: 2, label: 'Vắng có phép' },
+				// { value: 3, label: 'Vắng không phép' },
+				// { value: 4, label: 'Đi muộn' },
+				// { value: 5, label: 'Về sớm' },
+				// { value: 6, label: 'Nghĩ lễ' }
+				let statusColor = ['green', 'blue', 'red', 'orange', 'yellow', 'disabled']
+				return <PrimaryTag color={statusColor[Number(item.Status) ? Number(item.Status) - 1 : 'disabled']}>{text}</PrimaryTag>
+			}
+		},
+		{
+			title: 'Đánh giá',
 			width: 150,
-			dataIndex: 'StatusName'
+			dataIndex: 'Note'
 		}
 	]
 
