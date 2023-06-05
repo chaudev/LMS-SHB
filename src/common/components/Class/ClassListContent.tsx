@@ -19,11 +19,12 @@ import DeleteTableRow from '../Elements/DeleteTableRow'
 import PrimaryButton from '../Primary/Button'
 import UpdateClassForm from './UpdateClassForm'
 import EmptyData from '../EmptyData'
+import { AiOutlineBranches } from 'react-icons/ai'
 
 type IClassListContent = {
 	totalRow?: number
 	isLoading?: boolean
-	dataSource: any
+	dataSource: IClass[]
 	setTodoApi?: Function
 	listTodoApi?: any
 	todoApi?: any
@@ -47,7 +48,7 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 
 	const isRole = {
 		sale: userInformation.RoleId == 5,
-		student : userInformation.RoleId == 3,
+		student: userInformation.RoleId == 3
 	}
 
 	const checkStatus = (statusID, statusName) => {
@@ -158,20 +159,20 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 			{dataSource.length == 0 && <EmptyData loading={isLoading} />}
 			<div className="content-class">
 				{dataSource.length > 0 &&
-					dataSource?.map((item) => (
+					dataSource?.map((item: IClass) => (
 						<div className="item">
 							<div className="inner-item">
 								<div className="header">
 									<div className="header-inner">
 										<div className="status">{checkStatus(item.Status, item.StatusName)}</div>
 
-										{isRole.sale||isRole.student ? (
+										{isRole.sale || isRole.student ? (
 											''
 										) : (
 											<div className="action">
 												<Popover
-													open={showPop == item?.Id}
-													onOpenChange={(event) => setShowPop(event ? item?.Id : '')}
+													open={showPop == String(item?.Id)}
+													onOpenChange={(event) => setShowPop(event ? String(item?.Id) : '')}
 													placement="left"
 													trigger="click"
 													content={
@@ -302,6 +303,16 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 															<HiOutlineAcademicCap />
 														</div>
 														<p>{item.AcademicName}</p>
+													</div>
+												)}
+											</Tooltip>
+											<Tooltip title="Chi nhánh">
+												{item.BranchName && (
+													<div className="i">
+														<div className="icn">
+															<AiOutlineBranches />
+														</div>
+														<p>{item.BranchName}</p>
 													</div>
 												)}
 											</Tooltip>

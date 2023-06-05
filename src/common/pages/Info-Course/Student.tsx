@@ -106,20 +106,6 @@ const Student: FC<IPersonnel> = (props) => {
 		}
 	}
 
-	const getAllSale = async () => {
-		try {
-			const res = await userInformationApi.getAll({ pageSize: 99999, roleIds: '5' })
-			if (res.status === 200) {
-				dispatch(setSaler(res.data.data))
-			}
-			if (res.status === 204) {
-				dispatch(setSaler([]))
-			}
-		} catch (err) {
-			ShowNoti('error', err.message)
-		}
-	}
-
 	const getAllLearningNeed = async () => {
 		try {
 			const res = await learningNeedApi.getAll({ pageSize: 99999 })
@@ -213,9 +199,9 @@ const Student: FC<IPersonnel> = (props) => {
 			if (state.purpose.Purpose.length === 0) {
 				getAllPurpose()
 			}
-			if (state.saler.Saler.length === 0) {
-				getAllSale()
-			}
+			// if (state.saler.Saler.length === 0) {
+			// 	getAllSale()
+			// }
 		}
 	}, [])
 
@@ -449,9 +435,7 @@ const Student: FC<IPersonnel> = (props) => {
 							/>
 						)}
 						{(isAdmin() || isManage()) && (
-							<>
-								<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
-							</>
+							<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
 						)}
 						{((role == 3 && isAdmin()) || isManage()) && item.LearningStatus !== 1 && (
 							<Popconfirm

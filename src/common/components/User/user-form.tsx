@@ -23,7 +23,7 @@ import { branchApi } from '~/api/branch'
 import { setBranch } from '~/store/branchReducer'
 import TextBoxField from '../FormControl/TextBoxField'
 import RestApi from '~/api/RestApi'
-import { formNoneRequired, formRequired } from '~/common/libs/others/form'
+import { formNoneRequired } from '~/common/libs/others/form'
 import Router from 'next/router'
 import { officeApi } from '~/api/office'
 import { profileStatusApi } from '~/api/profile-status'
@@ -33,11 +33,13 @@ import { processApi } from '~/api/process'
 import { visaStatusApi } from '~/api/visa-status'
 
 const CreateUser: FC<ICreateNew> = (props) => {
+	// tư vấn viên  được lọc theo Trung tâm.
+
 	const { className, onOpen, roleStaff, source, purpose, sale, learningNeed } = props
 	const { onRefresh, isEdit, defaultData, isStudent, isChangeInfo } = props
 
 	const [form] = Form.useForm()
-
+	const BranchIds = Form.useWatch('BranchIds', form)
 	const [districts, setDistricts] = useState([])
 	const [wards, setWards] = useState([])
 	const [loading, setLoading] = useState(false)
@@ -49,6 +51,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 	const [partner, setPartner] = useState([])
 	const [process, setProcess] = useState([])
 	const [visaStatus, setVisaStatus] = useState([])
+	const [listSale, setListSale] = useState([])
 
 	const user = useSelector((state: RootState) => state.user.information)
 	const area = useSelector((state: RootState) => state.area.Area)
@@ -364,6 +367,35 @@ const CreateUser: FC<ICreateNew> = (props) => {
 		}
 	}
 
+	const getAllSaleByBranch = async () => {
+		try {
+			let parseBranchId = ''
+			if (Array.isArray(BranchIds)) {
+				BranchIds.forEach((element) => {
+					parseBranchId = parseBranchId + ',' + element
+				})
+			} else {
+				parseBranchId = BranchIds
+			}
+			const res = await userInformationApi.getAll({ pageSize: 9999, roleIds: '5', branchIds: parseBranchId })
+			if (res.status === 200) {
+				let tenpl = parseSelectArray(res.data.data, 'FullName', 'UserInformationId')
+
+				setListSale(tenpl)
+			}
+			if (res.status === 204) {
+				setListSale([])
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	useEffect(() => {
+		if (BranchIds) {
+			getAllSaleByBranch()
+		}
+	}, [BranchIds])
 	function convertToString(arr) {
 		if (!arr) return ''
 		return arr.join(',')
@@ -465,7 +497,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 				width={800}
 				bodyStyle={{
 					maxHeight: '80vh',
-					overflow:'auto'
+					overflow: 'auto'
 				}}
 				open={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
@@ -475,17 +507,38 @@ const CreateUser: FC<ICreateNew> = (props) => {
 							Huỷ
 						</PrimaryButton>
 						{!isChangeInfo && (
-							<PrimaryButton loading={loading} onClick={() => form.submit()} className="ml-2" background="primary" icon="save" type="button">
+							<PrimaryButton
+								loading={loading}
+								onClick={() => form.submit()}
+								className="ml-2"
+								background="primary"
+								icon="save"
+								type="button"
+							>
 								Lưu
 							</PrimaryButton>
 						)}
 						{!!isChangeInfo && (defaultData.RoleId == 1 || defaultData.RoleId == 2) && (
-							<PrimaryButton loading={loading} onClick={() => form.submit()} className="ml-2" background="primary" icon="save" type="button">
+							<PrimaryButton
+								loading={loading}
+								onClick={() => form.submit()}
+								className="ml-2"
+								background="primary"
+								icon="save"
+								type="button"
+							>
 								Lưu
 							</PrimaryButton>
 						)}
 						{!!isChangeInfo && defaultData.RoleId == 3 && (
-							<PrimaryButton loading={loading} onClick={() => form.submit()} className="ml-2" background="primary" icon="save" type="button">
+							<PrimaryButton
+								loading={loading}
+								onClick={() => form.submit()}
+								className="ml-2"
+								background="primary"
+								icon="save"
+								type="button"
+							>
 								Gửi yêu cầu thay đổi
 							</PrimaryButton>
 						)}
@@ -601,6 +654,9 @@ const CreateUser: FC<ICreateNew> = (props) => {
 								isRequired
 								rules={[yupSync]}
 								optionList={convertBranchSelect}
+								onChangeSelect={() => {
+									form.setFieldValue('SaleId', '')
+								}}
 							/>
 						) : (
 							<SelectField
@@ -649,25 +705,9 @@ const CreateUser: FC<ICreateNew> = (props) => {
 									optionList={learningNeed}
 									onChangeSelect={(value) => handleSelect('LearningNeedId', value)}
 								/>
-								{!isSaler() ? (
-									<SelectField
-										className="col-span-2"
-										label="Tư vấn viên"
-										name="SaleId"
-										optionList={sale}
-										onChangeSelect={(value) => handleSelect('SaleId', value)}
-									/>
-								) : (
-									''
-								)}
+								{!isSaler() ? <SelectField className="col-span-2" label="Tư vấn viên" name="SaleId" optionList={listSale} /> : ''}
 
-								<SelectField
-									className="col-span-2"
-									label="Mục đích học"
-									name="PurposeId"
-									optionList={purpose}
-									onChangeSelect={(value) => handleSelect('PurposeId', value)}
-								/>
+								<SelectField className="col-span-2" label="Mục đích học" name="PurposeId" optionList={purpose} />
 
 								<Divider className="col-span-4" orientation="center">
 									Thông tin hồ sơ

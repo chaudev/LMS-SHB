@@ -112,8 +112,8 @@ export default function ServiceAppointmentTest(props) {
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const [isOpenNoti, setisOpenNoti] = useState(false)
-	const [listStudent, setListStudent] = useState([])
-	const [listTeacher, setListTeacher] = useState([])
+	// const [listStudent, setListStudent] = useState([])
+	// const [listTeacher, setListTeacher] = useState([])
 	const [listExamination, setListExamination] = useState([])
 	const [students, setStudents] = useState<{ label: string; value: string }[]>([])
 
@@ -300,37 +300,6 @@ export default function ServiceAppointmentTest(props) {
 		setTodoApi({ ...todoApi, pageIndex: pageIndex })
 	}
 
-	const getTeachers = async () => {
-		try {
-			const res = await userInformationApi.getAllUserByRole(2)
-			if (res.status === 200) {
-				setListTeacher(parseSelectArrayUser(res.data.data, 'FullName', 'UserCode', 'UserInformationId'))
-			} else {
-				setListTeacher([])
-			}
-		} catch (err) {
-			ShowNoti('error', err.message)
-		}
-	}
-
-	const getStudents = async () => {
-		try {
-			const res = await userInformationApi.getAllUserByRole(3)
-			if (res.status === 200) {
-				setListStudent(parseSelectArrayUser(res.data.data, 'FullName', 'UserCode', 'UserInformationId'))
-			} else {
-				setListStudent([])
-			}
-		} catch (err) {
-			ShowNoti('error', err.message)
-		}
-	}
-
-	const getAllStudentAndTeacher = async () => {
-		getTeachers()
-		getStudents()
-	}
-
 	const getAllExamination = async () => {
 		if (isAdmin() || isSaler() || isManager()) {
 			try {
@@ -362,7 +331,6 @@ export default function ServiceAppointmentTest(props) {
 	}, [todoApi])
 
 	useEffect(() => {
-		getAllStudentAndTeacher()
 		getAllExamination()
 	}, [])
 
@@ -438,14 +406,7 @@ export default function ServiceAppointmentTest(props) {
 							<TestUpdateStatus rowData={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
 						)}
 						{(isAdmin() || isManager() || isTeacher() || isSaler() || isAcademic()) && (
-							<StudentForm
-								rowData={data}
-								listStudent={listStudent}
-								listTeacher={listTeacher}
-								listExamination={listExamination}
-								setTodoApi={setTodoApi}
-								listTodoApi={listTodoApi}
-							/>
+							<StudentForm rowData={data} listExamination={listExamination} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
 						)}
 						{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && data.Status == 1 && (
 							<CancelTest onUpdateData={onUpdateData} dataRow={data} />
@@ -476,14 +437,7 @@ export default function ServiceAppointmentTest(props) {
 							<TestUpdateStatus rowData={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
 						)}
 						{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && (
-							<StudentForm
-								rowData={data}
-								listStudent={listStudent}
-								listTeacher={listTeacher}
-								listExamination={listExamination}
-								setTodoApi={setTodoApi}
-								listTodoApi={listTodoApi}
-							/>
+							<StudentForm rowData={data} listExamination={listExamination} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
 						)}
 						{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && data.Status == 1 && (
 							<CancelTest onUpdateData={onUpdateData} dataRow={data} />
@@ -529,8 +483,8 @@ export default function ServiceAppointmentTest(props) {
 						<>
 							{(isAdmin() || isSaler() || isManager() || isAcademic()) && (
 								<StudentForm
-									listStudent={listStudent}
-									listTeacher={listTeacher}
+									// listStudent={listStudent}
+									// listTeacher={listTeacher}
 									listExamination={listExamination}
 									setTodoApi={setTodoApi}
 									listTodoApi={listTodoApi}

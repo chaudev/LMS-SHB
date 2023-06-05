@@ -1,4 +1,17 @@
-type IUserInputGetall = {}
+type IUserInputGetall = {
+	pageSize?: number
+	sort?: number
+	sortType?: boolean
+	fullName?: string
+	userCode?: string
+	roleIds?: number | string
+	branchIds?: number | string
+	genders?: number | string
+	parentIds?: number | string
+	studentIds?: number | string
+	pageIndex?: number
+	search?: string
+}
 
 type IExamsResponse = IBaseApi<{
 	Code: string

@@ -25,7 +25,6 @@ import SortBox from '~/common/components/Elements/SortBox'
 import CustomerAdvisoryNote from '~/common/components/Customer/CustomerAdvisory/CustomerAdvisoryNote'
 import { useRouter } from 'next/router'
 import { setSource } from '~/store/sourceReducer'
-import { setSaler } from '~/store/salerReducer'
 import { setLearningNeed } from '~/store/learningNeedReducer'
 import { setPurpose } from '~/store/purposeReducer'
 import { setCustomerStatus } from '~/store/customerStatusReducer'
@@ -202,20 +201,6 @@ const CustomerAdvisory = () => {
 		}
 	}
 
-	const getAllSale = async () => {
-		try {
-			const res = await userInformationApi.getAll({ pageSize: 99999, roleIds: '5' })
-			if (res.status === 200) {
-				dispatch(setSaler(res.data.data))
-			}
-			if (res.status === 204) {
-				dispatch(setSaler([]))
-			}
-		} catch (err) {
-			ShowNoti('error', err.message)
-		}
-	}
-
 	const getAllLearningNeed = async () => {
 		try {
 			const res = await learningNeedApi.getAll({ pageSize: 99999 })
@@ -343,9 +328,6 @@ const CustomerAdvisory = () => {
 		}
 		if (state.purpose.Purpose.length === 0) {
 			getAllPurpose()
-		}
-		if (state.saler.Saler.length === 0) {
-			getAllSale()
 		}
 		if (state.customerStatus.CustomerStatus.length === 0) {
 			getAllCustomerStatus()

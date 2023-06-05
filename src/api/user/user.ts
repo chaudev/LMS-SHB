@@ -15,6 +15,10 @@ export const userInformationApi = {
 		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/user-available/${role}`)
 	},
 
+	getAllUserAvailable(params: { roleId: string; branchId: string }) {
+		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/user-available/`, { params: params })
+	},
+
 	getName(params) {
 		return instance.get<IApiResultData<IUserInformation[]>>('/api/Staff', { params: params })
 	},
@@ -24,6 +28,7 @@ export const userInformationApi = {
 			params
 		})
 	},
+
 	getByID(ID) {
 		return instance.get<IApiResultData<IUserResponse>>(`${url}/${ID}`)
 	},
@@ -58,7 +63,7 @@ export const userInformationApi = {
 	},
 	checkExistUserName(data: any) {
 		return instance.post('/api/check-exist-username', data)
-	},
+	}
 }
 
 export const uploadImageApi = {

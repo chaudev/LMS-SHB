@@ -79,6 +79,9 @@ const CreateClassForm = (props) => {
 	const user = useSelector((state: RootState) => state.user.information)
 	const dispatch = useDispatch()
 	const [form] = Form.useForm()
+
+	const BranchId = Form.useWatch('BranchId', form)
+
 	function isAcademic() {
 		return user?.RoleId == 7
 	}
@@ -99,21 +102,25 @@ const CreateClassForm = (props) => {
 			await schema.validateSyncAt(field, { [field]: value })
 		}
 	}
+
 	const branch = useMemo(() => {
 		if (state.branch.Branch.length !== 0) {
 			return parseSelectArray(state.branch.Branch, 'Name', 'Id')
 		}
 	}, [state])
+
 	const specialize = useMemo(() => {
 		if (state.specialize.Specialize.length !== 0) {
 			return parseSelectArray(state.specialize.Specialize, 'Name', 'Id')
 		}
 	}, [state])
+
 	const studyTime = useMemo(() => {
 		if (state.studyTime.StudyTime.length !== 0) {
 			return parseSelectArray(state.studyTime.StudyTime, 'Name', 'Id')
 		}
 	}, [state])
+
 	const getAllBranch = async () => {
 		try {
 			const res = await branchApi.getAll({ pageSize: 9999 })
@@ -127,6 +134,7 @@ const CreateClassForm = (props) => {
 			ShowNoti('error', err.message)
 		}
 	}
+
 	const getAllSpecialize = async () => {
 		try {
 			const res = await gradeApi.getAll({ pageSize: 9999 })
@@ -140,6 +148,7 @@ const CreateClassForm = (props) => {
 			ShowNoti('error', err.message)
 		}
 	}
+
 	const getAllStudyTime = async () => {
 		try {
 			const res = await studyTimeApi.getAll({ pageSize: 9999 })
@@ -153,9 +162,10 @@ const CreateClassForm = (props) => {
 			ShowNoti('error', err.message)
 		}
 	}
+
 	const getUserInfomationAcademic = async () => {
 		try {
-			const res = await userInformationApi.getAll({ pageSize: 9999, roleIds: 7 })
+			const res = await userInformationApi.getAllUserAvailable({ roleId: '7', branchId: BranchId })
 			if (res.status === 200) {
 				const convertData = parseSelectArray(res.data.data, 'FullName', 'UserInformationId')
 				setAcademic(convertData)
@@ -167,6 +177,7 @@ const CreateClassForm = (props) => {
 			ShowNoti('error', err.message)
 		}
 	}
+
 	const getAllRoomByBranch = async (branchId) => {
 		try {
 			const res = await roomApi.getAll({ pageSize: 9999, branchId: branchId })
@@ -225,6 +236,15 @@ const CreateClassForm = (props) => {
 			ShowNoti('error', err.message)
 		}
 	}
+
+	useEffect(() => {
+		if (branch) {
+			getUserInfomationAcademic()
+		} else {
+			setAcademic([])
+		}
+	}, [branch])
+
 	const handleAddListTimeFrame = () => {
 		setListTimeFrames((prev) => {
 			return [...listTimeFrames, { Id: prev[prev.length - 1].Id + 1, DayOfWeek: null, StudyTimeId: null }]
@@ -294,6 +314,7 @@ const CreateClassForm = (props) => {
 		}
 		if (name === 'BranchId') {
 			getAllRoomByBranch(value)
+			form.setFieldValue('AcademicId', '')
 		}
 		if (name === 'CurriculumId') {
 			const getData = noneConvertCurriculum.find((item) => item.Id === value)

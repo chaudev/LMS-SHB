@@ -4,34 +4,90 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { testAppointmentApi } from '~/api/test-appointment'
 import { ShowNoti } from '~/common/utils'
-import { parseSelectArray } from '~/common/utils/common'
+import { parseSelectArray, parseSelectArrayUser } from '~/common/utils/common'
 import { RootState } from '~/store'
 import DatePickerField from '../FormControl/DatePickerField'
 import SelectField from '../FormControl/SelectField'
 import PrimaryButton from '../Primary/Button'
 import IconButton from '../Primary/IconButton'
 import * as yup from 'yup'
+import { userInformationApi } from '~/api/user/user'
+import { IoFastFood } from 'react-icons/io5'
 
 const StudentForm = (props) => {
-	const { rowData, listStudent, listTeacher, listExamination, setTodoApi, listTodoApi } = props
+	const { rowData, listExamination, setTodoApi, listTodoApi } = props
+	const [listStudent, setListStudent] = useState([])
+	const [listTeacher, setListTeacher] = useState([])
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const state = useSelector((state: RootState) => state)
 	const [form] = Form.useForm()
+
+	const BranchId = Form.useWatch('BranchId', form)
 	let schema = yup.object().shape({
 		BranchId: yup.string().required('Bạn không được để trống'),
 		StudentId: yup.string().required('Bạn không được để trống')
 	})
+
 	const yupSync = {
 		async validator({ field }, value) {
 			await schema.validateSyncAt(field, { [field]: value })
 		}
 	}
+
+	const getStudents = async () => {
+		try {
+			const res = await userInformationApi.getAllUserAvailable({
+				roleId: '3',
+				branchId: BranchId
+			})
+			if (res.status === 200) {
+				setListStudent(parseSelectArrayUser(res.data.data, 'FullName', 'UserCode', 'UserInformationId'))
+			} else {
+				setListStudent([])
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const getTeachers = async () => {
+		try {
+			const res = await userInformationApi.getAllUserAvailable({
+				roleId: '2',
+				branchId: BranchId
+			})
+			if (res.status === 200) {
+				setListTeacher(parseSelectArrayUser(res.data.data, 'FullName', 'UserCode', 'UserInformationId'))
+			} else {
+				setListTeacher([])
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
 	const branch = useMemo(() => {
 		if (state.branch.Branch.length > 0) {
 			return parseSelectArray(state.branch.Branch, 'Name', 'Id')
 		}
 	}, [state.branch])
+
+	useEffect(() => {
+		if (BranchId) {
+			form.setFieldValue('StudentId', '')
+			form.setFieldValue('TeacherId', '')
+			getStudents()
+			getTeachers()
+		} else {
+			form.setFieldValue('StudentId', '')
+			form.setFieldValue('TeacherId', '')
+
+			setListStudent([])
+			setListTeacher([])
+		}
+	}, [BranchId])
+
 	const onSubmit = async (data) => {
 		setIsLoading(true)
 		try {
@@ -54,9 +110,11 @@ const StudentForm = (props) => {
 			setIsLoading(false)
 		}
 	}
+
 	const handleCancel = () => {
 		setIsModalVisible(false)
 	}
+
 	useEffect(() => {
 		if (rowData) {
 			form.setFieldsValue(rowData)
@@ -66,7 +124,13 @@ const StudentForm = (props) => {
 		} else {
 			form.setFieldsValue({ Type: 1 })
 		}
+		if (isModalVisible) {
+			if (!listTeacher || listTeacher.length == 0) {
+				getTeachers()
+			}
+		}
 	}, [isModalVisible])
+
 	return (
 		<>
 			{!!rowData ? (

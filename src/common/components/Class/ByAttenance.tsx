@@ -15,7 +15,7 @@ const StudentByAttenance: React.FC<IStudentByAttenance> = ({ scheduleId }) => {
 	const [attenance, setAttenance] = useState([])
 
 	useEffect(() => {
-		if (Router.query?.class) {
+		if (Router.query?.class && scheduleId) {
 			handleGetByAttenance()
 		}
 	}, [Router.query, scheduleId])

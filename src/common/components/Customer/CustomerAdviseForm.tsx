@@ -19,7 +19,7 @@ import IconButton from '../Primary/IconButton'
 import RestApi from '~/api/RestApi'
 
 const CustomerAdviseForm = React.memo((props: any) => {
-	const { source, learningNeed, purpose, sale, branch, refPopover } = props
+	const { source, learningNeed, purpose, branch, refPopover } = props
 	const { customerStatus, rowData, listTodoApi, setTodoApi, isStudent, className } = props
 
 	const [isModalVisible, setIsModalVisible] = useState(false)
@@ -28,6 +28,8 @@ const CustomerAdviseForm = React.memo((props: any) => {
 	const [dataSubmit, setDataSubmit] = useState([])
 	const [districts, setDistricts] = useState([])
 	const [wards, setWards] = useState([])
+
+	const [listSale, setListSale] = useState([])
 
 	const area = useSelector((state: RootState) => state.area.Area)
 
@@ -54,6 +56,10 @@ const CustomerAdviseForm = React.memo((props: any) => {
 	// -----  HANDLE ALL IN FORM -------------
 
 	const [form] = Form.useForm()
+
+	const BranchId = Form.useWatch('BranchId', form)
+	const BranchIds = Form.useWatch('BranchIds', form)
+
 	let schema = yup.object().shape({
 		FullName: yup.string().required('Bạn không được để trống'),
 		Mobile: yup.string().required('Bạn không được để trống'),
@@ -65,6 +71,32 @@ const CustomerAdviseForm = React.memo((props: any) => {
 			await schema.validateSyncAt(field, { [field]: value })
 		}
 	}
+
+	const getAllSaleByBranch = async () => {
+		try {
+			const res = await userInformationApi.getAllUserAvailable({ roleId: '5', branchId: BranchId ? BranchId : BranchIds })
+			if (res.status === 200) {
+				// dispatch(setSaler(res.data.data))
+
+				const parseSelect = parseSelectArray(res.data.data, 'FullName', 'UserInformationId')
+				setListSale(parseSelect)
+			}
+			if (res.status === 204) {
+				// dispatch(setSaler([]))
+				setListSale([])
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	useEffect(() => {
+		if (BranchId || BranchIds) {
+			getAllSaleByBranch()
+		} else {
+			setListSale([])
+		}
+	}, [BranchId, BranchIds])
 
 	const checkExistCustomer = async (data) => {
 		try {
@@ -337,6 +369,9 @@ const CustomerAdviseForm = React.memo((props: any) => {
 								<SelectField
 									placeholder="Chọn trung tâm"
 									name={isStudent ? 'BranchIds' : 'BranchId'}
+									onChangeSelect={() => {
+										form.setFieldValue('SaleId', '')
+									}}
 									label="Trung tâm"
 									optionList={branch}
 									isRequired
@@ -368,7 +403,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 							</div>
 							{!isSaler() && (
 								<div className="col-md-6 col-12">
-									<SelectField name="SaleId" label="Tư vấn viên" placeholder="Chọn tư vấn viên" optionList={sale} />
+									<SelectField name="SaleId" label="Tư vấn viên" placeholder="Chọn tư vấn viên" optionList={listSale} />
 								</div>
 							)}
 						</div>
