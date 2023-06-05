@@ -15,7 +15,7 @@ import InputMoneyField from '~/common/components/FormControl/InputNumberField'
 import PrimaryTooltip from '../PrimaryTooltip'
 
 const ChangeScheduleClass = (props) => {
-	const { dataRow, checkTeacherAvailable, handleChangeInfo, checkRoomAvailable } = props
+	const { dataRow, checkTeacherAvailable, checkRoomAvailable } = props
 	const [form] = Form.useForm()
 	const dispatch = useDispatch()
 

@@ -289,7 +289,6 @@ const CalenderClass = () => {
 		}
 	}
 
-	const handleChangeInfo = async (data) => {}
 
 	return (
 		<div className="wrapper-calendar">
@@ -373,7 +372,6 @@ const CalenderClass = () => {
 							checkTeacherAvailable={checkTeacherAvailable}
 							checkRoomAvailable={checkRoomAvailable}
 							getAllTeacherByBranchAndProgram={getAllTeacherByBranchAndProgram}
-							handleChangeInfo={handleChangeInfo}
 						/>
 					)}
 					eventClick={(eventClickInfo) => {
