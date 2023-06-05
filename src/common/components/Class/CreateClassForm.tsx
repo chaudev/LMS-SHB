@@ -254,6 +254,7 @@ const CreateClassForm = (props) => {
 			{ Id: prev[prev.length - 1]?.Id + 1, DayOfWeek: null, StudyTimeId: null }
 		])
 	}
+
 	const handleRemoveListTimeFrame = (Id) => {
 		if (listTimeFrames.length !== 1) {
 			form.setFieldValue(`DayOfWeek-${Id}`, undefined)
@@ -395,7 +396,7 @@ const CreateClassForm = (props) => {
 			if (state.studyTime.StudyTime.length === 0) {
 				getAllStudyTime()
 			}
-			getUserInfomationAcademic()
+			// getUserInfomationAcademic()
 			refPopoverWrapperBtn.current.close()
 		}
 	}, [isModalOpen])
@@ -403,8 +404,14 @@ const CreateClassForm = (props) => {
 	useEffect(() => {
 		if (form.getFieldValue('BranchId') && form.getFieldValue('ProgramId')) {
 			getAllTeacherByBranchAndProgram(form.getFieldValue('BranchId'), form.getFieldValue('ProgramId'))
+		} else {
+			setTeacher([])
 		}
+		form.setFieldValue('TeacherId', '')
 	}, [form.getFieldValue('BranchId'), form.getFieldValue('ProgramId')])
+	useEffect(() => {
+		form.setFieldValue('AcademicId', '')
+	}, [form.getFieldValue('BranchId')])
 
 	// const listCalendar = useSelector((state: RootState) => state.class.listCalendar)
 
@@ -458,7 +465,7 @@ const CreateClassForm = (props) => {
 								label="Trung tâm"
 								name="BranchId"
 								optionList={branch}
-								onChangeSelect={(value) => !isOnline && handleSelectChange('BranchId', value)}
+								onChangeSelect={(value) => handleSelectChange('BranchId', value)}
 							/>
 						</div>
 						<div className="col-md-6 col-12">
