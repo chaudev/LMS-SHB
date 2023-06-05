@@ -13,9 +13,12 @@ import IconButton from '../Primary/IconButton'
 import * as yup from 'yup'
 import { userInformationApi } from '~/api/user/user'
 import { IoFastFood } from 'react-icons/io5'
+import { useRole } from '~/common/hooks/useRole'
 
 const StudentForm = (props) => {
 	const { rowData, listExamination, setTodoApi, listTodoApi } = props
+
+	const { isTeacher } = useRole()
 	const [listStudent, setListStudent] = useState([])
 	const [listTeacher, setListTeacher] = useState([])
 	const [isModalVisible, setIsModalVisible] = useState(false)
@@ -24,6 +27,7 @@ const StudentForm = (props) => {
 	const [form] = Form.useForm()
 
 	const BranchId = Form.useWatch('BranchId', form)
+
 	let schema = yup.object().shape({
 		BranchId: yup.string().required('Bạn không được để trống'),
 		StudentId: yup.string().required('Bạn không được để trống')
@@ -75,18 +79,21 @@ const StudentForm = (props) => {
 
 	useEffect(() => {
 		if (BranchId) {
-			form.setFieldValue('StudentId', '')
-			form.setFieldValue('TeacherId', '')
 			getStudents()
 			getTeachers()
 		} else {
-			form.setFieldValue('StudentId', '')
-			form.setFieldValue('TeacherId', '')
-
 			setListStudent([])
 			setListTeacher([])
 		}
 	}, [BranchId])
+
+	// useEffect(() => {
+	// 	if (rowData) {
+	// 		form.setFieldValue('BranchId', rowData.BranchId)
+	// 		form.setFieldValue('StudentId', rowData.StudentId)
+	// 		form.setFieldValue('TeacherId', rowData.TeacherId)
+	// 	}
+	// }, [rowData])
 
 	const onSubmit = async (data) => {
 		setIsLoading(true)
@@ -152,18 +159,18 @@ const StudentForm = (props) => {
 			<Modal title="Phiếu thông tin cá nhân" open={isModalVisible} onCancel={handleCancel} footer={null} width={600}>
 				<Form form={form} layout="vertical" onFinish={onSubmit}>
 					<div className="row">
-						{!rowData && (
-							<div className="col-md-6 col-12">
-								<SelectField
-									name="BranchId"
-									label="Trung tâm"
-									placeholder="Chọn trung tâm"
-									optionList={branch}
-									isRequired
-									rules={[yupSync]}
-								/>
-							</div>
-						)}
+						<div className={`col-md-6 col-12 ${!rowData ? '' : 'hidden'}`}>
+							<SelectField
+								name="BranchId"
+								label="Trung tâm"
+								placeholder="Chọn trung tâm"
+								optionList={branch}
+								isRequired
+								rules={[yupSync]}
+								onChangeSelect={() => {}}
+							/>
+						</div>
+
 						<div className={rowData ? 'col-12' : 'col-md-6 col-12'}>
 							<SelectField
 								disabled={!!rowData}
@@ -178,7 +185,13 @@ const StudentForm = (props) => {
 					</div>
 					<div className="row">
 						<div className="col-12">
-							<SelectField name="TeacherId" label="Giáo viên test" placeholder="Chọn giáo viên" optionList={listTeacher} />
+							<SelectField
+								name="TeacherId"
+								disabled={isTeacher}
+								label="Giáo viên test"
+								placeholder="Chọn giáo viên"
+								optionList={listTeacher}
+							/>
 						</div>
 						<div className="col-12">
 							<SelectField

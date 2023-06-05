@@ -16,6 +16,7 @@ import { billApi } from '~/api/bill'
 import { userInformationApi } from '~/api/user/user'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 import { branchApi } from '~/api/branch'
+import PrimaryTag from '~/common/components/Primary/Tag'
 
 const initParamters = { pageSize: PAGE_SIZE, pageIndex: 1, search: '', fromDate: null, toDate: null, studentIds: null, branchIds: null }
 const PaymentManagementPage = () => {
@@ -163,18 +164,21 @@ const PaymentManagementPage = () => {
 			title: 'Tổng số tiền',
 			dataIndex: 'TotalPrice',
 			width: 116,
+			align: 'right',
 			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
 		},
 
 		{
 			title: 'Đã thanh toán',
 			dataIndex: 'Paid',
+			align: 'right',
 			width: 126,
 			render: (value, item) => <p className="font-[600] text-[#388E3C]">{parseToMoney(value)}₫</p>
 		},
 		{
 			title: 'Chưa thanh toán',
 			dataIndex: 'Debt',
+			align: 'right',
 			width: 140,
 			render: (value, item) => <p className="font-[600] text-[#E53935]">{parseToMoney(value)}₫</p>
 		},
@@ -188,13 +192,13 @@ const PaymentManagementPage = () => {
 			dataIndex: 'Type',
 			width: 180,
 			render: (value, item) => (
-				<p className="font-[600] text-[#E53935]">
-					{value == 1 && <span className="tag blue">{item?.TypeName}</span>}
-					{value == 2 && <span className="tag green">{item?.TypeName}</span>}
-					{value == 3 && <span className="tag yellow">{item?.TypeName}</span>}
-					{value == 4 && <span className="tag gray">{item?.TypeName}</span>}
-					{value == 5 && <span className="tag blue">{item?.TypeName}</span>}
-				</p>
+				<>
+					{value == 1 && <PrimaryTag color={'green'}>{item?.TypeName}</PrimaryTag>}
+					{value == 2 && <PrimaryTag color={'blue'}>{item?.TypeName}</PrimaryTag>}
+					{value == 3 && <PrimaryTag color={'red'}>{item?.TypeName}</PrimaryTag>}
+					{value == 4 && <PrimaryTag color={'yellow'}>{item?.TypeName}</PrimaryTag>}
+					{value == 5 && <PrimaryTag color={'primary'}>{item?.TypeName}</PrimaryTag>}
+				</>
 			)
 		},
 		{

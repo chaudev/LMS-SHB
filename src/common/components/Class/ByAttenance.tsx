@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { AiFillStop } from 'react-icons/ai'
-import { BsFillCalendarCheckFill, BsFillCalendarFill, BsFillCalendarXFill } from 'react-icons/bs'
+import { BsCalendarEvent, BsFillCalendarCheckFill, BsFillCalendarFill, BsFillCalendarXFill } from 'react-icons/bs'
 import { FaBookReader, FaCalendarDay } from 'react-icons/fa'
 import { GiStopwatch } from 'react-icons/gi'
 import { TbCalendarTime } from 'react-icons/tb'
@@ -39,13 +39,14 @@ const StudentByAttenance: React.FC<IStudentByAttenance> = ({ scheduleId }) => {
 		<FaBookReader size={20} color="#fff" />,
 		<AiFillStop size={20} color="#fff" />,
 		<BsFillCalendarFill size={20} color="#fff" />,
-		<TbCalendarTime size={24} color="#fff" />
+		<TbCalendarTime size={24} color="#fff" />,
+		<BsCalendarEvent size={24} color="#fff" />
 	]
 
 	const colors = ['#ef8b43', '#599f50', '#d44141', '#0262db', '#FB8C00', '#E53935', '#35762c', '#d7b936']
 
 	function getColor(params) {
-		if (params == 'Có') {
+		if (params == 'Có mặt') {
 			return { color: colors[1], icon: icons[1] }
 		}
 		if (params == 'Vắng có phép') {
@@ -63,8 +64,8 @@ const StudentByAttenance: React.FC<IStudentByAttenance> = ({ scheduleId }) => {
 		if (params == 'Đang học') {
 			return { color: colors[3], icon: icons[4] }
 		}
-		if (params == 'Dừng học') {
-			return { color: colors[5], icon: icons[5] }
+		if (params == 'Nghỉ lễ') {
+			return { color: colors[6], icon: icons[8] }
 		}
 
 		return { color: colors[0], icon: icons[0] }

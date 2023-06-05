@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { tokenApi } from '~/api/token-api'
 import { logOut, playWithToken } from '~/common/utils/token-handle'
 import { userApi } from '~/services/auth'
 import { RootState } from '~/store'

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import PrimaryButton from '~/common/components/Primary/Button'
 import IconButton from '~/common/components/Primary/IconButton'
 import InputTextField from '../FormControl/InputTextField'
+import { useRole } from '~/common/hooks/useRole'
 
 export interface IModalCurriculumOfClassCRUD {
 	mode: 'add' | 'edit' | 'delete'
@@ -12,7 +13,11 @@ export interface IModalCurriculumOfClassCRUD {
 }
 
 export default function ModalCurriculumOfClassCRUD(props: IModalCurriculumOfClassCRUD) {
+
 	const { mode, dataRow, isLoading, onSubmit } = props
+
+	const { isStudent, isAccountant, isAdmin, isTeacher, isManager, isAcademic } = useRole()
+
 	const [visible, setVisible] = useState(false)
 	const [form] = Form.useForm()
 	const { TabPane } = Tabs

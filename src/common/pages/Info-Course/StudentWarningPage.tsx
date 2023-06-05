@@ -1,8 +1,10 @@
-import { Form, Input, Select } from 'antd'
+import { Form, Input, Select, Tooltip } from 'antd'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { studentInClassApi } from '~/api/student-in-class'
 import { userInformationApi } from '~/api/user/user'
+import { PrimaryTooltip } from '~/common/components'
 import CCSearch from '~/common/components/CCSearch'
 import IconButton from '~/common/components/Primary/IconButton'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
@@ -111,25 +113,35 @@ export const StudentWarningPage = () => {
 	const columns = [
 		userInfoColumn,
 		{
-			title: 'Số điện thoại',
-			dataIndex: 'Mobile'
-		},
-		{
 			title: 'Email',
 			dataIndex: 'Email'
 		},
 		{
+			title: 'Số điện thoại',
+			dataIndex: 'Mobile'
+		},
+		{
 			title: 'Lớp',
-			dataIndex: 'ClassName'
+			dataIndex: 'ClassName',
+			width: 170,
+			render: (value, item) => {
+				return (
+					<Tooltip title={'Xem lớp: ' + value}>
+						<Link href={`/class/list-class/detail/?class=${item.ClassId}`}>
+							<a>
+								<div className="max-w-[150px] in-1-line cursor-pointer font-[500] text-[#1976D2] hover:text-[#1968b7] hover:underline">
+									{value}
+								</div>
+							</a>
+						</Link>
+					</Tooltip>
+				)
+			}
 		},
 		{
 			title: 'Loại',
 			dataIndex: 'TypeName',
-			render: (text, item) => (
-				<>
-					<PrimaryTag color={item?.Type == 1 ? 'green' : 'red'} children={text} />
-				</>
-			)
+			render: (text, item) => <PrimaryTag color={item?.Type == 1 ? 'green' : 'red'} children={text} />
 		}
 	]
 

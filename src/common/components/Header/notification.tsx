@@ -1,4 +1,4 @@
-import { Card, List, Popover } from 'antd'
+import { Card, Empty, List, Popover } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
@@ -17,6 +17,7 @@ const Notification = () => {
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [countNotification, setCountNotification] = useState(0)
 	const [contentToShow, setContentToShow] = useState<INotification[]>([])
+	console.log('notification', notification)
 
 	const onCloseModal = () => {
 		setIsModalVisible(false)
@@ -90,30 +91,40 @@ const Notification = () => {
 			<Card
 				title="Thông báo"
 				extra={
-					<div onClick={() => handleSeenNotification(notification)} className="select-none cursor-pointer hover:text-tw-blue font-bold">
-						<p>Xem tất cả</p>
-					</div>
+					<>
+						{notification && notification.length > 0 ? (
+							<div onClick={() => handleSeenNotification(notification)} className="select-none cursor-pointer hover:text-tw-blue font-bold">
+								<p>Xem tất cả</p>
+							</div>
+						) : (
+							''
+						)}
+					</>
 				}
 				bordered={false}
 			>
 				<div className="w-96 h-96 overflow-y-auto scrollbar mr-[-10px] pr-[5px]">
-					{notification?.map((item, index) => {
-						return (
-							<div
-								key={index}
-								onClick={() => handleSeenNotification([item])}
-								className="bg-[#f3f3f3] hover:bg-[#e8e8e8] rounded-xl mb-tw-2 last:m-tw-0 px-tw-3 py-tw-2.5 cursor-pointer"
-							>
-								<div className="flex justify-between items-center">
-									<p className={`${item.IsSeen ? '' : 'font-bold'} text-tw-blue line-clamp-1`}>{item.Title}</p>
-									<p className={`${item.IsSeen ? '' : 'font-bold'}`}>{moment(item.CreatedOn).format('DD/MM/YYYY')}</p>
+					{notification && notification.length > 0 ? (
+						notification?.map((item, index) => {
+							return (
+								<div
+									key={index}
+									onClick={() => handleSeenNotification([item])}
+									className="bg-[#f3f3f3] hover:bg-[#e8e8e8] rounded-xl mb-tw-2 last:m-tw-0 px-tw-3 py-tw-2.5 cursor-pointer"
+								>
+									<div className="flex justify-between items-center">
+										<p className={`${item.IsSeen ? '' : 'font-bold'} text-tw-blue line-clamp-1`}>{item.Title}</p>
+										<p className={`${item.IsSeen ? '' : 'font-bold'}`}>{moment(item.CreatedOn).format('DD/MM/YYYY')}</p>
+									</div>
+									<div>
+										<p className={`${item.IsSeen ? '' : 'font-bold'} line-clamp-3`}>{ReactHtmlParser(item.Content)}</p>
+									</div>
 								</div>
-								<div>
-									<p className={`${item.IsSeen ? '' : 'font-bold'} line-clamp-3`}>{ReactHtmlParser(item.Content)}</p>
-								</div>
-							</div>
-						)
-					})}
+							)
+						})
+					) : (
+						<Empty />
+					)}
 				</div>
 			</Card>
 		</div>
@@ -130,7 +141,7 @@ const Notification = () => {
 				footer={null}
 			>
 				<div className={`${contentToShow.length > 1 ? 'h-tw-750' : 'h-auto'} overflow-y-auto scrollbar antd-custom-wrap`}>
-					{contentToShow.length > 1 ? (
+					{contentToShow && contentToShow.length > 1 ? (
 						<List
 							dataSource={contentToShow}
 							pagination={{

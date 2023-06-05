@@ -8,14 +8,13 @@ import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
 import CurriculumDetailListInClass from './CurriculumDetailListInClass'
 import ModalCurriculumOfClassCRUD from './ModalCurriculumOfClass'
+import { useRole } from '~/common/hooks/useRole'
 
 export interface IDocumentsPageInClassProps {}
 
 export default function DocumentsPageInClass(props: IDocumentsPageInClassProps) {
 	const router = useRouter()
-
-
-
+	const { isStudent, isAccountant, isAdmin, isTeacher, isManager, isAcademic ,isParents} = useRole()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const [curriculumIdInClass, setCurriculumIdInClass] = useState(null)
@@ -25,37 +24,13 @@ export default function DocumentsPageInClass(props: IDocumentsPageInClassProps) 
 		list: []
 	})
 
-	const userInformation = useSelector((state: RootState) => state.user.information)
-
-	function isAdmin() {
-		return userInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return userInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return userInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return userInformation?.RoleId == 3
-	}
-
-	function isAccountant() {
-		return userInformation?.RoleId == 6
-	}
-
-	function isAcademic() {
-		return userInformation?.RoleId == 7
-	}
-	
 
 	const getCurriculumDetail = async (curriculumID) => {
 		setIsLoading(true)
 		try {
 			const response = await classApi.getCurriculumDetailOfClass({ CurriculumIdInClassId: curriculumID ? curriculumID : 0 })
+			console.log(response)
+
 			if (response.status === 200) {
 				let temp = []
 				response.data.data.forEach((item) => temp.push({ title: item.Name, value: item.Id }))
@@ -154,7 +129,7 @@ export default function DocumentsPageInClass(props: IDocumentsPageInClassProps) 
 				title="Danh sách chủ đề"
 				extra={
 					<>
-						{(isAdmin() || isManager() || isTeacher() || isAcademic()) && (
+						{(isAdmin || isManager || isTeacher || isAcademic) && (
 							<ModalCurriculumOfClassCRUD mode="add" onSubmit={handleAddCurriculumDetail} isLoading={isLoadingSubmit} />
 						)}
 					</>
@@ -162,7 +137,7 @@ export default function DocumentsPageInClass(props: IDocumentsPageInClassProps) 
 			>
 				{dataSource && dataSource.list.length > 0 ? (
 					<>
-						{isStdent() ? (
+						{isStudent || isAccountant || isParents? (
 							<>
 								{dataSource.list.map((item, index) => (
 									<CurriculumDetailListInClass item={item} onRendering={getCurriculumNoLoading} />
@@ -178,7 +153,9 @@ export default function DocumentsPageInClass(props: IDocumentsPageInClassProps) 
 													<Draggable key={item.Id} draggableId={`ItemCurriculum${item.Id}`} index={index}>
 														{(providedDrag, snip) => {
 															return (
-																<div {...providedDrag.draggableProps} {...providedDrag.dragHandleProps} ref={providedDrag.innerRef}></div>
+																<div {...providedDrag.draggableProps} {...providedDrag.dragHandleProps} ref={providedDrag.innerRef}>
+																	<CurriculumDetailListInClass item={item} onRendering={getCurriculumNoLoading} />
+																</div>
 															)
 														}}
 													</Draggable>

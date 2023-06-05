@@ -21,6 +21,8 @@ import RestApi from '~/api/RestApi'
 const CustomerAdviseForm = React.memo((props: any) => {
 	const { source, learningNeed, purpose, branch, refPopover } = props
 	const { customerStatus, rowData, listTodoApi, setTodoApi, isStudent, className } = props
+	console.log('customerStatus', customerStatus)
+	console.log('rowData', rowData)
 
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
@@ -99,6 +101,8 @@ const CustomerAdviseForm = React.memo((props: any) => {
 	}, [BranchId, BranchIds])
 
 	const checkExistCustomer = async (data) => {
+		console.log('checkExistCustomer', data)
+
 		try {
 			if (rowData) {
 				onSubmit(data)
@@ -136,6 +140,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 			} else {
 				DATA_SUBMIT = { ...data, SaleId: isSaler() ? Number(theInformation.UserInformationId) : data.SaleId }
 			}
+			console.log(' SUBMI FORM')
 
 			const res = await (rowData?.Id
 				? isStudent
@@ -215,8 +220,21 @@ const CustomerAdviseForm = React.memo((props: any) => {
 		}
 	}
 
-	function removeContaining(arr) {
-		return arr.filter((person) => person?.value !== 2)
+	function formatCustomerStatus(arr) {
+		let templ = []
+		arr.forEach((element) => {
+			if (element.value == 2) {
+				templ.push({
+					...element,
+					disabled: true
+				})
+			} else {
+				templ.push({
+					...element
+				})
+			}
+		})
+		return templ
 	}
 
 	function onClickCreate() {
@@ -385,7 +403,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 										placeholder="Chọn tình trạng tư vấn"
 										name="CustomerStatusId"
 										label="Tình trạng tư vấn"
-										optionList={removeContaining(customerStatus)}
+										optionList={formatCustomerStatus(customerStatus)}
 									/>
 								</div>
 							)}

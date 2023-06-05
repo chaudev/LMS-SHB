@@ -6,6 +6,7 @@ import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { parseToMoney } from '~/common/utils/common'
 import { BillDetail } from '../BillDetail'
+import PrimaryTag from '~/common/components/Primary/Tag'
 
 type ITabBill = {
 	StudentDetail: IUserResponse
@@ -47,15 +48,21 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 
 	const columns = [
 		{
-			title: 'Mã',
-			dataIndex: 'Code',
-			width: 100
-		},
-		{
-			title: 'Người thanh toán',
+			title: 'Thông tin thanh toán',
 			dataIndex: 'FullName',
-			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
+			width: 250,
+			render: (value, item) => (
+				<>
+					<p>
+						<span className="font-[400] text-gray">Mã thanh toán: </span>
+						<span className="font-[500] text-[#002456]">{item.Code}</span>
+					</p>
+					<p>
+						<span className="font-[400] text-gray">Người thanh toán: </span>
+						<span className="font-[600] text-[#002456]">{value}</span>
+					</p>
+				</>
+			)
 		},
 		// {
 		// 	title: 'Mã khuyến mãi',
@@ -75,7 +82,6 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 			width: 116,
 			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
 		},
-
 		{
 			title: 'Đã thanh toán',
 			dataIndex: 'Paid',
@@ -88,36 +94,36 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 			width: 140,
 			render: (value, item) => <p className="font-[600] text-[#E53935]">{parseToMoney(value)}₫</p>
 		},
-		// {
-		// 	title: 'Phương thức',
-		// 	dataIndex: 'PaymentMethodName',
-		// 	width: 130
-		// },
 		{
 			title: 'Loại',
 			dataIndex: 'Type',
-			width: 180,
-			render: (value, item) => (
-				<p className="font-[600] text-[#E53935]">
-					{value == 1 && <span className="tag blue">{item?.TypeName}</span>}
-					{value == 2 && <span className="tag green">{item?.TypeName}</span>}
-					{value == 3 && <span className="tag yellow">{item?.TypeName}</span>}
-					{value == 4 && <span className="tag gray">{item?.TypeName}</span>}
-					{value == 5 && <span className="tag blue">{item?.TypeName}</span>}
-				</p>
-			)
+			width: 200,
+			render: (value, item) => {
+				let color = ['green', 'blue', 'red', 'yellow', 'primary']
+				return (
+					<>
+						{value == 1 && <PrimaryTag color={'green'}>{item?.TypeName}</PrimaryTag>}
+						{value == 2 && <PrimaryTag color={'blue'}>{item?.TypeName}</PrimaryTag>}
+						{value == 3 && <PrimaryTag color={'red'}>{item?.TypeName}</PrimaryTag>}
+						{value == 4 && <PrimaryTag color={'yellow'}>{item?.TypeName}</PrimaryTag>}
+						{value == 5 && <PrimaryTag color={'primary'}>{item?.TypeName}</PrimaryTag>}
+					</>
+				)
+			}
 		},
 		{
 			title: 'Người tạo',
 			dataIndex: 'ModifiedBy',
 			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
-		},
-		{
-			title: 'Ngày',
-			dataIndex: 'ModifiedOn',
-			width: 160,
-			render: (value, item) => <p>{moment(value).format('DD/MM/YYYY HH:mm')}</p>
+			render: (value, item) => (
+				<>
+					<p className="font-[600] text-[#002456]">{value}</p>
+					<p>
+						<span className="font-[400] text-gray">Ngày tạo: </span>
+						<span>{moment(item.ModifiedOn).format('DD/MM/YYYY HH:mm')}</span>
+					</p>
+				</>
+			)
 		},
 		{
 			title: 'Kỳ tiếp theo',

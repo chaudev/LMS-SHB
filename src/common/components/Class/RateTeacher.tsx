@@ -1,4 +1,4 @@
-import { Card, Form, Modal, Rate, Select, Spin, Timeline, Tooltip } from 'antd'
+import { Card, Empty, Form, Modal, Rate, Select, Spin, Timeline, Tooltip } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -94,8 +94,7 @@ export const RateTeacher = () => {
 			<Card title="Đánh giá giáo viên">
 				<Spin spinning={loading}>
 					<Timeline mode="left">
-						{dataTable &&
-							dataTable?.length > 0 &&
+						{dataTable && dataTable?.length > 0 ? (
 							dataTable?.map((item, index) => (
 								<Timeline.Item
 									label={
@@ -149,7 +148,10 @@ export const RateTeacher = () => {
 										</div>
 									</div>
 								</Timeline.Item>
-							))}
+							))
+						) : (
+							<Empty />
+						)}
 					</Timeline>
 				</Spin>
 			</Card>

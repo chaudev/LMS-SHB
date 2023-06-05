@@ -472,6 +472,7 @@ const Dashboard = () => {
 			{!isRole.student ? (
 				<div className="flex justify-end mt-4">
 					<Select
+						value={todoApi.year}
 						onChange={(e) => {
 							setTodoApi((pre) => ({ ...pre, year: e }))
 							setTodoApiOverView((pre) => ({ ...pre, year: e }))

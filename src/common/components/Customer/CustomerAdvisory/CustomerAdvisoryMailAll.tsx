@@ -69,7 +69,7 @@ const CustomerAdvisoryMailAll = () => {
 				const res = await customerAdviseApi.sendEmail(DATA_SUBMIT)
 				if (res.status === 200) {
 					ShowNoti('success', res.data.message)
-					router.push('/users/customer')
+					router.push('/info-course/customer')
 				}
 			} catch (err) {
 				ShowNoti('error', err.message)

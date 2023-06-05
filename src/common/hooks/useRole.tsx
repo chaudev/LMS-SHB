@@ -11,6 +11,7 @@ export const useRole = () => {
 		isManager: useInfomation.RoleId == 4,
 		isSaler: useInfomation.RoleId == 5,
 		isAccountant: useInfomation.RoleId == 6,
-		isAcademic: useInfomation.RoleId == 7
+		isAcademic: useInfomation.RoleId == 7,
+		isParents: useInfomation.RoleId == 8
 	}
 }
