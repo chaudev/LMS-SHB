@@ -19,7 +19,7 @@ $green: #4caf50;
 	}
 	.dashboard-content {
 		display: grid;
-		gap: 1rem;
+		gap: 1.5rem;
 		grid-template-columns: repeat(2, minmax(0px, 1fr));
 		@include max-media(1920px) {
 			grid-template-columns: repeat(4, minmax(0px, 1fr));

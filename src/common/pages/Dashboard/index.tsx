@@ -1,4 +1,4 @@
-import { Card, Select, Form } from 'antd'
+import { Select, Form } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
@@ -6,27 +6,30 @@ import moment from 'moment'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { branchApi } from '~/api/branch'
 import { IoAnalytics } from 'react-icons/io5'
-import StatisticTop5Course from '~/common/components/Dashboard/StatisticTop5Course'
-import { staticsticalApi } from '~/api/statistic'
-import StatisticStudentByAge from '~/common/components/Dashboard/StatisticStudentByAge'
-import StatisticPositiveAndNegativeChart from '~/common/components/Dashboard/StatisticPositiveAndNegativeChart'
-import StatisticPie from '~/common/components/Dashboard/StatisticPie'
-import { RiMoneyDollarCircleLine } from 'react-icons/ri'
-import { HiArrowNarrowDown, HiOutlineUser } from 'react-icons/hi'
-import { GiEvilBook } from 'react-icons/gi'
-import { TbArrowNarrowUp, TbPencil } from 'react-icons/tb'
-import { StatisticClassNew } from '~/common/components/Dashboard/StatisticClassNew'
+
 import IconButton from '~/common/components/Primary/IconButton'
-import StatisticPieRateTeacher from '~/common/components/Dashboard/StatisticPieRateTeacher'
-import { StatisticRateTeacher } from '~/common/components/Dashboard/StatisticRateTeacher'
 import { StatisticPointStudent } from '~/common/components/Dashboard/StatisticPointStudent'
 import { ListFeedback } from '~/common/components/Dashboard/ListFeedback'
 import { feedbackStudentApi } from '~/api/feedbacks-student'
 import DashboardStudents from './Student'
 import StudentByAttenance from './Student/ByAttenance'
-import { PrimaryTooltip } from '~/common/components'
 import { userInformationApi } from '~/api/user/user'
-import { FaChalkboardTeacher } from 'react-icons/fa'
+import { useRole } from '~/common/hooks/useRole'
+import StatisticOverview from './Statistic/Overview'
+import CustomerOfSales from './Statistic/CustomerOfSales'
+import { ClassNew } from './Statistic/TestApppointment'
+import Revenue from './Statistic/Revenue'
+import TopLearning from './Statistic/TopLearning'
+import TopPurpose from './Statistic/TopPurpose'
+import NewClass from './Statistic/NewClass'
+import RateTeacher from './Statistic/RateTeacher'
+import NewCustomer from './Statistic/NewCustomer'
+import TeacherRate from './Statistic/TeacherRate'
+import TotalScheduleTeacher from './Statistic/TotalScheduleTeacher'
+import Source from './Statistic/Source'
+import TopJob from './Statistic/TopJob'
+import StudentAge from './Statistic/StudentAge'
+import FeedRating from './Statistic/FeedRating'
 
 const dataYear = [
 	{
@@ -72,14 +75,7 @@ const Dashboard = () => {
 
 	const user = useSelector((state: RootState) => state.user.information)
 
-	const isRole = {
-		admin: user.RoleId == 1,
-		student: user.RoleId == 3,
-		teacher: user.RoleId == 2,
-		academic: user.RoleId == 7,
-		manager: user.RoleId == 4
-	}
-
+	const { isAdmin, isTeacher, isAcademic, isStudent, isSaler, isAccountant, isParents, isManager } = useRole()
 	const listTodoApi = { branchIds: '', year: moment().year() }
 
 	const listTodoApiOverView = {
@@ -92,21 +88,6 @@ const Dashboard = () => {
 	const [todoApiOverView, setTodoApiOverView] = useState(listTodoApiOverView)
 	const [allBranch, setAllBranch] = useState([])
 	const [student, setStudent] = useState<{ label: string; value: string }[]>([])
-	const [statisticRevenue, setStatisticRevenue] = useState<IStatisticTopCourse[]>([])
-	const [statisticOverview, setStatisticOverview] = useState([])
-	const [statisticTopLearning, setStatisticTopLearning] = useState<IStatisticTopCourse[]>([])
-	const [statisticStudentAge, setStatisticStudentAge] = useState([])
-	const [statisticSource, setStatisticSource] = useState([])
-	const [statisticTopJob, setStatisticTopJob] = useState([])
-	const [statisticTopPurpose, setStatisticTopPurpose] = useState([])
-	const [statisticNewClass, setStatisticNewClass] = useState([])
-	const [statisticNewCustomer, setStatisticNewCustomer] = useState([])
-	const [statisticFeedRating, setStatisticFeedRating] = useState([])
-	const [statisticTeacherRate, setStatisticTeacherRate] = useState([])
-	const [statisticCustomerofSales, setStatisticCustomerofSales] = useState([])
-	const [statisticialTestAppointment, setStatisticialTestAppointment] = useState([])
-	const [statisticTotalScheduleTeacher, setStatisticTotalScheduleTeacher] = useState([])
-	const [statisticTotalScheduleStudent, setStatisticTotalScheduleStudent] = useState([])
 	const initialFeedback = { pageSize: PAGE_SIZE, pageIndex: 1 }
 	const [todoFeedback, setTodoFeedback] = useState(initialFeedback)
 	const [feedback, setFeedback] = useState([])
@@ -131,162 +112,6 @@ const Dashboard = () => {
 		}
 	}
 
-	const getStaticStudentAge = async () => {
-		try {
-			const res = await staticsticalApi.getStudentAge(todoApi)
-			if (res.status === 200) {
-				setStatisticStudentAge(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticStudentAge([])
-			}
-		} catch (error) {}
-	}
-
-	const getTopLearningNeed = async () => {
-		try {
-			const res = await staticsticalApi.getTopLearningNeed(todoApi)
-			if (res.status === 200) {
-				setStatisticTopLearning(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticTopLearning([])
-			}
-		} catch (error) {}
-	}
-
-	const getTopPurpose = async () => {
-		try {
-			const res = await staticsticalApi.getTopPurpose(todoApi)
-			if (res.status === 200) {
-				setStatisticTopPurpose(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticTopPurpose([])
-			}
-		} catch (error) {}
-	}
-
-	const getTopSource = async () => {
-		try {
-			const res = await staticsticalApi.getTopSource(todoApi)
-			if (res.status === 200) {
-				setStatisticSource(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticSource([])
-			}
-		} catch (error) {}
-	}
-
-	const getTopJob = async () => {
-		try {
-			const res = await staticsticalApi.getTopJob(todoApi)
-			if (res.status === 200) {
-				setStatisticTopJob(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticTopJob([])
-			}
-		} catch (error) {}
-	}
-
-	const getOverView = async () => {
-		try {
-			const res = await staticsticalApi.getOverview(todoApiOverView)
-			if (res.status === 200) {
-				setStatisticOverview(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticOverview([])
-			}
-		} catch (error) {}
-	}
-
-	const getRevenue = async () => {
-		try {
-			const res = await staticsticalApi.getRevenue(todoApi)
-			if (res.status === 200) {
-				setStatisticRevenue(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticRevenue([])
-			}
-		} catch (error) {}
-	}
-
-	const getNewClassInMonth = async () => {
-		try {
-			const res = await staticsticalApi.getNewClass(todoApi)
-			if (res.status === 200) {
-				setStatisticNewClass(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticNewClass([])
-			}
-		} catch (error) {}
-	}
-
-	const getNewCustomer = async () => {
-		try {
-			const res = await staticsticalApi.getNewCustomer(todoApi)
-			if (res.status === 200) {
-				setStatisticNewCustomer(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticNewCustomer([])
-			}
-		} catch (error) {}
-	}
-
-	const getFeedbackRating = async () => {
-		try {
-			const res = await staticsticalApi.getFeedBackRating(todoApi)
-			if (res.status === 200) {
-				setStatisticFeedRating(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticFeedRating([])
-			}
-		} catch (error) {}
-	}
-
-	const getTeacherRate = async () => {
-		try {
-			const res = await staticsticalApi.getRateTeacher(todoApi)
-			if (res.status === 200) {
-				setStatisticTeacherRate(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticTeacherRate([])
-			}
-		} catch (error) {}
-	}
-
-	const getTotalScheduleTeacher = async () => {
-		try {
-			const res = await staticsticalApi.getTotalScheduleTeacher(todoApi)
-			if (res.status === 200) {
-				setStatisticTotalScheduleTeacher(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticTotalScheduleTeacher([])
-			}
-		} catch (error) {}
-	}
-
-	const getTotalScheduleStudent = async () => {
-		try {
-			const res = await staticsticalApi.getTotalScheduleStudent(todoApi)
-			if (res.status === 200) {
-				setStatisticTotalScheduleStudent(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticTotalScheduleStudent([])
-			}
-		} catch (error) {}
-	}
-
 	const getFeedback = async () => {
 		try {
 			const res = await feedbackStudentApi.getAll(todoFeedback)
@@ -300,30 +125,6 @@ const Dashboard = () => {
 		} catch (error) {}
 	}
 
-	const getStatisticialTestAppointment = async () => {
-		try {
-			const res = await staticsticalApi.getStatisticialTestAppointment(todoFeedback)
-			if (res.status === 200) {
-				setStatisticialTestAppointment(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticialTestAppointment([])
-			}
-		} catch (error) {}
-	}
-
-	const getNewCustomerofsales = async () => {
-		try {
-			const res = await staticsticalApi.getStatisticalNewCustomerofsales(todoFeedback)
-			if (res.status === 200) {
-				setStatisticCustomerofSales(res.data.data)
-			}
-			if (res.status === 204) {
-				setStatisticCustomerofSales([])
-			}
-		} catch (error) {}
-	}
-
 	const getUser = async () => {
 		try {
 			const res = await userInformationApi.getAll({ pageIndex: 1, pageSize: 9999, parentIds: user.UserInformationId.toString() })
@@ -332,6 +133,7 @@ const Dashboard = () => {
 				res?.data?.data?.forEach((item) => {
 					temp.push({ label: `${item?.FullName} - ${item.UserCode}`, value: item?.UserInformationId })
 				})
+
 				setStudent(temp)
 			}
 			if (res.status == 204) {
@@ -348,30 +150,6 @@ const Dashboard = () => {
 	}
 
 	useEffect(() => {
-		getStaticStudentAge()
-
-		getTopLearningNeed()
-		getTopPurpose()
-		getTopSource()
-		getTopJob()
-
-		getRevenue()
-		getNewClassInMonth()
-		getNewCustomer()
-		getFeedbackRating()
-		getTeacherRate()
-		getTotalScheduleTeacher()
-
-		getTotalScheduleStudent()
-		getStatisticialTestAppointment()
-		getNewCustomerofsales()
-	}, [todoApi])
-
-	useEffect(() => {
-		getOverView()
-	}, [todoApiOverView])
-
-	useEffect(() => {
 		if (user.UserInformationId) {
 			getUser()
 		}
@@ -383,214 +161,142 @@ const Dashboard = () => {
 	}, [])
 
 	return (
-		<div className="w-[100%] mx-auto dashboard">
-			{isRole.admin || isRole.academic || isRole.manager ? <StudentByAttenance /> : ''}
+		<div className="w-full d-flex flex-col  mx-auto dashboard gap-4">
+			{isAdmin || isAcademic || isManager ? <StudentByAttenance /> : ''}
 
-			<div className="flex justify-between my-4">
+			<div className="flex justify-between">
 				<Form form={form} className="w-full">
-					<div className='d-flex justify-end items-end'>
-					<div className="grid grid-cols-1 tablet:grid-cols-3 gap-3 w-full">
-						{user?.RoleId == 8 && (
-							<Form.Item name="student" className="grid-col-1">
-								<Select onChange={handleChangeStudent} options={student} className="w-[200px] h-[36px]"></Select>
-							</Form.Item>
-						)}
-						<Form.Item name="branchIds" className="grid-col-1">
-							<Select className="w-[200px] h-[36px]" mode="multiple" onChange={handleChangeBranch} allowClear placeholder="Trung tâm">
-								{allBranch?.length > 0 &&
-									allBranch?.map((branch, index) => (
-										<Select.Option value={branch.Id} key={index}>
-											{branch.Name}
-										</Select.Option>
-									))}
-							</Select>
-						</Form.Item>
-						{!isRole.student ? (
-							<Form.Item name="year" className="grid-col-1">
-								<Select
-									value={todoApi.year}
-									onChange={(e) => {
-										setTodoApi((pre) => ({ ...pre, year: e }))
-										setTodoApiOverView((pre) => ({ ...pre, year: e }))
-									}}
-									options={dataYear}
-									className="w-[100px] h-[36px] mr-2"
-								/>
-							</Form.Item>
-						) : (
-							''
+					<div className="d-flex justify-end items-end">
+						<div className="grid grid-cols-1 tablet:grid-cols-3 gap-3 w-full ">
+							{user?.RoleId == 8 && (
+								<Form.Item name="student" className="col-span-1">
+									<Select onChange={handleChangeStudent} options={student} className="w-[200px] h-[36px]"></Select>
+								</Form.Item>
+							)}
+
+							{!isStudent && (
+								<Form.Item name="branchIds" className="col-span-1">
+									<Select className="w-[200px] h-[36px]" mode="multiple" onChange={handleChangeBranch} allowClear placeholder="Trung tâm">
+										{allBranch?.length > 0 &&
+											allBranch?.map((branch, index) => (
+												<Select.Option value={branch.Id} key={index}>
+													{branch.Name}
+												</Select.Option>
+											))}
+									</Select>
+								</Form.Item>
+							)}
+
+							{!isStudent ? (
+								<Form.Item name="year" className="col-span-1">
+									<Select
+										value={todoApi.year}
+										onChange={(e) => {
+											setTodoApi((pre) => ({ ...pre, year: e }))
+											setTodoApiOverView((pre) => ({ ...pre, year: e }))
+										}}
+										options={dataYear}
+										className="w-[100px] h-[36px] mr-2"
+									/>
+								</Form.Item>
+							) : (
+								''
+							)}
+						</div>
+						{!isStudent && (
+							<IconButton
+								color="red"
+								icon="reset"
+								type="button"
+								tooltip="Reset"
+								onClick={() => {
+									setTodoApi(listTodoApi)
+									setTodoApiOverView(listTodoApiOverView)
+									form.resetFields()
+								}}
+								className="!mr-[0px]"
+							/>
 						)}
 					</div>
-					<IconButton
-						color="red"
-						icon="reset"
-						type="button"
-						tooltip="Reset"
-						onClick={() => {
-							setTodoApi(listTodoApi)
-							setTodoApiOverView(listTodoApiOverView)
-							form.resetFields()
-						}}
-						className="!mr-[0px]"
-					/>
-					</div>
-				
 				</Form>
 			</div>
 
-			<div className="dashboard-content">
-				{statisticOverview?.length > 0 &&
-					statisticOverview?.map((item, index) => (
-						<>
-							<div className="items">
-								<div className="inner-item">
-									<div
-										className={`name ${item?.Id === 1 ? 'kh' : item?.Id === 3 ? 'dt' : item?.Id === 4 ? 'gd' : item?.Id === 2 ? 'ht' : ''}`}
-									>
-										<div className="ttl">{item?.Title}</div>
-										<div className="icon">
-											{item?.Id === 1 ? (
-												<HiOutlineUser />
-											) : item?.Id === 3 ? (
-												<RiMoneyDollarCircleLine />
-											) : item?.Id === 4 ? (
-												<FaChalkboardTeacher />
-											) : item?.Id === 2 ? (
-												<TbPencil />
-											) : (
-												''
-											)}
-										</div>
-									</div>
-									<div className="value">
-										{item?.OverviewModel?.map((i) => (
-											<div className="item">
-												<div className="left">
-													<div className="n">{i?.Name}</div>
-													<div className="sub">
-														<p>{i?.SubValue}</p>
-														<div className={`ic ${i?.Type === 1 ? 'up' : i?.Type === 2 ? 'down' : ''}`}>
-															{i?.Type === 1 ? <TbArrowNarrowUp /> : i?.Type === 2 ? <HiArrowNarrowDown /> : ''}
-														</div>
-													</div>
-												</div>
-												<div className="right">{item?.Id !== 3 ? i?.Value : Intl.NumberFormat('ja-JP').format(i?.Value)}</div>
-											</div>
-										))}
-									</div>
-								</div>
-							</div>
-						</>
-					))}
-			</div>
+			<StatisticOverview todoApiOverView={todoApiOverView} />
 
-			<DashboardStudents />
+			{(isAdmin || isAcademic || isSaler || isManager || isAccountant) && <DashboardStudents />}
 
-			{user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
+			{(isAdmin || isManager || isAcademic) && (
 				<>
-					{user.RoleId != 7 ? (
-						<Card className="mt-tw-4" title={<h1 className="text-2xl font-medium">Doanh Thu</h1>}>
-							<StatisticPositiveAndNegativeChart data={statisticRevenue} titleBar="Doanh thu" />
-						</Card>
-					) : (
-						''
-					)}
-
-					<div className="grid grid-cols-6 gap-tw-4">
-						<Card className="col-span-3 mt-tw-4" title={<h1 className="text-2xl font-medium">Top 5 nhu cầu học</h1>}>
-							<StatisticTop5Course data={statisticTopLearning} titleBar="Nhu cầu học" type={1} />
-						</Card>
-						<Card className="col-span-3 mt-tw-4" title={<h1 className="text-2xl font-medium">Top 5 mục đích học</h1>}>
-							<StatisticTop5Course data={statisticTopPurpose} titleBar="Mục đích học " type={2} />
-						</Card>
+					{isAcademic ? <Revenue todoApi={todoApi} /> : ''}
+					<div className="grid grid-cols-1 tablet:grid-cols-2 gap-4">
+						<div className="col-span-1">
+							<TopLearning todoApi={todoApi} />
+						</div>
+						<div className="col-span-1">
+							<TopPurpose todoApi={todoApi} />
+						</div>
+						<div className="col-span-1">
+							<NewClass todoApi={todoApi} />
+						</div>
+						<div className="col-span-1">
+							<NewCustomer todoApi={todoApi} />
+						</div>
+						<div className="col-span-1">
+							<Source todoApi={todoApi} />
+						</div>
+						<div className="col-span-1">
+							<TopJob todoApi={todoApi} />
+						</div>
 					</div>
-
-					<div className="grid grid-cols-6 gap-tw-4">
-						<Card className="col-span-3 mt-tw-4 " title={<h1 className="text-2xl font-medium">Lớp mới mỗi tháng</h1>}>
-							<StatisticClassNew data={statisticNewClass} titleBar="Lớp mới mỗi tháng" type={1} />
-						</Card>
-
-						<Card className="col-span-3 mt-tw-4" title={<h1 className="text-2xl font-medium">Khách mới mỗi tháng</h1>}>
-							<StatisticClassNew data={statisticNewCustomer} titleBar="Khách mới mỗi tháng" type={2} />
-						</Card>
-					</div>
-
-					<Card className="mt-tw-4" title={<h1 className="text-2xl font-medium">Top 5 nguồn khách hàng</h1>}>
-						<StatisticTop5Course data={statisticSource} titleBar="Khách hàng" type={2} />
-					</Card>
-
-					<Card className="mt-tw-4" title={<h1 className="text-2xl font-medium">Top 5 công việc của học viên </h1>}>
-						<StatisticTop5Course data={statisticTopJob} titleBar="Học viên " type={2} />
-					</Card>
-					<Card className="mt-tw-4" title={<h1 className="text-2xl font-medium">Thống kê học viên theo độ tuổi</h1>}>
-						<StatisticStudentByAge data={statisticStudentAge} titleBar="Độ tuổi học viên " />
-					</Card>
-
-					{user.RoleId != 7 ? (
-						<Card className="mt-tw-4" title={<h1 className="text-2xl font-medium">Tỉ lệ đánh giá phản hồi</h1>}>
-							<StatisticPie data={statisticFeedRating} />
-						</Card>
-					) : (
-						''
-					)}
+					<StudentAge todoApi={todoApi} />
+					{isManager ? <FeedRating todoApi={todoApi} /> : ''}
 				</>
-			) : user?.RoleId == 2 ? ( // giáo viên
+			)}
+
+			{isTeacher && (
+				<div className="grid grid-cols-1 tablet:grid-cols-2 gap-4">
+					<div className="col-span-1">
+						<TeacherRate todoApi={todoApi} />
+					</div>
+					<div className="col-span-1">
+						<TotalScheduleTeacher todoApi={todoApi} />
+					</div>
+				</div>
+			)}
+
+			{(isStudent || isParents) && (
 				<>
-					<div className="grid grid-cols-6 gap-tw-4">
-						<Card className="col-span-3 mt-tw-4" title={<h1 className="text-2xl font-medium">Tỉ lệ đánh giá</h1>}>
-							<StatisticPieRateTeacher data={statisticTeacherRate} />
-						</Card>
-						<Card className="col-span-3 mt-tw-4" title={<h1 className="text-2xl font-medium">Tổng số buổi dạy trong từng tháng</h1>}>
-							<StatisticRateTeacher data={statisticTotalScheduleTeacher} titleBar="Buổi dạy trong từng tháng" type={1} />
-						</Card>
+					<StatisticPointStudent idStudent={idStudent} />
+					<ListFeedback
+						totalFeedback={totalFeedback}
+						initialFeedback={initialFeedback}
+						dataTable={feedback}
+						setTodo={setTodoFeedback}
+						todo={todoFeedback}
+					/>
+					<RateTeacher todoApi={todoApi} />
+				</>
+			)}
+
+			{isSaler && (
+				<div>
+					<CustomerOfSales todoApi={todoApi} />
+					<ClassNew todoFeedback={todoFeedback} />
+				</div>
+			)}
+
+			{isAccountant && (
+				<>
+					<Revenue todoApi={todoApi} />
+					<div className="grid grid-cols-1 tablet:grid-cols-2 gap-4">
+						<div className="col-span-1">
+							<NewClass todoApi={todoApi} />
+						</div>
+						<div className="col-span-1">
+							<CustomerOfSales todoApi={todoApi} />
+						</div>
 					</div>
 				</>
-			) : user?.RoleId == 3 || user?.RoleId == 8 ? ( //học viên phụ huynh
-				<>
-					<div className="mt-tw-4">
-						<StatisticPointStudent idStudent={idStudent} />
-					</div>
-					<div className="mt-tw-4">
-						<ListFeedback
-							totalFeedback={totalFeedback}
-							initialFeedback={initialFeedback}
-							dataTable={feedback}
-							setTodo={setTodoFeedback}
-							todo={todoFeedback}
-						/>
-					</div>
-					<Card className="mt-tw-4" title={<h1 className="text-2xl font-medium">Tổng số buổi học trong từng tháng</h1>}>
-						<StatisticRateTeacher data={statisticTotalScheduleStudent} titleBar="Buổi học trong từng tháng" type={1} />
-					</Card>
-				</>
-			) : user?.RoleId == 5 ? (
-				<>
-					<div className="grid grid-cols-6 gap-tw-4">
-						<Card className="col-span-3 mt-tw-4" title={<h1 className="text-2xl font-medium">Khách mới mỗi tháng</h1>}>
-							<StatisticClassNew data={statisticCustomerofSales} titleBar="Khách mới mỗi tháng" type={1} />
-						</Card>
-						<Card className="col-span-3 mt-tw-4" title={<h1 className="text-2xl font-medium">Kiểm tra đầu vào trong tháng</h1>}>
-							<StatisticClassNew data={statisticialTestAppointment} titleBar="Kiểm tra đầu vào trong tháng" type={2} />
-						</Card>
-					</div>
-				</>
-			) : user?.RoleId == 6 ? (
-				<>
-					<Card className="mt-tw-4" title={<h1 className="text-2xl font-medium">Doanh Thu</h1>}>
-						<StatisticPositiveAndNegativeChart data={statisticRevenue} titleBar="Doanh thu" />
-					</Card>
-					<div className="grid grid-cols-6 gap-tw-4">
-						<Card className="col-span-3 mt-tw-4 " title={<h1 className="text-2xl font-medium">Lớp mới mỗi tháng</h1>}>
-							<StatisticClassNew data={statisticNewClass} titleBar="Lớp mới mỗi tháng" type={1} />
-						</Card>
-
-						<Card className="col-span-3 mt-tw-4" title={<h1 className="text-2xl font-medium">Khách mới mỗi tháng</h1>}>
-							<StatisticClassNew data={statisticNewCustomer} titleBar="Khách mới mỗi tháng" type={2} />
-						</Card>
-					</div>
-				</>
-			) : (
-				''
 			)}
 		</div>
 	)
