@@ -250,17 +250,17 @@ const ListClass = () => {
 									<div className="list-action-table">
 										<FilterBase dataFilter={dataFilter} handleFilter={handleFilter} handleReset={handleReset} />
 									</div>
-									<div className="list-action-button">
-										<div onClick={() => hanskeChangeTab(null)} className={`item ${tabStatus == null ? 'active' : ''}`}>
+									<div className="list-action-button !hidden tablet:!flex">
+										<div onClick={() => hanskeChangeTab(null)} className={`item   ${tabStatus == null ? 'active' : ''}`}>
 											Tất cả
 										</div>
-										<div onClick={() => hanskeChangeTab(1)} className={`item ${tabStatus == 1 ? 'active' : ''}`}>
+										<div onClick={() => hanskeChangeTab(1)} className={`item   ${tabStatus == 1 ? 'active' : ''}`}>
 											Sắp diễn ra
 										</div>
-										<div onClick={() => hanskeChangeTab(2)} className={`item  ${tabStatus == 2 ? 'active' : ''}`}>
+										<div onClick={() => hanskeChangeTab(2)} className={`item   ${tabStatus == 2 ? 'active' : ''}`}>
 											Đang diễn ra
 										</div>
-										<div onClick={() => hanskeChangeTab(3)} className={`item  ${tabStatus == 3 ? 'active' : ''}`}>
+										<div onClick={() => hanskeChangeTab(3)} className={`item   ${tabStatus == 3 ? 'active' : ''}`}>
 											Kết thúc
 										</div>
 									</div>
@@ -268,17 +268,7 @@ const ListClass = () => {
 							}
 							extra={
 								userInformation?.RoleId === '8' ? (
-									<Form form={form}>
-										<Form.Item name="student">
-											<Select
-												allowClear
-												className="w-[200px]"
-												onChange={handleChangeStudent}
-												options={students}
-												placeholder="Chọn học viên"
-											/>
-										</Form.Item>
-									</Form>
+									<Select allowClear className="w-[200px]" onChange={handleChangeStudent} options={students} placeholder="Chọn học viên" />
 								) : (
 									''
 								)

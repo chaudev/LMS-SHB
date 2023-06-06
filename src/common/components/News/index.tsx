@@ -147,15 +147,16 @@ function NewsFeed() {
 					)}
 
 					{(isAdmin() || isTeacher() || isManager() || isAcademic()) && (
-						<div className="cc-news-container">
+						<div className="cc-news-container mb-3">
 							<CreateNews onRefresh={() => setFilter({ ...filter, pageIndex: 1 })} />
 						</div>
 					)}
 
+
 					{!currentGroup && (
-						<div className="cc-new-mobile-group ml-[3px]">
+						<div className="cc-new-mobile-group mx-[3px] mb-3">
 							<div className="bg-[#fff] shadow-md w-full rounded-[6px]">
-								<NewsGroup />
+								<NewsGroup onRefresh={() => getGroups()} groups={groups} totalRow={totalGroup} loading={groupLoading} />
 							</div>
 						</div>
 					)}
@@ -182,10 +183,19 @@ function NewsFeed() {
 							className="mx-[-10px]"
 						>
 							<List
-								className="ml-[1px]"
 								dataSource={data}
+								grid={{ gutter: 16, column: 1 }}
 								renderItem={(item, index) => (
-									<NewsItem key={`new-item-${index}`} onRefresh={() => setFilter({ ...filter, pageIndex: 1 })} item={item} index={index} />
+									<>
+										<List.Item>
+											<NewsItem
+												key={`new-item-${index}`}
+												onRefresh={() => setFilter({ ...filter, pageIndex: 1 })}
+												item={item}
+												index={index}
+											/>
+										</List.Item>
+									</>
 								)}
 							/>
 						</InfiniteScroll>

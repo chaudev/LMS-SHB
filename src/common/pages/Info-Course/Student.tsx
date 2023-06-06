@@ -625,14 +625,16 @@ const Student: FC<IPersonnel> = (props) => {
 							}
 							trigger="click"
 						>
-							<PrimaryButton
-								onClick={() => setVisible(!visible)}
-								className={`${role == 3 ? 'btn-popover-student' : 'btn-popover-personel'} btn-popover`}
-								type="button"
-								background="primary"
-							>
-								<BsThreeDots />
-							</PrimaryButton>
+							{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+								<PrimaryButton
+									onClick={() => setVisible(!visible)}
+									className={`${role == 3 ? 'btn-popover-student' : 'btn-popover-personel'} btn-popover`}
+									type="button"
+									background="primary"
+								>
+									<BsThreeDots />
+								</PrimaryButton>
+							)}
 						</Popover>
 
 						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (

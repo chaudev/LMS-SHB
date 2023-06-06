@@ -26,6 +26,7 @@ import DashboardStudents from './Student'
 import StudentByAttenance from './Student/ByAttenance'
 import { PrimaryTooltip } from '~/common/components'
 import { userInformationApi } from '~/api/user/user'
+import { FaChalkboardTeacher } from 'react-icons/fa'
 
 const dataYear = [
 	{
@@ -386,16 +387,16 @@ const Dashboard = () => {
 			{isRole.admin || isRole.academic || isRole.manager ? <StudentByAttenance /> : ''}
 
 			<div className="flex justify-between my-4">
-				{/* <p className="title">Xin chào, {user.FullName}</p> */}
-				<div></div>
-				<Form form={form}>
-					<div className="flex items-center">
-						<Form.Item name="student" className="w-[200px] mr-2">
-							{user?.RoleId == 8 && <Select onChange={handleChangeStudent} options={student} className="w-[200px] h-[36px] mr-2"></Select>}
-						</Form.Item>
-
-						<Form.Item name="branchIds" className="w-[200px]">
-							<Select className="w-[200px] h-[36px] mr-2" mode="multiple" onChange={handleChangeBranch} allowClear placeholder="Trung tâm">
+				<Form form={form} className="w-full">
+					<div className='d-flex justify-end items-end'>
+					<div className="grid grid-cols-1 tablet:grid-cols-3 gap-3 w-full">
+						{user?.RoleId == 8 && (
+							<Form.Item name="student" className="grid-col-1">
+								<Select onChange={handleChangeStudent} options={student} className="w-[200px] h-[36px]"></Select>
+							</Form.Item>
+						)}
+						<Form.Item name="branchIds" className="grid-col-1">
+							<Select className="w-[200px] h-[36px]" mode="multiple" onChange={handleChangeBranch} allowClear placeholder="Trung tâm">
 								{allBranch?.length > 0 &&
 									allBranch?.map((branch, index) => (
 										<Select.Option value={branch.Id} key={index}>
@@ -404,21 +405,36 @@ const Dashboard = () => {
 									))}
 							</Select>
 						</Form.Item>
-
-						<PrimaryTooltip id="the-tip-01" content="Reset" place="left">
-							<IconButton
-								color="red"
-								icon="reset"
-								type="button"
-								onClick={() => {
-									setTodoApi(listTodoApi)
-									setTodoApiOverView(listTodoApiOverView)
-									form.resetFields()
-								}}
-								className="!mr-[0px]"
-							/>
-						</PrimaryTooltip>
+						{!isRole.student ? (
+							<Form.Item name="year" className="grid-col-1">
+								<Select
+									value={todoApi.year}
+									onChange={(e) => {
+										setTodoApi((pre) => ({ ...pre, year: e }))
+										setTodoApiOverView((pre) => ({ ...pre, year: e }))
+									}}
+									options={dataYear}
+									className="w-[100px] h-[36px] mr-2"
+								/>
+							</Form.Item>
+						) : (
+							''
+						)}
 					</div>
+					<IconButton
+						color="red"
+						icon="reset"
+						type="button"
+						tooltip="Reset"
+						onClick={() => {
+							setTodoApi(listTodoApi)
+							setTodoApiOverView(listTodoApiOverView)
+							form.resetFields()
+						}}
+						className="!mr-[0px]"
+					/>
+					</div>
+				
 				</Form>
 			</div>
 
@@ -438,7 +454,7 @@ const Dashboard = () => {
 											) : item?.Id === 3 ? (
 												<RiMoneyDollarCircleLine />
 											) : item?.Id === 4 ? (
-												<GiEvilBook />
+												<FaChalkboardTeacher />
 											) : item?.Id === 2 ? (
 												<TbPencil />
 											) : (
@@ -469,21 +485,6 @@ const Dashboard = () => {
 			</div>
 
 			<DashboardStudents />
-			{!isRole.student ? (
-				<div className="flex justify-end mt-4">
-					<Select
-						value={todoApi.year}
-						onChange={(e) => {
-							setTodoApi((pre) => ({ ...pre, year: e }))
-							setTodoApiOverView((pre) => ({ ...pre, year: e }))
-						}}
-						options={dataYear}
-						className="w-[100px] h-[36px] mr-2"
-					/>
-				</div>
-			) : (
-				''
-			)}
 
 			{user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
 				<>

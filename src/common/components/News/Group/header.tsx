@@ -83,6 +83,7 @@ function GroupHeader({ groupId }) {
 
 	const [stuInGroup, setStuInGroup] = useState([])
 	const [stuFinded, setStuFinded] = useState([])
+	const [thumb, setThumb] = useState('')
 
 	async function getStudentInGroup() {
 		try {
@@ -152,13 +153,14 @@ function GroupHeader({ groupId }) {
 
 	return (
 		<div className="w-[calc(100%-8px)] ml-[3px] p-[16px] bg-[#fff] rounded-[6px] shadow-md">
-			{!!details?.BackGround && (
-				<>
-					<div className="cc-hr my-[16px]" />
-					<img src={details?.BackGround} className="object-cover w-[100%] h-[250px]" />
-				</>
-			)}
-
+			<>
+				{/* <div className="cc-hr my-[16px]" /> */}
+				<img
+					onError={() => setThumb('/default-group-thuumbnail.png')}
+					src={thumb || details?.BackGround || '/default-group-thuumbnail.png'}
+					className="object-cover w-[100%] h-[250px]"
+				/>
+			</>
 			<div className="flex row-center">
 				<div className="flex-1 cc-group-info">
 					<h2>{details?.Name}</h2>

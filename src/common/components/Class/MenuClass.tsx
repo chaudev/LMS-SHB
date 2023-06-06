@@ -55,9 +55,7 @@ const itemsTeacher = [
 	'Phản hồi buổi học',
 	'Thông báo'
 ]
-const itemsParent = ['Lịch học', 'Các buổi học',
- 'Điểm danh',
-  'Bảng điểm']
+const itemsParent = ['Lịch học', 'Các buổi học', 'Điểm danh', 'Bảng điểm']
 
 const MenuClass = () => {
 	const user = useSelector((state: RootState) => state.user.information)

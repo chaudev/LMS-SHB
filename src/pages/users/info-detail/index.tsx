@@ -21,7 +21,7 @@ export default function UserInfoDetail(props: IUserInfoDetailProps) {
 	const [isLoading, setIsLoading] = useState(false)
 	const router = useRouter()
 	const [form] = Form.useForm()
-	const userInformation = useSelector((state: RootState) => state.user.information)
+	const [thumb, setThumb] = useState('')
 
 	const getStudentDetail = async () => {
 		try {
@@ -77,7 +77,12 @@ export default function UserInfoDetail(props: IUserInfoDetailProps) {
 							<span className="email">{studentDetail.Email}</span>
 						</div>
 						<div className="avatar">
-							<img src={studentDetail.Avatar} alt="" />
+							<img
+								// src={studentDetail.Avatar}
+								onError={() => setThumb('/default-avatar.png')}
+								src={thumb || studentDetail.Avatar || '/default-avatar.png'}
+								alt=""
+							/>
 							<div
 								className="overlay"
 								onClick={() => {

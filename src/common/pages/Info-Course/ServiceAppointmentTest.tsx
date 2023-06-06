@@ -491,20 +491,14 @@ export default function ServiceAppointmentTest(props) {
 								/>
 							)}
 							{userInformation?.RoleId === '8' ? (
-								<>
-									<Form form={form}>
-										<Form.Item name="student">
-											<Select
-												defaultActiveFirstOption
-												allowClear
-												className="w-[200px]"
-												onChange={handleChangeStudent}
-												options={students}
-												placeholder="Chọn học viên"
-											/>
-										</Form.Item>
-									</Form>
-								</>
+								<Select
+									defaultActiveFirstOption
+									allowClear
+									className="w-[200px]"
+									onChange={handleChangeStudent}
+									options={students}
+									placeholder="Chọn học viên"
+								/>
 							) : (
 								''
 							)}

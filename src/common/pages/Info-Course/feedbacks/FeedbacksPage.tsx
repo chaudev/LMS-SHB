@@ -258,13 +258,7 @@ export default function FeedbacksStudentPage(props: IFeedbacksStudentPageProps) 
 				data={dataSource}
 				Extra={
 					userInformation?.RoleId === '8' ? (
-						<>
-							<Form form={form}>
-								<Form.Item name="student">
-									<Select allowClear className="w-[200px]" onChange={handleChangeStudent} options={students} placeholder="Chọn học viên" />
-								</Form.Item>
-							</Form>
-						</>
+						<Select allowClear className="w-[200px]" onChange={handleChangeStudent} options={students} placeholder="Chọn học viên" />
 					) : userInformation?.RoleId === '3' ? (
 						<ModalFeedback mode="add" onRefresh={() => getFeedbacks()} />
 					) : (

@@ -48,7 +48,8 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 
 	const isRole = {
 		sale: userInformation.RoleId == 5,
-		student: userInformation.RoleId == 3
+		student: userInformation.RoleId == 3,
+		parent: userInformation.RoleId == 8
 	}
 
 	const checkStatus = (statusID, statusName) => {
@@ -166,7 +167,7 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 									<div className="header-inner">
 										<div className="status">{checkStatus(item.Status, item.StatusName)}</div>
 
-										{isRole.sale || isRole.student ? (
+										{isRole.sale || isRole.student || isRole.parent ? (
 											''
 										) : (
 											<div className="action">

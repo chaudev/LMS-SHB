@@ -17,7 +17,6 @@ const Notification = () => {
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [countNotification, setCountNotification] = useState(0)
 	const [contentToShow, setContentToShow] = useState<INotification[]>([])
-	console.log('notification', notification)
 
 	const onCloseModal = () => {
 		setIsModalVisible(false)

@@ -181,20 +181,14 @@ export const StudentWarningPage = () => {
 				}
 				Extra={
 					userInformation?.RoleId === '8' ? (
-						<>
-							<Form form={form}>
-								<Form.Item name={'student'}>
-									<Select
-										defaultValue={students[0]}
-										allowClear
-										className="w-[200px]"
-										onChange={handleChangeStudent}
-										options={students}
-										placeholder="Chọn học viên"
-									/>
-								</Form.Item>
-							</Form>
-						</>
+						<Select
+							defaultValue={students[0]}
+							allowClear
+							className="w-[200px]"
+							onChange={handleChangeStudent}
+							options={students}
+							placeholder="Chọn học viên"
+						/>
 					) : (
 						''
 					)
