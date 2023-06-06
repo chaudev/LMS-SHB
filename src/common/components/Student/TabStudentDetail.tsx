@@ -34,7 +34,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const userInformation = useSelector((state: RootState) => state.user.information)
 	const { StudentDetail, setStudentDetail } = props
 	const router = useRouter()
-	const { isStudent } = useRole()
+	const { isStudent, isParents } = useRole()
 	const [optionList, setOptionList] = useState({
 		branch: [],
 		purpose: [],
@@ -275,6 +275,10 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 		}
 	}
 
+	const isDisable = () => {
+		// ko cho giáo  viên + học viên cập nhật thông tin
+		return isStudent || isParents ? true : false
+	}
 	return (
 		<div>
 			<Divider>
@@ -505,6 +509,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								label="Nhu cầu học"
 								placeholder="Chọn nhu cầu học"
 								optionList={optionList.learningNeed}
+								disabled={isDisable()}
 							/>
 							<IconButonUpdateUser
 								isShow={LearningNeedId !== StudentDetail.LearningNeedId}
@@ -519,6 +524,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								name="SourceId"
 								label="Nguồn khách hàng"
 								placeholder="Chọn nguồn khách hàng"
+								disabled={isDisable()}
 								optionList={optionList.source}
 							/>
 							<IconButonUpdateUser
@@ -534,6 +540,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								name="SaleId"
 								label="Tư vấn viên"
 								placeholder="Chọn tư vấn viên"
+								disabled={isDisable()}
 								optionList={optionList.sale}
 							/>
 							<IconButonUpdateUser
@@ -549,6 +556,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								name="PurposeId"
 								label="Mục đích học"
 								placeholder="Chọn mục đích học"
+								disabled={isDisable()}
 								optionList={optionList.purpose}
 							/>
 							<IconButonUpdateUser
@@ -559,7 +567,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						</div>
 					</>
 				)}
-				{isStudent && (
+				{isStudent   && (
 					<>
 						<Divider>
 							<h2 className="py-4 font-[600] text-center">Thông tin hồ sơ</h2>

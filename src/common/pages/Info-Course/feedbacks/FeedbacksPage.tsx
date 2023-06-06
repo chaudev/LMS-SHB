@@ -167,7 +167,7 @@ export default function FeedbacksStudentPage(props: IFeedbacksStudentPageProps) 
 						<Avatar uri={item.Avatar} className="fb-student-avatar shadow-sm" alt="feedback-user-avatar" />
 						<div>
 							<p className="fb-student-name">{item.CreatedBy || 'Ẩn danh'}</p>
-							<div style={{ color: '#9d9d9d', fontSize: 14 }}>{moment(item.CreateOn).format('DD/MM/YYYY HH:mm')}</div>
+							<div style={{ color: '#9d9d9d', fontSize: 14 }}>{moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</div>
 							<div className="">{text}</div>
 						</div>
 					</div>
