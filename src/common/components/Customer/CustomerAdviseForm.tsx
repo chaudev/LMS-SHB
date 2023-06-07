@@ -21,8 +21,6 @@ import RestApi from '~/api/RestApi'
 const CustomerAdviseForm = React.memo((props: any) => {
 	const { source, learningNeed, purpose, branch, refPopover } = props
 	const { customerStatus, rowData, listTodoApi, setTodoApi, isStudent, className } = props
-	console.log('customerStatus', customerStatus)
-	console.log('rowData', rowData)
 
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)

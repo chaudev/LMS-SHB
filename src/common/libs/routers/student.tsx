@@ -68,6 +68,13 @@ export const StudentChildMenu = [
 				Route: '/class/list-class',
 				Text: 'Danh sách lớp học',
 				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/class/schedule',
+				Route: '/class/schedule',
+				Text: 'Lịch học',
+				Icon: ''
 			}
 		]
 	},

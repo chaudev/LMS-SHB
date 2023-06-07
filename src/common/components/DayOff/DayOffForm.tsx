@@ -53,6 +53,7 @@ const DayOffForm = (props) => {
 				form.resetFields()
 				setIsModalVisible(false)
 				getAllDayOffList()
+				ShowNoti('success', res.data.message)
 			}
 		} catch (err) {
 			ShowNoti('error', err.message)

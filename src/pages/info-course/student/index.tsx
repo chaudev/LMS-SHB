@@ -1,4 +1,3 @@
-import { set } from 'immer/dist/internal'
 import React, { useEffect, useState } from 'react'
 import { registerApi } from '~/api/user/user'
 import MainLayout from '~/common/components/MainLayout'

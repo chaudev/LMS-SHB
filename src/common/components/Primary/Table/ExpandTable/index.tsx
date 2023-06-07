@@ -1,4 +1,4 @@
-import { Card, Table } from 'antd'
+import { Card, Select, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { GiPayMoney, GiReceiveMoney, GiTakeMyMoney } from 'react-icons/gi'
 import EmptyData from '~/common/components/EmptyData'
@@ -146,7 +146,7 @@ const ExpandTable = (props) => {
 							size="middle"
 							pagination={{
 								pageSize: props.pageSize ? props.pageSize : PAGE_SIZE,
-								pageSizeOptions: ['30'],
+								pageSizeOptions: ['10', '20', '30'],
 								onShowSizeChange: onShowSizeChange,
 								total: props.totalPage && props.totalPage,
 								showTotal: () => <div className="font-weight-black">Tổng cộng: {props.totalPage}</div>,

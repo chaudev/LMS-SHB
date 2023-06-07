@@ -44,8 +44,7 @@ const FilterTable = (props: IFilterTable) => {
 			default:
 				break
 		}
-
-		getValueSearch(null)
+		// getValueSearch(null)
 		setIsVisible(false)
 	}
 

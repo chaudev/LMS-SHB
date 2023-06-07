@@ -7,7 +7,7 @@ import NotiModal from '~/common/components/Elements/NotiModal'
 import SortBox from '~/common/components/Elements/SortBox'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import FilterColumn from '~/common/components/FilterTable/Filter/FilterColumn'
-import { parseSelectArray, parseSelectArrayUser, parseToMoney } from '~/common/utils/common'
+import { parseSelectArray } from '~/common/utils/common'
 import ScoreModal from '~/common/components/Service/ScoreModal'
 import TestUpdateStatus from '~/common/components/Service/TestUpdateStatus'
 import { ShowNoti } from '~/common/utils'
@@ -67,28 +67,28 @@ const appointmenDataOption = [
 			sort: 1,
 			sortType: true
 		},
-		text: 'Tên A - Z '
+		text: 'Tên A - Z'
 	},
 	{
 		dataSort: {
-			sort: 0,
+			sort: 1,
 			sortType: false
 		},
 		text: 'Tên Z - A'
 	},
 	{
 		dataSort: {
-			sort: 0,
+			sort: 2,
 			sortType: true
 		},
-		text: 'Ngày hẹn A - Z'
+		text: 'Ngày hẹn tăng dần'
 	},
 	{
 		dataSort: {
-			sort: 0,
+			sort: 2,
 			sortType: false
 		},
-		text: 'Ngày hẹn Z - A'
+		text: 'Ngày hẹn giảm dần'
 	}
 ]
 
