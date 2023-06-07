@@ -13,13 +13,14 @@ const RateTeacher: React.FC<IRateTeacher> = ({ todoApi }) => {
 		try {
 			setLoading(true)
 			const res = await staticsticalApi.getTotalScheduleStudent(todoApi)
+
 			if (res.status === 200) {
 				setStatisticTotalScheduleStudent(res.data.data)
 			}
 			if (res.status === 204) {
 				setStatisticTotalScheduleStudent([])
-				setLoading(false)
 			}
+			setLoading(false)
 		} catch (error) {
 			setLoading(false)
 		}

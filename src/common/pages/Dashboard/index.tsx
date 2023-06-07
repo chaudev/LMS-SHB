@@ -7,7 +7,6 @@ import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { branchApi } from '~/api/branch'
 import { IoAnalytics } from 'react-icons/io5'
 
-import IconButton from '~/common/components/Primary/IconButton'
 import { StatisticPointStudent } from '~/common/components/Dashboard/StatisticPointStudent'
 import { ListFeedback } from '~/common/components/Dashboard/ListFeedback'
 import { feedbackStudentApi } from '~/api/feedbacks-student'
@@ -109,6 +108,9 @@ const Dashboard = () => {
 			const branchs = val.toString()
 			setTodoApi({ ...todoApi, branchIds: branchs })
 			setTodoApiOverView({ ...todoApiOverView, branchIds: branchs })
+		} else {
+			setTodoApi({ ...todoApi, branchIds: '' })
+			setTodoApiOverView({ ...todoApiOverView, branchIds: '' })
 		}
 	}
 
@@ -145,6 +147,8 @@ const Dashboard = () => {
 	}
 
 	const handleChangeStudent = (val) => {
+		console.log('handleChangeStudent')
+
 		setTodoApiOverView({ ...todoApiOverView, userId: val })
 		setIdStudent(val)
 	}
@@ -164,62 +168,66 @@ const Dashboard = () => {
 		<div className="w-full d-flex flex-col  mx-auto dashboard gap-4">
 			{isAdmin || isAcademic || isManager ? <StudentByAttenance /> : ''}
 
-			<div className="flex justify-between">
-				<Form form={form} className="w-full">
-					<div className="d-flex justify-end items-end">
-						<div className="grid grid-cols-1 tablet:grid-cols-3 gap-3 w-full ">
-							{user?.RoleId == 8 && (
-								<Form.Item name="student" className="col-span-1">
-									<Select onChange={handleChangeStudent} options={student} className="w-[200px] h-[36px]"></Select>
-								</Form.Item>
-							)}
-
-							{!isStudent && (
-								<Form.Item name="branchIds" className="col-span-1">
-									<Select className="w-[200px] h-[36px]" mode="multiple" onChange={handleChangeBranch} allowClear placeholder="Trung tâm">
-										{allBranch?.length > 0 &&
-											allBranch?.map((branch, index) => (
-												<Select.Option value={branch.Id} key={index}>
-													{branch.Name}
-												</Select.Option>
-											))}
-									</Select>
-								</Form.Item>
-							)}
-
-							{!isStudent ? (
-								<Form.Item name="year" className="col-span-1">
-									<Select
-										value={todoApi.year}
-										onChange={(e) => {
-											setTodoApi((pre) => ({ ...pre, year: e }))
-											setTodoApiOverView((pre) => ({ ...pre, year: e }))
-										}}
-										options={dataYear}
-										className="w-[100px] h-[36px] mr-2"
-									/>
-								</Form.Item>
-							) : (
-								''
-							)}
-						</div>
-						{!isStudent && (
-							<IconButton
-								color="red"
-								icon="reset"
-								type="button"
-								tooltip="Reset"
-								onClick={() => {
-									setTodoApi(listTodoApi)
-									setTodoApiOverView(listTodoApiOverView)
-									form.resetFields()
-								}}
-								className="!mr-[0px]"
-							/>
-						)}
+			<div className="w-full grid grid-cols-1 tablet:grid-cols-3 gap-4">
+				{isParents && (
+					<div className="col-span-1 ">
+						<Select onChange={handleChangeStudent} options={student} className="w-full h-[36px]"></Select>
 					</div>
-				</Form>
+				)}
+				{!isStudent && (
+					<>
+						<div className="col-span-1">
+							<Select
+								className="w-full h-[36px]"
+								mode="multiple"
+								onClear={() => {
+									console.log('onClear')
+								}}
+								onChange={handleChangeBranch}
+								allowClear
+								placeholder="Trung tâm"
+							>
+								{allBranch?.length > 0 &&
+									allBranch?.map((branch, index) => (
+										<Select.Option value={branch.Id} key={index}>
+											{branch.Name}
+										</Select.Option>
+									))}
+							</Select>
+						</div>
+						<div className="col-span-1">
+							<Select
+								value={todoApi.year}
+								onChange={(e) => {
+									setTodoApi((pre) => ({ ...pre, year: e }))
+									setTodoApiOverView((pre) => ({ ...pre, year: e }))
+								}}
+								options={dataYear}
+								className="w-full h-[36px] "
+							/>
+						</div>
+					</>
+				)}
 			</div>
+			{/* <div className="flex justify-between">
+				<div className="d-flex justify-end  items-end">
+				
+					{!isStudent && (
+						<IconButton
+							color="red"
+							icon="reset"
+							type="button"
+							tooltip="Reset"
+							onClick={() => {
+								setTodoApi(listTodoApi)
+								setTodoApiOverView(listTodoApiOverView)
+								form.resetFields()
+							}}
+							className="!mr-[0px]"
+						/>
+					)}
+				</div>
+			</div> */}
 
 			<StatisticOverview todoApiOverView={todoApiOverView} />
 
