@@ -142,7 +142,7 @@ const ChangedPage = () => {
 		{
 			title: 'Người tạo',
 			dataIndex: 'CreatedBy',
-			width: 200,
+			width: 200
 			// render: (value, item) => <p className="font-[600] text-[#1976D2]">{value}</p>
 		},
 		{
@@ -173,7 +173,7 @@ const ChangedPage = () => {
 				columns={columns}
 				TitleCard={
 					<div className="w-full flex items-center">
-						<Filters showBranch filters={filters} onSubmit={(event) => setFilter(event)} onReset={() => setFilter(initFilters)} />
+						<Filters showBranch filters={initFilters} onSubmit={(event) => setFilter(event)} onReset={() => setFilter(initFilters)} />
 						<Input.Search
 							className="primary-search max-w-[250px] ml-[8px]"
 							onChange={(event) => {

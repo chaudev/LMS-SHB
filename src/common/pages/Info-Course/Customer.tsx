@@ -33,6 +33,7 @@ import PrimaryButton from '~/common/components/Primary/Button'
 import { BsThreeDots } from 'react-icons/bs'
 import appConfigs from '~/appConfig'
 import ImportCustomer from './ImportCustomer'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 
 let pageIndex = 1
 let dataOption = [
@@ -54,7 +55,7 @@ let dataOption = [
 const CustomerAdvisory = () => {
 	const listTodoApi = {
 		FullName: '',
-		Code: '',
+		code: '',
 		customerStatusIds: '',
 		branchIds: '',
 		sort: 0,
@@ -90,19 +91,21 @@ const CustomerAdvisory = () => {
 		return state.user.information
 	})
 
-	const [dataFilter, setDataFilter] = useState([
+	const [dataFilter, setDataFilter] = useState<any[]>([
 		{
 			name: 'customerStatusIds',
 			title: 'Tình trạng tư vấn',
-			col: 'col-md-6 col-12',
+			col: 'col-span-2',
 			type: 'select',
+			mode: 'multiple',
 			optionList: null
 		},
 		{
 			name: 'branchIds',
 			title: 'Trung tâm',
-			col: 'col-md-6 col-12',
+			col: 'col-span-2',
 			type: 'select',
+			mode: 'multiple',
 			optionList: null
 		}
 	])
@@ -260,17 +263,13 @@ const CustomerAdvisory = () => {
 
 	const handleFilter = (listFilter) => {
 		let newListFilter = { ...listFieldFilter }
-
-		listFilter.forEach((item, index) => {
-			let key = item.name
-			Object.keys(newListFilter).forEach((keyFilter) => {
-				if (keyFilter == key) {
-					newListFilter[key] = item.value
-				}
-			})
+		setTodoApi({
+			...listTodoApi,
+			...newListFilter,
+			customerStatusIds: listFilter.customerStatusIds ? listFilter.customerStatusIds.toString() : null,
+			branchIds: listFilter.branchIds ? listFilter.branchIds.toString() : null,
+			pageIndex: 1
 		})
-
-		setTodoApi({ ...listTodoApi, ...newListFilter, pageIndex: 1 })
 	}
 
 	// HANDLE RESET
@@ -292,19 +291,19 @@ const CustomerAdvisory = () => {
 
 	const handleSort = async (option) => {
 		let newTodoApi = {
-			...listTodoApi,
+			...todoApi,
 			pageIndex: 1,
 			sort: option.title.sort,
 			sortType: option.title.sortType
 		}
 		setCurrentPage(1), setTodoApi(newTodoApi)
 	}
+
 	const getPagination = (pageNumber: number) => {
 		pageIndex = pageNumber
 		setCurrentPage(pageNumber)
 		setTodoApi({
 			...todoApi,
-			// ...listFieldSearch,
 			pageIndex: pageIndex
 		})
 	}
@@ -331,6 +330,9 @@ const CustomerAdvisory = () => {
 		}
 		if (state.customerStatus.CustomerStatus.length === 0) {
 			getAllCustomerStatus()
+		} else {
+			const convertData = parseSelectArray(state.customerStatus.CustomerStatus, 'Name', 'Id')
+			setDataFilter((prev) => [{ ...prev[0], optionList: convertData }, { ...prev[1] }])
 		}
 	}, [])
 
@@ -343,7 +345,7 @@ const CustomerAdvisory = () => {
 			...FilterTable({
 				type: 'search',
 				dataIndex: 'Code',
-				handleSearch: (event) => setTodoApi({ ...listTodoApi, Code: event }),
+				handleSearch: (event) => setTodoApi({ ...listTodoApi, code: event }),
 				handleReset: (event) => setTodoApi(listTodoApi)
 			}),
 			width: 160,
@@ -460,10 +462,10 @@ const CustomerAdvisory = () => {
 							branch={convertBranchSelect}
 							customerStatus={customerStatus}
 							rowData={data}
-							listTodoApi={listTodoApi}
+							listTodoApi={todoApi}
 							setTodoApi={setTodoApi}
 						/>
-						<CustomerAdvisoryMail dataRow={data} listTodoApi={listTodoApi} setTodoApi={setTodoApi} />
+						<CustomerAdvisoryMail dataRow={data} listTodoApi={todoApi} setTodoApi={setTodoApi} />
 						{data.CustomerStatusId !== 2 && (
 							<CustomerAdviseForm
 								isStudent={true}
@@ -474,7 +476,7 @@ const CustomerAdvisory = () => {
 								branch={convertBranchSelect}
 								customerStatus={customerStatus}
 								rowData={data}
-								listTodoApi={listTodoApi}
+								listTodoApi={todoApi}
 								setTodoApi={setTodoApi}
 							/>
 						)}
@@ -513,6 +515,7 @@ const CustomerAdvisory = () => {
 			<ExpandTable
 				currentPage={currentPage}
 				totalPage={totalRow && totalRow}
+				pageIndex={todoApi.pageIndex}
 				getPagination={(pageNumber: number) => getPagination(pageNumber)}
 				loading={isLoading}
 				// addClass="basic-header"
@@ -579,7 +582,13 @@ const CustomerAdvisory = () => {
 							userInformation?.RoleId == 5 ||
 							userInformation?.RoleId == 7) && <ImportCustomer className="mr-1 btn-import" onFetchData={() => getAllCustomer()} />}
 
-						<FilterBase dataFilter={dataFilter} handleFilter={(listFilter: any) => handleFilter(listFilter)} handleReset={handleReset} />
+						<FilterBaseVer2
+							dataFilter={dataFilter}
+							handleFilter={(listFilter: any) => {
+								handleFilter(listFilter)
+							}}
+							handleReset={handleReset}
+						/>
 						<SortBox handleSort={(value) => handleSort(value)} dataOption={dataOption} />
 					</div>
 				}

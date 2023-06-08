@@ -24,7 +24,6 @@ import { purposeApi } from '~/api/purpose'
 import { setSource } from '~/store/sourceReducer'
 import { setLearningNeed } from '~/store/learningNeedReducer'
 import { setPurpose } from '~/store/purposeReducer'
-import { setSaler } from '~/store/salerReducer'
 import { useRouter } from 'next/router'
 import { userInfoColumn } from '~/common/libs/columns/user-info'
 import { ButtonEye } from '~/common/components/TableButton'
@@ -220,6 +219,8 @@ const Student: FC<IPersonnel> = (props) => {
 
 	useEffect(() => {
 		getUsers(apiParameters)
+
+		console.log('apiParameters', apiParameters)
 	}, [apiParameters])
 
 	async function deleteUser(param) {
@@ -509,6 +510,7 @@ const Student: FC<IPersonnel> = (props) => {
 				data={users}
 				total={totalRow}
 				loading={loading}
+				current={apiParameters.PageIndex}
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, PageIndex: event })}
 				TitleCard={
 					<>

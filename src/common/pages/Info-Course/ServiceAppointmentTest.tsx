@@ -476,7 +476,7 @@ export default function ServiceAppointmentTest(props) {
 									handleReset={handleReset}
 								/>
 							)}
-							<SortBox handleSort={(value) => handleSort(value)} dataOption={appointmenDataOption} />
+							<SortBox width={'200px'} handleSort={(value) => handleSort(value)} dataOption={appointmenDataOption} />
 						</div>
 					}
 					Extra={

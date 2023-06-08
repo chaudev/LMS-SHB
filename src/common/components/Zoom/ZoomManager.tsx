@@ -191,16 +191,18 @@ const ZoomManager: FC<TZoomManager> = (props) => {
 	if (!data?.IsOpenZoom) {
 		return (
 			<div className="mt-[8px]">
-				<PrimaryTooltip id={`tip-${data?.Id}`} content="Tạo phòng Zoom" place="top">
-					<div
-						onClick={createZoomRoom}
-						className="h-[32px] all-center w-full rounded-[6px] bg-[#4CAF50] hover:bg-[#449a48] active:bg-[#4CAF50]"
-					>
-						{!loading && <RiAddCircleLine size={20} color="#fff" />}
-						{loading == 'create' && <BaseLoading.White />}
-						{!!isPopover && <div className="text-[#fff] ml-[8px]">Tạo phòng Zoom</div>}
-					</div>
-				</PrimaryTooltip>
+				{(isAdmin() || isTeacher()) && (
+					<PrimaryTooltip id={`tip-${data?.Id}`} content="Tạo phòng Zoom" place="top">
+						<div
+							onClick={createZoomRoom}
+							className="h-[32px] all-center w-full rounded-[6px] bg-[#4CAF50] hover:bg-[#449a48] active:bg-[#4CAF50]"
+						>
+							{!loading && <RiAddCircleLine size={20} color="#fff" />}
+							{loading == 'create' && <BaseLoading.White />}
+							{!!isPopover && <div className="text-[#fff] ml-[8px]">Tạo phòng Zoom</div>}
+						</div>
+					</PrimaryTooltip>
+				)}
 
 				{/* {isActive() && (
 					<PrimaryTooltip id={`reco-tip-${data?.Id}`} content="Xem bản ghi" place="top">

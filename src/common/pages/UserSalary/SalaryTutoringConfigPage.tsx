@@ -2,10 +2,8 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { tutoringFeeApi } from '~/api/tutoring-fee'
 import CCSearch from '~/common/components/CCSearch'
-import PrimaryTable from '~/common/components/Primary/Table'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import FilterTable from '~/common/utils/table-filter'
 import { ModalSalaryTutoringConfigCRUD } from './ModalSalaryTutoringConfigCRUD'
 
 let pageIndex = 1

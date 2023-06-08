@@ -2,6 +2,7 @@ import { Card, Table } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import EmptyData from '../../EmptyData'
 import Popup from './MenuContext'
+import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 
 const PrimaryTable: FC<IPrimaryTable> = (props) => {
 	const { columns, children, TitleCard, Extra, className, loading, bordered } = props
@@ -93,7 +94,7 @@ const PrimaryTable: FC<IPrimaryTable> = (props) => {
 							dataSource={dataSource}
 							size="middle"
 							pagination={{
-								pageSize: pageSize || 30,
+								pageSize: pageSize ? pageSize : PAGE_SIZE,
 								pageSizeOptions: ['30'],
 								total: total && total,
 								current: current && current,

@@ -16,7 +16,6 @@ const StatisticOverview: React.FC<IStatisticOverview> = ({ todoApiOverView }) =>
 			const res = await staticsticalApi.getOverview(todoApiOverView)
 			if (res.status === 200) {
 				setStatisticOverview(res.data.data)
-				console.log('res.data.data', res.data.data)
 			}
 			if (res.status === 204) {
 				setStatisticOverview([])

@@ -5,7 +5,6 @@ import DatePickerField from '../FormControl/DatePickerField'
 import InputTextField from '../FormControl/InputTextField'
 import SelectFieldSearch from '../FormControl/SelectFieldSearch'
 import PrimaryButton from '../Primary/Button'
-import IconButton from '../Primary/IconButton'
 
 type IProps = {
 	dataFilter: {
@@ -13,7 +12,7 @@ type IProps = {
 		title: string
 		type: 'select' | 'date-range' | 'date-single' | 'text' | string
 		col?: string
-		mode?: 'multiple' | 'tag'
+		mode?: 'multiple' | 'tag' | string
 		optionList?: { title: string; value: any }[]
 		value?: number
 		handleScroll?: Function
@@ -27,10 +26,12 @@ type IProps = {
 }
 
 export default function FilterBaseVer2(props: IProps) {
+
 	const { dataFilter, handleFilter, handleReset, width, setTodoApiOption, todoApiOption } = props
 	const [listFilter, setListFilter] = useState(dataFilter)
 	const [visible, setVisible] = useState(false)
 	const [form] = Form.useForm()
+ 	
 
 	// ------------ RESET FILTER -------------
 	const resetFilter = () => {
