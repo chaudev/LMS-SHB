@@ -119,6 +119,7 @@ export default function ServiceAppointmentTest(props) {
 
 	// BASE USESTATE TABLE
 	const [dataSource, setDataSource] = useState<ITestCustomer[]>([])
+
 	const listTodoApi = {
 		pageSize: PAGE_SIZE,
 		pageIndex: pageIndex,
@@ -131,6 +132,7 @@ export default function ServiceAppointmentTest(props) {
 		Status: null,
 		studentId: null
 	}
+
 	const [isLoading, setIsLoading] = useState(false)
 	const [totalPage, setTotalPage] = useState(null)
 	const [currentPage, setCurrentPage] = useState(1)
@@ -267,7 +269,7 @@ export default function ServiceAppointmentTest(props) {
 	// HANDLE SORT
 	const handleSort = async (option) => {
 		let newTodoApi = {
-			...listTodoApi,
+			...todoApi,
 			pageIndex: 1,
 			sort: option.title.sort,
 			sortType: option.title.sortType
@@ -328,6 +330,7 @@ export default function ServiceAppointmentTest(props) {
 	// USE EFFECT - FETCH DATA
 	useEffect(() => {
 		getDataSource()
+		console.log('todoApi', todoApi)
 	}, [todoApi])
 
 	useEffect(() => {

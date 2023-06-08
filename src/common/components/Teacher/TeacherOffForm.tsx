@@ -7,6 +7,7 @@ import { ShowNoti } from '~/common/utils'
 import DatePickerField from '../FormControl/DatePickerField'
 import TextBoxField from '../FormControl/TextBoxField'
 import PrimaryButton from '../Primary/Button'
+import { formRequired } from '~/common/libs/others/form'
 
 const TeacherOffForm = (props) => {
 	const { setTodoApi, listTodoApi } = props
@@ -49,15 +50,15 @@ const TeacherOffForm = (props) => {
 				open={isModalOpen}
 				onCancel={() => setIsModalOpen(false)}
 				footer={
-					<PrimaryButton background="blue" type="button" icon="save" onClick={form.submit}>
+					<PrimaryButton background="primary" type="button" icon="save" onClick={form.submit}>
 						Lưu {isLoading && <Spin className="loading-base" />}
 					</PrimaryButton>
 				}
 			>
 				<Form form={form} layout="vertical" onFinish={onSubmit}>
-					<DatePickerField mode="single" name="StartTime" label="Nghỉ (từ ngày)" />
-					<DatePickerField mode="single" name="EndTime" label="Nghỉ (đến ngày)" />
-					<TextBoxField name="Reason" label="Lý do" />
+					<DatePickerField isRequired rules={formRequired} mode="single" name="StartTime" label="Nghỉ (từ ngày)" />
+					<DatePickerField isRequired rules={formRequired} mode="single" name="EndTime" label="Nghỉ (đến ngày)" />
+					<TextBoxField name="Reason" isRequired rules={formRequired} label="Lý do" />
 				</Form>
 			</Modal>
 		</div>

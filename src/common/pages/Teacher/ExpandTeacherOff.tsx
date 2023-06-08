@@ -182,7 +182,7 @@ const ExpandTeacherOff = ({ item }) => {
 				onChangePage={(pageNumber: number) => getPagination(pageNumber)}
 				total={totalRow}
 				columns={columns}
-				Extra={isTeacher() && <TeacherOffForm setTodoApi={setTodoApi} listTodoApi={listTodoApi} />}
+				// Extra={isTeacher() && <TeacherOffForm setTodoApi={setTodoApi} listTodoApi={listTodoApi} />}
 				TitleCard="Lịch dạy trong thời gian nghỉ"
 			/>
 		</div>

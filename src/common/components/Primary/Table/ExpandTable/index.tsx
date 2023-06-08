@@ -5,6 +5,11 @@ import EmptyData from '~/common/components/EmptyData'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { _format } from '~/common/utils'
 
+
+interface ExpandTable {
+	// getPagination: (a,b) => 
+}
+
 const ExpandTable = (props) => {
 	const [state, setState] = useState({ selectedRowKeys: [] })
 	const [dataSource, setDataSource] = useState([])
@@ -134,10 +139,12 @@ const ExpandTable = (props) => {
 
 					{props.sumPrice && renderStatistical()}
 
-					{dataSource.length == 0 && <EmptyData loading={props.loading?.status} />}
+					{/* {dataSource.length == 0 && <EmptyData loading={props.loading?.status} />} */}
 
-					{dataSource.length > 0 && (
-						<Table
+					{/* {dataSource.length > 0 && (
+						
+					)} */}
+					<Table
 							loading={props.loading?.type == 'GET_ALL' && props.loading?.status}
 							bordered={props.haveBorder ? props.haveBorder : false}
 							scroll={{ x: 'max-content', y: window.innerHeight - 295 }}
@@ -169,7 +176,6 @@ const ExpandTable = (props) => {
 								rowExpandable: (record) => record.name !== 'Not Expandable'
 							}}
 						/>
-					)}
 				</Card>
 			</div>
 		</>

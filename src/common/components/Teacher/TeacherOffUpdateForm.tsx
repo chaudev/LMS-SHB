@@ -60,6 +60,7 @@ const TeacherOffUpdateForm = (props) => {
 							{ value: 2, title: 'Duyệt' },
 							{ value: 3, title: 'Không duyệt' }
 						]}
+					
 					/>
 					<TextBoxField name="Note" label="Ghi chú" />
 				</Form>

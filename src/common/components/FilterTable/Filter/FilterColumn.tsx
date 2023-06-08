@@ -130,11 +130,13 @@ const FilterColumn = (dataIndex = null, handleSearch = null, handleReset = null,
 					<Button
 						type="primary"
 						onClick={() => checkHandleSearch(valueSearch)}
-						icon={<SearchOutlined />}
+						// icon={}
 						size="small"
 						style={{ width: 90 }}
 					>
-						Tìm
+						<div className="d-flex justify-center items-center gap-3">
+							<SearchOutlined /><span>Tìm</span>
+						</div>
 					</Button>
 					<Button onClick={checkHandleReset} size="small" style={{ width: 90 }}>
 						Khôi phục

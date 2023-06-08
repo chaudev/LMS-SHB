@@ -153,7 +153,7 @@ export const SalaryPage = () => {
 			dataIndex: 'StatusName',
 			render: (text, item) => (
 				<>
-					<span className={`tag ${item?.Status == 1 ? 'gray' : item?.Status == 2 ? 'green' : 'blue'}`}>{text}</span>
+					<span className={`tag ${item?.Status == 1 ? 'yellow' : item?.Status == 2 ? 'green' : 'blue'}`}>{text}</span>
 				</>
 			)
 		},

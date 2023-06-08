@@ -133,8 +133,8 @@ const ScheduleCalendar = (props) => {
 								<span className="title">Ghi chú:</span>
 								<span className="whitespace-pre-line ml-1">{dataRow.event.extendedProps.Note}</span>
 							</p>
-
-							<ZoomManager isPopover data={dataRow.event.extendedProps} onRefresh={onRefresh} />
+								{/* Mấy cái button tham gia lớp + tạo lớp bla bla nằm ở trong đây! chỉ cần mở cmt là dc */}
+							{/* <ZoomManager isPopover data={dataRow.event.extendedProps} onRefresh={onRefresh} /> */}
 						</div>
 					</>
 				}

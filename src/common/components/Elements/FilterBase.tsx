@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Select, DatePicker, Input, Form, Popover } from 'antd'
 import { Filter } from 'react-feather'
 import moment from 'moment'
@@ -26,6 +26,12 @@ const FilterBase = (props) => {
 		setListFilter(newFilter)
 	}
 
+	// useEffect(() => {
+	// 	if (todoApi && visible) {
+	// 		console.log('FilterBase', todoApi)
+	// 		form.setFieldsValue(todoApi)
+	// 	}
+	// }, [todoApi, visible])
 	// ------------- ON SUBMIT -----------------
 	const onSubmit = (params) => {
 		listFilter
@@ -163,12 +169,15 @@ const FilterBase = (props) => {
 
 	const content = (
 		<div className={`wrap-filter small`}>
-			<Form form={form} layout="vertical" onFinish={onSubmit} onValuesChange={(changedValues, allValues)=>{
-				console.log('changedValues',changedValues);
-				console.log('allValues',allValues);
-				
-				
-			}}>
+			<Form
+				form={form}
+				layout="vertical"
+				onFinish={onSubmit}
+				// onValuesChange={(changedValues, allValues) => {
+				// 	console.log('changedValues', changedValues)
+				// 	console.log('allValues', allValues)
+				// }}
+			>
 				<div className="row">
 					{dataFilter.map((item, index) => fieldOfFilter(item, index))}
 
