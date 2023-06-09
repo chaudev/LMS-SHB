@@ -11,7 +11,7 @@ type IProps = {
 		name: string
 		title: string
 		type: 'select' | 'date-range' | 'date-single' | 'text' | string
-		col?: string
+		col?: string //col-span-2 hoặc col-span-1
 		mode?: 'multiple' | 'tag' | string
 		optionList?: { title: string; value: any }[]
 		value?: number
@@ -26,12 +26,10 @@ type IProps = {
 }
 
 export default function FilterBaseVer2(props: IProps) {
-
 	const { dataFilter, handleFilter, handleReset, width, setTodoApiOption, todoApiOption } = props
 	const [listFilter, setListFilter] = useState(dataFilter)
 	const [visible, setVisible] = useState(false)
 	const [form] = Form.useForm()
- 	
 
 	// ------------ RESET FILTER -------------
 	const resetFilter = () => {

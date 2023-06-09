@@ -11,6 +11,10 @@ type ICreateNew = {
 	purpose?: Array<any>
 	sale?: Array<any>
 	learningNeed?: Array<any>
+	process?: Array<any>
+	visaStatus?: Array<any>
+	profileStatus?: Array<any>
+	foreignLanguage?: Array<any>
 }
 
 type IPersonnel = {

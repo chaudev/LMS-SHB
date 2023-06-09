@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react'
 import { majorsRegistrationApi } from '~/api/majors/registration'
 import { PrimaryTooltip } from '~/common/components'
 import Avatar from '~/common/components/Avatar'
+import FilterBase from '~/common/components/Elements/FilterBase'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 import IconButton from '~/common/components/Primary/IconButton'
 import PrimaryTable from '~/common/components/Primary/Table'
 import Filters from '~/common/components/Student/Filters'
@@ -125,20 +127,39 @@ const MajorsStudentPage = () => {
 			data={majors}
 			TitleCard={
 				<>
-					<Filters
-						filters={apiParameters}
-						statusList={[
+					<FilterBaseVer2
+						// filters={apiParameters}
+						// statusList={[
+						// 	{
+						// 		value: 1,
+						// 		title: 'Đang theo học'
+						// 	},
+						// 	{
+						// 		value: 2,
+						// 		title: 'Đã kết thúc'
+						// 	}
+						// ]}
+						dataFilter={[
 							{
-								value: 1,
-								title: 'Đang theo học'
-							},
-							{
-								value: 2,
-								title: 'Đã kết thúc'
+								name: 'status',
+								title: 'Trạng thái',
+								type: 'select',
+								col: 'col-span-2',
+
+								optionList: [
+									{
+										value: 1,
+										title: 'Đang theo học'
+									},
+									{
+										value: 2,
+										title: 'Đã kết thúc'
+									}
+								]
 							}
 						]}
-						onSubmit={(event) => setApiParameters(event)}
-						onReset={() => setApiParameters(initParamters)}
+						handleFilter={(event) => setApiParameters({ ...initParamters, ...event })}
+						handleReset={() => setApiParameters(initParamters)}
 					/>
 					<Input.Search
 						className="primary-search max-w-[250px] ml-[8px]"

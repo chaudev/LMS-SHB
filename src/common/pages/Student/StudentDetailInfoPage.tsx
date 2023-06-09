@@ -28,13 +28,6 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 	const [form] = Form.useForm()
 	const userInformation = useSelector((state: RootState) => state.user.information)
 
-	const isRole = {
-		admin: userInfomation.RoleId == 1,
-		teacher: userInfomation.RoleId == 2,
-		student: userInfomation.RoleId == 3,
-		parent: userInfomation.RoleId == 8
-	}
-
 	const getStudentDetail = async () => {
 		try {
 			const res = await userInformationApi.getByID(router.query.StudentID)
@@ -53,13 +46,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '1',
 						label: `Chi tiết`,
-						children: (
-							<TabStudentDetail
-							
-								StudentDetail={studentDetail}
-								setStudentDetail={setStudentDetail}
-							/>
-						)
+						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
 					},
 					// {
 					// 	key: '2',
@@ -91,13 +78,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '1',
 						label: `Chi tiết`,
-						children: (
-							<TabStudentDetail
-								
-								StudentDetail={studentDetail}
-								setStudentDetail={setStudentDetail}
-							/>
-						)
+						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
 					},
 					// {
 					// 	key: '2',

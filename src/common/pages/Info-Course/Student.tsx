@@ -13,7 +13,6 @@ import { BsThreeDots } from 'react-icons/bs'
 import ImportStudent from '~/common/components/User/ImportStudent'
 import CreateUser from '~/common/components/User/user-form'
 import appConfigs from '~/appConfig'
-import { permissionApi } from '~/api/permission'
 import { parseSelectArray } from '~/common/utils/common'
 import { branchApi } from '~/api/branch'
 import { setBranch } from '~/store/branchReducer'
@@ -28,15 +27,20 @@ import { useRouter } from 'next/router'
 import { userInfoColumn } from '~/common/libs/columns/user-info'
 import { ButtonEye } from '~/common/components/TableButton'
 import { PrimaryTooltip } from '~/common/components'
-import Filters from '~/common/components/Student/Filters'
 import IconButton from '~/common/components/Primary/IconButton'
 import Link from 'next/link'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import { processApi } from '~/api/process'
+import { visaStatusApi } from '~/api/visa-status'
+import { foreignLanguageApi } from '~/api/foreign-language'
+import { profileStatusApi } from '~/api/profile-status'
+import OverviewStatusStudent from './OverviewStatusStudent'
+import { permissionApi } from '~/api/permission'
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
 	const state = useSelector((state: RootState) => state)
 	const userInformation = useSelector((state: RootState) => state.user.information)
-
 	const initParamters = {
 		sort: 0,
 		sortType: false,
@@ -45,17 +49,25 @@ const Student: FC<IPersonnel> = (props) => {
 		PageIndex: 1,
 		RoleIds: role,
 		Search: null,
-		parentIds: userInformation?.RoleId == '8' ? userInformation.UserInformationId.toString() : ''
+		parentIds: userInformation?.RoleId == '8' ? userInformation.UserInformationId.toString() : '',
+		branchIds: null,
+		genders: null,
+		profileStatusIds: null,
+		foreignLanguageIds: null,
+		visaStatusIds: null,
+		processIds: null
 	}
-
+	const [process, setProcess] = useState([])
+	const [visaStatus, setVisaStatus] = useState([])
+	const [profileStatus, setProfileStatus] = useState([])
+	const [foreignLanguage, setForeignLanguage] = useState([])
+	const [visible, setVisible] = useState(false)
 	const [apiParameters, setApiParameters] = useState(initParamters)
 	const [roleStaff, setRoleStaff] = useState([])
-	const [roleSelectFilter, setRoleSelectFilter] = useState([])
 	const [users, setUser] = useState([])
 	const [totalRow, setTotalRow] = useState(1)
 	const [loading, setLoading] = useState(false)
 	const [loadingAllow, setLoadingAllow] = useState(false)
-	const router = useRouter()
 	const dispatch = useDispatch()
 
 	function isManager() {
@@ -86,10 +98,11 @@ const Student: FC<IPersonnel> = (props) => {
 		}
 	}, [state.purpose])
 
-	useEffect(() => {
-		const convertRoleSelectFilter = roleStaff.map((role) => role.value)
-		setRoleSelectFilter(convertRoleSelectFilter)
-	}, [roleStaff])
+	const branch = useMemo(() => {
+		if (state.purpose.Purpose.length > 0) {
+			return parseSelectArray(state.branch.Branch, 'Name', 'Id')
+		}
+	}, [state.branch])
 
 	const getAllSource = async () => {
 		try {
@@ -179,6 +192,7 @@ const Student: FC<IPersonnel> = (props) => {
 			}
 			if (response.status == 204) {
 				setUser([])
+				setTotalRow(0)
 			}
 		} catch (error) {
 			console.error(error)
@@ -198,29 +212,20 @@ const Student: FC<IPersonnel> = (props) => {
 			if (state.purpose.Purpose.length === 0) {
 				getAllPurpose()
 			}
-			// if (state.saler.Saler.length === 0) {
-			// 	getAllSale()
-			// }
 		}
-	}, [])
-
-	useEffect(() => {
-		getRoleStaff()
-	}, [])
-
-	useEffect(() => {
 		if (state.area.Area.length == 0) {
 			getAllArea()
 		}
 		if (state.branch.Branch.length == 0) {
 			getAllBranch()
 		}
+		initDateFilter()
 	}, [])
-
+	useEffect(() => {
+		getRoleStaff()
+	}, [])
 	useEffect(() => {
 		getUsers(apiParameters)
-
-		console.log('apiParameters', apiParameters)
 	}, [apiParameters])
 
 	async function deleteUser(param) {
@@ -251,6 +256,73 @@ const Student: FC<IPersonnel> = (props) => {
 			ShowNoti('error', error.message)
 			setLoading(false)
 		}
+	}
+
+	const getProcess = async () => {
+		try {
+			const res = await processApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setProcess(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const getVisaStatus = async () => {
+		try {
+			const res = await visaStatusApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setVisaStatus(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const getForeignLanguage = async () => {
+		try {
+			const res = await foreignLanguageApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setForeignLanguage(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const getProfileStatus = async () => {
+		try {
+			const res = await profileStatusApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setProfileStatus(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const initDateFilter = () => {
+		getProcess()
+		getVisaStatus()
+		getForeignLanguage()
+		getProfileStatus()
 	}
 
 	const columns = [
@@ -298,18 +370,13 @@ const Student: FC<IPersonnel> = (props) => {
 			render: (data, item) => {
 				return (
 					<div className="flex items-center">
-						{/* <IconButton
-							type="button"
-							icon={'eye'}
-							color="blue"
-							onClick={() => router.push({ pathname: '/info-course/student/detail', query: { StudentID: item.UserInformationId } })}
-							className=""
-							tooltip="Chi tiết"
-						/> */}
-
 						{isAdmin() && (
 							<>
 								<CreateUser
+									process={process}
+									visaStatus={visaStatus}
+									profileStatus={profileStatus}
+									foreignLanguage={foreignLanguage}
 									isEdit
 									roleStaff={roleStaff}
 									defaultData={item}
@@ -324,6 +391,10 @@ const Student: FC<IPersonnel> = (props) => {
 						{isManager() && item?.RoleId !== 1 && item?.RoleId !== 4 && (
 							<>
 								<CreateUser
+									process={process}
+									visaStatus={visaStatus}
+									profileStatus={profileStatus}
+									foreignLanguage={foreignLanguage}
 									isEdit
 									roleStaff={roleStaff}
 									defaultData={item}
@@ -379,15 +450,27 @@ const Student: FC<IPersonnel> = (props) => {
 		{
 			title: 'Trạng thái học',
 			width: 130,
-			dataIndex: 'LearningStatus',
-			render: (data, record) => (
-				<>
-					{data === 1 && <span className="tag yellow">{record.LearningStatusName}</span>}
-					{data === 2 && <span className="tag blue">{record.LearningStatusName}</span>}
-					{data === 3 && <span className="tag green">{record.LearningStatusName}</span>}
-					{data === 4 && <span className="tag red">{record.LearningStatusName}</span>}
-				</>
-			)
+			dataIndex: 'LearningStatusName'
+		},
+		{
+			title: 'Tình trạng hồ sơ',
+			width: 150,
+			dataIndex: 'profileStatusName'
+		},
+		{
+			title: 'Trình độ ngoại ngữ',
+			width: 150,
+			dataIndex: 'ForeignLanguageName'
+		},
+		{
+			title: 'Tình trạng visa',
+			width: 130,
+			dataIndex: 'VisaStatusName'
+		},
+		{
+			title: 'Tình trạng xử lý hồ sơ',
+			width: 160,
+			dataIndex: 'ProcessName'
 		},
 		{
 			width: 100,
@@ -412,6 +495,10 @@ const Student: FC<IPersonnel> = (props) => {
 
 						{role !== 3 && (isAdmin() || isManage()) && (
 							<CreateUser
+								process={process}
+								visaStatus={visaStatus}
+								profileStatus={profileStatus}
+								foreignLanguage={foreignLanguage}
 								isEdit
 								roleStaff={roleStaff}
 								defaultData={item}
@@ -423,6 +510,10 @@ const Student: FC<IPersonnel> = (props) => {
 
 						{role == 3 && (isAdmin() || isManage()) && (
 							<CreateUser
+								process={process}
+								visaStatus={visaStatus}
+								profileStatus={profileStatus}
+								foreignLanguage={foreignLanguage}
 								isEdit
 								roleStaff={roleStaff}
 								source={source}
@@ -482,17 +573,6 @@ const Student: FC<IPersonnel> = (props) => {
 		return userInformation?.RoleId == 1
 	}
 
-	function isTeacher() {
-		return userInformation?.RoleId == 2
-	}
-
-	function isStdent() {
-		return userInformation?.RoleId == 3
-	}
-
-	function isAccountant() {
-		return userInformation?.RoleId == 6
-	}
 	function isManage() {
 		return userInformation?.RoleId == 4
 	}
@@ -501,7 +581,95 @@ const Student: FC<IPersonnel> = (props) => {
 		return userInformation?.RoleId == 7
 	}
 
-	const [visible, setVisible] = useState(false)
+	const handleFilter = (params) => {
+		const paramsForrmat = {
+			...apiParameters,
+			pageIndex: 1,
+			branchIds: params.branchIds ? params.branchIds.join(',') : null,
+			foreignLanguageIds: params.foreignLanguageIds ? params.foreignLanguageIds.join(',') : null,
+			genders: params.genders,
+			processIds: params.processIds ? params.processIds.join(',') : null,
+			profileStatusIds: params.profileStatusIds ? params.profileStatusIds.join(',') : null,
+			visaStatusIds: params.visaStatusIds ? params.visaStatusIds.join(',') : null
+		}
+		setApiParameters(paramsForrmat)
+	}
+
+	const dataFilterStudent = [
+		{
+			name: 'branchIds',
+			title: 'Trung tâm',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: branch
+		},
+		{
+			name: 'genders',
+			title: 'Giới tính',
+			type: 'select',
+			col: 'col-span-2',
+			optionList: [
+				{ value: 0, title: 'Khác' },
+				{ value: 1, title: 'Nam' },
+				{ value: 2, title: 'Nữ' }
+			]
+		},
+		{
+			name: 'profileStatusIds',
+			title: 'Tình trạng hồ sơ',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: profileStatus
+		},
+		{
+			name: 'foreignLanguageIds',
+			title: 'Trình độ ngoại ngữ',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: foreignLanguage
+		},
+		{
+			name: 'visaStatusIds',
+			title: 'Tình trạng visa',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: visaStatus
+		},
+		{
+			name: 'processIds',
+			title: 'Tình trạng xử lý hồ sơ',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: process
+		}
+	]
+
+	const dataFilterPersional = [
+		{
+			name: 'branchIds',
+			title: 'Trung tâm',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: branch
+		},
+		{
+			name: 'genders',
+			title: 'Giới tính',
+			type: 'select',
+			col: 'col-span-2',
+			optionList: [
+				{ value: 0, title: 'Khác' },
+				{ value: 1, title: 'Nam' },
+				{ value: 2, title: 'Nữ' }
+			]
+		}
+	]
 
 	return (
 		<div className="info-course-student">
@@ -514,12 +682,13 @@ const Student: FC<IPersonnel> = (props) => {
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, PageIndex: event })}
 				TitleCard={
 					<>
-						<Filters
-							showBranch
-							showSort
-							filters={apiParameters}
-							onSubmit={(event) => setApiParameters(event)}
-							onReset={() => setApiParameters(initParamters)}
+						{role === 3 && <OverviewStatusStudent />}
+						<FilterBaseVer2
+							dataFilter={role === 3 ? dataFilterStudent : dataFilterPersional}
+							handleFilter={handleFilter}
+							handleReset={(value) => {
+								setApiParameters(initParamters)
+							}}
 						/>
 						<Input.Search
 							className="primary-search max-w-[250px] ml-[8px]"
@@ -584,23 +753,15 @@ const Student: FC<IPersonnel> = (props) => {
 									)}
 
 									<CreateUser
+										process={process}
+										visaStatus={visaStatus}
+										profileStatus={profileStatus}
+										foreignLanguage={foreignLanguage}
 										onOpen={() => setVisible(false)}
 										className={`!w-full ${role == 3 && 'mb-3'}`}
 										onRefresh={() => getUsers(apiParameters)}
 										isStudent={role == 3 ? true : false}
 									/>
-
-									{!!apiParameters.Search && users.length == 0 && (
-										<PrimaryButton
-											className="!w-full mb-3"
-											type="button"
-											icon="cancel"
-											background="yellow"
-											onClick={() => setApiParameters(initParamters)}
-										>
-											Xoá bộ lọc
-										</PrimaryButton>
-									)}
 
 									{role == 3 && (
 										<PrimaryButton
@@ -641,6 +802,10 @@ const Student: FC<IPersonnel> = (props) => {
 
 						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
 							<CreateUser
+								process={process}
+								visaStatus={visaStatus}
+								profileStatus={profileStatus}
+								foreignLanguage={foreignLanguage}
 								roleStaff={roleStaff}
 								source={source}
 								learningNeed={learningNeed}
@@ -653,7 +818,16 @@ const Student: FC<IPersonnel> = (props) => {
 						)}
 
 						{role !== 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
-							<CreateUser roleStaff={roleStaff} className="btn-create" onRefresh={() => getUsers(apiParameters)} isStudent={false} />
+							<CreateUser
+								process={process}
+								visaStatus={visaStatus}
+								profileStatus={profileStatus}
+								foreignLanguage={foreignLanguage}
+								roleStaff={roleStaff}
+								className="btn-create"
+								onRefresh={() => getUsers(apiParameters)}
+								isStudent={false}
+							/>
 						)}
 					</>
 				}

@@ -63,6 +63,10 @@ export const userInformationApi = {
 	},
 	checkExistUserName(data: any) {
 		return instance.post('/api/check-exist-username', data)
+	},
+
+	getOverviewStatus() {
+		return instance.get(url + '/overview-status')
 	}
 }
 

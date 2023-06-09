@@ -380,6 +380,7 @@ export const ManagerChildMenu = [
 						Text: 'Ngày nghỉ',
 						Icon: ''
 					},
+ 
 					{
 						ItemType: 'single',
 						Key: '/options/jobs',

@@ -23,7 +23,7 @@ const TopJob = ({ todoApi }) => {
 
 	return (
 		<Card title={<h1 className="text-2xl font-medium">Top 5 công việc của học viên </h1>}>
-			<StatisticTop5Course data={statisticTopJob} titleBar="Học viên " type={2} />
+			<StatisticTop5Course data={statisticTopJob} titleBar="Học viên " type={1} />
 		</Card>
 	)
 }

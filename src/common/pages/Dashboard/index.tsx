@@ -1,4 +1,4 @@
-import { Select, Form } from 'antd'
+import { Select, Form, DatePicker } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
@@ -30,52 +30,11 @@ import TopJob from './Statistic/TopJob'
 import StudentAge from './Statistic/StudentAge'
 import FeedRating from './Statistic/FeedRating'
 
-const dataYear = [
-	{
-		value: 2023,
-		label: '2023'
-	},
-	{
-		value: 2022,
-		label: '2022'
-	},
-	{
-		value: 2021,
-		label: '2021'
-	},
-	{
-		value: 2020,
-		label: '2020'
-	},
-	{
-		value: 2019,
-		label: '2019'
-	},
-	{
-		value: 2018,
-		label: '2018'
-	},
-	{
-		value: 2017,
-		label: '2017'
-	},
-	{
-		value: 2016,
-		label: '2016'
-	},
-	{
-		value: 2015,
-		label: '2015'
-	}
-]
-
 const Dashboard = () => {
-	const [form] = Form.useForm()
-
 	const user = useSelector((state: RootState) => state.user.information)
 
 	const { isAdmin, isTeacher, isAcademic, isStudent, isSaler, isAccountant, isParents, isManager } = useRole()
-	const listTodoApi = { branchIds: '', year: moment().year() }
+	const listTodoApi = { branchIds: '', year: String(moment().year()) }
 
 	const listTodoApiOverView = {
 		branchIds: '',
@@ -196,38 +155,19 @@ const Dashboard = () => {
 							</Select>
 						</div>
 						<div className="col-span-1">
-							<Select
-								value={todoApi.year}
-								onChange={(e) => {
-									setTodoApi((pre) => ({ ...pre, year: e }))
-									setTodoApiOverView((pre) => ({ ...pre, year: e }))
+							<DatePicker
+								className="w-full h-[36px] primary-input"
+								onChange={(date: any, dateString: string) => {
+									setTodoApi((pre) => ({ ...pre, year: dateString }))
+									setTodoApiOverView((pre) => ({ ...pre, year: dateString }))
 								}}
-								options={dataYear}
-								className="w-full h-[36px] "
+								picker="year"
+								placeholder='Chọn năm'
 							/>
 						</div>
 					</>
 				)}
 			</div>
-			{/* <div className="flex justify-between">
-				<div className="d-flex justify-end  items-end">
-				
-					{!isStudent && (
-						<IconButton
-							color="red"
-							icon="reset"
-							type="button"
-							tooltip="Reset"
-							onClick={() => {
-								setTodoApi(listTodoApi)
-								setTodoApiOverView(listTodoApiOverView)
-								form.resetFields()
-							}}
-							className="!mr-[0px]"
-						/>
-					)}
-				</div>
-			</div> */}
 
 			<StatisticOverview todoApiOverView={todoApiOverView} />
 
@@ -252,9 +192,9 @@ const Dashboard = () => {
 						<div className="col-span-1">
 							<Source todoApi={todoApi} />
 						</div>
-						<div className="col-span-1">
+						{/* <div className="col-span-1">
 							<TopJob todoApi={todoApi} />
-						</div>
+						</div> */}
 					</div>
 					<StudentAge todoApi={todoApi} />
 					{isManager ? <FeedRating todoApi={todoApi} /> : ''}

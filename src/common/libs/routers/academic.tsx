@@ -352,7 +352,7 @@ export const AcademicChildMenu = [
 						Text: 'Ngày nghỉ',
 						Icon: ''
 					},
-					{
+ 					{
 						ItemType: 'single',
 						Key: '/options/jobs',
 						Route: '/options/jobs',

@@ -133,6 +133,9 @@ const Schedule = () => {
 						<PopoverSearch setParamsSearch={setParamsSearch} teachers={teachers} isLoading={isLoading} />
 					)
 				}
+				bodyStyle={{
+					padding:'0px'
+				}}
 			>
 				<FullCalendar
 					ref={thisCalendar}

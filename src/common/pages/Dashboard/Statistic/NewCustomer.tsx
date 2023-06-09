@@ -23,8 +23,12 @@ const NewCustomer: React.FC<INewCustomer> = ({ todoApi }) => {
 		getNewCustomer()
 	}, [todoApi])
 	return (
-		<Card title={<h1 className="text-2xl font-medium">Tổng số buổi học trong từng tháng</h1>}>
-			<StatisticClassNew data={statisticNewCustomer} titleBar="Buổi học trong từng tháng" type={1} />
+		<Card title={<h1 className="text-2xl font-medium">Khách mới mỗi tháng</h1>}>
+			<StatisticClassNew
+				data={statisticNewCustomer}
+				titleBar="Khách mới mỗi tháng"
+				type={1}
+			/>
 		</Card>
 	)
 }

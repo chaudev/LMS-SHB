@@ -11,6 +11,9 @@ const TopPurpose: React.FC<ITopPurpose> = ({ todoApi }) => {
 	const getTopPurpose = async () => {
 		try {
 			const res = await staticsticalApi.getTopPurpose(todoApi)
+			console.log(res);
+			console.log(todoApi);
+			
 			if (res.status === 200) {
 				setStatisticTopPurpose(res.data.data)
 			}
@@ -21,7 +24,7 @@ const TopPurpose: React.FC<ITopPurpose> = ({ todoApi }) => {
 	}
 	useEffect(() => {
 		getTopPurpose()
-	}, [TopPurpose])
+	}, [todoApi])
 	return (
 		<Card title={<h1 className="text-2xl font-medium">Top 5 mục đích học</h1>}>
 			<StatisticTop5Course data={statisticTopPurpose} titleBar="Mục đích học " type={2} />

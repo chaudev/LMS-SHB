@@ -7,6 +7,7 @@ import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { parseToMoney } from '~/common/utils/common'
 import { BillDetail } from '../BillDetail'
 import PrimaryTag from '~/common/components/Primary/Tag'
+import { Card, Divider, Empty } from 'antd'
 
 type ITabBill = {
 	StudentDetail: IUserResponse
@@ -99,7 +100,6 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 			dataIndex: 'Type',
 			width: 200,
 			render: (value, item) => {
-				let color = ['green', 'blue', 'red', 'yellow', 'primary']
 				return (
 					<>
 						{value == 1 && <PrimaryTag color={'green'}>{item?.TypeName}</PrimaryTag>}
@@ -154,17 +154,59 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 		setApiParameters({ ...apiParameters, pageIndex: pageIndex })
 	}
 
+	// return (
+	// 	<>
+	// 		{dataTable && dataTable.length > 0 ? (
+	// 			<div className="d-flex flex-col gap-3">
+	// 				{dataTable.map((item) => {
+	// 					return (
+	// 						<Card>
+	// 							<div className="d-flex justify-between">
+	// 								<div className="font-[500] text-[#002456]">{item.Code}</div>
+	// 								<div className="text-[#002456]">{moment(item.ModifiedOn).format('DD/MM/YYYY HH:mm')}</div>
+	// 							</div>
+	// 							<div className="border-solid border-[1px] border-[#00337A] my-[8px]"></div>
+	// 							<div className="d-flex mb-[4px]">
+	// 								<div className="text-gray font-[400]">Tổng tiền: </div>
+	// 								<div className="font-[600] ">{parseToMoney(item.TotalPrice)}₫</div>
+	// 							</div>
+	// 							<div className="d-flex mb-[4px]">
+	// 								<div className="text-gray font-[400]">Đã thanh toán: </div>
+	// 								<div className="font-[600] text-[#388E3C]">{parseToMoney(item.Paid)}₫</div>
+	// 							</div>
+	// 							<div className="d-flex mb-[4px]">
+	// 								<div className="text-gray font-[400]">Còn lại: </div>
+	// 								<div className="font-[600] text-[#E53935]">{parseToMoney(item.Debt)}₫</div>
+	// 							</div>
+	// 							<div className="d-flex mb-[4px]">
+	// 								<div className="text-gray font-[400]">Kiểu thanh toán: </div>
+	// 								<div className="font-[600] text-[#E53935]">
+	// 									{item.Type == 1 && <PrimaryTag color={'green'}>{item?.TypeName}</PrimaryTag>}
+	// 									{item.Type == 2 && <PrimaryTag color={'blue'}>{item?.TypeName}</PrimaryTag>}
+	// 									{item.Type == 3 && <PrimaryTag color={'red'}>{item?.TypeName}</PrimaryTag>}
+	// 									{item.Type == 4 && <PrimaryTag color={'yellow'}>{item?.TypeName}</PrimaryTag>}
+	// 									{item.Type == 5 && <PrimaryTag color={'primary'}>{item?.TypeName}</PrimaryTag>}
+	// 								</div>
+	// 							</div>
+	// 						</Card>
+	// 					)
+	// 				})}
+	// 			</div>
+	// 		) : (
+	// 			<Empty></Empty>
+	// 		)}
+	// 	</>
+	// )
+
 	return (
-		<>
-			<ExpandTable
-				currentPage={currentPage}
-				totalPage={totalRow && totalRow}
-				getPagination={(pageNumber: number) => getPagination(pageNumber)}
-				loading={isLoading}
-				dataSource={dataTable}
-				columns={columns}
-				expandable={expandedRowRender}
-			/>
-		</>
+		<ExpandTable
+			currentPage={currentPage}
+			totalPage={totalRow && totalRow}
+			getPagination={(pageNumber: number) => getPagination(pageNumber)}
+			loading={isLoading}
+			dataSource={dataTable}
+			columns={columns}
+			expandable={expandedRowRender}
+		/>
 	)
 }

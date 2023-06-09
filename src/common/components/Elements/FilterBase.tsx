@@ -7,13 +7,13 @@ import { MdOutlineRestore, MdSearch } from 'react-icons/md'
 
 const FilterBase = (props) => {
 	const { dataFilter } = props
-
+	const [form] = Form.useForm()
+	const getVavalue = form.getFieldsValue()
 	const { handleFilter, handleReset } = props
 	const { RangePicker } = DatePicker
 
 	const [listFilter, setListFilter] = useState(dataFilter)
 	const [visible, setVisible] = useState(false)
-	const [form] = Form.useForm()
 	const { Option } = Select
 	const dateFormat = 'YYYY/MM/DD'
 
@@ -26,18 +26,10 @@ const FilterBase = (props) => {
 		setListFilter(newFilter)
 	}
 
-	// useEffect(() => {
-	// 	if (todoApi && visible) {
-	// 		console.log('FilterBase', todoApi)
-	// 		form.setFieldsValue(todoApi)
-	// 	}
-	// }, [todoApi, visible])
 	// ------------- ON SUBMIT -----------------
 	const onSubmit = (params) => {
 		listFilter
 		handleFilter(listFilter)
-		// resetFilter();
-		// form.resetFields();
 		setVisible(false)
 	}
 

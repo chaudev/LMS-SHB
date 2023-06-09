@@ -96,6 +96,7 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 			{/* học viên + Phụ huynh + Giáo viên không được phép chỉnh sửa */}
 			<Card
 				title=""
+				loading={loading}
 				extra={
 					<div className="d-flex gap-3">
 						{user?.RoleId == 3 || user?.RoleId == 8 || user?.RoleId == 2 ? (
@@ -117,10 +118,8 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 					</div>
 				}
 			>
-				{!loading && dataTable?.length == 0 && <Empty />}
-
-				<Spin spinning={loading}>
-					<Timeline mode="left">
+				{/* {!loading && dataTable?.length == 0 && <Empty />} */}
+				<Timeline mode="left">
 						{dataTable &&
 							dataTable?.length > 0 &&
 							dataTable?.map((item, index) => (
@@ -168,7 +167,9 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 								</Timeline.Item>
 							))}
 					</Timeline>
-				</Spin>
+				{/* <Spin spinning={loading}>
+				
+				</Spin> */}
 			</Card>
 		</>
 	)
