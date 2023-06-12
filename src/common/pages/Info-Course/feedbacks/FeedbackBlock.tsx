@@ -1,4 +1,4 @@
-import { Card, Spin } from 'antd'
+import { Card, Empty, Spin } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -119,7 +119,6 @@ export default function FeedbackBlock(props: IFeedbackBlockProps) {
 				<div className="time">
 					<div className="flex items-center ">
 						<FiCalendar size={18} />
-
 						<span style={{ color: '#8d8d90', marginLeft: 8 }}>{moment(feedbackDetail?.CreatedOn).format('DD/MM/YYYY HH:mm')}</span>
 					</div>
 
@@ -137,53 +136,57 @@ export default function FeedbackBlock(props: IFeedbackBlockProps) {
 						<Spin />
 					</div>
 				)}
-				{dataSource?.map((item, index) => {
-					return (
-						<div className="wrap-content-reply">
-							<div
-								className="item-reply"
-								key={index}
-								style={{
-									borderBottom: index !== dataSource.length - 1 ? 1 : 0,
-									borderBottomColor: '#e8eded',
-									borderBottomStyle: 'solid'
-								}}
-							>
-								<div className="left">
-									<div className="avatar">
-										<img src={item?.Avatar?.length > 0 ? item.Avatar : '/images/default-avatar.svg'} alt="" />
-									</div>
-								</div>
-
-								<div className="right">
-									<div className="information">
-										<div className="left">
-											<div style={{ fontSize: 16, fontWeight: 600 }}>{item.CreatedBy || 'Ẩn danh'}</div>
-											<p style={{ color: '#8d8d90', fontSize: 14 }}>{moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</p>
+				{dataSource && dataSource.length >0? (
+					dataSource?.map((item, index) => {
+						return (
+							<div className="wrap-content-reply">
+								<div
+									className="item-reply"
+									key={index}
+									style={{
+										borderBottom: index !== dataSource.length - 1 ? 1 : 0,
+										borderBottomColor: '#e8eded',
+										borderBottomStyle: 'solid'
+									}}
+								>
+									<div className="left">
+										<div className="avatar">
+											<img src={item?.Avatar?.length > 0 ? item.Avatar : '/images/default-avatar.svg'} alt="" />
 										</div>
 									</div>
 
-									<div className="content">
-										<p>{item.Content}</p>
+									<div className="right">
+										<div className="information">
+											<div className="left">
+												<div className='text-[green]' style={{ fontSize: 16, fontWeight: 600 }}>{item.CreatedBy || 'Ẩn danh'}</div>
+												<p style={{ color: '#8d8d90', fontSize: 14 }}>{moment(item.CreatedOn).format('DD/MM/YYYY HH:mm')}</p>
+											</div>
+										</div>
+
+										<div className="content">
+											<p>{item.Content}</p>
+										</div>
 									</div>
 								</div>
-							</div>
 
-							{!isParent() && (
-								<>
-									{userInformation?.UserInformationId == item.CreatedIdBy && (
-										<ModalFeedbackReplyCRUD
-											mode="delete"
-											isLoading={isLoading.type == 'SUBMIT' && isLoading.status}
-											onSubmit={_onSubmit}
-											dataRow={item}
-										/>
-									)}
-								</>
-							)}
-						</div>
-					)
-				})}
+								{!isParent() && (
+									<>
+										{userInformation?.UserInformationId == item.CreatedIdBy && (
+											<ModalFeedbackReplyCRUD
+												mode="delete"
+												isLoading={isLoading.type == 'SUBMIT' && isLoading.status}
+												onSubmit={_onSubmit}
+												dataRow={item}
+											/>
+										)}
+									</>
+								)}
+							</div>
+						)
+					})
+				) : (
+					<Empty description="Chưa có phản hồi"></Empty>
+				)}
 			</div>
 		</div>
 	)

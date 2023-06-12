@@ -18,8 +18,6 @@ export const BillDetail: React.FC<IBillDetail> = ({ dataRow }) => {
 			setLoading(true)
 			const res = await billApi.getBillDetail(Id)
 			if (res.status === 200) {
-				console.log(res)
-
 				setDataTable(res.data.data)
 				setLoading(false)
 			}
@@ -154,7 +152,7 @@ export const BillDetail: React.FC<IBillDetail> = ({ dataRow }) => {
 				<div className="font-[600]">Ghi chú:</div> {dataRow?.Note}
 			</div>
 			{dataRow.Type != 4 ? (
-				<NestedTable loading={loading} addClass="basic-header" dataSource={dataTable} columns={columns} haveBorder={true} />
+				<NestedTable loading={loading} addClass="basic-header" dataSource={dataTable} columns={columns} haveBorder />
 			) : (
 				''
 			)}

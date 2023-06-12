@@ -2,7 +2,6 @@ import { Popconfirm, Popover, Rate, Skeleton, Spin } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { HiMail, HiPhone } from 'react-icons/hi'
-import { MdKeyboardArrowLeft } from 'react-icons/md'
 import { TiLocation } from 'react-icons/ti'
 import { useSelector } from 'react-redux'
 import { feedbackStudentApi } from '~/api/feedbacks-student'
@@ -28,24 +27,8 @@ export default function FeedbackDetailPage(props: IFeedbackDetailPageProps) {
 		return user?.RoleId == 1
 	}
 
-	function isTeacher() {
-		return user?.RoleId == 2
-	}
-
-	function isManager() {
-		return user?.RoleId == 4
-	}
-
 	function isStdent() {
 		return user?.RoleId == 3
-	}
-
-	function isAccountant() {
-		return user?.RoleId == 6
-	}
-
-	function isAcademic() {
-		return user?.RoleId == 7
 	}
 
 	function isParent() {
@@ -217,7 +200,7 @@ export default function FeedbackDetailPage(props: IFeedbackDetailPageProps) {
 											<TiLocation />
 										</div>
 										<div className="text">
-											<div className="title">Địa chỉ</div>
+											{/* <div className="title">Địa chỉ</div> */}
 											<div className="main-content">{userInformation?.Address}</div>
 										</div>
 									</div>

@@ -8,8 +8,7 @@ const NestedTable = React.memo((props: any) => {
 	const [dataSource, setDataSource] = useState([])
 	const [activeIndex, setActiveIndex] = useState(null)
 
-	console.log('dataSource: ', props.dataSource)
-
+ 
 	const selectRow = (record) => {
 		const selectedRowKeys = []
 		if (selectedRowKeys.indexOf(record.key) >= 0) {

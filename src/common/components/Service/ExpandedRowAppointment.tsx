@@ -2,6 +2,7 @@ import React from 'react'
 import CustomerAppointmentNote from '~/common/components/Customer/CustomerAdvisory/CustomerAppointmentNote'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
+import { parseToMoney } from '~/common/utils/common'
 
 const ExpandedRowAppointment = (props) => {
 	const { rowData } = props
@@ -52,7 +53,7 @@ const ExpandedRowAppointment = (props) => {
 					<td>{rowData.WritingPoint}</td>
 					<td>{rowData.SpeakingPoint}</td>
 					<td>{rowData.Vocab}</td>
-					<td>{rowData.Tuitionfee}</td>
+					<td>{parseToMoney(rowData.Tuitionfee)}₫</td>
 				</tr>
 				<tr className="last-row">
 					<td>

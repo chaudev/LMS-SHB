@@ -7,7 +7,8 @@ import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { parseToMoney } from '~/common/utils/common'
 import { BillDetail } from '../BillDetail'
 import PrimaryTag from '~/common/components/Primary/Tag'
-import { Card, Divider, Empty } from 'antd'
+import { Card, Divider, Empty, List, Modal } from 'antd'
+import { useRole } from '~/common/hooks/useRole'
 
 type ITabBill = {
 	StudentDetail: IUserResponse
@@ -16,10 +17,13 @@ type ITabBill = {
 let pageIndex = 1
 export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 	const [isLoading, setIsLoading] = useState({ type: '', status: false })
+	const [visible, setVisible] = useState(false)
 	const initParameters = { studentIds: StudentDetail?.UserInformationId, pageIndex: 1, pageSize: PAGE_SIZE }
 	const [apiParameters, setApiParameters] = useState(initParameters)
 	const [totalRow, setTotalRow] = useState(1)
 	const [dataTable, setDataTable] = useState([])
+	const [bill, setBill] = useState(null)
+	const { isStudent } = useRole()
 	const [currentPage, setCurrentPage] = useState(1)
 
 	const getBill = async (params) => {
@@ -41,6 +45,7 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 			setIsLoading({ type: 'GET_ALL', status: false })
 		}
 	}
+
 	useEffect(() => {
 		if (StudentDetail) {
 			getBill(apiParameters)
@@ -70,29 +75,36 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 		// 	width: 150,
 		// 	dataIndex: 'DiscountCode'
 		// },
-		{
-			title: 'Giảm giá',
-			width: 150,
-			dataIndex: 'Reduced',
-			render: (text) => <>{parseToMoney(text)}₫</>
-		},
+		// {
+		// 	title: 'Giảm giá',
+		// 	width: 150,
+		// 	dataIndex: 'Reduced',
+		// 	align: 'right',
+		// 	render: (text) => <>{parseToMoney(text)}₫</>
+		// },
 
 		{
 			title: 'Tổng số tiền',
 			dataIndex: 'TotalPrice',
 			width: 116,
+			align: 'right',
+
 			render: (value, item) => <p className="font-[600] text-[#000]">{parseToMoney(value)}₫</p>
 		},
 		{
 			title: 'Đã thanh toán',
 			dataIndex: 'Paid',
 			width: 126,
+			align: 'right',
+
 			render: (value, item) => <p className="font-[600] text-[#388E3C]">{parseToMoney(value)}₫</p>
 		},
 		{
 			title: 'Chưa thanh toán',
 			dataIndex: 'Debt',
 			width: 140,
+			align: 'right',
+
 			render: (value, item) => <p className="font-[600] text-[#E53935]">{parseToMoney(value)}₫</p>
 		},
 		{
@@ -154,59 +166,120 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 		setApiParameters({ ...apiParameters, pageIndex: pageIndex })
 	}
 
-	// return (
-	// 	<>
-	// 		{dataTable && dataTable.length > 0 ? (
-	// 			<div className="d-flex flex-col gap-3">
-	// 				{dataTable.map((item) => {
-	// 					return (
-	// 						<Card>
-	// 							<div className="d-flex justify-between">
-	// 								<div className="font-[500] text-[#002456]">{item.Code}</div>
-	// 								<div className="text-[#002456]">{moment(item.ModifiedOn).format('DD/MM/YYYY HH:mm')}</div>
-	// 							</div>
-	// 							<div className="border-solid border-[1px] border-[#00337A] my-[8px]"></div>
-	// 							<div className="d-flex mb-[4px]">
-	// 								<div className="text-gray font-[400]">Tổng tiền: </div>
-	// 								<div className="font-[600] ">{parseToMoney(item.TotalPrice)}₫</div>
-	// 							</div>
-	// 							<div className="d-flex mb-[4px]">
-	// 								<div className="text-gray font-[400]">Đã thanh toán: </div>
-	// 								<div className="font-[600] text-[#388E3C]">{parseToMoney(item.Paid)}₫</div>
-	// 							</div>
-	// 							<div className="d-flex mb-[4px]">
-	// 								<div className="text-gray font-[400]">Còn lại: </div>
-	// 								<div className="font-[600] text-[#E53935]">{parseToMoney(item.Debt)}₫</div>
-	// 							</div>
-	// 							<div className="d-flex mb-[4px]">
-	// 								<div className="text-gray font-[400]">Kiểu thanh toán: </div>
-	// 								<div className="font-[600] text-[#E53935]">
-	// 									{item.Type == 1 && <PrimaryTag color={'green'}>{item?.TypeName}</PrimaryTag>}
-	// 									{item.Type == 2 && <PrimaryTag color={'blue'}>{item?.TypeName}</PrimaryTag>}
-	// 									{item.Type == 3 && <PrimaryTag color={'red'}>{item?.TypeName}</PrimaryTag>}
-	// 									{item.Type == 4 && <PrimaryTag color={'yellow'}>{item?.TypeName}</PrimaryTag>}
-	// 									{item.Type == 5 && <PrimaryTag color={'primary'}>{item?.TypeName}</PrimaryTag>}
-	// 								</div>
-	// 							</div>
-	// 						</Card>
-	// 					)
-	// 				})}
-	// 			</div>
-	// 		) : (
-	// 			<Empty></Empty>
-	// 		)}
-	// 	</>
-	// )
-
 	return (
-		<ExpandTable
-			currentPage={currentPage}
-			totalPage={totalRow && totalRow}
-			getPagination={(pageNumber: number) => getPagination(pageNumber)}
-			loading={isLoading}
-			dataSource={dataTable}
-			columns={columns}
-			expandable={expandedRowRender}
-		/>
+		<div>
+			<div className="tablet:hidden">
+				<List
+					dataSource={dataTable}
+					pagination={{
+						onChange: (pageNumber: number) => getPagination(pageNumber),
+						total: totalRow,
+						size: 'small',
+						pageSize: apiParameters.pageSize,
+						showTotal: () => <div className="font-weight-black">Tổng cộng: {totalRow ? totalRow : 0}</div>
+					}}
+					renderItem={(item) => {
+						return (
+							<List.Item>
+								<Card
+									hoverable
+									className="w-full"
+									onClick={() => {
+										setBill(item)
+										setVisible(true)
+									}}
+								>
+									<div className="d-flex justify-between">
+										<div className="font-[500] text-[#002456]">{item.Code}</div>
+										<div className="text-[#002456]">{moment(item.ModifiedOn).format('DD/MM/YYYY HH:mm')}</div>
+									</div>
+									<div className="border-solid border-[1px] border-[#00337A] my-[8px]"></div>
+									{!isStudent && (
+										<div className="d-flex mb-[4px] justify-between">
+											<div className="text-gray font-[400]">Người thanh toán:&nbsp;</div>
+											<div className="font-[600] ">{item.FullName}</div>
+										</div>
+									)}
+									<div className="d-flex mb-[4px] justify-between">
+										<div className="text-gray font-[400]">Tổng tiền:&nbsp;</div>
+										<div className="font-[600] ">{parseToMoney(item.TotalPrice)}₫</div>
+									</div>
+									<div className="d-flex mb-[4px] justify-between">
+										<div className="text-gray font-[400]">Đã thanh toán:&nbsp;</div>
+										<div className="font-[600] text-[#388E3C]">{parseToMoney(item.Paid)}₫</div>
+									</div>
+									<div className="d-flex mb-[4px] justify-between">
+										<div className="text-gray font-[400]">Còn lại:&nbsp;</div>
+										<div className="font-[600] text-[#E53935]">{parseToMoney(item.Debt)}₫</div>
+									</div>
+									<div className="d-flex mb-[4px] justify-between">
+										<div className="text-gray font-[400]">Kiểu thanh toán:&nbsp;</div>
+										<div className="font-[600] text-[#E53935]">
+											{item.Type == 1 && <PrimaryTag color={'green'}>{item?.TypeName}</PrimaryTag>}
+											{item.Type == 2 && <PrimaryTag color={'blue'}>{item?.TypeName}</PrimaryTag>}
+											{item.Type == 3 && <PrimaryTag color={'red'}>{item?.TypeName}</PrimaryTag>}
+											{item.Type == 4 && <PrimaryTag color={'yellow'}>{item?.TypeName}</PrimaryTag>}
+											{item.Type == 5 && <PrimaryTag color={'primary'}>{item?.TypeName}</PrimaryTag>}
+										</div>
+									</div>
+									<div>{item.Note}</div>
+								</Card>
+							</List.Item>
+						)
+					}}
+				/>
+				{/* {dataTable && dataTable.length > 0 ? (
+					<div className="d-flex flex-col gap-3">
+						{dataTable.map((item) => {
+							return (
+							
+							)
+						})}
+					</div>
+				) : (
+					<Empty></Empty>
+				)} */}
+			</div>
+
+			<div className="hidden tablet:flex">
+				<ExpandTable
+					currentPage={currentPage}
+					totalPage={totalRow && totalRow}
+					getPagination={(pageNumber: number) => getPagination(pageNumber)}
+					loading={isLoading}
+					dataSource={dataTable}
+					columns={columns}
+					expandable={expandedRowRender}
+				/>
+			</div>
+			<Modal
+				title={
+					<p>
+						Chi tiết hóa đơn <span className="font-[500] text-[#002456]">{bill?.Code ? bill.Code : ''}</span>
+					</p>
+				}
+				centered
+				open={visible}
+				onCancel={() => {
+					setBill(null)
+					setVisible(false)
+				}}
+				footer={false}
+			>
+				<BillDetail dataRow={bill} />
+			</Modal>
+		</div>
 	)
+
+	// return (
+	// 	<ExpandTable
+	// 		currentPage={currentPage}
+	// 		totalPage={totalRow && totalRow}
+	// 		getPagination={(pageNumber: number) => getPagination(pageNumber)}
+	// 		loading={isLoading}
+	// 		dataSource={dataTable}
+	// 		columns={columns}
+	// 		expandable={expandedRowRender}
+	// 	/>
+	// )
 }

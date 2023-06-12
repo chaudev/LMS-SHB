@@ -5,10 +5,6 @@ import FeedbacksStudentPage from '~/common/pages/Info-Course/feedbacks/Feedbacks
 export interface IFeedbacksStudentProps {}
 
 export default function FeedbacksStudent(props: IFeedbacksStudentProps) {
-	return (
-		<>
-			<FeedbacksStudentPage />
-		</>
-	)
+	return <FeedbacksStudentPage />
 }
 FeedbacksStudent.Layout = MainLayout

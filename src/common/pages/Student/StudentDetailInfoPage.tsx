@@ -20,13 +20,13 @@ import TabMajors from './Tab/TabMajors'
 export interface IStudentDetailInfoPageProps {}
 
 export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps) {
-	const userInfomation = useSelector((state: RootState) => state.user.information)
 	const [studentDetail, setStudentDetail] = useState<IUserResponse>()
 	const [isVisibleModal, setIsVisibleModal] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const router = useRouter()
 	const [form] = Form.useForm()
 	const userInformation = useSelector((state: RootState) => state.user.information)
+	console.log(userInformation)
 
 	const getStudentDetail = async () => {
 		try {
@@ -181,7 +181,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 				</div>
 			</div>
 
-			<Modal title="Cập nhật avatar" width={400} open={isVisibleModal} onCancel={() => setIsVisibleModal(false)} footer={null}>
+			<Modal title="Cập nhật avatar" centered width={400} open={isVisibleModal} onCancel={() => setIsVisibleModal(false)} footer={null}>
 				<Form form={form} layout="vertical" initialValues={{ remember: true }} onFinish={onFinish}>
 					<div className="grid grid-cols-4 gap-x-4">
 						<div className="col-span-4 flex justify-center items-center">

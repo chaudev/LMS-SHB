@@ -227,11 +227,16 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 			if (!init) {
 				form.setFieldsValue(ref.current.getFieldsValue())
 			} else {
+				let branchs =
+					isStudent || isParents ? Number(StudentDetail.BranchIds) : StudentDetail.BranchIds.split(',').map((item) => Number(item))
+				console.log('branchs', branchs)
+				// num_arr = str2double(str_arr);
 				form.setFieldsValue({
 					...StudentDetail,
-					BranchIds: Number(StudentDetail.BranchIds),
+					BranchIds: branchs,
 					DOB: StudentDetail?.DOB ? moment(StudentDetail?.DOB) : null
 				})
+
 				if (StudentDetail.AreaId) {
 					getDistrict(StudentDetail.AreaId)
 				}
@@ -262,7 +267,17 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const updateUserInfo = async (key, value) => {
 		try {
 			setIsLoading(key)
-			const payload = { ...StudentDetail, [key]: value }
+
+			let payload = { ...StudentDetail, [key]: value }
+
+			if (key === 'BranchIds') {
+				if (isStudent || isParents) {
+					payload = { ...payload, BranchIds: value }
+				} else {
+					payload = { ...payload, BranchIds: value.join(',') }
+				}
+			}
+
 			let res = await userInformationApi.update(payload)
 			if (res.status == 200) {
 				setStudentDetail(payload)
@@ -415,13 +430,25 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				</div>
 				<Divider></Divider>
 				<div className="d-flex w-full justify-between items-start">
-					<SelectField
-						className="border-none min-w-xs w-full items-center m-0 hover:border-none focus:border-none"
-						name="BranchIds"
-						label={labelUser.Branch}
-						placeholder="Chọn trung tâm"
-						optionList={optionList.branch}
-					/>
+					{isStudent || isParents ? (
+						<SelectField
+							className="border-none min-w-xs w-full items-center m-0 hover:border-none focus:border-none"
+							name="BranchIds"
+							label={labelUser.Branch}
+							placeholder="Chọn trung tâm"
+							optionList={optionList.branch}
+						/>
+					) : (
+						<SelectField
+							className="border-none min-w-xs w-full items-center m-0 hover:border-none focus:border-none"
+							name="BranchIds"
+							mode="multiple"
+							label={labelUser.Branch}
+							placeholder="Chọn trung tâm"
+							optionList={optionList.branch}
+						/>
+					)}
+
 					<IconButonUpdateUser
 						isShow={BranchIds != StudentDetail.BranchIds}
 						onClick={() => updateUserInfo('BranchIds', BranchIds)}
@@ -567,7 +594,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						</div>
 					</>
 				)}
-				{isStudent   && (
+				{isStudent && (
 					<>
 						<Divider>
 							<h2 className="py-4 font-[600] text-center">Thông tin hồ sơ</h2>
