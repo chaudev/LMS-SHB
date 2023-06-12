@@ -274,7 +274,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				if (isStudent || isParents) {
 					payload = { ...payload, BranchIds: value }
 				} else {
-					payload = { ...payload, BranchIds: value.join(',') }
+					payload = { ...payload, BranchIds: value ? value.join(',') : '' }
 				}
 			}
 
