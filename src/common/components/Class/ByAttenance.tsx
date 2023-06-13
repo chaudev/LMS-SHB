@@ -9,20 +9,23 @@ import { statisticalStudentApi } from '~/api/dashboard/student'
 
 interface IStudentByAttenance {
 	scheduleId: number
+	isUpdate: any
 }
 
-const StudentByAttenance: React.FC<IStudentByAttenance> = ({ scheduleId }) => {
+const StudentByAttenance: React.FC<IStudentByAttenance> = ({ scheduleId, isUpdate }) => {
 	const [attenance, setAttenance] = useState([])
 
 	useEffect(() => {
 		if (Router.query?.class && scheduleId) {
 			handleGetByAttenance()
 		}
-	}, [Router.query, scheduleId])
+		
+	}, [Router.query, scheduleId, isUpdate])
 
 	const handleGetByAttenance = async () => {
 		try {
 			const res = await statisticalStudentApi.GetByAttenance({ classId: Router.query?.class, scheduleId: scheduleId })
+
 			if (res.status == 200) {
 				setAttenance(res.data.data)
 			}

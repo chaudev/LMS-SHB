@@ -1,13 +1,17 @@
-import { Card, Empty, Modal, Spin, Tooltip } from 'antd'
+import { Card, Empty, List, Modal, Spin, Tooltip, Typography } from 'antd'
 import React, { useState } from 'react'
+import { AiOutlineFileSync } from 'react-icons/ai'
+import { BsFileEarmarkCheck } from 'react-icons/bs'
 import { FiBarChart2 } from 'react-icons/fi'
+import { MdOutlineLanguage } from 'react-icons/md'
+import { RiVisaFill } from 'react-icons/ri'
 import { userInformationApi } from '~/api/user/user'
-import StatisticComposedChart from '~/common/components/Statistic/StatisticComposedChart'
+import PrimaryButton from '~/common/components/Primary/Button'
 import { ShowNoti } from '~/common/utils'
 
 const OverviewStatusStudent = () => {
-    const [open, setOpen] = useState<boolean>(false)
-	const [overviewStatus, setOverviewStatus] = useState<any>([])
+	const [open, setOpen] = useState<boolean>(false)
+	const [overviewStatus, setOverviewStatus] = useState<IStatisticOverviewStudent[]>([])
 	const [loading, setLoading] = useState(false)
 
 	const getOverviewStatus = async () => {
@@ -15,22 +19,7 @@ const OverviewStatusStudent = () => {
 			setLoading(true)
 			const response = await userInformationApi.getOverviewStatus()
 			if (response.status === 200) {
-				let formats = []
-				response.data.data.forEach((item) => {
-					let templ = []
-					item.Item.forEach((element) => {
-						templ.push({
-							Name: element.StatusName,
-							Value: element.Amount
-						})
-					})
-					formats.push({
-						TypeName: item.TypeName,
-						Type: item.Type,
-						Item: templ
-					})
-				})
-				setOverviewStatus(formats)
+				setOverviewStatus(response.data.data)
 			}
 			if (response.status === 204) {
 				setOverviewStatus([])
@@ -63,16 +52,38 @@ const OverviewStatusStudent = () => {
 				footer={false}
 			>
 				{overviewStatus && overviewStatus.length ? (
-					<div className="d-flex flex-col gap-[16px]">
+					<div className="grid grid-cols-1 tablet:grid-cols-2 gap-[16px]">
 						{overviewStatus.map((item) => {
+							let headerColor =
+								item.Type == 1 ? 'bg-[green]' : item.Type == 2 ? 'bg-[#ef8b43]' : item.Type == 3 ? 'bg-[#0262db]' : 'bg-[#d44141]'
 							return (
-								<Card>
-									<StatisticComposedChart
-										titleBar={<div className="font-[500] text-xl">{item.TypeName}</div>}
-										data={item.Item}
-										color={color[item.Type - 1]}
+								<div className="shadow-lg col-span-1" key={item.Type}>
+									<div className={`text-lg text-white px-3 py-2 d-flex justify-between items-center rounded-t-lg ${headerColor}`}>
+										<span>{item.TypeName}</span>
+										<div className="bg-[hsla(25,65%,88%,.3);] p-2 rounded-lg">
+											{item.Type == 1 ? (
+												<BsFileEarmarkCheck size={24} />
+											) : item.Type == 2 ? (
+												<MdOutlineLanguage size={24} />
+											) : item.Type == 3 ? (
+												<AiOutlineFileSync size={24} />
+											) : (
+												<RiVisaFill size={24} />
+											)}
+										</div>
+									</div>
+									<List
+										key={item.Type}
+										className="rounded-lg col-span-1"
+										dataSource={item.Item}
+										renderItem={(e) => (
+											<List.Item className="px-3">
+												<Typography.Text className="font-[500] text-[14px] text-[#08569f]">{e.StatusName}</Typography.Text>
+												<Typography.Text className="font-[600] text-[18px]">{e.Amount}</Typography.Text>
+											</List.Item>
+										)}
 									/>
-								</Card>
+								</div>
 							)
 						})}
 					</div>

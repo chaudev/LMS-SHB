@@ -33,6 +33,7 @@ export interface ITabStudentDetailProps {
 export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const userInformation = useSelector((state: RootState) => state.user.information)
 	const { StudentDetail, setStudentDetail } = props
+	
 	const router = useRouter()
 	const { isStudent, isParents } = useRole()
 	const [optionList, setOptionList] = useState({
@@ -229,7 +230,6 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 			} else {
 				let branchs =
 					isStudent || isParents ? Number(StudentDetail.BranchIds) : StudentDetail.BranchIds.split(',').map((item) => Number(item))
-				console.log('branchs', branchs)
 				// num_arr = str2double(str_arr);
 				form.setFieldsValue({
 					...StudentDetail,
@@ -430,7 +430,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				</div>
 				<Divider></Divider>
 				<div className="d-flex w-full justify-between items-start">
-					{isStudent || isParents ? (
+					{StudentDetail.RoleId == 3 || StudentDetail.RoleId === 7 ? (
 						<SelectField
 							className="border-none min-w-xs w-full items-center m-0 hover:border-none focus:border-none"
 							name="BranchIds"

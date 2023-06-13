@@ -66,7 +66,7 @@ export const userInformationApi = {
 	},
 
 	getOverviewStatus() {
-		return instance.get(url + '/overview-status')
+		return instance.get<IApiResultData<IStatisticOverviewStudent[]>>(url + '/overview-status')
 	}
 }
 

@@ -139,3 +139,12 @@ interface IUpdateUserProfileTemplate {
 	ProfileTemplateId: number
 	Value: string
 }
+
+interface IStatisticOverviewStudent {
+	Item: {
+		StatusName: string
+		Amount: number
+	}[]
+	Type: number
+	TypeName: string
+}

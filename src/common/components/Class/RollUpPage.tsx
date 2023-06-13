@@ -1,4 +1,4 @@
-import { Input, Select } from 'antd'
+import { Input, Select, Spin } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -49,6 +49,9 @@ export const RollUpPage = () => {
 	const [dataTable, setDataTable] = useState([])
 	const [scheduleId, setScheduleId] = useState(null)
 	const [dataSchedule, setDataSchedule] = useState<{ title: string; value: string }[]>([])
+	const [isUpdate, setIsUpdate] = useState<any>(null)
+
+	const [loadingUpdate, setLoadingUpdate] = useState(-1)
 
 	const getSchedule = async (params) => {
 		try {
@@ -115,17 +118,23 @@ export const RollUpPage = () => {
 
 	const handleUpdateRollUp = async (data) => {
 		try {
+			setLoadingUpdate(data.Id)
 			const res = await rollUpApi.add(data)
 			if (res.status === 200) {
 				ShowNoti('success', res.data.message)
+				// checkupdate thành công => cập nhật lại biểu đồ thống kê
+				setIsUpdate(res.data.data)
 			}
+			setLoadingUpdate(-1)
 		} catch (error) {
 			ShowNoti('error', error.message)
+			setLoadingUpdate(-1)
 		}
 	}
 
-	const handleChangeRollUp = (data) => {
+	const handleChangeRollUp = (data, index) => {
 		const dataSubmit = {
+			Id: index,
 			StudentId: data?.StudentId,
 			ScheduleId: data?.ScheduleId,
 			Status: data?.Status,
@@ -216,10 +225,24 @@ export const RollUpPage = () => {
 			title: '',
 			width: 100,
 			dataIndex: 'Action',
+			align: 'center',
 			render: (text, item, index) => (
 				<>
 					{user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
-						<IconButton tooltip="Cập nhật" color="green" icon="save" type="button" onClick={() => handleChangeRollUp(item)} size={22} />
+						<>
+							{loadingUpdate == index ? (
+								<Spin></Spin>
+							) : (
+								<IconButton
+									tooltip="Cập nhật"
+									color="green"
+									icon="save"
+									type="button"
+									onClick={() => handleChangeRollUp(item, index)}
+									size={22}
+								/>
+							)}
+						</>
 					) : (
 						''
 					)}
@@ -230,7 +253,7 @@ export const RollUpPage = () => {
 
 	return (
 		<>
-			<StudentByAttenance scheduleId={apiParameters.scheduleId} />
+			<StudentByAttenance scheduleId={apiParameters.scheduleId} isUpdate={isUpdate} />
 
 			<PrimaryTable
 				loading={loading}
