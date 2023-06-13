@@ -189,7 +189,7 @@ const Dashboard = () => {
 						<div className="col-span-1">
 							<NewCustomer todoApi={todoApi} />
 						</div>
-						<div className="col-span-1">
+						<div className="col-span-1 tablet:col-span-2">
 							<Source todoApi={todoApi} />
 						</div>
 						{/* <div className="col-span-1">
