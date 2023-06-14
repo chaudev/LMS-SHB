@@ -28,14 +28,16 @@ import { useRole } from '~/common/hooks/useRole'
 export interface ITabStudentDetailProps {
 	StudentDetail: IUserResponse
 	setStudentDetail?: any
+	isNotUpdate: boolean
 }
 
 export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const userInformation = useSelector((state: RootState) => state.user.information)
-	const { StudentDetail, setStudentDetail } = props
-	
+	const { StudentDetail, setStudentDetail, isNotUpdate = true } = props
+	console.log('StudentDetail', StudentDetail)
+
 	const router = useRouter()
-	const { isStudent, isParents } = useRole()
+	const { isStudent, isParents, isTeacher } = useRole()
 	const [optionList, setOptionList] = useState({
 		branch: [],
 		purpose: [],
@@ -76,10 +78,11 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const OfficeId = Form.useWatch('OfficeId', form)
 	const ProfileStatusId = Form.useWatch('ProfileStatusId', form)
 	const ForeignLanguageId = Form.useWatch('ForeignLanguageId', form)
-	const PartnerId = Form.useWatch('PartnerId', form)
+	// const PartnerId = Form.useWatch('PartnerId', form)
 	const ProcessId = Form.useWatch('ProcessId', form)
 	const VisaStatusId = Form.useWatch('VisaStatusId', form)
-
+	const BirthPlace = Form.useWatch('BirthPlace', form)
+	const NativeLand = Form.useWatch('NativeLand', form)
 	const ref = useRef(null)
 
 	const getDistrict = async (areaID) => {
@@ -269,6 +272,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 			setIsLoading(key)
 
 			let payload = { ...StudentDetail, [key]: value }
+			console.log(payload)
 
 			if (key === 'BranchIds') {
 				if (isStudent || isParents) {
@@ -292,7 +296,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 
 	const isDisable = () => {
 		// ko cho giáo  viên + học viên cập nhật thông tin
-		return isStudent || isParents ? true : false
+		return isStudent || isParents || isTeacher ? true : false
 	}
 	return (
 		<div>
@@ -307,6 +311,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				labelWrap={true}
 				onFinish={_onSubmit}
 				labelCol={{ span: 5 }}
+				disabled={isNotUpdate}
 			>
 				<div className="d-flex justify-between items-center">
 					<InputTextField
@@ -387,12 +392,46 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						loading={isLoading === 'DOB'}
 					/>
 				</div>
+				{StudentDetail.RoleId == 3 && (
+					<>
+						<Divider />
+						<div className="d-flex justify-between items-center">
+							<InputTextField
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								placeholder="Nhập nơi sinh"
+								label="Nơi sinh"
+								name="BirthPlace"
+							/>
+							<IconButonUpdateUser
+								isShow={BirthPlace !== StudentDetail.BirthPlace}
+								onClick={() => updateUserInfo('BirthPlace', BirthPlace)}
+								loading={isLoading === 'NativeLand'}
+							/>
+						</div>
+						<Divider />
+						<div className="d-flex justify-between items-center">
+							<InputTextField
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								label="Quê quán"
+								name="NativeLand"
+								placeholder="Nhập quê quán"
+							/>
+							<IconButonUpdateUser
+								isShow={NativeLand !== StudentDetail.NativeLand}
+								onClick={() => updateUserInfo('NativeLand', NativeLand)}
+								loading={isLoading === 'NativeLand'}
+							/>
+						</div>
+					</>
+				)}
+
 				<Divider />
 				<div className="d-flex justify-between items-center">
 					<SelectField
 						name="StatusId"
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 						label={labelUser.Status}
+						placeholder="Chọn trạng thái hoạt động"
 						optionList={[
 							{
 								value: 0,
@@ -404,7 +443,6 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 							}
 						]}
 						allowClear={false}
-						placeholder="Chọn trạng thái hoạt động"
 					/>
 					<IconButonUpdateUser
 						isShow={StatusId !== StudentDetail.StatusId}
@@ -419,6 +457,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						name="Extension"
 						placeholder="Nhập giới thiệu thêm về bản thân"
 						autoSize={true}
+						disabled={isNotUpdate}
 						label={labelUser.Extension}
 					/>
 
@@ -491,7 +530,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				<div className="d-flex w-full justify-between items-start">
 					<SelectField
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-						disabled={district.length > 0 ? false : true}
+						// disabled={district.length > 0 ? false : true}
 						name="DistrictId"
 						label={labelUser.District}
 						placeholder="Chọn quận / huyện"
@@ -511,7 +550,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				<div className="d-flex w-full justify-between items-start">
 					<SelectField
 						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-						disabled={ward.length > 0 ? false : true}
+						// disabled={ward.length > 0 ? false : true}
 						placeholder="Chọn phường/xã"
 						label={labelUser.Ward}
 						name="WardId"
@@ -594,7 +633,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						</div>
 					</>
 				)}
-				{isStudent && (
+				{StudentDetail.RoleId == 3 && (
 					<>
 						<Divider>
 							<h2 className="py-4 font-[600] text-center">Thông tin hồ sơ</h2>
@@ -607,7 +646,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 									label="Văn phòng đại diện"
 									placeholder="Chọn văn phòng đại diện"
 									optionList={optionList.office}
-									disabled={userInformation.RoleId == 3}
+									disabled={isStudent || isParents || isTeacher}
 								/>
 								<IconButonUpdateUser
 									isShow={OfficeId !== StudentDetail.OfficeId}
@@ -623,7 +662,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 									label="Tình trạng hồ sơ"
 									placeholder="Chọn tình trạng hồ sơ"
 									optionList={optionList.profileStatus}
-									disabled={userInformation.RoleId == 3}
+									disabled={isStudent || isParents || isTeacher}
 								/>
 								<IconButonUpdateUser
 									isShow={ProfileStatusId !== StudentDetail.ProfileStatusId}
@@ -639,7 +678,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 									label="Trình độ ngoại ngữ"
 									placeholder="Chọn trình độ ngoại ngữ"
 									optionList={optionList.foreignLanguage}
-									disabled={userInformation.RoleId == 3}
+									disabled={isStudent || isParents || isTeacher}
 								/>
 								<IconButonUpdateUser
 									isShow={ForeignLanguageId !== StudentDetail.ForeignLanguageId}
@@ -648,7 +687,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								/>
 							</div>
 							<Divider />
-							<div className="d-flex justify-between items-center">
+							{/* <div className="d-flex justify-between items-center">
 								<SelectField
 									className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 									name="PartnerId"
@@ -662,7 +701,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 									onClick={() => updateUserInfo('PartnerId', PartnerId)}
 									loading={isLoading === 'PartnerId'}
 								/>
-							</div>
+							</div> */}
 							<Divider />
 							<div className="d-flex justify-between items-center">
 								<SelectField
@@ -671,7 +710,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 									label="Tình trạng xử lý hồ sơ"
 									placeholder="Chọn tình trạng xử lý hồ sơ"
 									optionList={optionList.process}
-									disabled={userInformation.RoleId == 3}
+									disabled={isStudent || isParents || isTeacher}
 								/>
 								<IconButonUpdateUser
 									isShow={ProcessId !== StudentDetail.ProcessId}
@@ -687,7 +726,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 									label="Tình trạng visa"
 									placeholder="Chọn tình trạng visa"
 									optionList={optionList.visaStatus}
-									disabled={userInformation.RoleId == 3}
+									disabled={isStudent || isParents || isTeacher}
 								/>
 								<IconButonUpdateUser
 									isShow={VisaStatusId !== StudentDetail.VisaStatusId}

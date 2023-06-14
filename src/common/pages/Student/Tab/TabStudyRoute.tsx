@@ -118,7 +118,7 @@ export const TabStudyRoute: React.FC<ITabStudyRoute> = ({ StudentDetail }) => {
 					</div>
 				}
 			>
-				{/* {!loading && dataTable?.length == 0 && <Empty />} */}
+				{!loading && dataTable?.length == 0 && <Empty />}
 				<Timeline mode="left">
 						{dataTable &&
 							dataTable?.length > 0 &&

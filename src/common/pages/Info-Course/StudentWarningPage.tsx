@@ -126,15 +126,15 @@ export const StudentWarningPage = () => {
 			width: 170,
 			render: (value, item) => {
 				return (
-					<Tooltip title={'Xem lớp: ' + value}>
-						<Link href={`/class/list-class/detail/?class=${item.ClassId}`}>
-							<a>
+					<Link href={`/class/list-class/detail/?class=${item.ClassId}`}>
+						<a>
+							<Tooltip title={'Xem lớp: ' + value}>
 								<div className="max-w-[150px] in-1-line cursor-pointer font-[500] text-[#1976D2] hover:text-[#1968b7] hover:underline">
 									{value}
 								</div>
-							</a>
-						</Link>
-					</Tooltip>
+							</Tooltip>
+						</a>
+					</Link>
 				)
 			}
 		},

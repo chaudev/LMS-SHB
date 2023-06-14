@@ -1,4 +1,4 @@
-import { DatePicker, Popconfirm } from 'antd'
+import { DatePicker, Input, Popconfirm } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { staffSalaryApi } from '~/api/staff-salary'
@@ -14,7 +14,7 @@ import { RootState } from '~/store'
 
 export const SalaryPage = () => {
 	const [valueDate, setValueDate] = useState(moment().subtract(1, 'months'))
-	const initParameters = { fullName: '', userCode: '', year: null, month: null, pageIndex: 1, pageSize: PAGE_SIZE }
+	const initParameters = { fullName: '', userCode: '', year: null, month: null, pageIndex: 1, pageSize: PAGE_SIZE, search: '' }
 	const [apiParameters, setApiParameters] = useState(initParameters)
 	const [totalRow, setTotalRow] = useState(1)
 	const [dataTable, setDataTable] = useState([])
@@ -44,14 +44,6 @@ export const SalaryPage = () => {
 
 	function isTeacher() {
 		return theInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return theInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return theInformation?.RoleId == 3
 	}
 
 	function isSaler() {
@@ -138,7 +130,7 @@ export const SalaryPage = () => {
 			title: 'Thưởng',
 			width: 80,
 			dataIndex: 'Bonus',
-			align:'right',
+			align: 'right',
 			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
@@ -160,26 +152,30 @@ export const SalaryPage = () => {
 		{
 			title: 'Trừ tạm ứng',
 			width: 150,
-			dataIndex: 'Deduction', align:'right',
+			dataIndex: 'Deduction',
+			align: 'right',
 			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
 			title: 'Lương cơ bản',
 			width: 150,
-			dataIndex: 'BasicSalary', align:'right',
+			dataIndex: 'BasicSalary',
+			align: 'right',
 			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
 			title: 'Lương giảng dạy',
 			width: 150,
-			dataIndex: 'TeachingSalary', align:'right',
+			dataIndex: 'TeachingSalary',
+			align: 'right',
 			render: (text) => <>{parseToMoney(text)}₫</>
 			// render: (text, item) => <ModalTeachingDetail dataRow={item} />
 		},
 		{
 			title: 'Lương tổng',
 			width: 150,
-			dataIndex: 'TotalSalary', align:'right',
+			dataIndex: 'TotalSalary',
+			align: 'right',
 			render: (text) => <>{parseToMoney(text)}₫</>
 		},
 		{
@@ -205,8 +201,18 @@ export const SalaryPage = () => {
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, pageIndex: event })}
 				TitleCard={
 					<div className="extra-table">
-						<div className="flex-1 max-w-[350px] mr-[16px]">
+						<div className="flex gap-3">
 							<DatePicker onChange={handleFilterMonth} picker="month" placeholder="Chọn tháng" value={valueDate} />
+							<Input.Search
+								className="primary-search max-w-[300px]"
+								onChange={(event) => {
+									if (event.target.value == '') {
+										setApiParameters({ ...apiParameters, pageIndex: 1, search: '' })
+									}
+								}}
+								onSearch={(event) => setApiParameters({ ...apiParameters, pageIndex: 1, search: event })}
+								placeholder="Tìm kiếm"
+							/>
 						</div>
 					</div>
 				}

@@ -10,6 +10,7 @@ import { ShowNostis } from '~/common/utils'
 import { FiChevronDown } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
+import { useRole } from '~/common/hooks/useRole'
 
 const UserProfileTemplate = () => {
 	const router = useRouter()
@@ -21,6 +22,8 @@ const UserProfileTemplate = () => {
 	const [profileItem, setProfileItem] = useState<IUserProfileTemplateItem | null>(null)
 	const [textUpdate, setTextUpdate] = useState<IUserProfileTemplateItem[]>([])
 	const [rateCompleted, setRateCompleted] = useState<number>(0)
+
+	const { isParents, isStudent, isTeacher } = useRole()
 
 	const getAllProfileTemplate = async () => {
 		try {
@@ -116,8 +119,8 @@ const UserProfileTemplate = () => {
 	}
 
 	const isDisable = () => {
-		// ko cho giáo  viên + học viên cập nhật thông tin
-		return userInfomation.RoleId == '2' || userInfomation.RoleId == '3' ? true : false
+		// ko cho giáo  viên + học viên + phụ huynh cập nhật thông tin
+		return isTeacher || isStudent || isParents ? true : false
 	}
 
 	return (

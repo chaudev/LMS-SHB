@@ -1,23 +1,22 @@
 import { Input } from 'antd'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import RestApi from '~/api/RestApi'
 import { MainLayout } from '~/common'
 import { PrimaryTooltip } from '~/common/components'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNostis } from '~/common/utils'
-import BillDetails from '../../../common/components/Finance/BillDetails'
 import Head from 'next/head'
 import appConfigs from '~/appConfig'
-import Router from 'next/router'
 import { ImWarning } from 'react-icons/im'
 import { ButtonEye } from '~/common/components/TableButton'
 import { ChangeClass } from '~/common/components/Student/StudentInClass'
 import { userInfoColumn } from '~/common/libs/columns/user-info'
 import Filters from '~/common/components/Student/Filters'
-import { useSelector } from 'react-redux'
-import { RootState } from '~/store'
+
 import Link from 'next/link'
+import { useRole } from '~/common/hooks/useRole'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 
 const initFilters = { PageSize: PAGE_SIZE, PageIndex: 1, Search: '' }
 
@@ -27,9 +26,17 @@ const StudentInClassPage = () => {
 	const [data, setData] = React.useState([])
 	const [filters, setFilter] = React.useState(initFilters)
 
+	const [listClass, setListClass] = React.useState([])
+
+	const { isSaler } = useRole()
+
 	useEffect(() => {
 		getData()
 	}, [filters])
+
+	useEffect(() => {
+		getClasses()
+	}, [])
 
 	async function getData() {
 		setLoading(true)
@@ -49,45 +56,29 @@ const StudentInClassPage = () => {
 		}
 	}
 
-	const expandedRowRender = (item) => {
-		return <BillDetails bill={item} />
-	}
+	const getClasses = async () => {
+		try {
+			const response = await RestApi.get<any>('Class', { pageIndex: 1, pageSize: 99999, types: '1,2' })
+			if (response.status == 200) {
+				let temp = []
+				response.data.data.map((item) => {
+					temp.push({
+						title: item.Name,
+						value: item.Id
+					})
+				})
 
-	function gotoClass(params) {
-		Router.push(`/class/list-class/detail/?class=${params.ClassId}`)
-	}
-
-	function viewStudentDetails(params) {
-		Router.push({
-			pathname: '/info-course/student/detail',
-			query: { StudentID: params?.StudentId }
-		})
-	}
-
-	const theInformation = useSelector((state: RootState) => state.user.information)
-
-	function isAdmin() {
-		return theInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return theInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return theInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return theInformation?.RoleId == 3
-	}
-
-	function isSaler() {
-		return theInformation.RoleId == 5
+				setListClass(temp)
+			} else {
+				setListClass([])
+			}
+		} catch (error) {
+			ShowNostis.error(error?.message)
+		}
 	}
 
 	function handleColumn(value, item) {
-		if (isSaler()) return ''
+		if (isSaler) return ''
 
 		return (
 			<div className="flex item-center">
@@ -186,6 +177,43 @@ const StudentInClassPage = () => {
 			render: handleColumn
 		}
 	]
+	const dataFilterStudent = [
+		{
+			name: 'classId',
+			title: 'Lớp học',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: listClass
+		},
+		{
+			name: 'warning',
+			title: 'Cảnh báo',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: [
+				{
+					value: false,
+					title: 'Không bị cảnh báo'
+				},
+				{
+					value: true,
+					title: 'Bị cảnh báo'
+				}
+			]
+		}
+	]
+
+	const handleFilter = (params) => {
+		const paramsForrmat = {
+			...filters,
+			pageIndex: 1,
+			classId: params.classId ? params.classId.join(',') : null,
+			warning: params.warning
+		}
+		setFilter(paramsForrmat)
+	}
 
 	return (
 		<>
@@ -202,13 +230,20 @@ const StudentInClassPage = () => {
 				columns={columns}
 				TitleCard={
 					<div className="w-full flex items-center">
-						<Filters
+						{/* <Filters
 							showClass
 							showSort
 							showWarning
 							filters={filters}
 							onSubmit={(event) => setFilter(event)}
 							onReset={() => setFilter(initFilters)}
+						/> */}
+						<FilterBaseVer2
+							dataFilter={dataFilterStudent}
+							handleFilter={handleFilter}
+							handleReset={(value) => {
+								setFilter(initFilters)
+							}}
 						/>
 						<Input.Search
 							className="primary-search max-w-[250px] ml-[8px]"

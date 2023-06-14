@@ -4,6 +4,7 @@ import Avatar from '~/common/components/Avatar'
 export const userInfoColumn = {
 	title: 'Thông tin',
 	dataIndex: 'Code',
+	
 	render: (value, item) => (
 		<div className="flex items-center">
 			<Avatar className="h-[36px] w-[36px] rounded-full shadow-sm" uri={item?.Avatar} />

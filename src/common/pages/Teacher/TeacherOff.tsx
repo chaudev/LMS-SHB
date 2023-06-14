@@ -12,6 +12,8 @@ import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
 import ExpandTeacherOff from './ExpandTeacherOff'
+import { Input } from 'antd'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 
 let pageIndex = 1
 const TeacherOff = () => {
@@ -22,7 +24,8 @@ const TeacherOff = () => {
 		userCode: null,
 		status: null,
 		pageSize: PAGE_SIZE,
-		pageIndex: pageIndex
+		pageIndex: pageIndex,
+		search: ''
 	}
 
 	const [todoApi, setTodoApi] = useState(listTodoApi)
@@ -98,7 +101,7 @@ const TeacherOff = () => {
 			onFilter: (value: string, record) => {
 				return record.Status === value
 			},
-			width:150,
+			width: 150,
 			render: (status, data) => {
 				switch (status) {
 					case 1:
@@ -158,7 +161,7 @@ const TeacherOff = () => {
 		{
 			title: 'Trạng thái',
 			dataIndex: 'Status',
-			width:150,
+			width: 150,
 			key: 'Status',
 			filters: [
 				{
@@ -273,7 +276,49 @@ const TeacherOff = () => {
 			columns={userInformation?.RoleId == 2 ? columnsTeacher : columnsAdmin}
 			expandable={expandedRowRender}
 			Extra={isTeacher() && <TeacherOffForm setTodoApi={setTodoApi} listTodoApi={listTodoApi} />}
-			TitleCard="Danh sách lịch nghỉ"
+			TitleCard={
+				<>
+					<FilterBaseVer2
+						dataFilter={[
+							{
+								name: 'status',
+								title: 'Trạng thái',
+								type: 'select',
+								col: 'col-span-2',
+						 
+								optionList: [
+									{
+										value: 1,
+										title: 'Chờ duyệt'
+									},	{
+										value: 2,
+										title: 'Duyệt'
+									},	{
+										value: 3,
+										title: 'Không duyệt'
+									},
+								]
+							}
+						]}
+						handleFilter={(value) => {
+							setTodoApi({ ...listTodoApi, ...value })
+						}}
+						handleReset={(value) => {
+							setTodoApi(listTodoApi)
+						}}
+					/>
+					<Input.Search
+						className="primary-search max-w-[300px]"
+						onChange={(event) => {
+							if (event.target.value == '') {
+								setTodoApi({ ...listTodoApi, pageIndex: 1, search: '' })
+							}
+						}}
+						onSearch={(event) => setTodoApi({ ...listTodoApi, pageIndex: 1, search: event })}
+						placeholder="Tìm kiếm"
+					/>
+				</>
+			}
 		/>
 	)
 }

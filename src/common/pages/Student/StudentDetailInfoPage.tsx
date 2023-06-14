@@ -16,6 +16,7 @@ import { TabDiscountHistory } from './Tab/TabDiscountHistory'
 import { TabStudyRoute } from './Tab/TabStudyRoute'
 import { TabTestAppointment } from './Tab/TabTestAppointment'
 import TabMajors from './Tab/TabMajors'
+import { useRole } from '~/common/hooks/useRole'
 
 export interface IStudentDetailInfoPageProps {}
 
@@ -26,7 +27,8 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 	const router = useRouter()
 	const [form] = Form.useForm()
 	const userInformation = useSelector((state: RootState) => state.user.information)
-	console.log(userInformation)
+
+	const { isStudent, isTeacher, isAdmin ,isParents} = useRole()
 
 	const getStudentDetail = async () => {
 		try {
@@ -46,7 +48,9 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '1',
 						label: `Chi tiết`,
-						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+						children: (
+							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+						)
 					},
 					// {
 					// 	key: '2',
@@ -78,7 +82,9 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					{
 						key: '1',
 						label: `Chi tiết`,
-						children: <TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+						children: (
+							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+						)
 					},
 					// {
 					// 	key: '2',

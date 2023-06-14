@@ -83,14 +83,6 @@ const ListClass = () => {
 		return userInformation?.RoleId == 1
 	}
 
-	function isTeacher() {
-		return userInformation?.RoleId == 2
-	}
-
-	function isStdent() {
-		return userInformation?.RoleId == 3
-	}
-
 	const getAllClass = async () => {
 		setIsLoading(true)
 		try {

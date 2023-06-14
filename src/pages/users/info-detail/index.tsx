@@ -96,7 +96,7 @@ export default function UserInfoDetail(props: IUserInfoDetailProps) {
 						</div>
 					</div>
 					<div className="body">
-						<TabStudentDetail StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+						<TabStudentDetail isNotUpdate={false} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
 					</div>
 				</div>
 			</div>

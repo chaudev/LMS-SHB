@@ -40,10 +40,13 @@
 				}
 				.fc-button-group {
 					button.fc-button {
-						@apply font-medium ;
+						@apply font-medium bg-[#fff] hover:bg-[#C94A4F] focus:bg-[#002456] border-none;
+						 color :#495057;
 					}
 					button.fc-button-active {
 						@apply bg-[#002456] hover:bg-[#C94A4F] border-none;
+						color :#fff;
+
 					}
 				}
 			}

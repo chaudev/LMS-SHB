@@ -36,6 +36,8 @@ import { foreignLanguageApi } from '~/api/foreign-language'
 import { profileStatusApi } from '~/api/profile-status'
 import OverviewStatusStudent from './OverviewStatusStudent'
 import { permissionApi } from '~/api/permission'
+import PrimaryTag from '~/common/components/Primary/Tag'
+import moment from 'moment'
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
@@ -99,7 +101,7 @@ const Student: FC<IPersonnel> = (props) => {
 	}, [state.purpose])
 
 	const branch = useMemo(() => {
-		if (state.purpose.Purpose.length > 0) {
+		if (state.branch.Branch.length > 0) {
 			return parseSelectArray(state.branch.Branch, 'Name', 'Id')
 		}
 	}, [state.branch])
@@ -412,7 +414,7 @@ const Student: FC<IPersonnel> = (props) => {
 	]
 
 	const columnsStudent = [
-		userInfoColumn,
+		{ ...userInfoColumn, fixed: 'left' },
 		{
 			title: 'Email',
 			dataIndex: 'Email',
@@ -430,10 +432,9 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'Gender',
 			render: (value, record) => (
 				<>
-					{value == 0 && <span className="tag yellow">Khác</span>}
-					{value == 1 && <span className="tag blue">Nam</span>}
-					{value == 2 && <span className="tag green">Nữ</span>}
-					{value == 3 && <span className="tag yellow">Khác</span>}
+					{value == 0 && <PrimaryTag color="disabled">Khác</PrimaryTag>}
+					{value == 1 && <PrimaryTag color="blue">Nam</PrimaryTag>}
+					{value == 2 && <PrimaryTag color="yellow">Nữ</PrimaryTag>}
 				</>
 			)
 		},
@@ -442,20 +443,40 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'StatusId',
 			render: (data) => (
 				<>
-					{data == 1 && <span className="tag red">Đã khóa</span>}
-					{data == 0 && <span className="tag blue">Đang hoạt động</span>}
+					{data == 1 && <PrimaryTag color="red">Đã khóa</PrimaryTag>}
+					{data == 0 && <PrimaryTag color="primary">Đang hoạt động</PrimaryTag>}
 				</>
 			)
 		},
 		{
 			title: 'Trạng thái học',
 			width: 130,
-			dataIndex: 'LearningStatusName'
+			dataIndex: 'LearningStatusName',
+			render: (value, data) => {
+				return (
+					<>
+						{data.LearningStatus == 1 && <PrimaryTag color="green">{value}</PrimaryTag>}
+						{data.LearningStatus == 2 && <PrimaryTag color="primary">{value}</PrimaryTag>}
+						{data.LearningStatus == 3 && <PrimaryTag color="blue">{value}</PrimaryTag>}
+						{data.LearningStatus == 4 && <PrimaryTag color="red">{value}</PrimaryTag>}
+					</>
+				)
+			}
+		},
+		{
+			title: 'Nơi sinh',
+			width: 150,
+			dataIndex: 'BirthPlace'
+		},
+		{
+			title: 'Quê quán',
+			width: 150,
+			dataIndex: 'NativeLand'
 		},
 		{
 			title: 'Tình trạng hồ sơ',
 			width: 150,
-			dataIndex: 'profileStatusName'
+			dataIndex: 'ProfileStatusName'
 		},
 		{
 			title: 'Trình độ ngoại ngữ',
@@ -473,6 +494,14 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'ProcessName'
 		},
 		{
+			title: 'Ngày tạo',
+			width: 160,
+			dataIndex: 'CreatedOn',
+			render: (value, item) => {
+				return <>{moment(value).format('HH:MM DD/MM/YYYY ')}</>
+			}
+		},
+		{
 			width: 100,
 			title: 'Chức năng',
 			dataIndex: '',
@@ -488,7 +517,7 @@ const Student: FC<IPersonnel> = (props) => {
 								}}
 							>
 								<a>
-									<ButtonEye />
+									<ButtonEye className="mr-2" />
 								</a>
 							</Link>
 						</PrimaryTooltip>
@@ -590,7 +619,9 @@ const Student: FC<IPersonnel> = (props) => {
 			genders: params.genders,
 			processIds: params.processIds ? params.processIds.join(',') : null,
 			profileStatusIds: params.profileStatusIds ? params.profileStatusIds.join(',') : null,
-			visaStatusIds: params.visaStatusIds ? params.visaStatusIds.join(',') : null
+			visaStatusIds: params.visaStatusIds ? params.visaStatusIds.join(',') : null,
+			learningStatus: params.learningStatus ? params.learningStatus.join(',') : null,
+			statusId: params.statusId
 		}
 		setApiParameters(paramsForrmat)
 	}
@@ -613,6 +644,48 @@ const Student: FC<IPersonnel> = (props) => {
 				{ value: 0, title: 'Khác' },
 				{ value: 1, title: 'Nam' },
 				{ value: 2, title: 'Nữ' }
+			]
+		},
+		{
+			name: 'statusId',
+			title: 'Trạng thái',
+			type: 'select',
+			col: 'col-span-2',
+			// mode: 'multiple',
+			optionList: [
+				{
+					value: 0,
+					title: 'Đang hoạt động'
+				},
+				{
+					value: 1,
+					title: 'Đã khóa'
+				}
+			]
+		},
+		{
+			name: 'learningStatus',
+			title: 'Trạng thái học',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: [
+				{
+					value: 1,
+					title: 'Mới'
+				},
+				{
+					value: 2,
+					title: 'Đang học'
+				},
+				{
+					value: 3,
+					title: 'Học xong'
+				},
+				{
+					value: 4,
+					title: 'Bảo lưu'
+				}
 			]
 		},
 		{
@@ -691,7 +764,7 @@ const Student: FC<IPersonnel> = (props) => {
 							}}
 						/>
 						<Input.Search
-							className="primary-search max-w-[250px] ml-[8px]"
+							className="primary-search max-w-[250px] ml-[8px] "
 							onChange={(event) => {
 								if (event.target.value == '') {
 									setApiParameters({ ...apiParameters, PageIndex: 1, Search: '' })

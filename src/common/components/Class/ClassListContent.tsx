@@ -20,6 +20,7 @@ import PrimaryButton from '../Primary/Button'
 import UpdateClassForm from './UpdateClassForm'
 import EmptyData from '../EmptyData'
 import { AiOutlineBranches } from 'react-icons/ai'
+import { useRole } from '~/common/hooks/useRole'
 
 type IClassListContent = {
 	totalRow?: number
@@ -45,6 +46,8 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 	const [isLoadingDelete, setIsLoadingDelete] = useState(false)
 	const [isModalOpen, setIsModalOpen] = useState({ id: null, open: null })
 	const [showPop, setShowPop] = useState('')
+
+	const {isStudent , isParents , isSaler,isAccountant  , isTeacher} = useRole()
 
 	const isRole = {
 		sale: userInformation.RoleId == 5,
@@ -167,7 +170,7 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 									<div className="header-inner">
 										<div className="status">{checkStatus(item.Status, item.StatusName)}</div>
 
-										{isRole.sale || isRole.student || isRole.parent ? (
+										{isSaler || isStudent || isParents || isAccountant || isTeacher? (
 											''
 										) : (
 											<div className="action">

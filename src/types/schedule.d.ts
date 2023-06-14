@@ -23,5 +23,5 @@ type ISchedule = IBaseApi<{
 	SalaryId: string
 	TeachingFee: any
 	Note: ''
-	Id: number
+	Id: number & T
 }>

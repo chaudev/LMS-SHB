@@ -252,7 +252,7 @@ export default function RefundPage(props: IRefundPageProps) {
 					},
 					{
 						title: 'Loại yêu cầu',
-						width: 200,
+						width: 210,
 						dataIndex: 'TypeName',
 						render: (text, item) => (
 							<p className="font-[600] text-[#E53935]">
@@ -338,7 +338,7 @@ export default function RefundPage(props: IRefundPageProps) {
 					},
 					{
 						title: 'Loại yêu cầu',
-						width: 200,
+						width: 210,
 						dataIndex: 'TypeName',
 						render: (text, item) => (
 							<>

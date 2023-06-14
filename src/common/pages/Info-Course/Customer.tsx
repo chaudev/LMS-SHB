@@ -28,7 +28,7 @@ import { setSource } from '~/store/sourceReducer'
 import { setLearningNeed } from '~/store/learningNeedReducer'
 import { setPurpose } from '~/store/purposeReducer'
 import { setCustomerStatus } from '~/store/customerStatusReducer'
-import { Popover } from 'antd'
+import { Input, Popover } from 'antd'
 import PrimaryButton from '~/common/components/Primary/Button'
 import { BsThreeDots } from 'react-icons/bs'
 import appConfigs from '~/appConfig'
@@ -54,6 +54,7 @@ let dataOption = [
 ]
 const CustomerAdvisory = () => {
 	const listTodoApi = {
+		search: '',
 		FullName: '',
 		code: '',
 		customerStatusIds: '',
@@ -486,10 +487,31 @@ const CustomerAdvisory = () => {
 		}
 	]
 	const content = (
-		<>
+		<div className="flex flex-col gap-3">
+			{(userInformation?.RoleId == 1 ||
+				userInformation?.RoleId == 2 ||
+				userInformation?.RoleId == 4 ||
+				userInformation?.RoleId == 5 ||
+				userInformation?.RoleId == 7) && (
+				<PrimaryButton
+					className="w-full btn-download"
+					type="button"
+					icon="download"
+					background="blue"
+					onClick={() => window.open(`${appConfigs.linkDownloadExcel}?key=${new Date().getTime()}`)}
+				>
+					File mẫu
+				</PrimaryButton>
+			)}
+			{(userInformation?.RoleId == 1 ||
+				userInformation?.RoleId == 2 ||
+				userInformation?.RoleId == 4 ||
+				userInformation?.RoleId == 5 ||
+				userInformation?.RoleId == 7) && <ImportCustomer className="w-full btn-import" onFetchData={() => getAllCustomer()} />}
+
 			<PrimaryButton
-				className="!w-full mb-2"
-				background="yellow"
+				className="!w-full "
+				background="orange"
 				type="button"
 				onClick={() => router.push({ pathname: '/info-course/customer/send-mail-all' })}
 				icon="send"
@@ -508,7 +530,7 @@ const CustomerAdvisory = () => {
 				setTodoApi={setTodoApi}
 				refPopover={refVisiblePopover}
 			/>
-		</>
+		</div>
 	)
 	return (
 		<div className="info-course-customer">
@@ -522,26 +544,73 @@ const CustomerAdvisory = () => {
 				TitlePage="Danh sách khách hàng"
 				TitleCard={
 					<div className="d-flex align-items-center justify-content-end">
+						<FilterBaseVer2
+							dataFilter={dataFilter}
+							handleFilter={(listFilter: any) => {
+								handleFilter(listFilter)
+							}}
+							handleReset={handleReset}
+						/>
+						<Input.Search
+							className="primary-search max-w-[250px] ml-[8px] mr-3"
+							onChange={(event) => {
+								if (event.target.value == '') {
+									setTodoApi({ ...todoApi, pageIndex: 1, search: '' })
+								}
+							}}
+							onSearch={(event) => setTodoApi({ ...todoApi, pageIndex: 1, search: event })}
+							placeholder="Tìm kiếm"
+						/>
+						{/* <SortBox handleSort={(value) => handleSort(value)} dataOption={dataOption} /> */}
+					</div>
+				}
+				dataSource={dataCustomer}
+				columns={columns}
+				Extra={
+					<div className="extra-table">
 						<div className="wrap-btn-customer">
-							<PrimaryButton
-								background="yellow"
-								type="button"
-								icon="send"
-								onClick={() => router.push({ pathname: '/info-course/customer/send-mail-all' })}
-								className="mr-2"
-							>
-								Gửi thông báo
-							</PrimaryButton>
-							<CustomerAdviseForm
-								source={source}
-								learningNeed={learningNeed}
-								purpose={purpose}
-								sale={sale}
-								branch={convertBranchSelect}
-								customerStatus={customerStatus}
-								listTodoApi={listTodoApi}
-								setTodoApi={setTodoApi}
-							/>
+							<div className="flex">
+								{(userInformation?.RoleId == 1 ||
+									userInformation?.RoleId == 2 ||
+									userInformation?.RoleId == 4 ||
+									userInformation?.RoleId == 5 ||
+									userInformation?.RoleId == 7) && (
+									<PrimaryButton
+										className="mr-2 btn-download"
+										type="button"
+										icon="download"
+										background="blue"
+										onClick={() => window.open(`${appConfigs.linkDownloadExcel}?key=${new Date().getTime()}`)}
+									>
+										File mẫu
+									</PrimaryButton>
+								)}
+								{(userInformation?.RoleId == 1 ||
+									userInformation?.RoleId == 2 ||
+									userInformation?.RoleId == 4 ||
+									userInformation?.RoleId == 5 ||
+									userInformation?.RoleId == 7) && <ImportCustomer className="mr-1 btn-import" onFetchData={() => getAllCustomer()} />}
+
+								<PrimaryButton
+									background="orange"
+									type="button"
+									icon="send"
+									onClick={() => router.push({ pathname: '/info-course/customer/send-mail-all' })}
+									className="mr-2"
+								>
+									Gửi thông báo
+								</PrimaryButton>
+								<CustomerAdviseForm
+									source={source}
+									learningNeed={learningNeed}
+									purpose={purpose}
+									sale={sale}
+									branch={convertBranchSelect}
+									customerStatus={customerStatus}
+									listTodoApi={listTodoApi}
+									setTodoApi={setTodoApi}
+								/>
+							</div>
 						</div>
 						<Popover
 							ref={refVisiblePopover}
@@ -555,41 +624,6 @@ const CustomerAdvisory = () => {
 								<BsThreeDots />
 							</PrimaryButton>
 						</Popover>
-					</div>
-				}
-				dataSource={dataCustomer}
-				columns={columns}
-				Extra={
-					<div className="extra-table">
-						{(userInformation?.RoleId == 1 ||
-							userInformation?.RoleId == 2 ||
-							userInformation?.RoleId == 4 ||
-							userInformation?.RoleId == 5 ||
-							userInformation?.RoleId == 7) && (
-							<PrimaryButton
-								className="mr-2 btn-download"
-								type="button"
-								icon="download"
-								background="blue"
-								onClick={() => window.open(`${appConfigs.linkDownloadExcel}?key=${new Date().getTime()}`)}
-							>
-								File mẫu
-							</PrimaryButton>
-						)}
-						{(userInformation?.RoleId == 1 ||
-							userInformation?.RoleId == 2 ||
-							userInformation?.RoleId == 4 ||
-							userInformation?.RoleId == 5 ||
-							userInformation?.RoleId == 7) && <ImportCustomer className="mr-1 btn-import" onFetchData={() => getAllCustomer()} />}
-
-						<FilterBaseVer2
-							dataFilter={dataFilter}
-							handleFilter={(listFilter: any) => {
-								handleFilter(listFilter)
-							}}
-							handleReset={handleReset}
-						/>
-						<SortBox handleSort={(value) => handleSort(value)} dataOption={dataOption} />
 					</div>
 				}
 				expandable={expandedRowRender}

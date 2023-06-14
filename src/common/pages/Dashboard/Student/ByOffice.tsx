@@ -25,7 +25,7 @@ const StudentByOffice = () => {
 			<div className="items w-full flex-1 shadow-sm">
 				<div className="inner-item">
 					<div className="name bg-[#e42b6f]">
-						<div className="ttl">Học viên theo trung tâm</div>
+						<div className="ttl">Văn phòng đại diện</div>
 						<div className="icon">
 							<FaBuilding size={22} />
 						</div>

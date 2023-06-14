@@ -274,6 +274,8 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 			...todoApi,
 			userId: data.userId,
 			branchIds: data.branchIds,
+			type: data.type,
+
 			fromDate: data.date ? moment(data.date[0].toDate()).format('YYYY-MM-DD') : null,
 			toDate: data.date ? moment(data.date[1].toDate()).format('YYYY-MM-DD') : null
 		}
@@ -349,7 +351,7 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 				/>
 			}
 			TitleCard={
-				<div className="flex items-center justify-between w-full">
+				<div className="flex items-center  w-full">
 					<FilterBaseVer2
 						handleFilter={handleFilter}
 						dataFilter={[
@@ -363,6 +365,16 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 							}
 						]}
 						handleReset={() => setTodoApi({ ...initialParams })}
+					/>
+					<Input.Search
+						className="primary-search max-w-[300px]"
+						onChange={(event) => {
+							if (event.target.value == '') {
+								setTodoApi({ ...initialParams, pageIndex: 1, search: '' })
+							}
+						}}
+						onSearch={(event) => setTodoApi({ ...initialParams, pageIndex: 1, search: event })}
+						placeholder="Tìm kiếm"
 					/>
 				</div>
 			}

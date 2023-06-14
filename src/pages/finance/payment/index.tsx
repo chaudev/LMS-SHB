@@ -32,6 +32,54 @@ const PaymentManagementPage = () => {
 			col: 'col-span-2',
 			type: 'date-range',
 			value: null
+		},
+		{
+			name: 'type',
+			title: 'Loại thanh toán',
+			col: 'col-span-2',
+			type: 'select',
+			optionList: [
+				// {
+				// 	value: 1,
+				// 	title: 'Đăng ký học'
+				// },
+				// {
+				// 	value: 2,
+				// 	title: 'Mua dịch vụ'
+				// },
+				// {
+				// 	value: 3,
+				// 	title: 'Đăng ký lớp dạy kèm'
+				// },
+				{
+					value: 4,
+					title: 'Tạo thủ công'
+				},
+				{
+					value: 5,
+					title: 'Thanh toán học phí'
+				}
+			]
+		},
+		{
+			name: 'unPaid',
+			title: 'Trạng thái thanh toán',
+			col: 'col-span-2',
+			type: 'select',
+			optionList: [
+				{
+					value: 0,
+					title: 'Thanh toán thiếu'
+				},
+				{
+					value: 1,
+					title: 'Đã thanh toán đủ'
+				},
+				{
+					value: 2,
+					title: 'Thanh toán dư'
+				}
+			]
 		}
 	])
 
@@ -56,9 +104,10 @@ const PaymentManagementPage = () => {
 				setData(res.data.data)
 				setTotalPage(res.data.totalRow)
 				setSumPrice(res.data)
-			} else {
+			}
+			if (res.status === 204) {
 				setData([])
-				setTotalPage(1)
+				setTotalPage(0)
 			}
 			// lấy toàn bộ học viên
 		} catch (error) {
@@ -125,7 +174,9 @@ const PaymentManagementPage = () => {
 			studentIds: listFilter.studentIds,
 			branchIds: listFilter.branchIds,
 			fromDate: listFilter.date ? moment(listFilter.date[0].toDate()).format('YYYY-MM-DD') : null,
-			toDate: listFilter.date ? moment(listFilter.date[1].toDate()).format('YYYY-MM-DD') : null
+			toDate: listFilter.date ? moment(listFilter.date[1].toDate()).format('YYYY-MM-DD') : null,
+			type: listFilter.type,
+			unPaid: listFilter.unPaid
 		}
 		console.log('filters ', filters)
 		console.log('params ', params)
@@ -139,6 +190,7 @@ const PaymentManagementPage = () => {
 	const columns = [
 		{
 			title: 'Mã',
+			fixed: 'left',
 			dataIndex: 'Code',
 			width: 100
 		},
@@ -200,6 +252,11 @@ const PaymentManagementPage = () => {
 					{value == 5 && <PrimaryTag color={'primary'}>{item?.TypeName}</PrimaryTag>}
 				</>
 			)
+		},
+		{
+			title: 'Hình thức đóng tiền',
+			dataIndex: 'PaymentTypeName',
+			width: 220
 		},
 		{
 			title: 'Người tạo',

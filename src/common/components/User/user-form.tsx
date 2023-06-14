@@ -517,6 +517,12 @@ const CreateUser: FC<ICreateNew> = (props) => {
 						<InputTextField className="col-span-2" label="Địa chỉ Email" name="Email" isRequired rules={[yupSync]} />
 						<InputTextField className="col-span-2" label="Số điện thoại" name="Mobile" isRequired rules={[yupSync]} />
 						<DatePickerField className="col-span-2" label="Ngày sinh" name="DOB" mode="single" format="DD/MM/YYYY" />
+						{isStudent && (
+							<>
+								<InputTextField className="col-span-2" label="Nơi sinh" name="BirthPlace" />
+								<InputTextField className="col-span-2" label="Quê quán" name="NativeLand" />
+							</>
+						)}
 
 						{!isChangeInfo && isEdit && user?.RoleId == 1 && (
 							<SelectField
@@ -600,6 +606,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 									optionList={learningNeed}
 									onChangeSelect={(value) => handleSelect('LearningNeedId', value)}
 								/>
+
 								{!isSaler() ? <SelectField className="col-span-2" label="Tư vấn viên" name="SaleId" optionList={listSale} /> : ''}
 
 								<SelectField className="col-span-2" label="Mục đích học" name="PurposeId" optionList={purpose} />
@@ -608,12 +615,42 @@ const CreateUser: FC<ICreateNew> = (props) => {
 									Thông tin hồ sơ
 								</Divider>
 
-								<SelectField className="col-span-2" label="Văn phòng đại diện" name="OfficeId" optionList={office} />
-								<SelectField className="col-span-2" label="Tình trạng hồ sơ" name="ProfileStatusId" optionList={profileStatus} />
-								<SelectField className="col-span-2" label="Trình độ ngoại ngữ" name="ForeignLanguageId" optionList={foreignLanguage} />
-								<SelectField className="col-span-2" label="Đối tác" name="PartnerId" optionList={partner} />
-								<SelectField className="col-span-2" label="Tình trạng xử lý hồ sơ" name="ProcessId" optionList={process} />
-								<SelectField className="col-span-2" label="Tình trạng visa" name="VisaStatusId" optionList={visaStatus} />
+								<SelectField
+									className="col-span-2"
+									label="Văn phòng đại diện"
+									name="OfficeId"
+									optionList={office}
+									disabled={user.RoleId == 3 || user.RoleId == 8 || user.RoleId == 2}
+								/>
+								<SelectField
+									className="col-span-2"
+									label="Tình trạng hồ sơ"
+									name="ProfileStatusId"
+									optionList={profileStatus}
+									disabled={user.RoleId == 3 || user.RoleId == 8 || user.RoleId == 2}
+								/>
+								<SelectField
+									className="col-span-2"
+									label="Trình độ ngoại ngữ"
+									name="ForeignLanguageId"
+									optionList={foreignLanguage}
+									disabled={user.RoleId == 3 || user.RoleId == 8 || user.RoleId == 2}
+								/>
+								{/* <SelectField className="col-span-2" label="Đối tác" name="PartnerId" optionList={partner} /> */}
+								<SelectField
+									className="col-span-2"
+									label="Tình trạng xử lý hồ sơ"
+									name="ProcessId"
+									optionList={process}
+									disabled={user.RoleId == 3 || user.RoleId == 8 || user.RoleId == 2}
+								/>
+								<SelectField
+									className="col-span-2"
+									label="Tình trạng visa"
+									name="VisaStatusId"
+									optionList={visaStatus}
+									disabled={user.RoleId == 3 || user.RoleId == 8 || user.RoleId == 2}
+								/>
 							</>
 						)}
 					</div>

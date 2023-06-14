@@ -2,14 +2,13 @@ import { Input } from 'antd'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { giftApi } from '~/api/gift'
 import { majorsRegistrationApi } from '~/api/majors/registration'
 import { PrimaryTooltip } from '~/common/components'
 import Avatar from '~/common/components/Avatar'
-import FilterBase from '~/common/components/Elements/FilterBase'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 import IconButton from '~/common/components/Primary/IconButton'
 import PrimaryTable from '~/common/components/Primary/Table'
-import Filters from '~/common/components/Student/Filters'
 import { ButtonEye } from '~/common/components/TableButton'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNostis } from '~/common/utils'
@@ -30,6 +29,7 @@ const MajorsStudentPage = () => {
 		status: null
 	}
 	const [apiParameters, setApiParameters] = useState(initParamters)
+	const [gifts, setGift] = useState([])
 
 	const getMajorsRegistration = async () => {
 		try {
@@ -49,9 +49,39 @@ const MajorsStudentPage = () => {
 		}
 	}
 
+	const getAllGift = async () => {
+		try {
+			const res = await giftApi.getAll({
+				pageSize: 9999,
+				pageIndex: 1
+			})
+			if (res.status === 200) {
+				// setData(res.data.data)
+				let temlp = []
+
+				res.data.data.map((item) => {
+					temlp.push({
+						value: item.Id,
+						title: item.Name
+					})
+				})
+				setGift(temlp)
+			}
+			if (res.status === 204) {
+				setGift([])
+			}
+		} catch (error) {
+		} finally {
+		}
+	}
+
 	useEffect(() => {
-		if (!!slug) getMajorsRegistration()
+		if (!!slug) {
+			getMajorsRegistration()
+		}
+		getAllGift()
 	}, [slug])
+
 	useEffect(() => {
 		getMajorsRegistration()
 	}, [apiParameters])
@@ -85,6 +115,7 @@ const MajorsStudentPage = () => {
 		},
 		{
 			title: 'Ghi chú',
+			width: 250,
 			dataIndex: 'Note',
 			render: (text) => <p>{text}</p>
 		},
@@ -100,21 +131,35 @@ const MajorsStudentPage = () => {
 			render: (text) => <p>{text}</p>
 		},
 		{
-			width: 60,
+			width: 100,
 			title: '',
 			fixed: 'right',
 			dataIndex: '',
 			render: (text, item) => (
-				<Link
-					href={{
-						pathname: '/majors/change-majors/',
-						query: { studentId: item?.StudentId }
-					}}
-				>
-					<a>
-						<IconButton tooltip="Thay đổi ngành học" type="button" icon="exchange" color="primary" />
-					</a>
-				</Link>
+				<div className="d-flex items-center">
+					<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.StudentId}`}>
+						<Link
+							href={{
+								pathname: '/info-course/student/detail',
+								query: { StudentID: item?.StudentId }
+							}}
+						>
+							<a>
+								<ButtonEye />
+							</a>
+						</Link>
+					</PrimaryTooltip>
+					<Link
+						href={{
+							pathname: '/majors/change-majors/',
+							query: { studentId: item?.StudentId }
+						}}
+					>
+						<a>
+							<IconButton tooltip="Thay đổi ngành học" type="button" icon="exchange" color="primary" />
+						</a>
+					</Link>
+				</div>
 			)
 		}
 	]
@@ -128,17 +173,6 @@ const MajorsStudentPage = () => {
 			TitleCard={
 				<>
 					<FilterBaseVer2
-						// filters={apiParameters}
-						// statusList={[
-						// 	{
-						// 		value: 1,
-						// 		title: 'Đang theo học'
-						// 	},
-						// 	{
-						// 		value: 2,
-						// 		title: 'Đã kết thúc'
-						// 	}
-						// ]}
 						dataFilter={[
 							{
 								name: 'status',
@@ -156,6 +190,13 @@ const MajorsStudentPage = () => {
 										title: 'Đã kết thúc'
 									}
 								]
+							},
+							{
+								name: 'giftId',
+								title: 'Quà tặng',
+								type: 'select',
+								col: 'col-span-2',
+								optionList: gifts
 							}
 						]}
 						handleFilter={(event) => setApiParameters({ ...initParamters, ...event })}

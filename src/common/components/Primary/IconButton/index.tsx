@@ -126,19 +126,19 @@ const IconButton: FC<IIconButton> = (props) => {
 			return <MdOutlineCancel size={!!size ? size : 22} />
 		}
 		if (icon == 'x') {
-			return <X className="mt-[0.5px] mb-[-1px]" size={!!size ? size : 22} />
+			return <X  size={!!size ? size : 22} />
 		}
 		if (icon == 'login') {
-			return <LogIn className="mt-[0.5px] mb-[-1px]" size={!!size ? size : 22} />
+			return <LogIn  size={!!size ? size : 22} />
 		}
 		if (icon == 'send') {
 			return <FiSend size={22} />
 		}
 		if (icon == 'file') {
-			return <FileMinus className="mt-[0.5px] mb-[-1px]" size={!!size ? size : 22} />
+			return <FileMinus  size={!!size ? size : 22} />
 		}
 		if (icon == 'print') {
-			return <FiPrinter className="mt-[0.5px] mb-[-1px]" size={!!size ? size : 22} />
+			return <FiPrinter  size={!!size ? size : 22} />
 		}
 		if (icon == 'user-group') {
 			return <AiOutlineUsergroupAdd size={!!size ? size : 22} />

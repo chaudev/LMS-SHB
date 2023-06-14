@@ -1,4 +1,4 @@
-import { Card } from 'antd'
+import { Avatar, Card, List } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -19,12 +19,13 @@ import Lottie from 'react-lottie-player'
 
 import loadingJson from '~/common/components/json/loading-calendar.json'
 import { userInformationApi } from '~/api/user/user'
+import PrimaryTag from '~/common/components/Primary/Tag'
 
 const Schedule = () => {
 	const thisCalendar = useRef(null)
 	const branch = useSelector((state: RootState) => state.branch.Branch)
 	const [teachers, setTeachers] = useState([])
-	const [listSchedule, setListSchedule] = useState([])
+	const [listSchedule, setListSchedule] = useState<any[]>([])
 	const [timeStamp, setTimeStamp] = useState(0)
 	const [isLoading, setIsLoading] = useState(false)
 	const [paramsSearch, setParamsSearch] = useState({ teacherIds: '', branchIds: '', from: null, to: null })
@@ -59,6 +60,8 @@ const Schedule = () => {
 						title: `${moment(item.StartTime).format()} - ${moment(item.EndTime).format()}`
 					}
 				})
+				console.log(newListSchedule)
+
 				setListSchedule(newListSchedule)
 			}
 			if (res.status === 204) {
@@ -134,7 +137,7 @@ const Schedule = () => {
 					)
 				}
 				bodyStyle={{
-					padding:'0px'
+					padding: '0px'
 				}}
 			>
 				<FullCalendar
@@ -161,7 +164,6 @@ const Schedule = () => {
 					firstDay={1}
 					eventContent={(eventInfo) => <ScheduleCalendar dataRow={eventInfo} onRefresh={getAllSchedule} />}
 				/>
-
 				<div className="wrapper-status">
 					<div className="wrapper-tag">
 						<div className="bg-[#fb862d] w-[20px] h-[20px] rounded-[4px] mr-[8px]"></div>

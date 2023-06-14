@@ -22,7 +22,7 @@ function AuthProvider({ children }: IAuthLayout) {
 
 	const allowNoneLogin = () => {
 		if (
-			router.pathname !== '/minhtuoiloz' &&
+			router.pathname !== '/support-portal' &&
 			router.pathname.search('login') < 1 &&
 			router.pathname.search('fogot-password') < 1 &&
 			router.pathname.search('reset-password') < 1 &&
