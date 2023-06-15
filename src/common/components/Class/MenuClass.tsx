@@ -42,7 +42,7 @@ const itemsAdmin = [
 	'Thông báo'
 ]
 
-const itemsStudent = ['Lịch học', 'Các buổi học', 'Tài liệu', 'Bảng điểm']
+const itemsStudent = ['Lịch học', 'Các buổi học', 'Tài liệu', 'Báo cáo', 'Bảng điểm']
 
 const itemsTeacher = [
 	'Lịch học',
@@ -164,8 +164,10 @@ const MenuClass = () => {
 			case 2:
 				return <DocumentsPageInClass />
 			case 3:
-				return <TranscriptPage />
+				return <StudentReport />
 			case 4:
+				return <TranscriptPage />
+			case 5:
 				return <RollUpStudent />
 			default:
 				return <CalendarClassEdit />
@@ -195,23 +197,28 @@ const MenuClass = () => {
 			case 3:
 				return (
 					<div className="label-tab">
-						<CgTranscript className="mr-3" size={20} /> <span>{item}</span>
+						<TbReportAnalytics className="mr-3" size={20} /> <span>{item}</span>
 					</div>
 				)
 			case 4:
 				return (
 					<div className="label-tab">
-						<AiOutlineQrcode className="mr-3" size={20} /> <span>{item}</span>
+						<FiUserCheck className="mr-3" size={20} /> <span>{item}</span>
 					</div>
 				)
 			case 5:
 				return (
 					<div className="label-tab">
+						<AiOutlineQrcode className="mr-3" size={20} /> <span>{item}</span>
+					</div>
+				)
+			case 6:
+				return (
+					<div className="label-tab">
 						<VscFeedback className="mr-3" size={20} /> <span>{item}</span>
 					</div>
 				)
-			case 3:
-				return <div className="label-tab">{item}</div>
+
 			default:
 				return 'Lịch học'
 		}

@@ -125,6 +125,7 @@ const ReportForm: FC<TReportForm> = (props) => {
 				open={visible}
 				closable={false}
 				title="Cập nhật nhận xét của GVCN"
+				// onCancel={toggle}
 				footer={<ModalFooter onCancel={toggle} onOK={form.submit} loading={false} />}
 			>
 				<div className="none-ant-border">

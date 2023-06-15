@@ -168,7 +168,7 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 
 	return (
 		<div>
-			<div className="tablet:hidden">
+			{/* <div className="tablet:hidden">
 				<List
 					dataSource={dataTable}
 					pagination={{
@@ -228,30 +228,22 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 						)
 					}}
 				/>
-				{/* {dataTable && dataTable.length > 0 ? (
-					<div className="d-flex flex-col gap-3">
-						{dataTable.map((item) => {
-							return (
-							
-							)
-						})}
-					</div>
-				) : (
-					<Empty></Empty>
-				)} */}
 			</div>
 
-			<div className="hidden tablet:flex">
-				<ExpandTable
-					currentPage={currentPage}
-					totalPage={totalRow && totalRow}
-					getPagination={(pageNumber: number) => getPagination(pageNumber)}
-					loading={isLoading}
-					dataSource={dataTable}
-					columns={columns}
-					expandable={expandedRowRender}
-				/>
-			</div>
+			<div className="hidden tablet:flex ">
+				<div className="overscroll-x-contain	"></div>
+			</div> */}
+
+			<ExpandTable
+				currentPage={currentPage}
+				totalPage={totalRow && totalRow}
+				getPagination={(pageNumber: number) => getPagination(pageNumber)}
+				loading={isLoading}
+				dataSource={dataTable}
+				columns={columns}
+				expandable={expandedRowRender}
+			/>
+
 			<Modal
 				title={
 					<p>

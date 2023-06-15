@@ -17,6 +17,9 @@ import { userInformationApi } from '~/api/user/user'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 import { branchApi } from '~/api/branch'
 import PrimaryTag from '~/common/components/Primary/Tag'
+import { PrimaryTooltip } from '~/common/components'
+import { ButtonEye } from '~/common/components/TableButton'
+import Link from 'next/link'
 
 const initParamters = { pageSize: PAGE_SIZE, pageIndex: 1, search: '', fromDate: null, toDate: null, studentIds: null, branchIds: null }
 const PaymentManagementPage = () => {
@@ -187,18 +190,53 @@ const PaymentManagementPage = () => {
 		return <BillDetails bill={item} />
 	}
 
+	// 	<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.UserInformationId}`}>
+	// 	<Link
+	// 		href={{
+	// 			pathname: '/info-course/student/detail',
+	// 			query: { StudentID: item?.UserInformationId }
+	// 		}}
+	// 	>
+	// 		<a>
+	// 			<ButtonEye className="mr-2" />
+	// 		</a>
+	// 	</Link>
+	// </PrimaryTooltip>
 	const columns = [
+		// {
+		// 	title: 'Mã',
+		// 	fixed: 'left',
+		// 	dataIndex: 'Code',
+		// 	width: 100
+		// },
 		{
-			title: 'Mã',
-			fixed: 'left',
-			dataIndex: 'Code',
-			width: 100
-		},
-		{
-			title: 'Người thanh toán',
+			title: 'Thông tin thanh toán',
 			dataIndex: 'FullName',
-			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
+			width: 250,
+			fixed: 'left',
+			render: (value, item) => (
+				<>
+					<p>
+						<span className="font-[400] text-gray">Mã thanh toán: </span>
+						<span className="font-[500] text-[#002456]">{item.Code}</span>
+					</p>
+					<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.StudentId}`}>
+						<p>
+							<span className="font-[400] text-gray">Người thanh toán: </span>
+							<span className="font-[600] text-[#002456]">
+								<Link
+									href={{
+										pathname: '/info-course/student/detail',
+										query: { StudentID: item?.StudentId }
+									}}
+								>
+									<a>{value}</a>
+								</Link>
+							</span>
+						</p>
+					</PrimaryTooltip>
+				</>
+			)
 		},
 		// {
 		// 	title: 'Mã khuyến mãi',
@@ -283,6 +321,18 @@ const PaymentManagementPage = () => {
 			width: 60,
 			render: (value, item) => (
 				<div className="flex item-center">
+					{/* <PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.UserInformationId}`}>
+						<Link
+							href={{
+								pathname: '/info-course/student/detail',
+								query: { StudentID: item?.UserInformationId }
+							}}
+						>
+							<a>
+								<ButtonEye className="mr-2" />
+							</a>
+						</Link>
+					</PrimaryTooltip> */}
 					<PayForm isEdit defaultData={item} onRefresh={getData} />
 					{item?.Debt < 0 && <RefundForm onRefresh={getData} item={item} />}
 				</div>

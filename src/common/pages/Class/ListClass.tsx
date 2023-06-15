@@ -1,4 +1,4 @@
-import { Card, Form, Pagination, Select } from 'antd'
+import { Card, Form, Input, Pagination, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
@@ -22,7 +22,8 @@ const listTodoApi = {
 	pageIndex: 1,
 	sort: 0,
 	sortType: false,
-	studentId: null
+	studentId: null,
+	search: ''
 }
 
 let listFieldFilter = {
@@ -30,12 +31,24 @@ let listFieldFilter = {
 	pageSize: PAGE_SIZE,
 	name: null,
 	status: null,
-	branchIds: null
+	branchIds: null,
+	fromDate: null,
+	toDate: null
 }
 
 const ListClass = () => {
 	const [form] = Form.useForm()
+	const userInformation = useSelector((state: RootState) => state.user.information)
+
 	const [dataFilter, setDataFilter] = useState([
+		{
+			name: 'date-range',
+			title: '',
+			col: 'col-12',
+			type: 'date-range',
+			placeholder: '',
+			value: null
+		},
 		{
 			name: 'name',
 			title: 'Tên lớp học',
@@ -69,15 +82,21 @@ const ListClass = () => {
 		}
 	])
 
+	const apiParametersStudent = {
+		PageSize: 9999,
+		PageIndex: 1,
+		RoleIds: '3',
+		parentIds: userInformation?.RoleId == '8' ? userInformation.UserInformationId.toString() : ''
+	}
+
+	const [students, setStudents] = useState<{ label: string; value: string }[]>([])
 	const [todoApi, setTodoApi] = useState(listTodoApi)
 	const [listClass, setListClass] = useState<IClass[]>([])
 	const [totalRow, setTotalRow] = useState(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const state = useSelector((state: RootState) => state)
-	const [current, setCurrent] = useState(1)
 	const dispatch = useDispatch()
 	const [tabStatus, setTabStatus] = useState(null)
-	const userInformation = useSelector((state: RootState) => state.user.information)
 
 	function isAdmin() {
 		return userInformation?.RoleId == 1
@@ -129,6 +148,8 @@ const ListClass = () => {
 	}
 
 	const handleFilter = (listFilter) => {
+		console.log(listFilter)
+
 		setTabStatus(null)
 		let newListFilter = { ...listFieldFilter }
 		listFilter.forEach((item, index) => {
@@ -142,6 +163,9 @@ const ListClass = () => {
 				}
 			})
 		})
+
+		console.log('newListFilter', newListFilter)
+
 		setTodoApi({
 			...todoApi,
 			...newListFilter,
@@ -149,13 +173,6 @@ const ListClass = () => {
 			pageIndex: 1
 		})
 	}
-	const [apiParametersStudent, setApiParametersStudent] = useState({
-		PageSize: 9999,
-		PageIndex: 1,
-		RoleIds: '3',
-		parentIds: userInformation?.RoleId == '8' ? userInformation.UserInformationId.toString() : ''
-	})
-	const [students, setStudents] = useState<{ label: string; value: string }[]>([])
 
 	const getUsers = async (param) => {
 		try {
@@ -200,7 +217,7 @@ const ListClass = () => {
 	useEffect(() => {
 		if (state.branch.Branch.length > 0) {
 			const convertData = parseSelectArray(state.branch.Branch, 'Name', 'Id')
-			dataFilter[2].optionList = convertData
+			dataFilter[3].optionList = convertData
 			setDataFilter([...dataFilter])
 		}
 	}, [state])
@@ -217,7 +234,7 @@ const ListClass = () => {
 	}, [students])
 
 	const getPagination = (pageNumber: number) => {
-		setCurrent(pageNumber)
+		// setCurrent(pageNumber)
 		setTodoApi({
 			...todoApi,
 			// ...listFieldSearch,
@@ -256,6 +273,16 @@ const ListClass = () => {
 											Kết thúc
 										</div>
 									</div>
+									<Input.Search
+										className="primary-search max-w-[250px] ml-[8px] "
+										onChange={(event) => {
+											if (event.target.value == '') {
+												setTodoApi({ ...listTodoApi, pageIndex: 1, search: '' })
+											}
+										}}
+										onSearch={(event) => setTodoApi({ ...listTodoApi, pageIndex: 1, search: event })}
+										placeholder="Tìm kiếm"
+									/>
 								</>
 							}
 							extra={
@@ -276,19 +303,11 @@ const ListClass = () => {
 									todoApi={todoApi}
 									getAllClass={getAllClass}
 								/>
-								{/* <ClassList
-									totalRow={totalRow}
-									isLoading={isLoading}
-									dataSource={listClass}
-									setTodoApi={setTodoApi}
-									listTodoApi={listTodoApi}
-									todoApi={todoApi}
-									getAllClass={getAllClass}
-								/> */}
+
 								<div className="custom-pagination my-4">
 									<Pagination
 										size="small"
-										current={current}
+										current={todoApi.pageIndex}
 										onChange={(pageNumber) => getPagination(pageNumber)}
 										total={totalRow}
 										pageSize={PAGE_SIZE}

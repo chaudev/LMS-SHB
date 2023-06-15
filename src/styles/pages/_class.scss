@@ -15,7 +15,7 @@
 			display: grid;
 			gap: 1rem;
 			grid-template-columns: repeat(4, minmax(0px, 1fr));
-
+		
 			@include desktop {
 				grid-template-columns: repeat(3, minmax(0px, 1fr));
 			}
