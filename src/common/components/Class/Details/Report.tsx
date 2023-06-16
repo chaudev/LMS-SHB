@@ -19,6 +19,10 @@ import PrimaryTooltip from '../../PrimaryTooltip'
 import BaseLoading from '../../BaseLoading'
 import { Trash2 } from 'react-feather'
 import { IoClose } from 'react-icons/io5'
+import FilterBaseVer2 from '../../Elements/FilterBaseVer2'
+import { profileStatusApi } from '~/api/profile-status'
+import { officeApi } from '~/api/office'
+import { foreignLanguageApi } from '~/api/foreign-language'
 
 const InputNote = ({ value, onChange, index }) => {
 	const [note, setNote] = useState('')
@@ -68,8 +72,12 @@ export const StudentReport = () => {
 		pageSize: PAGE_SIZE,
 		pageIndex: 1,
 		year: moment(subtractOneMonthFromDate()).format('YYYY'),
-		month: moment(subtractOneMonthFromDate()).format('MM')
+		month: moment(subtractOneMonthFromDate()).format('MM'),
+		foreignLanguageId: null,
+		officeId: null
 	}
+	const [foreinLanguage, setForeinLanguage] = useState([])
+	const [office, setOffice] = useState([])
 
 	const [filter, setFilter] = useState(initFilter)
 
@@ -87,6 +95,39 @@ export const StudentReport = () => {
 		}
 		console.log('filter', filter)
 	}, [filter])
+	useEffect(() => {
+		getForeignLanguage()
+		getOffices()
+	}, [])
+
+	const getForeignLanguage = async () => {
+		try {
+			const res = await foreignLanguageApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setForeinLanguage(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+	const getOffices = async () => {
+		try {
+			const res = await officeApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setOffice(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
 
 	const getStudentPointRecord = async () => {
 		setLoading(true)
@@ -415,17 +456,39 @@ export const StudentReport = () => {
 						)}
 					</div>
 
-					<div className="flex items-center">
-						<div className="antd-custom-wrap">
-							<DatePicker
-								defaultValue={moment(subtractOneMonthFromDate())}
-								className="w-[160px]"
-								placeholder="Chọn tháng, năm"
-								picker="month"
-								format="MM/YYYY"
-								onChange={(event) => setSelectedDate(!event ? event : moment(event))}
-							/>
-						</div>
+					<div className="flex items-center gap-3">
+						<DatePicker
+							defaultValue={moment(subtractOneMonthFromDate())}
+							className="w-[160px] primary-input"
+							placeholder="Chọn tháng, năm"
+							picker="month"
+							format="MM/YYYY"
+							onChange={(event) => setSelectedDate(!event ? event : moment(event))}
+						/>
+						<FilterBaseVer2
+							dataFilter={[
+								{
+									name: 'foreignLanguageId',
+									title: 'Trình độ',
+									type: 'select',
+									col: 'col-span-2',
+									optionList: foreinLanguage
+								},
+								{
+									name: 'officeId',
+									title: 'Văn phòng',
+									type: 'select',
+									col: 'col-span-2',
+									optionList: office
+								}
+							]}
+							handleFilter={(params) => {
+								setFilter({ ...filter, ...params })
+							}}
+							handleReset={(value) => {
+								setFilter(initFilter)
+							}}
+						></FilterBaseVer2>
 					</div>
 				</div>
 			}
