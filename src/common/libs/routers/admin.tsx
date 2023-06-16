@@ -613,13 +613,13 @@ export const AdminChildMenu = [
 						Text: 'Văn phòng đại diện',
 						Icon: ''
 					},
-					// {
-					// 	ItemType: 'single',
-					// 	Key: '/options/partner',
-					// 	Route: '/options/partner',
-					// 	Text: 'Đối tác',
-					// 	Icon: ''
-					// }
+					{
+						ItemType: 'single',
+						Key: '/options/partner',
+						Route: '/options/partner',
+						Text: 'Đối tác',
+						Icon: ''
+					}
 				]
 			},
 			{
