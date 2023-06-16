@@ -34,7 +34,8 @@ const CreateUser: FC<ICreateNew> = (props) => {
 
 	const { className, onOpen, roleStaff, source, purpose, process, visaStatus, profileStatus, foreignLanguage, sale, learningNeed } = props
 	const { onRefresh, isEdit, defaultData, isStudent, isChangeInfo } = props
-
+	console.log(defaultData);
+	
 	const [form] = Form.useForm()
 	const BranchIds = Form.useWatch('BranchIds', form)
 	const [districts, setDistricts] = useState([])
@@ -636,7 +637,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 									optionList={foreignLanguage}
 									disabled={user.RoleId == 3 || user.RoleId == 8 || user.RoleId == 2}
 								/>
-								{/* <SelectField className="col-span-2" label="Đối tác" name="PartnerId" optionList={partner} /> */}
+								{defaultData && <SelectField className="col-span-2" label="Đối tác" name="PartnerId" optionList={partner} />}
 								<SelectField
 									className="col-span-2"
 									label="Tình trạng xử lý hồ sơ"

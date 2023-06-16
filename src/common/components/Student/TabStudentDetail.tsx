@@ -78,7 +78,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const OfficeId = Form.useWatch('OfficeId', form)
 	const ProfileStatusId = Form.useWatch('ProfileStatusId', form)
 	const ForeignLanguageId = Form.useWatch('ForeignLanguageId', form)
-	// const PartnerId = Form.useWatch('PartnerId', form)
+	const PartnerId = Form.useWatch('PartnerId', form)
 	const ProcessId = Form.useWatch('ProcessId', form)
 	const VisaStatusId = Form.useWatch('VisaStatusId', form)
 	const BirthPlace = Form.useWatch('BirthPlace', form)
@@ -687,21 +687,21 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								/>
 							</div>
 							<Divider />
-							{/* <div className="d-flex justify-between items-center">
+							<div className="d-flex justify-between items-center">
 								<SelectField
 									className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 									name="PartnerId"
 									label="Đối tác"
 									placeholder="Chọn đối tác"
 									optionList={optionList.partner}
-									disabled={userInformation.RoleId == 3}
+									disabled={isStudent || isParents || isTeacher}
 								/>
 								<IconButonUpdateUser
 									isShow={PartnerId !== StudentDetail.PartnerId}
 									onClick={() => updateUserInfo('PartnerId', PartnerId)}
 									loading={isLoading === 'PartnerId'}
 								/>
-							</div> */}
+							</div>
 							<Divider />
 							<div className="d-flex justify-between items-center">
 								<SelectField

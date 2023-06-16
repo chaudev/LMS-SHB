@@ -195,7 +195,7 @@ export const AdminChildMenu = [
 				Route: '/info-course/feedbacks',
 				Text: 'Phản hồi học viên',
 				Icon: ''
-			}
+			},
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/rollup',
@@ -203,13 +203,13 @@ export const AdminChildMenu = [
 			// 	Text: 'Điểm danh học viên (QR)',
 			// 	Icon: ''
 			// },
-			// {
-			// 	ItemType: 'single',
-			// 	Key: '/info-course/parents',
-			// 	Route: '/info-course/parents',
-			// 	Text: 'Phụ huynh',
-			// 	Icon: ''
-			// }
+			{
+				ItemType: 'single',
+				Key: '/info-course/parents',
+				Route: '/info-course/parents',
+				Text: 'Phụ huynh',
+				Icon: ''
+			}
 		]
 	},
 	{
