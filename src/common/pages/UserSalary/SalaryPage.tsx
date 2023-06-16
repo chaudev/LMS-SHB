@@ -211,18 +211,9 @@ export const SalaryPage = () => {
 										type: 'select',
 										col: 'col-span-2',
 										optionList: [
-											{
-												value: '1',
-												title: 'Chưa chốt'
-											},
-											{
-												value: '2',
-												title: 'Đã chốt'
-											},
-											{
-												value: '3',
-												title: 'Đã hoàn thành'
-											}
+											{ title: 'Chưa chốt', value: 1 },
+											{ title: 'Đã chốt', value: 2 },
+											{ title: 'Đã thanh toán', value: 3 }
 										]
 									}
 								]}
