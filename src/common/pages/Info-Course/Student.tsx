@@ -38,11 +38,13 @@ import OverviewStatusStudent from './OverviewStatusStudent'
 import { permissionApi } from '~/api/permission'
 import PrimaryTag from '~/common/components/Primary/Tag'
 import moment from 'moment'
+import { useRole } from '~/common/hooks/useRole'
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
 	const state = useSelector((state: RootState) => state)
 	const userInformation = useSelector((state: RootState) => state.user.information)
+	const { isParents } = useRole()
 	const initParamters = {
 		sort: 0,
 		sortType: false,
@@ -755,7 +757,7 @@ const Student: FC<IPersonnel> = (props) => {
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, PageIndex: event })}
 				TitleCard={
 					<>
-						{role === 3 && <OverviewStatusStudent />}
+						{role === 3 && !isParents && <OverviewStatusStudent />}
 						<FilterBaseVer2
 							dataFilter={role === 3 ? dataFilterStudent : dataFilterPersional}
 							handleFilter={handleFilter}

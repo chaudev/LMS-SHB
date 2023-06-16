@@ -57,7 +57,6 @@ let pageIndex = 1
 export default function Childs(props) {
 	const state = useSelector((state: RootState) => state)
 	const dispatch = useDispatch()
-
 	// BASE USESTATE TABLE
 	const [dataSource, setDataSource] = useState<ITestCustomer[]>([])
 
@@ -105,6 +104,10 @@ export default function Childs(props) {
 		return userInformation?.RoleId == 7
 	}
 
+	function isParents() {
+		return userInformation?.RoleId == 8
+	}
+
 	useMemo(() => {
 		if (state.branch.Branch.length > 0) {
 			const convertDataBranch = parseSelectArray(state.branch.Branch, 'Name', 'Id')
@@ -116,7 +119,7 @@ export default function Childs(props) {
 	const getAllBranch = async () => {
 		if (isAdmin() || isSaler() || isManager()) {
 			try {
-				const res = await branchApi.getAll({ pageSize: 99999 })
+				const res = await branchApi.getAll({ pageSize: 99999 ,  })
 				if (res.status == 200) {
 					dispatch(setBranch(res.data.data))
 				} else {

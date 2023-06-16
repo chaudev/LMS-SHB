@@ -19,6 +19,7 @@ const url = 'UserInformation'
 
 const AddChildForm: FC<IParentForm> = (props) => {
 	const { isEdit, onRefresh, parent } = props
+	console.log(parent)
 
 	const [form] = Form.useForm()
 
@@ -40,7 +41,12 @@ const AddChildForm: FC<IParentForm> = (props) => {
 	const getStudents = async () => {
 		setLoading(true)
 		try {
-			let res = await RestApi.get<any>('UserInformation', { pageSize: 9999999, pageIndex: 1, RoleIds: '3' })
+			let res = await RestApi.get<any>('UserInformation', {
+				pageSize: 9999999,
+				pageIndex: 1,
+				RoleIds: '3',
+				branchIds: parent.BranchIds ? parent.BranchIds : ''
+			})
 			if (res.status == 200) {
 				setStudents(res.data.data)
 			}

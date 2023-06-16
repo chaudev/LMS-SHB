@@ -11,6 +11,7 @@ import { ModalSalaryCRUD } from './ModalSalaryCRUD'
 import { ModalTeachingDetail } from './ModalTeachingDetail'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 
 export const SalaryPage = () => {
 	const [valueDate, setValueDate] = useState(moment().subtract(1, 'months'))
@@ -202,6 +203,36 @@ export const SalaryPage = () => {
 				TitleCard={
 					<div className="extra-table">
 						<div className="flex gap-3">
+							<FilterBaseVer2
+								dataFilter={[
+									{
+										name: 'status',
+										title: 'Trạng thái',
+										type: 'select',
+										col: 'col-span-2',
+										optionList: [
+											{
+												value: '1',
+												title: 'Chưa chốt'
+											},
+											{
+												value: '2',
+												title: 'Đã chốt'
+											},
+											{
+												value: '3',
+												title: 'Đã hoàn thành'
+											}
+										]
+									}
+								]}
+								handleFilter={(values) => {
+									setApiParameters({ ...apiParameters, ...values })
+								}}
+								handleReset={(value) => {
+									setApiParameters(initParameters)
+								}}
+							/>
 							<DatePicker onChange={handleFilterMonth} picker="month" placeholder="Chọn tháng" value={valueDate} />
 							<Input.Search
 								className="primary-search max-w-[300px]"
