@@ -440,16 +440,16 @@ const Student: FC<IPersonnel> = (props) => {
 				</>
 			)
 		},
-		{
-			title: 'Trạng thái',
-			dataIndex: 'StatusId',
-			render: (data) => (
-				<>
-					{data == 1 && <PrimaryTag color="red">Đã khóa</PrimaryTag>}
-					{data == 0 && <PrimaryTag color="primary">Đang hoạt động</PrimaryTag>}
-				</>
-			)
-		},
+		// {
+		// 	title: 'Trạng thái',
+		// 	dataIndex: 'StatusId',
+		// 	render: (data) => (
+		// 		<>
+		// 			{data == 1 && <PrimaryTag color="red">Đã khóa</PrimaryTag>}
+		// 			{data == 0 && <PrimaryTag color="primary">Đang hoạt động</PrimaryTag>}
+		// 		</>
+		// 	)
+		// },
 		{
 			title: 'Trạng thái học',
 			width: 130,
@@ -464,6 +464,11 @@ const Student: FC<IPersonnel> = (props) => {
 					</>
 				)
 			}
+		},
+		{
+			title: 'Trường THPT',
+			width: 150,
+			dataIndex: 'HighSchool'
 		},
 		{
 			title: 'Nơi sinh',

@@ -38,6 +38,7 @@ type IUserResponse = IBaseApi<{
 	FullName: string
 	UserName: string
 	UserCode: string
+	HighSchool: string
 	BirthPlace: string
 	NativeLand: string
 	DOB: string

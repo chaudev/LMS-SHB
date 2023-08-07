@@ -83,6 +83,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const VisaStatusId = Form.useWatch('VisaStatusId', form)
 	const BirthPlace = Form.useWatch('BirthPlace', form)
 	const NativeLand = Form.useWatch('NativeLand', form)
+	const HighSchool = Form.useWatch('HighSchool', form)
 	const ref = useRef(null)
 
 	const getDistrict = async (areaID) => {
@@ -394,6 +395,20 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				</div>
 				{StudentDetail.RoleId == 3 && (
 					<>
+					<Divider />
+					<div className="d-flex justify-between items-center">
+						<InputTextField
+							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+							placeholder="Nhập trường THPT"
+							label="Trường THPT"
+							name="HighSchool"
+						/>
+						<IconButonUpdateUser
+							isShow={HighSchool !== StudentDetail.HighSchool}
+							onClick={() => updateUserInfo('HighSchool', HighSchool)}
+							loading={isLoading === 'HighSchool'}
+						/>
+					</div>
 						<Divider />
 						<div className="d-flex justify-between items-center">
 							<InputTextField
@@ -405,7 +420,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 							<IconButonUpdateUser
 								isShow={BirthPlace !== StudentDetail.BirthPlace}
 								onClick={() => updateUserInfo('BirthPlace', BirthPlace)}
-								loading={isLoading === 'NativeLand'}
+								loading={isLoading === 'BirthPlace'}
 							/>
 						</div>
 						<Divider />

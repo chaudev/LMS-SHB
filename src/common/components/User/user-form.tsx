@@ -542,7 +542,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 						) : (
 							<InputTextField className="col-span-2" label="Mật khẩu" name="Password" />
 						)}
-
+						<InputTextField className="col-span-2" label="Trường THPT" name="HighSchool" />
 						<TextBoxField name="Extension" label="Giới thiệu thêm" className="col-span-4" />
 
 						<Divider className="col-span-4" orientation="center">
