@@ -41,6 +41,9 @@ type IUserResponse = IBaseApi<{
 	HighSchool: string
 	BirthPlace: string
 	NativeLand: string
+	ContractSigningDate: string
+	ContractNumber: string
+	EnrollmentDay: string
 	DOB: string
 	Gender: number
 	Mobile: string

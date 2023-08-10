@@ -306,6 +306,8 @@ const CreateUser: FC<ICreateNew> = (props) => {
 		const DATA_SUBMIT = {
 			...values,
 			DOB: !!values.DOB ? new Date(values.DOB) : undefined,
+			ContractSigningDate: !!values.ContractSigningDate ? new Date(values.ContractSigningDate) : undefined,
+			EnrollmentDay: !!values.EnrollmentDay ? new Date(values.EnrollmentDay) : undefined,
 			RoleId: isStudent ? 3 : values.RoleId,
 			BranchIds: values.BranchIds
 				? isStudent
@@ -342,6 +344,8 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			form.setFieldsValue({ LearningNeedId: !!defaultData.LearningNeedId ? defaultData.LearningNeedId : null })
 			form.setFieldsValue({ SaleId: !!defaultData.SaleId ? defaultData.SaleId : null })
 			form.setFieldsValue({ PurposeId: !!defaultData.PurposeId ? defaultData.PurposeId : null })
+			!!defaultData?.ContractSigningDate && form.setFieldsValue({ ContractSigningDate: moment(defaultData.ContractSigningDate) })
+			!!defaultData?.EnrollmentDay && form.setFieldsValue({ EnrollmentDay: moment(defaultData.EnrollmentDay) })
 		}
 		!!defaultData?.DOB && form.setFieldsValue({ DOB: moment(defaultData.DOB) })
 		if (defaultData.BranchIds) {
@@ -545,6 +549,13 @@ const CreateUser: FC<ICreateNew> = (props) => {
 						<InputTextField className="col-span-2" label="Trường THPT" name="HighSchool" />
 						<TextBoxField name="Extension" label="Giới thiệu thêm" className="col-span-4" />
 
+						
+						<Divider className="col-span-4" orientation="center">
+							Thông tin hợp đồng
+						</Divider>
+						<DatePickerField className="col-span-2" label="Ngày ký hợp đồng" name="ContractSigningDate" mode="single" format="DD/MM/YYYY" />
+						<InputTextField className="col-span-2" label="Số hợp đồng" name="ContractNumber" />
+						<DatePickerField className="col-span-2" label="Ngày nhập học" name="EnrollmentDay" mode="single" format="DD/MM/YYYY" />
 						<Divider className="col-span-4" orientation="center">
 							Địa chỉ
 						</Divider>

@@ -39,6 +39,7 @@ import { permissionApi } from '~/api/permission'
 import PrimaryTag from '~/common/components/Primary/Tag'
 import moment from 'moment'
 import { useRole } from '~/common/hooks/useRole'
+import { object } from 'yup/lib/locale'
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
@@ -417,16 +418,29 @@ const Student: FC<IPersonnel> = (props) => {
 
 	const columnsStudent = [
 		{ ...userInfoColumn, fixed: 'left' },
+		// {
+		// 	title: 'Email',
+		// 	dataIndex: 'Email',
+		// 	render: (text) => <>{text}</>
+		// },
+		// {
+		// 	title: 'Số điện thoại',
+		// 	dataIndex: 'Mobile',
+		// 	width: 150,
+		// 	render: (text) => <>{text}</>
+		// },
 		{
-			title: 'Email',
+			title: 'Liên hệ',
 			dataIndex: 'Email',
-			render: (text) => <>{text}</>
-		},
-		{
-			title: 'Số điện thoại',
-			dataIndex: 'Mobile',
-			width: 150,
-			render: (text) => <>{text}</>
+
+			render: (value, item) => (
+				<div className="flex items-center">
+					<div className="ml-[8px]">
+						<p className="font-weight-primary"><b>Email: </b>{item?.Email}</p>
+						<p className="text-[14px] font-[400]"><b>Số điện thoại: </b>{item?.Mobile}</p>
+					</div>
+				</div>
+			)
 		},
 		{
 			title: 'Giới tính',
@@ -440,6 +454,99 @@ const Student: FC<IPersonnel> = (props) => {
 				</>
 			)
 		},
+		{
+			title: 'Ngày sinh',
+			width: 160,
+			dataIndex: 'DOB',
+			render: (value, item) => {
+				if (value === null)
+					return <>Không xác định</>
+				return <>{moment(value).format('DD/MM/YYYY ')}</>
+			}
+		},
+		{
+			title: 'Quê quán',
+			width: 150,
+			dataIndex: 'NativeLand'
+		},
+		{
+			title: 'Địa chỉ',
+			width: 250,
+			dataIndex: 'Address'
+		},
+		{
+			title: 'Nơi sinh',
+			width: 150,
+			dataIndex: 'BirthPlace'
+		},
+		{
+			title: 'Trường THPT',
+			width: 150,
+			dataIndex: 'HighSchool'
+		},
+		{
+			title: 'Ngày ký hợp đồng',
+			width: 160,
+			dataIndex: 'ContractSigningDate',
+			render: (value, item) => {
+				if (value === null)
+					return <>Không xác định</>
+				return <>{moment(value).format('DD/MM/YYYY ')}</>
+			}
+		},
+		{
+			title: 'Số hợp đồng',
+			width: 150,
+			dataIndex: 'ContractNumber',
+		},
+		{
+			title: 'Văn phòng',
+			width: 150,
+			dataIndex: 'OfficeName',
+		},
+		{
+			title: 'Tư vấn viên',
+			width: 150,
+			dataIndex: 'SaleName',
+		},
+		{
+			title: 'Nguồn',
+			width: 150,
+			dataIndex: 'SourceName',
+		},
+		{
+			title: 'Trung tâm',
+			width: 160,
+			dataIndex: 'BranchNames',
+			render: (value, item) => {
+				return <div>
+					{
+						value.map((item) => (
+							<p>{item}</p>
+						))}
+				</div>
+			}
+		},
+		{
+			title: 'Ngành',
+			width: 150,
+			dataIndex: 'MajorsName',
+		},
+		{
+			title: 'Ngày nhập học',
+			width: 160,
+			dataIndex: 'EnrollmentDay',
+			render: (value, item) => {
+				if (value === null)
+					return <>Không xác định</>
+				return <>{moment(value).format('DD/MM/YYYY ')}</>
+			}
+		},
+		{
+			title: 'Lớp đang học',
+			width: 150,
+			dataIndex: 'ClassName',
+		},
 		// {
 		// 	title: 'Trạng thái',
 		// 	dataIndex: 'StatusId',
@@ -452,7 +559,7 @@ const Student: FC<IPersonnel> = (props) => {
 		// },
 		{
 			title: 'Trạng thái học',
-			width: 130,
+			width: 150,
 			dataIndex: 'LearningStatusName',
 			render: (value, data) => {
 				return (
@@ -464,21 +571,6 @@ const Student: FC<IPersonnel> = (props) => {
 					</>
 				)
 			}
-		},
-		{
-			title: 'Trường THPT',
-			width: 150,
-			dataIndex: 'HighSchool'
-		},
-		{
-			title: 'Nơi sinh',
-			width: 150,
-			dataIndex: 'BirthPlace'
-		},
-		{
-			title: 'Quê quán',
-			width: 150,
-			dataIndex: 'NativeLand'
 		},
 		{
 			title: 'Tình trạng hồ sơ',
@@ -679,7 +771,7 @@ const Student: FC<IPersonnel> = (props) => {
 			optionList: [
 				{
 					value: 1,
-					title: 'Mới'
+					title: 'Chờ xếp lớp'
 				},
 				{
 					value: 2,

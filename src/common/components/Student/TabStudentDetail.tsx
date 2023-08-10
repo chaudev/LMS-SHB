@@ -83,6 +83,9 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const VisaStatusId = Form.useWatch('VisaStatusId', form)
 	const BirthPlace = Form.useWatch('BirthPlace', form)
 	const NativeLand = Form.useWatch('NativeLand', form)
+	const ContractSigningDate = Form.useWatch('ContractSigningDate', form)
+	const ContractNumber = Form.useWatch('ContractNumber', form)
+	const EnrollmentDay = Form.useWatch('EnrollmentDay', form)
 	const HighSchool = Form.useWatch('HighSchool', form)
 	const ref = useRef(null)
 
@@ -238,7 +241,9 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				form.setFieldsValue({
 					...StudentDetail,
 					BranchIds: branchs,
-					DOB: StudentDetail?.DOB ? moment(StudentDetail?.DOB) : null
+					DOB: StudentDetail?.DOB ? moment(StudentDetail?.DOB) : null,
+					ContractSigningDate: StudentDetail?.ContractSigningDate ? moment(StudentDetail?.ContractSigningDate) : null,
+					EnrollmentDay: StudentDetail?.EnrollmentDay ? moment(StudentDetail?.EnrollmentDay) : null
 				})
 
 				if (StudentDetail.AreaId) {
@@ -580,6 +585,58 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				</div>
 				{router.query.StudentID && (
 					<>
+					<Divider>
+						<h2 className="py-4 font-[600] text-center">Thông tin hợp đồng</h2>
+					</Divider>
+					<div className="d-flex justify-between items-center">
+					<DatePickerField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						classNamePicker="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						label={labelUser.ContractSigningDate}
+						name="ContractSigningDate"
+						mode="single"
+						format="DD/MM/YYYY"
+						allowClear={false}
+						placeholder="Nhập ngày ký hợp đồng"
+					/>
+					<IconButonUpdateUser
+						isShow={moment(ContractSigningDate).format('yyy/mm/dd') !== moment(StudentDetail.ContractSigningDate).format('yyy/mm/dd')}
+						onClick={() => updateUserInfo('ContractSigningDate', new Date(ContractSigningDate))}
+						loading={isLoading === 'ContractSigningDate'}
+					/>
+				</div>
+					<Divider />
+						<div className="d-flex justify-between items-center">
+							<InputTextField
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								placeholder="Nhập số hợp đồng"
+								label="Số hợp đồng"
+								name="ContractNumber"
+							/>
+							<IconButonUpdateUser
+								isShow={ContractNumber !== StudentDetail.ContractNumber}
+								onClick={() => updateUserInfo('ContractNumber', ContractNumber)}
+								loading={isLoading === 'ContractNumber'}
+							/>
+						</div>
+					<Divider />
+						<div className="d-flex justify-between items-center">
+					<DatePickerField
+						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						classNamePicker="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+						label={labelUser.EnrollmentDay}
+						name="EnrollmentDay"
+						mode="single"
+						format="DD/MM/YYYY"
+						allowClear={false}
+						placeholder="Nhập ngày nhập học"
+					/>
+					<IconButonUpdateUser
+						isShow={moment(EnrollmentDay).format('yyy/mm/dd') !== moment(StudentDetail.EnrollmentDay).format('yyy/mm/dd')}
+						onClick={() => updateUserInfo('EnrollmentDay', new Date(EnrollmentDay))}
+						loading={isLoading === 'EnrollmentDay'}
+					/>
+				</div>
 						<Divider>
 							<h2 className="py-4 font-[600] text-center">Thông tin học</h2>
 						</Divider>
@@ -763,6 +820,8 @@ const labelUser = {
 	FullName: 'Họ tên',
 	UserName: 'Tên đăng nhập',
 	DOB: 'Ngày sinh',
+	ContractSigningDate: 'Ngày ký hợp đồng',
+	EnrollmentDay: 'Ngày nhập học',
 	Gender: 'Giới tính',
 	Mobile: 'Số điện thoại',
 	Email: 'Email',
