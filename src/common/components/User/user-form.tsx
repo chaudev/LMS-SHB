@@ -546,19 +546,21 @@ const CreateUser: FC<ICreateNew> = (props) => {
 						) : (
 							<InputTextField className="col-span-2" label="Mật khẩu" name="Password" />
 						)}
-						<InputTextField className="col-span-2" label="Trường THPT" name="HighSchool" />
+						{isStudent && (
+							<>
+							<InputTextField className="col-span-2" label="Trường THPT" name="HighSchool" />
+							</>
+						)}
 						<TextBoxField name="Extension" label="Giới thiệu thêm" className="col-span-4" />
-
-						
-						<Divider className="col-span-4" orientation="center">
+						{isStudent ? 
+						(<>
+							<Divider className="col-span-4" orientation="center">
 							Thông tin hợp đồng
 						</Divider>
 						<DatePickerField className="col-span-2" label="Ngày ký hợp đồng" name="ContractSigningDate" mode="single" format="DD/MM/YYYY" />
 						<InputTextField className="col-span-2" label="Số hợp đồng" name="ContractNumber" />
-						<DatePickerField className="col-span-2" label="Ngày nhập học" name="EnrollmentDay" mode="single" format="DD/MM/YYYY" />
-						<Divider className="col-span-4" orientation="center">
-							Địa chỉ
-						</Divider>
+						<DatePickerField className="col-span-2" label="Ngày nhập học" name="EnrollmentDay" mode="single" format="DD/MM/YYYY" /></>
+						):(<></>)}
 						{isStudent ? (
 							<SelectField
 								className="col-span-4 antd-custom-wrap"
@@ -582,7 +584,9 @@ const CreateUser: FC<ICreateNew> = (props) => {
 								optionList={convertBranchSelect}
 							/>
 						)}
-
+						<Divider className="col-span-4" orientation="center">
+							Địa chỉ
+						</Divider>
 						<InputTextField className="col-span-2" label="Địa chỉ" name="Address" />
 						<SelectField
 							className="col-span-2"
