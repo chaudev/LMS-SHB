@@ -24,7 +24,7 @@ import { processApi } from '~/api/process'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
 import { useRole } from '~/common/hooks/useRole'
-
+//
 export interface ITabStudentDetailProps {
 	StudentDetail: IUserResponse
 	setStudentDetail?: any
