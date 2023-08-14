@@ -114,7 +114,9 @@ export const RollUpTeacherPage = () => {
 					return (
 						<div className="antd-custom-wrap">
 							<Switch
+								// @ts-ignore
 								checkedChildren={<CheckOutlined />}
+								// @ts-ignore
 								unCheckedChildren={<CloseOutlined />}
 								loading={loadingSwitch}
 								onChange={(val) => handleChangeRollUp(item?.ScheduleId)}
