@@ -140,7 +140,7 @@ const ProgramDetail = () => {
 				}
 				TitleCard={
 					<>
-						Chương trình:<span className="ml-2 text-tw-primary">{name}</span>
+						Khung đào tạo:<span className="ml-2 text-tw-primary">{name}</span>
 					</>
 				}
 			/>

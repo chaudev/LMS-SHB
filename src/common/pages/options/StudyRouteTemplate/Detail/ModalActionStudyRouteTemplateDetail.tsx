@@ -108,7 +108,7 @@ const ModalActionStudyRouteTemplateDetail: React.FC<IModalActionStudyRouteTempla
 				destroyOnClose
 				open={visible}
 				onCancel={onClose}
-				title={mode === 'CREATE' ? 'Thêm mới chương trình học' : 'Cập nhật chương trình học'}
+				title={mode === 'CREATE' ? 'Thêm mới Khung đào tạo học' : 'Cập nhật Khung đào tạo học'}
 				footer={false}
 			>
 				<Form form={form} layout="vertical" onFinish={_onSubmit}>
@@ -117,7 +117,7 @@ const ModalActionStudyRouteTemplateDetail: React.FC<IModalActionStudyRouteTempla
 							label="Khóa học"
 							name="ProgramId"
 							optionList={program}
-							placeholder="Chọn chương trình"
+							placeholder="Chọn Khung đào tạo"
 							rules={[{ required: true, message: 'Bạn không được để trống' }]}
 						/>
 					</div>

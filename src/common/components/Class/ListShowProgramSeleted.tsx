@@ -18,14 +18,14 @@ const ListShowProgramSelected = (props) => {
 				renderItem={(item: IClass) => (
 					<List.Item
 						extra={
-							<IconButton icon="remove" color="red" type="button" tooltip="Xóa chương trình" onClick={() => handleRemoveProgram(item)} />
+							<IconButton icon="remove" color="red" type="button" tooltip="Xóa Khung đào tạo" onClick={() => handleRemoveProgram(item)} />
 						}
 					>
 						<div className="wrapper-item-class">
 							<AvatarComponent className="img-class" url={item?.Thumbnail} type="class" />
 							<div className="wrapper-info-class">
 								<p>
-									<span className="title">Chương trình:</span>
+									<span className="title">Khung đào tạo:</span>
 									<span className="font-normal ml-1">{item?.Name}</span>
 								</p>
 								<p>

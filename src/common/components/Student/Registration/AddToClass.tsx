@@ -190,12 +190,12 @@ const AddToClass: FC<IAddToClass> = ({ isEdit, onRefresh, item }) => {
 					onFinish={onFinish}
 					autoComplete="on"
 				>
-					<Form.Item className="col-span-2" name="ProgramId" label="Chương trình" rules={formRequired}>
+					<Form.Item className="col-span-2" name="ProgramId" label="Khung đào tạo" rules={formRequired}>
 						<Select
 							defaultValue={item?.ProgramId}
 							disabled={loading}
 							onChange={(event) => getClass(event)}
-							placeholder="Chọn chương trình"
+							placeholder="Chọn Khung đào tạo"
 							className=""
 						>
 							{programs.map((thisItem) => {

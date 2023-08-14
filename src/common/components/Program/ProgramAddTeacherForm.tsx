@@ -38,7 +38,7 @@ const ProgramAddTeacherForm = (props) => {
 			dataIndex: 'TeacherName'
 		},
 		{
-			title: 'Thêm vào chương trình',
+			title: 'Thêm vào Khung đào tạo',
 			dataIndex: 'Allow',
 			align: 'center',
 			width: 170,
@@ -112,7 +112,7 @@ const ProgramAddTeacherForm = (props) => {
 			<Modal
 				title={
 					<>
-						Thêm giáo viên vào chương trình: <span className="font-semibold text-tw-primary">{rowData?.Name}</span>
+						Thêm giáo viên vào Khung đào tạo: <span className="font-semibold text-tw-primary">{rowData?.Name}</span>
 					</>
 				}
 				open={isModalOpen}

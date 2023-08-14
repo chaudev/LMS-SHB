@@ -70,7 +70,7 @@ const ListShowAllProgram: FC<TListShowAllProgram> = (props) => {
 
 	return (
 		<>
-			<Input className="primary-input mb-3" value={searchValue} onChange={handleSearch} placeholder="Tìm kiếm chương trình" />
+			<Input className="primary-input mb-3" value={searchValue} onChange={handleSearch} placeholder="Tìm kiếm Khung đào tạo" />
 
 			<List
 				className="modal-review-class-program"
@@ -82,7 +82,7 @@ const ListShowAllProgram: FC<TListShowAllProgram> = (props) => {
 							checkSelected(item) ? (
 								<RxCheck size={28} className="mr-[6px] text-[#66BB6A]" />
 							) : (
-								<IconButton icon="add" color="blue" type="button" tooltip="Thêm chương trình" onClick={() => handleAddProgram(item)} />
+								<IconButton icon="add" color="blue" type="button" tooltip="Thêm Khung đào tạo" onClick={() => handleAddProgram(item)} />
 							)
 						}
 					>
@@ -90,7 +90,7 @@ const ListShowAllProgram: FC<TListShowAllProgram> = (props) => {
 							<AvatarComponent className="img-class" url={item?.Thumbnail} type="class" />
 							<div className="wrapper-info-class">
 								<p>
-									<span className="title">Chương trình:</span>
+									<span className="title">Khung đào tạo:</span>
 									<span className="font-normal ml-1">{item?.Name}</span>
 								</p>
 								<p>

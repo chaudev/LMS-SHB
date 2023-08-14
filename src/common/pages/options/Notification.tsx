@@ -190,7 +190,7 @@ const Notification = () => {
 	// const expandedRowRender = () => {
 	//   return (
 	//     <div>
-	//       Tuần tới đội chuyên môn HN sẽ họp tại tầng 8 CS Thái Hà. Thời gian: 10h
+	//       Tuần tới đội Trình độ tiếng HN sẽ họp tại tầng 8 CS Thái Hà. Thời gian: 10h
 	//       sáng thứ 2 (26/10) Nội dung: Phát triển trong môi trường ZIM và những kĩ
 	//       năng cần thiết.
 	//     </div>

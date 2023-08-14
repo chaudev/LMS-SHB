@@ -126,13 +126,13 @@ const AcceptRequest: FC<{ data: any; onRefresh?: Function; onDelete?: Function }
 						</div>
 						<div className="col-span-1 mt-3">
 							<span className="font-semibold">
-								Lý do theo học chương trình đào tạo này / Why do you want to attend this training program?:
+								Lý do theo học Khung đào tạo đào tạo này / Why do you want to attend this training program?:
 							</span>{' '}
 							{data?.Info?.Purpose}
 						</div>
 						<div className="col-span-1 mt-3">
 							<span className="font-semibold">
-								Làm thế nào anh/chị biết đến chương trình đào tạo này? / How do you get to know about this training program?:
+								Làm thế nào anh/chị biết đến Khung đào tạo đào tạo này? / How do you get to know about this training program?:
 							</span>{' '}
 							{data?.Info?.Source}
 						</div>
@@ -234,13 +234,13 @@ const AcceptRequest: FC<{ data: any; onRefresh?: Function; onDelete?: Function }
 						</div>
 						<div className="col-span-1 mt-3">
 							<span className={`font-semibold  ${getColor(data?.Info?.Purpose, data?.Purpose)}`}>
-								Lý do theo học chương trình đào tạo này / Why do you want to attend this training program?:
+								Lý do theo học Khung đào tạo đào tạo này / Why do you want to attend this training program?:
 							</span>
 							<span className={`pl-2 ${getColor(data?.Info?.Purpose, data?.Purpose)}`}>{data?.Purpose}</span>
 						</div>
 						<div className="col-span-1 mt-3">
 							<span className={`font-semibold  ${getColor(data?.Info?.Source, data?.Source)}`}>
-								Làm thế nào anh/chị biết đến chương trình đào tạo này? / How do you get to know about this training program?:
+								Làm thế nào anh/chị biết đến Khung đào tạo đào tạo này? / How do you get to know about this training program?:
 							</span>
 							<span className={`pl-2 ${getColor(data?.Info?.Source, data?.Source)}`}>{data?.Source}</span>
 						</div>

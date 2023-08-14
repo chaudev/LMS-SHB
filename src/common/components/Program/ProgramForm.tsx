@@ -60,7 +60,7 @@ const ProgramForm = React.memo((props: any) => {
 			)}
 
 			<Modal
-				title={`${rowData ? 'Cập nhật' : 'Tạo'} chương trình`}
+				title={`${rowData ? 'Cập nhật' : 'Tạo'} Khung đào tạo`}
 				open={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}
@@ -71,14 +71,14 @@ const ProgramForm = React.memo((props: any) => {
 					<Form form={form} layout="vertical" onFinish={onSubmit}>
 						<div className="row">
 							<div className="col-md-6 col-12">
-								<SelectField disabled={rowData} placeholder="Chọn chuyên môn" name="GradeId" label="Chuyên môn" optionList={specialize} />
+								<SelectField disabled={rowData} placeholder="Chọn Trình độ tiếng" name="GradeId" label="Trình độ tiếng" optionList={specialize} />
 							</div>
 
 							<div className="col-md-6 col-12">
 								<InputTextField
 									placeholder="Nhập mã trương trình"
 									name="Code"
-									label="Mã chương trình"
+									label="Mã Khung đào tạo"
 									rules={[{ required: true, message: 'Bạn không được để trống' }]}
 								/>
 							</div>
@@ -87,7 +87,7 @@ const ProgramForm = React.memo((props: any) => {
 								<InputTextField
 									placeholder="Nhập tên trương trình"
 									name="Name"
-									label="Tên chương trình"
+									label="Tên Khung đào tạo"
 									rules={[{ required: true, message: 'Bạn không được để trống' }]}
 								/>
 							</div>

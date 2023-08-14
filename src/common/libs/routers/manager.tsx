@@ -327,14 +327,14 @@ export const ManagerChildMenu = [
 						ItemType: 'single',
 						Key: '/options/specialize',
 						Route: '/options/specialize',
-						Text: 'Chuyên môn',
+						Text: 'Trình độ tiếng',
 						Icon: ''
 					},
 					{
 						ItemType: 'single',
 						Key: '/options/program',
 						Route: '/options/program',
-						Text: 'Chương trình',
+						Text: 'Khung đào tạo',
 						Icon: ''
 					},
 					{

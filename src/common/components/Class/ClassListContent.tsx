@@ -250,7 +250,7 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 										</div>
 
 										<div className="inner-body">
-											<Tooltip title="Chuyên môn">
+											<Tooltip title="Trình độ tiếng">
 												{item.GradeName && (
 													<div className="i">
 														<div className="icn">
@@ -270,7 +270,7 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 													</div>
 												)}
 											</Tooltip>
-											<Tooltip title="Chương trình">
+											<Tooltip title="Khung đào tạo">
 												{item.ProgramName && (
 													<div className="i">
 														<div className="icn">

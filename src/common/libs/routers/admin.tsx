@@ -422,14 +422,14 @@ export const AdminChildMenu = [
 						ItemType: 'single',
 						Key: '/options/specialize',
 						Route: '/options/specialize',
-						Text: 'Chuyên môn',
+						Text: 'Trình độ tiếng',
 						Icon: ''
 					},
 					{
 						ItemType: 'single',
 						Key: '/options/program',
 						Route: '/options/program',
-						Text: 'Chương trình',
+						Text: 'Khung đào tạo',
 						Icon: ''
 					},
 					{
@@ -646,14 +646,14 @@ export const AdminChildMenu = [
 						ItemType: 'single',
 						Key: '/options/profile-status',
 						Route: '/options/profile-status',
-						Text: 'Tình trạng hồ sơ',
+						Text: 'Tình trạng thu hồ sơ',
 						Icon: ''
 					},
 					{
 						ItemType: 'single',
 						Key: '/options/process',
 						Route: '/options/process',
-						Text: 'Tình trạng xử lý hồ sơ',
+						Text: 'Tiến trình xử lý hồ sơ',
 						Icon: ''
 					}
 				]

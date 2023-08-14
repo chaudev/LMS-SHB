@@ -215,7 +215,7 @@ export const ModalStudyRoute: React.FC<IModalStudyRoute> = ({ mode, onRefresh, d
 											label="Khóa học"
 											name="ProgramId"
 											optionList={program}
-											placeholder="Chọn chương trình"
+											placeholder="Chọn Khung đào tạo"
 											// rules={[{ required: true, message: 'Bạn không được để trống' }]}
 										/>
 									</div>

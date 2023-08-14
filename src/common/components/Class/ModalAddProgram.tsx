@@ -57,7 +57,7 @@ const ModalAddProgram: FC<TModalAddProgram> = (props) => {
 
 	return (
 		<>
-			<PrimaryTooltip id="add-pro" place="top" content="Thêm chương trình">
+			<PrimaryTooltip id="add-pro" place="top" content="Thêm Khung đào tạo">
 				<button type="button" onClick={() => setIsModalOpen(true)} className="text-tw-primary">
 					<AiOutlinePlusCircle size={18} />
 				</button>
@@ -65,7 +65,7 @@ const ModalAddProgram: FC<TModalAddProgram> = (props) => {
 
 			<Modal
 				centered
-				title="Thêm chương trình"
+				title="Thêm Khung đào tạo"
 				open={isModalOpen}
 				onCancel={() => setIsModalOpen(false)}
 				footer={

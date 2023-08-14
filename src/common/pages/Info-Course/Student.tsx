@@ -573,7 +573,7 @@ const Student: FC<IPersonnel> = (props) => {
 			}
 		},
 		{
-			title: 'Tình trạng hồ sơ',
+			title: 'Tình trạng thu hồ sơ',
 			width: 150,
 			dataIndex: 'ProfileStatusName'
 		},
@@ -582,13 +582,13 @@ const Student: FC<IPersonnel> = (props) => {
 			width: 150,
 			dataIndex: 'ForeignLanguageName'
 		},
+		// {
+		// 	title: 'Tình trạng visa',
+		// 	width: 130,
+		// 	dataIndex: 'VisaStatusName'
+		// },
 		{
-			title: 'Tình trạng visa',
-			width: 130,
-			dataIndex: 'VisaStatusName'
-		},
-		{
-			title: 'Tình trạng xử lý hồ sơ',
+			title: 'Tiến trình xử lý hồ sơ',
 			width: 160,
 			dataIndex: 'ProcessName'
 		},
@@ -789,7 +789,7 @@ const Student: FC<IPersonnel> = (props) => {
 		},
 		{
 			name: 'profileStatusIds',
-			title: 'Tình trạng hồ sơ',
+			title: 'Tình trạng thu hồ sơ',
 			type: 'select',
 			col: 'col-span-2',
 			mode: 'multiple',
@@ -813,7 +813,7 @@ const Student: FC<IPersonnel> = (props) => {
 		},
 		{
 			name: 'processIds',
-			title: 'Tình trạng xử lý hồ sơ',
+			title: 'Tiến trình xử lý hồ sơ',
 			type: 'select',
 			col: 'col-span-2',
 			mode: 'multiple',

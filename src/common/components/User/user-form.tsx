@@ -506,8 +506,8 @@ const CreateUser: FC<ICreateNew> = (props) => {
 						)}
 
 						{!isEdit && Router.asPath.includes('users/personnel') && isTeacherSelect && (
-							<Form.Item name="ProgramIds" className="col-span-2" label="Chương trình" rules={formNoneRequired}>
-								<Select className="primary-input" mode="tags" placeholder="Chọn chương trình">
+							<Form.Item name="ProgramIds" className="col-span-2" label="Khung đào tạo" rules={formNoneRequired}>
+								<Select className="primary-input" mode="tags" placeholder="Chọn Khung đào tạo">
 									{programs.map((item) => {
 										return (
 											<Select.Option key={item.Id} value={item.Id}>
@@ -640,7 +640,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 								/>
 								<SelectField
 									className="col-span-2"
-									label="Tình trạng hồ sơ"
+									label="Tình trạng thu hồ sơ"
 									name="ProfileStatusId"
 									optionList={profileStatus}
 									disabled={user.RoleId == 3 || user.RoleId == 8 || user.RoleId == 2}
@@ -655,7 +655,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 								{defaultData && <SelectField className="col-span-2" label="Đối tác" name="PartnerId" optionList={partner} />}
 								<SelectField
 									className="col-span-2"
-									label="Tình trạng xử lý hồ sơ"
+									label="Tiến trình xử lý hồ sơ"
 									name="ProcessId"
 									optionList={process}
 									disabled={user.RoleId == 3 || user.RoleId == 8 || user.RoleId == 2}

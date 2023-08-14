@@ -42,7 +42,7 @@ const BillDetails = ({ bill }) => {
 			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
 		},
 		{
-			title: 'Chương trình học',
+			title: 'Khung đào tạo học',
 			dataIndex: 'ProgramName',
 			width: 130,
 			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
@@ -66,7 +66,7 @@ const BillDetails = ({ bill }) => {
 			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>
 		},
 		{
-			title: 'Chương trình học',
+			title: 'Khung đào tạo học',
 			dataIndex: 'ProgramName',
 			width: 130,
 			render: (value, item) => <p className="font-[600] text-[#1E88E5]">{value}</p>

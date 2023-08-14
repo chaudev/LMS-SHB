@@ -74,7 +74,7 @@ const SpeacializeForm = React.memo((props: any) => {
 			)}
 
 			<Modal
-				title={rowData ? 'Cập nhật chuyên môn' : 'Thêm chuyên môn'}
+				title={rowData ? 'Cập nhật Trình độ tiếng' : 'Thêm Trình độ tiếng'}
 				visible={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}
@@ -83,12 +83,12 @@ const SpeacializeForm = React.memo((props: any) => {
 					<Form form={form} layout="vertical" onFinish={onSubmit}>
 						<div className="row">
 							<div className="col-12">
-								<InputTextField name="Code" label="Mã chuyên môn" rules={[yupSync]} isRequired />
+								<InputTextField name="Code" label="Mã Trình độ tiếng" rules={[yupSync]} isRequired />
 							</div>
 						</div>
 						<div className="row">
 							<div className="col-12">
-								<InputTextField name="Name" label="Tên chuyên môn" rules={[yupSync]} isRequired />
+								<InputTextField name="Name" label="Tên Trình độ tiếng" rules={[yupSync]} isRequired />
 							</div>
 						</div>
 						<div className="row ">

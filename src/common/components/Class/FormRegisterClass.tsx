@@ -88,7 +88,7 @@ const FormRegisterClass = (props) => {
 			<div className="col-span-2">
 				<div className="wrapper-programs">
 					<div className="flex items-center gap-2 mb-3">
-						<p className="title">Chương trình mong muốn</p>
+						<p className="title">Khung đào tạo mong muốn</p>
 						<ModalAddProgram
 							programs={programs}
 							programsSelected={programsSelected}

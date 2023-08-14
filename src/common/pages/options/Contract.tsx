@@ -15,7 +15,7 @@ const Contract = () => {
 
 	const codeEditorList = [
 		{ label: '{khoahoc}', desc: ' Lớp học' },
-		{ label: '{chuongtrinh}', desc: ' Chương trình' },
+		{ label: '{chuongtrinh}', desc: ' Khung đào tạo' },
 		{ label: '{batdau}', desc: ' Thời gian bắt đầu' },
 		{ label: '{ketthuc}', desc: ' Thời gian kết thúc' },
 		{ label: '{hinhthucthanhtoan}', desc: 'Hình thức thanh toán' },

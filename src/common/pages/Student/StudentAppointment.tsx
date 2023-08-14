@@ -263,7 +263,7 @@ const CourseRegistration = () => {
 				setDataFunc('ProgramID', newData)
 			}
 
-			res.status == 204 && console.log('Chương trình Không có dữ liệu')
+			res.status == 204 && console.log('Khung đào tạo Không có dữ liệu')
 		} catch (error) {
 			// showNoti('danger', error.message);
 			ShowNoti('error', error.message)

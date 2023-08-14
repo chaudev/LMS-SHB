@@ -194,7 +194,7 @@ const ModalViewStudyRouteTemplate: React.FC<IModalViewStudyRouteTemplate> = ({ o
 								})
 							) : (
 								<Empty
-									description={!!selected ? <span>Không có chương trình trong lộ trình {selected ? selected.label : ''}! </span> : ''}
+									description={!!selected ? <span>Không có Khung đào tạo trong lộ trình {selected ? selected.label : ''}! </span> : ''}
 								/>
 							)}
 						</Timeline>

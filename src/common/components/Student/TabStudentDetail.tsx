@@ -731,8 +731,8 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								<SelectField
 									className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 									name="ProfileStatusId"
-									label="Tình trạng hồ sơ"
-									placeholder="Chọn tình trạng hồ sơ"
+									label=""
+									placeholder="Chọn Tình trạng thu hồ sơ"
 									optionList={optionList.profileStatus}
 									disabled={isStudent || isParents || isTeacher}
 								/>
@@ -779,8 +779,8 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								<SelectField
 									className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 									name="ProcessId"
-									label="Tình trạng xử lý hồ sơ"
-									placeholder="Chọn tình trạng xử lý hồ sơ"
+									label="Tiến trình xử lý hồ sơ"
+									placeholder="Chọn Tiến trình xử lý hồ sơ"
 									optionList={optionList.process}
 									disabled={isStudent || isParents || isTeacher}
 								/>

@@ -13,7 +13,7 @@ const ModalAllDiscount = (props) => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const discount = useSelector((state: RootState) => state.discount.Discount)
 
-	// Tính tổng lớp + chương trình đã chọn
+	// Tính tổng lớp + Khung đào tạo đã chọn
 	const totalSelected = useMemo(() => {
 		return classesSelected.length + programsSelected.length
 	}, [classesSelected, programsSelected])

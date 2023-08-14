@@ -88,7 +88,7 @@ const CurriculumForm = (props: any) => {
 					<Form form={form} onFinish={onSubmit} layout="vertical">
 						<div className="row">
 							<div className="col-12">
-								<InputTextField className="form-disable" disabled label="Chương trình" name="NameProgram" />
+								<InputTextField className="form-disable" disabled label="Khung đào tạo" name="NameProgram" />
 							</div>
 						</div>
 						<div className="row">

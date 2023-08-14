@@ -127,7 +127,7 @@ const RegistrationPage = () => {
 			width: 200
 		},
 		{
-			title: 'Chương trình',
+			title: 'Khung đào tạo',
 			dataIndex: 'ProgramName',
 			width: 160,
 			render: (value, item) => <div className="font-[600] text-[#000]">{value}</div>

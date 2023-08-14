@@ -107,7 +107,7 @@ const Specialize = () => {
 			render: (value) => <span className="weight-600">{value}</span>
 		},
 		{
-			title: 'Tên chuyên môn',
+			title: 'Tên Trình độ tiếng',
 			dataIndex: 'Name',
 			width: 250,
 			...FilterColumn('Name', onSearch, handleReset, 'text'),
@@ -129,7 +129,7 @@ const Specialize = () => {
 			render: (text, data, index) => (
 				<>
 					<SpecializeForm rowData={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
-					<DeleteTableRow text={`chuyên môn ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
+					<DeleteTableRow text={`Trình độ tiếng ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
 				</>
 			)
 		}

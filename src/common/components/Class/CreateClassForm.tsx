@@ -472,8 +472,8 @@ const CreateClassForm = (props) => {
 							<SelectField
 								isRequired
 								rules={[yupSync]}
-								placeholder="Chọn chuyên môn"
-								label="Chuyên môn"
+								placeholder="Chọn Trình độ tiếng"
+								label="Trình độ tiếng"
 								name="GradeId"
 								optionList={specialize}
 								onChangeSelect={(value) => handleSelectChange('GradeId', value)}
@@ -496,8 +496,8 @@ const CreateClassForm = (props) => {
 							<SelectField
 								isRequired
 								rules={[yupSync]}
-								placeholder="Chọn chương trình"
-								label="Chương trình"
+								placeholder="Chọn Khung đào tạo"
+								label="Khung đào tạo"
 								name="ProgramId"
 								optionList={program}
 								onChangeSelect={(value) => handleSelectChange('ProgramId', value)}

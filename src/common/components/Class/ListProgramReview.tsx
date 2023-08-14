@@ -30,7 +30,7 @@ const ListProgramReview = (props) => {
 						<AvatarComponent className="img-class" url={item?.Thumbnail} type="class" />
 						<div className="wrapper-info-class">
 							<p>
-								<span className="title">Chương trình:</span>
+								<span className="title">Khung đào tạo:</span>
 								<span className="font-normal ml-1">{item?.Name}</span>
 							</p>
 							<p>

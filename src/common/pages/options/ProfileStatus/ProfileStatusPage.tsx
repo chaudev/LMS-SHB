@@ -61,7 +61,7 @@ export const ProfileStatusPage = () => {
 				loading={loading}
 				total={totalItems}
 				onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
-				TitleCard={<h1 className="text-2xl font-medium">Tình trạng tiếng</h1>}
+				TitleCard={<h1 className="text-2xl font-medium">Tình trạng thu hồ sơ</h1>}
 				data={data}
 				columns={columns}
 				Extra={<ModalProfileStatusCRUD mode="add" onRefresh={() => getData(todoApi)} />}

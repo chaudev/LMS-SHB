@@ -130,7 +130,7 @@ const StudyRouteTemplateDetailPage = () => {
 											<ModalActionStudyRouteTemplateDetail item={item} mode="UPDATE" onRefresh={getAllStudyTemplateDetail} />
 											<Popconfirm
 												onConfirm={() => handleRemovePrograms(item)}
-												title="Xóa chương trình khỏi lộ trình học"
+												title="Xóa Khung đào tạo khỏi lộ trình học"
 												okText="Xóa"
 												cancelText="Hủy"
 											>
@@ -142,7 +142,7 @@ const StudyRouteTemplateDetailPage = () => {
 							)
 						})
 					) : (
-						<Empty description={<span>Chưa có chương trình học!</span>} />
+						<Empty description={<span>Chưa có Khung đào tạo học!</span>} />
 					)}
 				</Timeline>
 			</Card>

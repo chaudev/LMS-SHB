@@ -71,12 +71,12 @@ const Programs = () => {
 	const [dataFilter, setDataFilter] = useState([
 		{
 			name: 'gradeId',
-			title: 'Chuyên môn',
+			title: 'Trình độ tiếng',
 			col: 'col-md-12 col-12',
 			type: 'select',
 			optionList: [],
 			value: null,
-			placeholder: 'Chọn chuyên môn'
+			placeholder: 'Chọn Trình độ tiếng'
 		}
 	])
 	const [isLoading, setIsLoading] = useState(false)
@@ -229,7 +229,7 @@ const Programs = () => {
 	// COLUMN
 	const columns = [
 		{
-			title: 'Mã chương trình',
+			title: 'Mã Khung đào tạo',
 			width: 170,
 			dataIndex: 'Code',
 			className:'font-weight-black',
@@ -237,7 +237,7 @@ const Programs = () => {
 			// render: (value) => <span className="weight-600">{value}</span>
 		},
 		{
-			title: 'Tên chương trình',
+			title: 'Tên Khung đào tạo',
 			dataIndex: 'Name',
 			minWidth: 150,
 			...FilterColumn('Name', onSearch, handleReset, 'text'),
@@ -246,7 +246,7 @@ const Programs = () => {
 			}
 		},
 		{
-			title: 'Chuyên môn',
+			title: 'Trình độ tiếng',
 			dataIndex: 'GradeName',
 			render: (text) => {
 				return <p className="font-weight-black">{text}</p>
@@ -289,7 +289,7 @@ const Programs = () => {
 						}}
 					>
 						<a>
-							<IconButton icon="eye" color="orange" type="button" tooltip="Chi tiết chương trình" />
+							<IconButton icon="eye" color="orange" type="button" tooltip="Chi tiết Khung đào tạo" />
 						</a>
 					</Link>
 
@@ -298,7 +298,7 @@ const Programs = () => {
 					{userInformation && userInformation?.RoleId !== 2 && (
 						<>
 							<ProgramForm rowData={data} specialize={specialize} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
-							<DeleteTableRow text={`chương trình ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
+							<DeleteTableRow text={`Khung đào tạo ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
 						</>
 					)}
 				</>
@@ -315,7 +315,7 @@ const Programs = () => {
 	return (
 		<Fragment>
 			<Head>
-				<title>{appConfigs.appName} | Cấu hình chương trình</title>
+				<title>{appConfigs.appName} | Cấu hình Khung đào tạo</title>
 			</Head>
 			<PrimaryTable
 				current={currentPage}

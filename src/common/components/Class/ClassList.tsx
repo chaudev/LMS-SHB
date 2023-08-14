@@ -198,10 +198,10 @@ const ClassList = (props) => {
 								<div className="content-body">
 									<ul className="list-ver">
 										<li>
-											<span>Chuyên môn: </span> <span>{item.GradeName || 'Trống'}</span>
+											<span>Trình độ tiếng: </span> <span>{item.GradeName || 'Trống'}</span>
 										</li>
 										<li>
-											<span>Chương trình: </span> <span>{item.ProgramName || 'Trống'}</span>
+											<span>Khung đào tạo: </span> <span>{item.ProgramName || 'Trống'}</span>
 										</li>
 										<li>
 											<span>Giáo trình: </span> <span>{item.CurriculumName || 'Trống'}</span>

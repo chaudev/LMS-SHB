@@ -157,7 +157,7 @@ const PaymentDetailPage = () => {
 													},
 													{
 														value: 2,
-														title: 'Thay đổi tình trạng hồ sơ'
+														title: 'Thay đổi Tình trạng thu hồ sơ'
 													},
 													{
 														value: 3,
@@ -169,7 +169,7 @@ const PaymentDetailPage = () => {
 													},
 													{
 														value: 5,
-														title: 'Thay đổi tình trạng xử lý hồ sơ'
+														title: 'Thay đổi Tiến trình xử lý hồ sơ'
 													}
 												]}
 												onChangeSelect={(value) => {
