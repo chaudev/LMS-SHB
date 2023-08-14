@@ -14,6 +14,7 @@
 		"npm": "please-use-yarn"
 	},
 	"dependencies": {
+		"@ant-design/icons": "4.8.0",
 		"@fullcalendar/core": "^6.0.0",
 		"@fullcalendar/daygrid": "^6.0.0",
 		"@fullcalendar/interaction": "^6.0.0",
