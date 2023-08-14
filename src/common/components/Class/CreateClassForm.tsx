@@ -480,7 +480,7 @@ const CreateClassForm = (props) => {
 							/>
 						</div>
 						{!isOnline && (
-							<div className="col-md-6 col-12">
+							<div className="col-md-6 col-12"> 
 								<SelectField
 									isRequired
 									rules={formRequired}
