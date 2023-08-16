@@ -19,7 +19,12 @@ type IStudentInClass = IBaseApi<{
 	ModifiedOn: any,
 	ModifiedBy: srting
 }>
-
+type IAddStudentsToClass = IBaseApi<{
+      ClassId:number,
+      StudentIds: number[],
+      Note:string,
+      Type:number
+}>
 type IClassOfStudent = IBaseApi<{
 	Name: string,
       Thumbnail: null,

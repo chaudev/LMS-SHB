@@ -116,7 +116,27 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 			setIsLoading(false)
 		}
 	}
+	const handleAddStudensToClass = async (data) =>
+	{
+		try
+		{
+			setIsLoading(true)
+			const res = await studentInClassApi.adds(data)
+			if (res.status === 200) {
+				onClose()
+				onRefresh()
+				setIsLoading(false)
+				form.resetFields()
+				ShowNoti('success', res.data.message)
+			}
 
+		}catch (error) {
+			setIsLoading(true)
+			ShowNoti('error', error.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
 	const _onSubmit = (data) => {
 		if (mode !== 'add') {
 			data.Id = dataRow?.Id
@@ -131,7 +151,8 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 				ClassId: Number(router?.query?.class),
 				...data
 			}
-			handleCreate(dataSubmit)
+			// handleCreate(dataSubmit)
+			handleAddStudensToClass(dataSubmit)
 		}
 
 		if (mode === 'delete') {
@@ -222,12 +243,13 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 											<div className="col-span-2">
 												<SelectField
 													label="Học viên"
-													name="StudentId"
+													name="StudentIds"
 													isLoading={loadingStudent}
 													optionList={student}
 													placeholder="Chọn học viên"
 													isRequired
 													rules={[{ required: true, message: 'Bạn không được để trống' }]}
+													mode='multiple'
 												/>
 											</div>
 
