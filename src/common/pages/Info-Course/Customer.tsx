@@ -367,7 +367,7 @@ const CustomerAdvisory = () => {
 			render: (text) => <p className="font-weight-primary">{text}</p>
 		},
 		{
-			width: 160,
+			// width: 240,
 			title: 'Số điện thoại',
 			dataIndex: 'Mobile'
 		},

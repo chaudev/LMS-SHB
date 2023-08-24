@@ -5,9 +5,8 @@ import EmptyData from '~/common/components/EmptyData'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { _format } from '~/common/utils'
 
-
 interface ExpandTable {
-	// getPagination: (a,b) => 
+	// getPagination: (a,b) =>
 }
 
 const ExpandTable = (props) => {
@@ -96,7 +95,8 @@ const ExpandTable = (props) => {
 				<div className="item total-income">
 					<div className="text">
 						<p className="name">Tổng nợ</p>
-						<p className="number">{_format.numberToPrice(props.sumPrice.sumDebt)}₫</p>
+						{!props.sumPrice.sumDebt && <p className="number">0₫</p>}
+						{!!props.sumPrice.sumDebt && <p className="number">{_format.numberToPrice(props.sumPrice.sumDebt)}₫</p>}
 					</div>
 					<div className="icon">
 						<GiReceiveMoney />
@@ -106,7 +106,8 @@ const ExpandTable = (props) => {
 				<div className="item total-expense">
 					<div className="text">
 						<p className="name">Tổng thanh toán</p>
-						<p className="number">{_format.numberToPrice(props.sumPrice.sumPaid)}₫</p>
+						{!props.sumPrice.sumPaid && <p className="number">0₫</p>}
+						{!!props.sumPrice.sumPaid && <p className="number">{_format.numberToPrice(props.sumPrice.sumPaid)}₫</p>}
 					</div>
 					<div className="icon">
 						<GiPayMoney />
@@ -116,7 +117,8 @@ const ExpandTable = (props) => {
 				<div className="item total-revenue">
 					<div className="text">
 						<p className="name">Tổng tiền</p>
-						<p className="number">{_format.numberToPrice(props.sumPrice.sumtotalPrice)}₫</p>
+						{!props.sumPrice.sumtotalPrice && <p className="number">0₫</p>}
+						{!!props.sumPrice.sumtotalPrice && <p className="number">{_format.numberToPrice(props.sumPrice.sumtotalPrice)}₫</p>}
 					</div>
 					<div className="icon">
 						<GiTakeMyMoney />
@@ -139,12 +141,9 @@ const ExpandTable = (props) => {
 
 					{props.sumPrice && renderStatistical()}
 
-					{/* {dataSource.length == 0 && <EmptyData loading={props.loading?.status} />} */}
-
-					{/* {dataSource.length > 0 && (
-						
-					)} */}
-					<Table
+					{dataSource.length == 0 && <EmptyData loading={props.loading?.status} />}
+					{dataSource.length > 0 && (
+						<Table
 							loading={props.loading?.type == 'GET_ALL' && props.loading?.status}
 							bordered={props.haveBorder ? props.haveBorder : false}
 							scroll={{ x: 'max-content', y: window.innerHeight - 295 }}
@@ -176,6 +175,7 @@ const ExpandTable = (props) => {
 								rowExpandable: (record) => record.name !== 'Not Expandable'
 							}}
 						/>
+					)}
 				</Card>
 			</div>
 		</>
