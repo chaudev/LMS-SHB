@@ -236,7 +236,11 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				form.setFieldsValue(ref.current.getFieldsValue())
 			} else {
 				let branchs =
-					isStudent || isParents ? Number(StudentDetail.BranchIds) : StudentDetail.BranchIds.split(',').map((item) => Number(item))
+					isStudent || isParents
+						? Number(StudentDetail.BranchIds)
+						: !!StudentDetail.BranchIds
+						? StudentDetail.BranchIds.split(',').map((item) => Number(item))
+						: null
 				// num_arr = str2double(str_arr);
 				form.setFieldsValue({
 					...StudentDetail,
@@ -400,20 +404,20 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				</div>
 				{StudentDetail.RoleId == 3 && (
 					<>
-					<Divider />
-					<div className="d-flex justify-between items-center">
-						<InputTextField
-							className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-							placeholder="Nhập trường THPT"
-							label="Trường THPT"
-							name="HighSchool"
-						/>
-						<IconButonUpdateUser
-							isShow={HighSchool !== StudentDetail.HighSchool}
-							onClick={() => updateUserInfo('HighSchool', HighSchool)}
-							loading={isLoading === 'HighSchool'}
-						/>
-					</div>
+						<Divider />
+						<div className="d-flex justify-between items-center">
+							<InputTextField
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								placeholder="Nhập trường THPT"
+								label="Trường THPT"
+								name="HighSchool"
+							/>
+							<IconButonUpdateUser
+								isShow={HighSchool !== StudentDetail.HighSchool}
+								onClick={() => updateUserInfo('HighSchool', HighSchool)}
+								loading={isLoading === 'HighSchool'}
+							/>
+						</div>
 						<Divider />
 						<div className="d-flex justify-between items-center">
 							<InputTextField
@@ -585,27 +589,27 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				</div>
 				{router.query.StudentID && (
 					<>
-					<Divider>
-						<h2 className="py-4 font-[600] text-center">Thông tin hợp đồng</h2>
-					</Divider>
-					<div className="d-flex justify-between items-center">
-					<DatePickerField
-						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-						classNamePicker="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-						label={labelUser.ContractSigningDate}
-						name="ContractSigningDate"
-						mode="single"
-						format="DD/MM/YYYY"
-						allowClear={false}
-						placeholder="Nhập ngày ký hợp đồng"
-					/>
-					<IconButonUpdateUser
-						isShow={moment(ContractSigningDate).format('yyy/mm/dd') !== moment(StudentDetail.ContractSigningDate).format('yyy/mm/dd')}
-						onClick={() => updateUserInfo('ContractSigningDate', new Date(ContractSigningDate))}
-						loading={isLoading === 'ContractSigningDate'}
-					/>
-				</div>
-					<Divider />
+						<Divider>
+							<h2 className="py-4 font-[600] text-center">Thông tin hợp đồng</h2>
+						</Divider>
+						<div className="d-flex justify-between items-center">
+							<DatePickerField
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								classNamePicker="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								label={labelUser.ContractSigningDate}
+								name="ContractSigningDate"
+								mode="single"
+								format="DD/MM/YYYY"
+								allowClear={false}
+								placeholder="Nhập ngày ký hợp đồng"
+							/>
+							<IconButonUpdateUser
+								isShow={moment(ContractSigningDate).format('yyy/mm/dd') !== moment(StudentDetail.ContractSigningDate).format('yyy/mm/dd')}
+								onClick={() => updateUserInfo('ContractSigningDate', new Date(ContractSigningDate))}
+								loading={isLoading === 'ContractSigningDate'}
+							/>
+						</div>
+						<Divider />
 						<div className="d-flex justify-between items-center">
 							<InputTextField
 								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
@@ -619,24 +623,24 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								loading={isLoading === 'ContractNumber'}
 							/>
 						</div>
-					<Divider />
+						<Divider />
 						<div className="d-flex justify-between items-center">
-					<DatePickerField
-						className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-						classNamePicker="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
-						label={labelUser.EnrollmentDay}
-						name="EnrollmentDay"
-						mode="single"
-						format="DD/MM/YYYY"
-						allowClear={false}
-						placeholder="Nhập ngày nhập học"
-					/>
-					<IconButonUpdateUser
-						isShow={moment(EnrollmentDay).format('yyy/mm/dd') !== moment(StudentDetail.EnrollmentDay).format('yyy/mm/dd')}
-						onClick={() => updateUserInfo('EnrollmentDay', new Date(EnrollmentDay))}
-						loading={isLoading === 'EnrollmentDay'}
-					/>
-				</div>
+							<DatePickerField
+								className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								classNamePicker="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
+								label={labelUser.EnrollmentDay}
+								name="EnrollmentDay"
+								mode="single"
+								format="DD/MM/YYYY"
+								allowClear={false}
+								placeholder="Nhập ngày nhập học"
+							/>
+							<IconButonUpdateUser
+								isShow={moment(EnrollmentDay).format('yyy/mm/dd') !== moment(StudentDetail.EnrollmentDay).format('yyy/mm/dd')}
+								onClick={() => updateUserInfo('EnrollmentDay', new Date(EnrollmentDay))}
+								loading={isLoading === 'EnrollmentDay'}
+							/>
+						</div>
 						<Divider>
 							<h2 className="py-4 font-[600] text-center">Thông tin học</h2>
 						</Divider>
