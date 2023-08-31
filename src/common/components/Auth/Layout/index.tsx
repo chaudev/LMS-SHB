@@ -114,19 +114,19 @@ function AuthLayout({ children }: IAuthLayout) {
 							<div className="icon">
 								<MdPlace />
 							</div>
-							<p>Công viên lê thị riêng</p>
+							{/* <p>Công viên lê thị riêng</p> */}
 						</div>
 						<div className="item">
 							<div className="icon">
 								<FaPhoneSquareAlt />
 							</div>
-							<p>1900 000 000</p>
+							{/* <p>1900 000 000</p> */}
 						</div>
 						<div className="item">
 							<div className="icon">
 								<AiTwotoneMail />
 							</div>
-							<p>INFO@CENTER.COM</p>
+							{/* <p>INFO@CENTER.COM</p> */}
 						</div>
 						<div className="item cursor-pointer" onClick={() => setVisible(true)}>
 							<div className="icon">
