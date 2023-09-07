@@ -369,22 +369,27 @@
 			flex: 40;
 			margin-left: 10px;
 			.title {
-				font-size: 16px;
-				font-weight: 700;
+				display: block;
 				white-space: nowrap;
 				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 16px;
+				font-weight: 700;
+				max-width: 25vw;
+				&:hover {
+					text-decoration: underline;
+				}
 			}
 		}
 		.inner-body-class-list-center {
 			flex: 20;
-			margin-left: 10px;
 		}
 		.inner-body-class-list-after-center {
 			flex: 20;
 		}
 		.inner-body-class-list-right {
 			flex: 20;
-			margin-left: 10px;
+
 			.action-container {
 				display: flex;
 				flex-direction: row;
