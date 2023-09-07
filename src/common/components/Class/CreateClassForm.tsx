@@ -93,8 +93,8 @@ const CreateClassForm = (props) => {
 		AcademicId: yup.string().required('Bạn không được để trống'),
 		TeacherId: yup.string().required('Bạn không được để trống'),
 		CurriculumId: yup.string().required('Bạn không được để trống'),
-		StartDay: yup.string().required('Bạn không được để trống'),
-		TeachingFee: yup.string().required('Bạn không được để trống')
+		StartDay: yup.string().required('Bạn không được để trống')
+		// TeachingFee: yup.string().required('Bạn không được để trống')
 		// Price: yup.string().required('Bạn không được để trống')
 	})
 	const yupSync = {
@@ -337,6 +337,7 @@ const CreateClassForm = (props) => {
 		return !!checkExist
 	}
 	const handleSubmit = async (data) => {
+		console.log('TeachingFee:', listTimeFrames)
 		const convertListTimeFrame = listTimeFrames.map((timeFrame) => {
 			return { DayOfWeek: timeFrame.DayOfWeek, StudyTimeId: timeFrame.StudyTimeId }
 		})
@@ -377,9 +378,9 @@ const CreateClassForm = (props) => {
 			const res = await onSubmit(DATA_LESSON_WHEN_CREATE)
 			if (res.status == 200) {
 				setIsModalOpen(false)
-				setListTimeFrames([{ Id: 1, DayOfWeek: null, StudyTimeId: null }])
 			}
 		} catch (err) {
+			setIsLoading(false)
 		} finally {
 			// form.resetFields()
 			setIsLoading(false)
@@ -412,6 +413,9 @@ const CreateClassForm = (props) => {
 	useEffect(() => {
 		form.setFieldValue('AcademicId', '')
 	}, [form.getFieldValue('BranchId')])
+	useEffect(() => {
+		form.setFieldValue('TeachingFee', 0)
+	}, [])
 
 	// const listCalendar = useSelector((state: RootState) => state.class.listCalendar)
 
@@ -575,14 +579,7 @@ const CreateClassForm = (props) => {
 							</Form.Item>
 						</div>
 						<div className="col-md-6 col-12">
-							<InputNumberField
-								isRequired
-								rules={[yupSync]}
-								placeholder="Nhập lương/buổi"
-								className="w-full"
-								label="Lương/buổi"
-								name="TeachingFee"
-							/>
+							<InputNumberField placeholder="Nhập lương/buổi" className="w-full" label="Lương/buổi" name="TeachingFee" />
 						</div>
 						<div className="col-md-6 col-12">
 							<DatePickerField isRequired rules={[yupSync]} mode="single" label="Ngày mở lớp" name="StartDay" />

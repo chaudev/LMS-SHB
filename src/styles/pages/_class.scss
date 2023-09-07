@@ -15,7 +15,7 @@
 			display: grid;
 			gap: 1rem;
 			grid-template-columns: repeat(4, minmax(0px, 1fr));
-		
+
 			@include desktop {
 				grid-template-columns: repeat(3, minmax(0px, 1fr));
 			}
@@ -51,7 +51,7 @@
 								text-overflow: ellipsis;
 								max-width: 15ch;
 
-								>a {
+								> a {
 									width: max-content;
 								}
 							}
@@ -70,7 +70,7 @@
 									border-radius: 50%;
 									@include flex(center, center);
 									text-align: center;
-									background: #C94A4F;
+									background: #c94a4f;
 								}
 							}
 						}
@@ -326,6 +326,110 @@
 					@apply text-xl;
 				}
 			}
+		}
+	}
+}
+
+.content-class-list {
+	display: flex;
+	flex-direction: column;
+
+	.item-class-list {
+		cursor: pointer;
+		user-select: none;
+		transition: all 0.2s ease;
+		border: 1px solid #dadada;
+		border-radius: 6px;
+		padding: 8px;
+		transform: scale(1);
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 3px 10px 0 #1b73e8;
+			border: 1px solid #1b73e8;
+		}
+		margin-bottom: 10px;
+	}
+	.inner-item-class-list {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.image {
+		width: 100px;
+		height: 100px;
+		border-radius: 10px;
+		margin-bottom: 10px;
+	}
+	.inner-body-class-list {
+		display: flex;
+		flex-direction: row;
+		flex: 1;
+		justify-content: space-between;
+		.inner-body-class-list-left {
+			flex: 40;
+			margin-left: 10px;
+			.title {
+				font-size: 16px;
+				font-weight: 700;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+		}
+		.inner-body-class-list-center {
+			flex: 20;
+			margin-left: 10px;
+		}
+		.inner-body-class-list-after-center {
+			flex: 20;
+		}
+		.inner-body-class-list-right {
+			flex: 20;
+			margin-left: 10px;
+			.action-container {
+				display: flex;
+				flex-direction: row;
+				width: 50px;
+				position: relative;
+				margin-left: auto;
+				.item-hover {
+					display: flex;
+					align-items: center;
+					transform: translateY(-50%);
+					transition: all 0.5s ease;
+					position: absolute;
+					right: 24px;
+					top: 50%;
+					z-index: 1;
+					opacity: 0;
+					visibility: hidden;
+					width: 0px;
+					overflow: hidden;
+					justify-content: center;
+					[dir='rtl'] & {
+						right: auto;
+						left: 24px;
+					}
+				}
+				&:hover {
+					.item-hover {
+						opacity: 1;
+						visibility: visible;
+						width: 100px;
+					}
+				}
+			}
+			.item-action {
+				margin-left: auto;
+			}
+		}
+
+		.i {
+			display: flex;
+			align-items: center;
+			margin-bottom: 5px;
+		}
+		.icn {
+			margin-right: 3px;
 		}
 	}
 }

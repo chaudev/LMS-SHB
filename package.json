@@ -10,7 +10,7 @@
 		"export": "next build && next export"
 	},
 	"engines": {
-		"node": "16.x",
+		"node": "18.x",
 		"npm": "please-use-yarn"
 	},
 	"dependencies": {
