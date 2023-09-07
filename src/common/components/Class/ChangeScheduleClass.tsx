@@ -375,7 +375,7 @@ const ChangeScheduleClass = (props) => {
 							</Select>
 						</Form.Item>
 					)}
-					<InputMoneyField className="col-span-2" label="Lương / buổi" name="TeachingFee" placeholder="Nhập mức lương" isRequired />
+					<InputMoneyField className="col-span-2" label="Lương / buổi" name="TeachingFee" placeholder="Nhập mức lương" />
 					<TextBoxField className="col-span-2" name="Note" label="Ghi chú" />
 				</Form>
 			</Modal>

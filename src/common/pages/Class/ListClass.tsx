@@ -1,5 +1,7 @@
 import { Card, Form, Input, Pagination, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { ImList } from 'react-icons/im'
+import { IoGrid } from 'react-icons/io5'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { branchApi } from '~/api/branch'
@@ -7,6 +9,7 @@ import { classApi } from '~/api/class'
 import { userInformationApi } from '~/api/user/user'
 import ClassList from '~/common/components/Class/ClassList'
 import { ClassListContent } from '~/common/components/Class/ClassListContent'
+import { ListClass as ListClassContent } from '~/common/components/Class/ListClass'
 import FilterBase from '~/common/components/Elements/FilterBase'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
@@ -97,6 +100,7 @@ const ListClass = () => {
 	const state = useSelector((state: RootState) => state)
 	const dispatch = useDispatch()
 	const [tabStatus, setTabStatus] = useState(null)
+	const [currentStyle, setCurrentStyle] = useState(0)
 
 	function isAdmin() {
 		return userInformation?.RoleId == 1
@@ -248,6 +252,12 @@ const ListClass = () => {
 		setTabStatus(val)
 		setTodoApi({ ...todoApi, status: val })
 	}
+
+	async function handleChangeStyleSaved(e) {
+		setCurrentStyle(e)
+		await localStorage.setItem('proClassStyle', e + '')
+	}
+
 	return (
 		<div className="wrapper-class">
 			<div className="row">
@@ -286,23 +296,66 @@ const ListClass = () => {
 								</>
 							}
 							extra={
-								userInformation?.RoleId === '8' ? (
-									<Select allowClear className="w-[200px]" onChange={handleChangeStudent} options={students} placeholder="Chọn học viên" />
-								) : (
-									''
-								)
+								<div className="flex items-center">
+									{userInformation?.RoleId === '8' ? (
+										<Select
+											allowClear
+											className="w-[200px]"
+											onChange={handleChangeStudent}
+											options={students}
+											placeholder="Chọn học viên"
+										/>
+									) : (
+										''
+									)}
+
+									<div className="flex items-center w3-animate-right">
+										<div
+											className="border-[1px] h-[32px] w-[32px] flex items-center justify-center cursor-pointer rounded-l-[4px]"
+											onClick={() => handleChangeStyleSaved(0)}
+											style={{
+												backgroundColor: currentStyle == 0 ? '#1b73e8' : '#fff',
+												borderColor: currentStyle == 0 ? '#1b73e8' : '#bdbdbd'
+											}}
+										>
+											<IoGrid className="cursor-pointer" size={20} color={currentStyle == 0 ? '#fff' : '#000'} />
+										</div>
+										<div
+											className="border-[1px] border-l-[0px] border-[#bdbdbd] h-[32px] w-[32px] flex items-center justify-center cursor-pointer rounded-r-[4px]"
+											onClick={() => handleChangeStyleSaved(1)}
+											style={{
+												backgroundColor: currentStyle == 1 ? '#1b73e8' : '#fff',
+												borderColor: currentStyle == 1 ? '#1b73e8' : '#bdbdbd'
+											}}
+										>
+											<ImList className="cursor-pointer" size={16} color={currentStyle == 1 ? '#fff' : '#000'} />
+										</div>
+									</div>
+								</div>
 							}
 						>
 							<div className="course-list-content">
-								<ClassListContent
-									totalRow={totalRow}
-									isLoading={isLoading}
-									dataSource={listClass}
-									setTodoApi={setTodoApi}
-									listTodoApi={listTodoApi}
-									todoApi={todoApi}
-									getAllClass={getAllClass}
-								/>
+								{currentStyle == 0 ? (
+									<ClassListContent
+										totalRow={totalRow}
+										isLoading={isLoading}
+										dataSource={listClass}
+										setTodoApi={setTodoApi}
+										listTodoApi={listTodoApi}
+										todoApi={todoApi}
+										getAllClass={getAllClass}
+									/>
+								) : (
+									<ListClassContent
+										totalRow={totalRow}
+										isLoading={isLoading}
+										dataSource={listClass}
+										setTodoApi={setTodoApi}
+										listTodoApi={listTodoApi}
+										todoApi={todoApi}
+										getAllClass={getAllClass}
+									/>
+								)}
 
 								<div className="custom-pagination my-4">
 									<Pagination
