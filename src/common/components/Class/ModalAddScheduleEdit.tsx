@@ -287,30 +287,30 @@ const ModalAddScheduleEdit = (props) => {
 							{scheduleList?.map((_item) => (
 								<div
 									className="schedule-list-item"
-									onClick={() => {
-										form.setFields([
-											{
-												name: 'StartTime',
-												value: _item.StartTime
-											},
-											{
-												name: 'EndTime',
-												value: _item.EndTime
-											},
-											{
-												name: 'TeacherId',
-												value: _item.TeacherId
-											},
-											{
-												name: 'TeachingFee',
-												value: _item.TeachingFee
-											},
-											{
-												name: 'Note',
-												value: _item.Note
-											}
-										])
-									}}
+									// onClick={() => {
+									// 	form.setFields([
+									// 		{
+									// 			name: 'StartTime',
+									// 			value: _item.StartTime
+									// 		},
+									// 		{
+									// 			name: 'EndTime',
+									// 			value: _item.EndTime
+									// 		},
+									// 		{
+									// 			name: 'TeacherId',
+									// 			value: _item.TeacherId
+									// 		},
+									// 		{
+									// 			name: 'TeachingFee',
+									// 			value: _item.TeachingFee
+									// 		},
+									// 		{
+									// 			name: 'Note',
+									// 			value: _item.Note
+									// 		}
+									// 	])
+									// }}
 								>
 									<div className="schedule-list-item-left">
 										<div className="schedule-list-title">{_item.TeacherId.split('-')[1]}</div>
