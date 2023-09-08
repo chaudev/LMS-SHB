@@ -47,7 +47,7 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 	const [isModalOpen, setIsModalOpen] = useState({ id: null, open: null })
 	const [showPop, setShowPop] = useState('')
 
-	const {isStudent , isParents , isSaler,isAccountant  , isTeacher} = useRole()
+	const { isStudent, isParents, isSaler, isAccountant, isTeacher } = useRole()
 
 	const isRole = {
 		sale: userInformation.RoleId == 5,
@@ -73,7 +73,7 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 		if (role == 1 || role == 5) {
 			path = {
 				pathname: '/class/list-class/detail',
-				query: { class: item?.Id, CurriculumId: item?.CurriculumId, BranchId: item?.BranchId }
+				query: { class: item?.Id, CurriculumId: item?.CurriculumId, BranchId: item?.BranchId, Type: item.Type }
 			}
 		} else {
 			path = {
@@ -170,7 +170,7 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 									<div className="header-inner">
 										<div className="status">{checkStatus(item.Status, item.StatusName)}</div>
 
-										{isSaler || isStudent || isParents || isAccountant || isTeacher? (
+										{isSaler || isStudent || isParents || isAccountant || isTeacher ? (
 											''
 										) : (
 											<div className="action">

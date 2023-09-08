@@ -438,3 +438,45 @@
 		}
 	}
 }
+.schedule-list-container {
+	flex: 45;
+	// border: 1px solid #dadada;
+	margin-left: 20px;
+	padding: 10px 10px 10px 10px;
+	max-height: 60vh;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: #f4f7fe;
+	border-radius: 5px;
+	&::-webkit-scrollbar {
+		width: 0;
+		height: 0;
+	}
+	.schedule-list-item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		// border-bottom: 1px solid #dadada;
+		margin-bottom: 10px;
+		padding: 10px 15px;
+		transform: scale(1);
+		border-radius: 5px;
+		background-color: #fff;
+		box-shadow: 0 1px 5px 0 #E3F2FD;
+		&:hover {
+			transform: translateY(-2px);
+			// box-shadow: 0 1px 5px 0 #1b73e8;
+			background-color: #e3f2fd;
+		}
+	}
+	.schedule-list-footer {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-top: 10px;
+	}
+	.schedule-list-title {
+		font-size: 13px;
+		font-weight: 500;
+	}
+}

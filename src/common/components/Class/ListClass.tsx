@@ -73,7 +73,7 @@ export const ListClass: React.FC<IClassListContent> = ({
 		if (role == 1 || role == 5) {
 			path = {
 				pathname: '/class/list-class/detail',
-				query: { class: item?.Id, CurriculumId: item?.CurriculumId, BranchId: item?.BranchId }
+				query: { class: item?.Id, CurriculumId: item?.CurriculumId, BranchId: item?.BranchId, Type: item.Type }
 			}
 		} else {
 			path = {

@@ -10,6 +10,13 @@ export const scheduleApi = {
 	add(data) {
 		return instance.post(url, data)
 	},
+	adds(data) {
+		return instance.post(`${url}/items`, { items: data })
+	},
+	
+	checkTime(data) {
+		return instance.post(`${url}/validate`, data)
+	},
 
 	update(data) {
 		return instance.put(url, data, {})
