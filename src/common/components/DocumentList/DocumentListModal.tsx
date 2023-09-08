@@ -139,7 +139,7 @@ const DocumentListModal = ({ type, docInfo, onFetchDataForm, docID, docName }) =
 										rules={[{ required: true, message: 'Bạn không được để trống' }]}
 									>
 										<Upload maxCount={1} name="File">
-											<Button icon={<UploadOutlined rev={undefined} />}>Click to Upload</Button>
+											<Button icon={<UploadOutlined />}>Click to Upload</Button>
 										</Upload>
 									</Form.Item>
 								</div>
