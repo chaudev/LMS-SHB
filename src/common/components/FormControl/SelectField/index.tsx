@@ -18,7 +18,8 @@ const SelectField = (props: IFormSelectField) => {
 		isLoading,
 		suffix,
 		allowClear = true,
-		hidden = false
+		hidden = false,
+		max
 	} = props
 	const { Option } = Select
 
@@ -43,6 +44,7 @@ const SelectField = (props: IFormSelectField) => {
 				onChange={(value) => {
 					checkOnChangeSelect(value)
 				}}
+				maxTagCount={max}
 			>
 				{optionList &&
 					optionList.map((o, idx) => (

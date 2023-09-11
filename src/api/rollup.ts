@@ -14,6 +14,9 @@ export const rollUpApi = {
     add(data) {
 		return instance.post(`${url}/InsertOrUpdate`, data)
 	},
+    adds(data) {
+		return instance.put(`${url}/items`, { Items: data })
+	},
 
     // xóa data
     delete(ID) {

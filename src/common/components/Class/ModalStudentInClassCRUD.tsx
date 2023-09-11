@@ -44,7 +44,10 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 			if (res.status === 200) {
 				let temp = []
 				res?.data?.data?.forEach((item) => {
-					temp.push({ title: `${item?.FullName} - ${item?.UserCode}`, value: item?.UserInformationId })
+					temp.push({
+						title: `[${item?.UserCode}] - ${item?.FullName}  - ${item?.CurrentClassName !== null ? item?.CurrentClassName : 'Chưa có lớp'}`,
+						value: item?.UserInformationId
+					})
 				})
 				setStudent(temp)
 				setLoadingStudent(false)
@@ -116,10 +119,8 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 			setIsLoading(false)
 		}
 	}
-	const handleAddStudensToClass = async (data) =>
-	{
-		try
-		{
+	const handleAddStudensToClass = async (data) => {
+		try {
 			setIsLoading(true)
 			const res = await studentInClassApi.adds(data)
 			if (res.status === 200) {
@@ -129,8 +130,7 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 				form.resetFields()
 				ShowNoti('success', res.data.message)
 			}
-
-		}catch (error) {
+		} catch (error) {
 			setIsLoading(true)
 			ShowNoti('error', error.message)
 		} finally {
@@ -208,7 +208,8 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 			<Modal
 				title={mode === 'add' ? 'Thêm học viên' : mode == 'edit' ? 'Cập nhật học viên' : 'Xác nhận xóa'}
 				open={visible}
-				onCancel={onClose} 	centered
+				onCancel={onClose}
+				centered
 				footer={
 					<>
 						<PrimaryButton onClick={() => onClose()} background="red" icon="cancel" type="button">
@@ -249,7 +250,7 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 													placeholder="Chọn học viên"
 													isRequired
 													rules={[{ required: true, message: 'Bạn không được để trống' }]}
-													mode='multiple'
+													mode="multiple"
 												/>
 											</div>
 

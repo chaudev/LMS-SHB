@@ -411,7 +411,7 @@ const MajorsRegistrationPage = () => {
 									rules={[{ required: Type === 1 ? true : false, message: 'Vui lòng chọn phương thức thanh toán' }]}
 									optionList={listOption.paymentMethod}
 								/>
-								<SelectField className="col-span-2" name={'GiftId'} label="Quà tặng" optionList={listOption.gift} />
+								<SelectField mode="multiple" className="col-span-2" name={'GiftId'} label="Quà tặng" optionList={listOption.gift} max={2} />
 								<TextBoxField name="Note" label={'Ghi chú'} />
 
 								<div className="d-flex justify-center mt-3">

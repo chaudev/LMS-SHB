@@ -37,6 +37,14 @@ const InputNote = ({ value, onChange, index }) => {
 	)
 }
 
+type DataUpdate = {
+	StudentId: number
+	ScheduleId: number
+	Status: number
+	LearningStatus: number
+	Note: string
+}
+
 export const RollUpPage = () => {
 	const router = useRouter()
 	const user = useSelector((state: RootState) => state.user.information)
@@ -50,6 +58,7 @@ export const RollUpPage = () => {
 	const [scheduleId, setScheduleId] = useState(null)
 	const [dataSchedule, setDataSchedule] = useState<{ title: string; value: string }[]>([])
 	const [isUpdate, setIsUpdate] = useState<any>(null)
+	const [dataUpdate, setDataUpdate] = useState<DataUpdate[]>([])
 
 	const [loadingUpdate, setLoadingUpdate] = useState(-1)
 
@@ -101,34 +110,100 @@ export const RollUpPage = () => {
 	const handleChangeStatus = (info, index) => {
 		let temp = [...dataTable]
 		temp[index] = { ...temp[index], Status: info }
+
 		setDataTable(temp)
+
+		const temporary = dataUpdate.findIndex((e) => e.StudentId === temp[index].StudentId)
+		const DATA_HANDLE = {
+			StudentId: temp[index].StudentId,
+			ScheduleId: temp[index].ScheduleId,
+			Status: temp[index].Status,
+			LearningStatus: temp[index].LearningStatus,
+			Note: temp[index].Note
+		}
+
+		if (temporary > -1) {
+			let tam = [...dataUpdate]
+			tam[temporary] = { ...tam[temporary], Status: info }
+			setDataUpdate(tam)
+		} else {
+			setDataUpdate((prev) => [...prev, DATA_HANDLE])
+		}
 	}
 
 	const handleChangeLearningStatus = (info, index) => {
 		let temp = [...dataTable]
 		temp[index] = { ...temp[index], LearningStatus: info }
 		setDataTable(temp)
+
+		const temporary = dataUpdate.findIndex((e) => e.StudentId === temp[index].StudentId)
+		const DATA_HANDLE = {
+			StudentId: temp[index].StudentId,
+			ScheduleId: temp[index].ScheduleId,
+			Status: temp[index].Status,
+			LearningStatus: temp[index].LearningStatus,
+			Note: temp[index].Note
+		}
+
+		if (temporary > -1) {
+			let tam = [...dataUpdate]
+			tam[temporary] = { ...tam[temporary], LearningStatus: info }
+			setDataUpdate(tam)
+		} else {
+			setDataUpdate((prev) => [...prev, DATA_HANDLE])
+		}
 	}
 
 	const handleChangeNote = (info, index) => {
 		let temp = [...dataTable]
 		temp[index] = { ...temp[index], Note: info.target.value }
 		setDataTable(temp)
+
+		const temporary = dataUpdate.findIndex((e) => e.StudentId === temp[index].StudentId)
+		const DATA_HANDLE = {
+			StudentId: temp[index].StudentId,
+			ScheduleId: temp[index].ScheduleId,
+			Status: temp[index].Status,
+			LearningStatus: temp[index].LearningStatus,
+			Note: temp[index].Note
+		}
+
+		if (temporary > -1) {
+			let tam = [...dataUpdate]
+			tam[temporary] = { ...tam[temporary], Note: info.target.value }
+			setDataUpdate(tam)
+		} else {
+			setDataUpdate((prev) => [...prev, DATA_HANDLE])
+		}
 	}
+
+	// const handleUpdateRollUp = async (data) => {
+	// 	try {
+	// 		setLoadingUpdate(data.Id)
+	// 		const res = await rollUpApi.add(data)
+	// 		if (res.status === 200) {
+	// 			ShowNoti('success', res.data.message)
+	// 			// checkupdate thành công => cập nhật lại biểu đồ thống kê
+	// 			setIsUpdate(res.data.data)
+	// 		}
+	// 		setLoadingUpdate(-1)
+	// 	} catch (error) {
+	// 		ShowNoti('error', error.message)
+	// 		setLoadingUpdate(-1)
+	// 	}
+	// }
 
 	const handleUpdateRollUp = async (data) => {
 		try {
-			setLoadingUpdate(data.Id)
-			const res = await rollUpApi.add(data)
+			const res = await rollUpApi.adds(data)
 			if (res.status === 200) {
 				ShowNoti('success', res.data.message)
+				setDataUpdate([])
 				// checkupdate thành công => cập nhật lại biểu đồ thống kê
 				setIsUpdate(res.data.data)
 			}
-			setLoadingUpdate(-1)
 		} catch (error) {
 			ShowNoti('error', error.message)
-			setLoadingUpdate(-1)
 		}
 	}
 
@@ -220,35 +295,35 @@ export const RollUpPage = () => {
 					<InputNote index={index} onChange={(val, inx) => handleChangeNote(val, inx)} value={text} />
 				</div>
 			)
-		},
-		{
-			title: '',
-			width: 100,
-			dataIndex: 'Action',
-			align: 'center',
-			render: (text, item, index) => (
-				<>
-					{user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
-						<>
-							{loadingUpdate == index ? (
-								<Spin></Spin>
-							) : (
-								<IconButton
-									tooltip="Cập nhật"
-									color="green"
-									icon="save"
-									type="button"
-									onClick={() => handleChangeRollUp(item, index)}
-									size={22}
-								/>
-							)}
-						</>
-					) : (
-						''
-					)}
-				</>
-			)
 		}
+		// {
+		// 	title: '',
+		// 	width: 100,
+		// 	dataIndex: 'Action',
+		// 	align: 'center',
+		// 	render: (text, item, index) => (
+		// 		<>
+		// 			{user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
+		// 				<>
+		// 					{loadingUpdate == index ? (
+		// 						<Spin></Spin>
+		// 					) : (
+		// 						<IconButton
+		// 							tooltip="Cập nhật"
+		// 							color="green"
+		// 							icon="save"
+		// 							type="button"
+		// 							onClick={() => handleChangeRollUp(item, index)}
+		// 							size={22}
+		// 						/>
+		// 					)}
+		// 				</>
+		// 			) : (
+		// 				''
+		// 			)}
+		// 		</>
+		// 	)
+		// }
 	]
 
 	return (
@@ -260,12 +335,19 @@ export const RollUpPage = () => {
 				total={totalRow}
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, pageIndex: event })}
 				TitleCard={
-					<div className="extra-table">
+					<div
+						className="extra-table"
+						style={{
+							flex: 1,
+							justifyContent: 'space-between'
+						}}
+					>
 						<div className="flex items-center antd-custom-wrap">
 							Buổi học:
 							<Select
 								className="w-[220px] ml-tw-4"
 								onChange={(data) => {
+									setDataUpdate([])
 									setScheduleId(data)
 									setApiParameters({ ...apiParameters, scheduleId: data })
 								}}
@@ -280,6 +362,22 @@ export const RollUpPage = () => {
 										</>
 									))}
 							</Select>
+						</div>
+						<div>
+							{user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
+								<IconButton
+									tooltip="Cập nhật"
+									color={dataUpdate.length > 0 ? 'green' : 'disabled'}
+									icon="save"
+									type="button"
+									onClick={() => {
+										handleUpdateRollUp(dataUpdate)
+									}}
+									size={25}
+								/>
+							) : (
+								''
+							)}
 						</div>
 					</div>
 				}

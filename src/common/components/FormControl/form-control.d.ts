@@ -67,6 +67,7 @@ type IFormSelectField = {
 	allowClear?:boolean
 	hidden?:boolean
 	initialValue?:any
+	max?:number
 }
 
 type ISelectOptionList = {
