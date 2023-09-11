@@ -10,6 +10,9 @@ export const majorsRegistrationApi = {
 	majorsRegistration(params) {
 		return instance.post<IApiResultCreate<IMajorsRegistrationAvailble>>(URl, params)
 	},
+	updatemajorsRegistration(params) {
+		return instance.put<IApiResultCreate<any>>(URl, params)
+	},
 
 	getAllMajorsRegistrationAvailble() {
 		return instance.get<IApiResultData<IMajorsRegistrationAvailble[]>>(URl + '/student-available')

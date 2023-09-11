@@ -65,28 +65,28 @@ const ModalAddScheduleEdit = (props) => {
 			(e) => new Date(e.StartTime).getTime() <= new Date(start).getTime() && new Date(e.EndTime).getTime() >= new Date(end).getTime()
 		)
 		if (between > -1) {
-			console.log(1)
+			
 			return false
 		} else {
 			const include = scheduleList?.findIndex(
 				(e) => new Date(e.StartTime).getTime() > new Date(start).getTime() && new Date(e.EndTime).getTime() < new Date(end).getTime()
 			)
 			if (include > -1) {
-				console.log(2)
+				
 				return false
 			} else {
 				const include_right = scheduleList?.findIndex(
 					(e) => new Date(e.StartTime).getTime() >= new Date(start).getTime() && new Date(e.StartTime).getTime() <= new Date(end).getTime()
 				)
 				if (include_right > -1) {
-					console.log(3)
+					
 					return false
 				} else {
 					const include_left = scheduleList?.findIndex(
 						(e) => new Date(e.EndTime).getTime() >= new Date(start).getTime() && new Date(e.EndTime).getTime() <= new Date(end).getTime()
 					)
 					if (include_left > -1) {
-						console.log(4)
+						
 						return false
 					} else {
 						console.log(5)

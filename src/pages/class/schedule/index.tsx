@@ -142,27 +142,30 @@ const Schedule = () => {
 			>
 				<FullCalendar
 					ref={thisCalendar}
+					locale="vi"
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 					initialView="dayGridMonth"
 					droppable={true}
 					selectable={true}
-					selectMirror={true}
-					weekends={true}
-					events={listSchedule}
-					eventsSet={(data) => setTimeStamp(new Date().getTime())}
-					eventChange={(data) => console.log('DATA: ', data)}
 					datesSet={(data) => {
 						let DATA_GET = { ...paramsSearch, from: moment(data.start).format(), to: moment(data.end).format() }
 						setParamsSearch(DATA_GET)
 					}}
-					locale="vi"
+					selectMirror={true}
+					weekends={true}
+					events={listSchedule}
+					eventContent={(eventInfo) => <ScheduleCalendar dataRow={eventInfo} onRefresh={getAllSchedule} />}
+					eventTextColor="white"
+					eventsSet={(data) => setTimeStamp(new Date().getTime())}
+					eventChange={(data) => console.log('DATA: ', data)}
+					eventClassNames="ccc-event"
 					headerToolbar={{ start: 'prev today next', center: 'title', end: 'dayGridMonth,timeGridWeek' }}
 					buttonText={{ today: 'Hôm nay', month: 'Tháng', week: 'Tuần', day: 'Ngày' }}
 					allDaySlot={false}
-					titleFormat={{ month: 'numeric', year: 'numeric', day: 'numeric' }}
+					titleFormat={{ month: 'numeric', year: 'numeric' }}
 					dayHeaderFormat={{ weekday: 'long' }}
 					firstDay={1}
-					eventContent={(eventInfo) => <ScheduleCalendar dataRow={eventInfo} onRefresh={getAllSchedule} />}
+					
 				/>
 				<div className="wrapper-status">
 					<div className="wrapper-tag">

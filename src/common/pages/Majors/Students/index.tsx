@@ -1,4 +1,4 @@
-import { Input } from 'antd'
+import { Input, Tag } from 'antd'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -121,8 +121,19 @@ const MajorsStudentPage = () => {
 		},
 		{
 			title: 'Quà tặng',
-			dataIndex: 'GiftName',
-			render: (text) => <p>{text}</p>
+			width: 250,
+			dataIndex: 'GiftInfos',
+			render: (_, { item }) => (
+				<>
+					{_?.map((e) => {
+						return (
+							<Tag color="green" key={e.Id}>
+								{e.Name}
+							</Tag>
+						)
+					})}
+				</>
+			)
 		},
 		{
 			width: 250,

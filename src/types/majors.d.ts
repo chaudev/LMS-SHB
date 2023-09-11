@@ -3,12 +3,12 @@ type IMajors = {
 	Thumbnail: string
 	Price: number
 	Description: string
-	Status:number,
-	StatusName:string
+	Status: number
+	StatusName: string
 	Id: number
 }
 
-type IMajorsRegistration  = {
+type IMajorsRegistration = {
 	MajorsId: number
 	MajorsName: string
 	StudentId: number
@@ -16,7 +16,8 @@ type IMajorsRegistration  = {
 	TotalPrice: number
 	Paid: number
 	GiftId: number
-	GiftName: string
+	GiftName?: string
+	GiftInfos: any
 	GiftThumbnail: ''
 	PaymentTypeId: number
 	PaymentTypeName: string
@@ -39,5 +40,5 @@ type IMajorsRegistrationAvailble = {
 	HasMajors: boolean
 	Email: string
 	Mobile: string
-	MajorsName:String
+	MajorsName: String
 }

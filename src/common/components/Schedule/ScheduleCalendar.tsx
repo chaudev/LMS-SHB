@@ -110,7 +110,7 @@ const ScheduleCalendar = (props) => {
 			) : (
 				<>
 					<div className="wrapper-schedule wrapper-schedule-calender relative ">
-						<div className={`${getStatusScheduleTag()}`}>
+						<div className={`${getStatusScheduleTag()}`} >
 							<Popover
 								trigger="click"
 								content={
@@ -193,7 +193,7 @@ const ScheduleCalendar = (props) => {
 						title="Thông tin buổi học"
 						trigger="click"
 					>
-						<div className="wrapper-schedule wrapper-schedule-tablet">
+						<div className="wrapper-schedule wrapper-schedule-tablet" >
 							<button
 								className={`${getStatusSchedulePoppover()} !bg-white !text-[#FFF] font-semibold  w-full p-[6px] flex justify-start gap-2`}
 							>

@@ -33,6 +33,7 @@ const TabMajors: React.FC<TabMajors> = () => {
 	const [loading, setLoading] = useState<'' | 'GET_ALL'>('')
 	const [panels, SetPanals] = useState<number[]>([])
 	const [optionType, setOptionType] = useState<IOptionType>()
+	const [isReLoad, setIsReLoad] = useState<boolean>()
 
 	const getMajorsRegistration = async () => {
 		try {
@@ -57,6 +58,7 @@ const TabMajors: React.FC<TabMajors> = () => {
 			ShowNostis.error(error.message)
 		}
 	}
+
 	const getAllOptionType = async () => {
 		try {
 			// setLoading('INIT_PAGE')
@@ -100,7 +102,11 @@ const TabMajors: React.FC<TabMajors> = () => {
 			getAllOptionType()
 			getMajorsRegistration()
 		}
-	}, [StudentID])
+	}, [StudentID, isReLoad])
+
+	const handleReLoadData = () => {
+		setIsReLoad(!isReLoad)
+	}
 
 	return (
 		<Spin spinning={loading === 'GET_ALL'}>
@@ -124,14 +130,16 @@ const TabMajors: React.FC<TabMajors> = () => {
 								key={item.Id}
 								header={
 									<HeaderPanalMajors
+										Id={item.Id}
 										majorsName={item.MajorsName}
 										paymentTypeName={item.PaymentTypeName}
-										giftName={item.GiftName}
+										gifts={item.GiftInfos}
 										note={item.Note}
 										statusName={item.StatusName}
 										status={item.Status}
 										paid={item.Paid}
 										totalPrice={item.TotalPrice}
+										setIsReLoad={handleReLoadData}
 									/>
 								}
 							>
