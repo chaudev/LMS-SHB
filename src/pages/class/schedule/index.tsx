@@ -27,6 +27,7 @@ const Schedule = () => {
 	const [teachers, setTeachers] = useState([])
 	const [listSchedule, setListSchedule] = useState<any[]>([])
 	const [timeStamp, setTimeStamp] = useState(0)
+	const [isHidden, setIsHidden] = useState<boolean>()
 	const [isLoading, setIsLoading] = useState(false)
 	const [paramsSearch, setParamsSearch] = useState({ teacherIds: '', branchIds: '', from: null, to: null })
 	const dispatch = useDispatch()
@@ -57,7 +58,8 @@ const Schedule = () => {
 						...item,
 						start: moment(item.StartTime).format(),
 						end: moment(item.EndTime).format(),
-						title: `${moment(item.StartTime).format()} - ${moment(item.EndTime).format()}`
+						title: `${moment(item.StartTime).format()} - ${moment(item.EndTime).format()}`,
+						allDay: true
 					}
 				})
 				console.log(newListSchedule)
@@ -145,27 +147,29 @@ const Schedule = () => {
 					locale="vi"
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 					initialView="dayGridMonth"
-					droppable={true}
+					droppable={false}
 					selectable={true}
 					datesSet={(data) => {
 						let DATA_GET = { ...paramsSearch, from: moment(data.start).format(), to: moment(data.end).format() }
 						setParamsSearch(DATA_GET)
 					}}
+					contentHeight={isHidden ? 0 : 'auto'}
 					selectMirror={true}
 					weekends={true}
 					events={listSchedule}
-					eventContent={(eventInfo) => <ScheduleCalendar dataRow={eventInfo} onRefresh={getAllSchedule} />}
+					eventContent={(eventInfo) => <ScheduleCalendar dataRow={eventInfo} onRefresh={getAllSchedule} setIsHidden={setIsHidden} />}
 					eventTextColor="white"
 					eventsSet={(data) => setTimeStamp(new Date().getTime())}
 					eventChange={(data) => console.log('DATA: ', data)}
 					eventClassNames="ccc-event"
+					slotLaneClassNames="slot-event-calendar-cc"
 					headerToolbar={{ start: 'prev today next', center: 'title', end: 'dayGridMonth,timeGridWeek' }}
 					buttonText={{ today: 'Hôm nay', month: 'Tháng', week: 'Tuần', day: 'Ngày' }}
-					allDaySlot={false}
-					titleFormat={{ month: 'numeric', year: 'numeric' }}
+					allDaySlot={true}
+					allDayText=""
+					titleFormat={{ month: 'numeric', year: 'numeric', day: 'numeric' }}
 					dayHeaderFormat={{ weekday: 'long' }}
 					firstDay={1}
-					
 				/>
 				<div className="wrapper-status">
 					<div className="wrapper-tag">

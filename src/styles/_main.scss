@@ -534,6 +534,7 @@ button {
 		.ant-input-search-button {
 			height: 36px;
 			border-radius: 0px 6px 6px 0px !important;
+
 			.anticon {
 				color: #192641;
 			}
@@ -800,92 +801,20 @@ button {
 	}
 }
 
-.selec-antd-gift {
-	width: 100%;
-	.ant-select-selector {
-		width: 100%;
+.fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event {
+	color: #ffffff;
+	background: #fff !important;
+	border-color: #fff !important;
+}
+
+
+.text-gv-in-calendar {
+	@media screen and (max-width: 1600px) {
+		text-align: start;
+		white-space: pre-wrap;
 	}
 }
 
-.ccc-event {
-	background-color: transparent !important;
-	border: none !important;
-	color: #000000 !important;
-	flex: 1 !important;
-	border-radius: 2px;
-	box-shadow: none !important;
-	align-items: center !important;
-
-	display: flex !important;
-	flex-direction: column !important;
-	align-items: flex-start !important;
-
-	@media screen and (max-width: 950px) {
-		width: 18px;
-		height: 18px;
-		border-radius: 9999px;
-		flex: unset !important;
-	}
-
-	.fc-event-main {
-		flex: 1;
-		display: flex;
-		width: 100%;
-	}
-
-	&.default {
-		background: #eeeeee !important;
-		color: #000000 !important;
-		padding: 6px !important;
-		&:hover {
-			background: #e6e6e6 !important;
-		}
-		&:active {
-			background: #eeeeee !important;
-		}
-
-		&.none {
-			&:hover {
-				background: #eeeeee !important;
-			}
-		}
-
-		@media screen and (max-width: 950px) {
-			background: #0c78d1 !important;
-			&:hover {
-				background: #096ab8 !important;
-			}
-			&:active {
-				background: #0c78d1 !important;
-			}
-		}
-	}
-
-	&.isExam {
-		background: #f7e2ff !important;
-		color: #000000 !important;
-		padding: 6px !important;
-		&:hover {
-			background: #f2d8fc !important;
-		}
-		&:active {
-			background: #f7e2ff !important;
-		}
-
-		&.none {
-			&:hover {
-				background: #f2d3fe !important;
-			}
-		}
-
-		@media screen and (max-width: 950px) {
-			background: #b700ff !important;
-			&:hover {
-				background: #a205e0 !important;
-			}
-			&:active {
-				background: #b700ff !important;
-			}
-		}
-	}
+.slot-event-calendar-cc{
+	height: 0px !important;
 }
