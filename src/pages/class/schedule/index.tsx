@@ -57,7 +57,8 @@ const Schedule = () => {
 						...item,
 						start: moment(item.StartTime).format(),
 						end: moment(item.EndTime).format(),
-						title: `${moment(item.StartTime).format()} - ${moment(item.EndTime).format()}`
+						title: `${moment(item.StartTime).format()} - ${moment(item.EndTime).format()}`,
+						allDay: true
 					}
 				})
 				console.log(newListSchedule)
@@ -144,7 +145,7 @@ const Schedule = () => {
 					ref={thisCalendar}
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 					initialView="dayGridMonth"
-					droppable={true}
+					droppable={false}
 					selectable={true}
 					selectMirror={true}
 					weekends={true}
@@ -158,10 +159,11 @@ const Schedule = () => {
 					locale="vi"
 					headerToolbar={{ start: 'prev today next', center: 'title', end: 'dayGridMonth,timeGridWeek' }}
 					buttonText={{ today: 'Hôm nay', month: 'Tháng', week: 'Tuần', day: 'Ngày' }}
-					allDaySlot={false}
+					allDaySlot={true}
 					titleFormat={{ month: 'numeric', year: 'numeric', day: 'numeric' }}
 					dayHeaderFormat={{ weekday: 'long' }}
 					firstDay={1}
+					allDayText=""
 					eventContent={(eventInfo) => <ScheduleCalendar dataRow={eventInfo} onRefresh={getAllSchedule} />}
 				/>
 				<div className="wrapper-status">

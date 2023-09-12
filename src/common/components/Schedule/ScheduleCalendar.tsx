@@ -12,6 +12,8 @@ import PrimaryTag from '../Primary/Tag'
 const ScheduleCalendar = (props) => {
 	const { dataRow, onRefresh } = props
 
+	console.log('------ ScheduleCalendar: ', props?.dataRow?.event?._def?.extendedProps)
+
 	const getStatusSchedule = () => {
 		switch (dataRow.event.extendedProps.Status) {
 			case 1:
@@ -71,7 +73,10 @@ const ScheduleCalendar = (props) => {
 						}
 						extra={
 							<div className="font-[500]">
-								{moment(dataRow.event.extendedProps.start).format('HH:mm')} - {moment(dataRow.event.extendedProps.end).format('HH:mm')}
+								{/* {moment(dataRow.event.extendedProps.start).format('HH:mm')} - {moment(dataRow.event.extendedProps.end).format('HH:mm')} */}
+								{moment(props?.dataRow?.event?._def?.extendedProps.StartTime).format('HH:mm')} -{' '}
+								{moment(props?.dataRow?.event?._def?.extendedProps.EndTime).format('HH:mm')}
+								{/* props?.dataRow?.event?._def?.extendedProps */}
 							</div>
 						}
 					>
@@ -143,8 +148,16 @@ const ScheduleCalendar = (props) => {
 									// onDoubleClick={() => router.push(`/class/list-class/detail/?class=${dataRow.event.extendedProps.ClassId}`)}
 									className={`${getStatusSchedule()}  !bg-white !text-[#fff] font-semibold  w-full p-[6px] flex justify-start items-center gap-2`}
 								>
-									<span className={`${getStatusScheduleTime()}`}>{moment(dataRow.event.start).format('HH:mm')}</span>{' '}
-									<span className={`${getStatusScheduleTime()}`}>{moment(dataRow.event.end).format('HH:mm')}</span>
+									{/* <span className={`${getStatusScheduleTime()}`}>{moment(dataRow.event.start).format('HH:mm')}</span>{' '}
+									<span className={`${getStatusScheduleTime()}`}>{moment(dataRow.event.end).format('HH:mm')}</span> */}
+									<span className={`${getStatusScheduleTime()}`}>
+										{moment(props?.dataRow?.event?._def?.extendedProps.StartTime).format('HH:mm')}
+									</span>{' '}
+									<span className={`${getStatusScheduleTime()}`}>
+										{moment(props?.dataRow?.event?._def?.extendedProps.EndTime).format('HH:mm')}
+									</span>
+									{/* {moment(props?.dataRow?.event?._def?.extendedProps.StartTime).format('HH:mm')} -{' '}
+								{moment(props?.dataRow?.event?._def?.extendedProps.EndTime).format('HH:mm')} */}
 									<Avatar
 										className="w-[24px] h-[24px]  bg-[#939292]"
 										src={dataRow.event.extendedProps?.TeacherAvatar || '/default-avatar.png'}
@@ -197,8 +210,14 @@ const ScheduleCalendar = (props) => {
 							<button
 								className={`${getStatusSchedulePoppover()} !bg-white !text-[#FFF] font-semibold  w-full p-[6px] flex justify-start gap-2`}
 							>
-								<span className={`${getStatusScheduleTime()}`}>{moment(dataRow.event.start).format('HH:mm')}</span>{' '}
-								<span className={`${getStatusScheduleTime()}`}>{moment(dataRow.event.end).format('HH:mm')}</span>
+								{/* <span className={`${getStatusScheduleTime()}`}>{moment(dataRow.event.start).format('HH:mm')}</span>{' '}
+								<span className={`${getStatusScheduleTime()}`}>{moment(dataRow.event.end).format('HH:mm')}</span> */}
+								<span className={`${getStatusScheduleTime()}`}>
+									{moment(props?.dataRow?.event?._def?.extendedProps.StartTime).format('HH:mm')}
+								</span>{' '}
+								<span className={`${getStatusScheduleTime()}`}>
+									{moment(props?.dataRow?.event?._def?.extendedProps.EndTime).format('HH:mm')}
+								</span>
 							</button>
 						</div>
 						<div className="wrapper-schedule wrapper-schedule-mobile">

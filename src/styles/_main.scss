@@ -534,7 +534,7 @@ button {
 		.ant-input-search-button {
 			height: 36px;
 			border-radius: 0px 6px 6px 0px !important;
-			.anticon{
+			.anticon {
 				color: #192641;
 			}
 		}
@@ -798,4 +798,16 @@ button {
 			align-items: center;
 		}
 	}
+}
+
+// .fc-timeGridWeek-view {
+// 	.fc-scrollgrid-section-liquid {
+// 		display: none !important;
+// 	}
+// }
+
+.fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event {
+	background-color: unset !important;
+	background: unset !important;
+	border-color: transparent !important;
 }
