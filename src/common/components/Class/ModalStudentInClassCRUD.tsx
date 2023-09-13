@@ -1,4 +1,4 @@
-import { Form, Modal, Switch } from 'antd'
+import { Avatar, Form, Modal, Select, Switch } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { studentInClassApi } from '~/api/student-in-class'
@@ -20,7 +20,7 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 	const [isLoading, setIsLoading] = useState(false)
 	const [loadingStudent, setLoadingStudent] = useState(false)
 	const [form] = Form.useForm()
-	const [student, setStudent] = useState<{ title: string; value: string }[]>([])
+	const [student, setStudent] = useState<any[]>([])
 	const [checkedWarning, setCheckWarning] = useState(false)
 
 	const onClose = () => {
@@ -42,14 +42,14 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 			setLoadingStudent(true)
 			const res = await studentInClassApi.getStudentAvailable(router?.query?.class)
 			if (res.status === 200) {
-				let temp = []
-				res?.data?.data?.forEach((item) => {
-					temp.push({
-						title: `[${item?.UserCode}] - ${item?.FullName}  - ${item?.CurrentClassName !== null ? item?.CurrentClassName : 'Chưa có lớp'}`,
-						value: item?.UserInformationId
-					})
-				})
-				setStudent(temp)
+				// let temp = []
+				// res?.data?.data?.forEach((item) => {
+				// 	temp.push({
+				// 		title: `[${item?.UserCode}] - ${item?.FullName}  - ${item?.CurrentClassName !== null ? item?.CurrentClassName : 'Chưa có lớp'}`,
+				// 		value: item?.UserInformationId
+				// 	})
+				// })
+				setStudent(res.data.data)
 				setLoadingStudent(false)
 			}
 			if (res.status == 204) {
@@ -242,7 +242,7 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 									{mode === 'add' && (
 										<>
 											<div className="col-span-2">
-												<SelectField
+												{/* <SelectField
 													label="Học viên"
 													name="StudentIds"
 													isLoading={loadingStudent}
@@ -251,7 +251,26 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 													isRequired
 													rules={[{ required: true, message: 'Bạn không được để trống' }]}
 													mode="multiple"
-												/>
+												/> */}
+												<Form.Item name={'StudentIds'} label="Chọn học viên" rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}>
+													<Select mode="multiple" maxTagCount={2} allowClear>
+														{student?.map((item: any) => {
+															return (
+																<Select.Option value={item?.UserInformationId} label={item?.FullName} key={item?.UserInformationId}>
+																	<div className="selected-option">{item?.FullName}</div>
+																	<div className="select-option-propdown">
+																		<div className="ml-[8px]">
+																			<div className="font-[500]">
+																				{item?.FullName} - {item?.UserCode}
+																			</div>
+																		<div>Lớp hiện tại: {item?.CurrentClassName ? item?.CurrentClassName : "Chưa có lớp"}</div>
+																		</div>
+																	</div>
+																</Select.Option>
+															)
+														})}
+													</Select>
+												</Form.Item>
 											</div>
 
 											<div className="col-span-2">

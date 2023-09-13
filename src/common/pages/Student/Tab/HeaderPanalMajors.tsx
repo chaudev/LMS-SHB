@@ -75,7 +75,7 @@ const HeaderPanalMajors = ({ Id, majorsName, status, statusName, paymentTypeName
 				Id,
 				GiftIds: values.GiftIds.join(',')
 			}
-			console.log('dataSumit: ', dataSumit)
+			
 			const res = await majorsRegistrationApi.updatemajorsRegistration(dataSumit)
 			if (res.status === 200) {
 				setIsModalOpen(false)
@@ -92,6 +92,7 @@ const HeaderPanalMajors = ({ Id, majorsName, status, statusName, paymentTypeName
 			<Modal
 				title="Cập nhật ngành học"
 				open={isModalOpen}
+				closable={false}
 				footer={
 					<ModalFooter
 						// hideOK={scheduleList?.length < 1}

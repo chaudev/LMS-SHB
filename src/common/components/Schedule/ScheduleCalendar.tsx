@@ -148,7 +148,7 @@ const ScheduleCalendar = (props) => {
 											<span className="whitespace-pre-line ml-1">{dataRow.event.extendedProps.Note}</span>
 										</p>
 
-										<ZoomManager data={dataRow.event.extendedProps} onRefresh={onRefresh} />
+										{/* <ZoomManager data={dataRow.event.extendedProps} onRefresh={onRefresh} /> */}
 									</div>
 								}
 							>

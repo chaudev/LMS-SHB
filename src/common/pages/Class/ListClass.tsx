@@ -318,7 +318,7 @@ const ListClass = () => {
 												borderColor: currentStyle == 0 ? '#1b73e8' : '#bdbdbd'
 											}}
 										>
-											<IoGrid className="cursor-pointer" size={20} color={currentStyle == 0 ? '#fff' : '#000'} />
+											<ImList className="cursor-pointer" size={20} color={currentStyle == 0 ? '#fff' : '#000'} />
 										</div>
 										<div
 											className="border-[1px] border-l-[0px] border-[#bdbdbd] h-[32px] w-[32px] flex items-center justify-center cursor-pointer rounded-r-[4px]"
@@ -328,14 +328,14 @@ const ListClass = () => {
 												borderColor: currentStyle == 1 ? '#1b73e8' : '#bdbdbd'
 											}}
 										>
-											<ImList className="cursor-pointer" size={16} color={currentStyle == 1 ? '#fff' : '#000'} />
+											<IoGrid className="cursor-pointer" size={16} color={currentStyle == 1 ? '#fff' : '#000'} />
 										</div>
 									</div>
 								</div>
 							}
 						>
 							<div className="course-list-content">
-								{currentStyle == 0 ? (
+								{currentStyle == 1 ? (
 									<ClassListContent
 										totalRow={totalRow}
 										isLoading={isLoading}
