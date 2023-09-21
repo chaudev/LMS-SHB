@@ -179,7 +179,7 @@ const ScheduleCalendar = (props) => {
 											<span className="title">GV:</span> {dataRow.event.extendedProps.TeacherName}
 										</p>
 										<p className="text-gv-in-calendar " style={{ color: '#212121', alignSelf: 'start' }}>
-											<span className="title">Lớp:</span>
+											<span className="title">Lớp: </span>
 											<Link
 												className="text-decoration-hover"
 												href={`/class/list-class/detail/?class=${dataRow.event.extendedProps.ClassId}`}
@@ -218,7 +218,7 @@ const ScheduleCalendar = (props) => {
 								<span>{moment(props?.dataRow?.event?._def?.extendedProps.EndTime).format('HH:mm')}</span>
 								<div className="wrapper-content-schedule">
 									<p>
-										<span className="title">Lớp:</span> {dataRow.event.extendedProps.ClassName}
+										<span className="title">Lớp: </span> {dataRow.event.extendedProps.ClassName}
 									</p>
 									<p>
 										<span className="title">Trạng thái:</span> {dataRow.event.extendedProps.StatusName}
@@ -304,7 +304,7 @@ const ScheduleCalendar = (props) => {
 											fontWeight: '500'
 										}}
 									>
-										<span className="title">Lớp:</span>
+										<span className="title">Lớp: </span>
 										<Link className="text-decoration-hover" href={`/class/list-class/detail/?class=${dataRow.event.extendedProps.ClassId}`}>
 											{dataRow.event.extendedProps.ClassName}
 										</Link>
