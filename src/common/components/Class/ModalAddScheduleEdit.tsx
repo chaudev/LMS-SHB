@@ -1,7 +1,7 @@
-import { Form, InputNumber, Modal, Select, Tooltip } from 'antd'
+import { DatePicker, Form, InputNumber, Modal, Select, Tooltip } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiOutlineWarning } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { scheduleApi } from '~/api/schedule'
@@ -11,12 +11,11 @@ import { setRoomEdit, setTeacherEdit } from '~/store/classReducer'
 import DatePickerField from '../FormControl/DatePickerField'
 import TextBoxField from '../FormControl/TextBoxField'
 import PrimaryButton from '../Primary/Button'
-import { classApi } from '~/api/class'
 
+import { RiDeleteBin6Line } from 'react-icons/ri'
 import { formRequired } from '~/common/libs/others/form'
 import ModalFooter from '../Custom/Modal/ModalFooter'
-import { DeleteOutlined } from '@ant-design/icons'
-import { RiDeleteBin6Line } from 'react-icons/ri'
+import dayjs from 'dayjs'
 
 type Schedule = {
 	Id: string
@@ -31,8 +30,10 @@ type Schedule = {
 
 const ModalAddScheduleEdit = (props) => {
 	const { checkTeacherAvailable, checkRoomAvailable, getListSchedule, paramsSchedule } = props
-	const [openModalAdd, setOpenModalAdd] = useState(false)
+	const [openModalAdd, setOpenModalAdd] = useState<boolean>(false)
 	const [isLoading, setIsLoading] = useState(false)
+	const [stydyTime, setStydyTime] = useState<any>()
+	const [onShow, setOnShow] = useState<number>(0)
 	const [scheduleList, setScheduleList] = useState<Schedule[]>([])
 	const [form] = Form.useForm()
 	const router = useRouter()
@@ -42,6 +43,19 @@ const ModalAddScheduleEdit = (props) => {
 	const { class: slug, BranchId, CurriculumId, Type } = router.query
 
 	const infoClass = useSelector((state: RootState) => state.class.infoClass)
+
+	useEffect(() => {
+		getStudyTime()
+	}, [])
+
+	const getStudyTime = async () => {
+		try {
+			const res = await scheduleApi.getStudyTime()
+			if (res.status === 200) {
+				setStydyTime(res.data.data)
+			}
+		} catch (error) {}
+	}
 
 	const getDataAvailable = async () => {
 		if (!!form.getFieldValue('StartTime') && !!form.getFieldValue('EndTime')) {
@@ -65,28 +79,24 @@ const ModalAddScheduleEdit = (props) => {
 			(e) => new Date(e.StartTime).getTime() <= new Date(start).getTime() && new Date(e.EndTime).getTime() >= new Date(end).getTime()
 		)
 		if (between > -1) {
-			
 			return false
 		} else {
 			const include = scheduleList?.findIndex(
 				(e) => new Date(e.StartTime).getTime() > new Date(start).getTime() && new Date(e.EndTime).getTime() < new Date(end).getTime()
 			)
 			if (include > -1) {
-				
 				return false
 			} else {
 				const include_right = scheduleList?.findIndex(
 					(e) => new Date(e.StartTime).getTime() >= new Date(start).getTime() && new Date(e.StartTime).getTime() <= new Date(end).getTime()
 				)
 				if (include_right > -1) {
-					
 					return false
 				} else {
 					const include_left = scheduleList?.findIndex(
 						(e) => new Date(e.EndTime).getTime() >= new Date(start).getTime() && new Date(e.EndTime).getTime() <= new Date(end).getTime()
 					)
 					if (include_left > -1) {
-						
 						return false
 					} else {
 						console.log(5)
@@ -184,6 +194,45 @@ const ModalAddScheduleEdit = (props) => {
 		}
 	}
 
+	const onChangeDate = (v) => {
+		const date = new Date(v).toLocaleDateString()
+		const startTime = form.getFieldValue('StartTime')
+		const dateTime = new Date(startTime).toLocaleDateString()
+		if(!!dateTime){
+			form.setFieldValue('StartTime', dayjs(`${date} 00:00`, 'MM/DD/YYYY HH:mm'))
+		}
+	
+		if (onShow < 2) {
+			setOnShow(onShow + 1)
+		}
+	}
+	const handleChange = (v: string) => {
+		console.log('Data quis haha: ', v)
+		const startTime = form.getFieldValue('StartTime')
+		const date = new Date(startTime).toLocaleDateString()
+		const time = v?.split('&')
+		// var followingDay = new Date(new Date(startTime).getTime() + 86400000);
+		// console.log('quisssss: ',date,  followingDay.toLocaleDateString())
+		if (date) {
+			const hhS = time[0].split(':')[0]
+			const hhE = time[1].split(':')[0]
+			form.setFieldValue('StartTime', dayjs(`${date} ${time[0]}`, 'MM/DD/YYYY HH:mm'))
+			if (Number(hhS) <= Number(hhE)) {
+				form.setFieldValue('EndTime', dayjs(`${date} ${time[1]}`, 'MM/DD/YYYY HH:mm'))
+			} else {
+				var followingDay = new Date(new Date(date).getTime() + 86400000).toLocaleDateString()
+
+				form.setFieldValue('EndTime', dayjs(`${followingDay} ${time[1]}`, 'MM/DD/YYYY HH:mm'))
+			}
+		} else {
+			const currenDate = new Date().toLocaleDateString()
+			form.setFieldValue('StartTime', dayjs(`${currenDate} ${time[0]}`, 'MM/DD/YYYY HH:mm'))
+		}
+		if (onShow < 2) {
+			setOnShow(onShow + 1)
+		}
+	}
+
 	return (
 		<>
 			<PrimaryButton onClick={() => setOpenModalAdd(true)} className="ml-3" background="green" type="button" icon="add">
@@ -212,25 +261,70 @@ const ModalAddScheduleEdit = (props) => {
 							flex: 55
 						}}
 					>
+						<div
+							style={{
+								display: 'flex',
+								width: '100%',
+								justifyContent: 'space-between',
+								flex: 1,
+								marginBottom: 20
+							}}
+						>
+							<div
+								style={{
+									flex: 50
+								}}
+							>
+								<div style={{ fontWeight: '600', marginBottom: 6 }}>Ngày học</div>
+								<DatePicker
+									format="DD/MM/YYYY"
+									placeholder="Chọn ngày học"
+									onChange={onChangeDate}
+									style={{ width: '100%', borderRadius: 6 }}
+								/>
+							</div>
+							<div
+								style={{
+									flex: 50,
+									marginLeft: 20
+								}}
+							>
+								<div style={{ fontWeight: '600', marginBottom: 6 }}>Ca học</div>
+								<Select style={{ width: '100%' }} placeholder="Chọn ca học" onChange={(v) => handleChange(v)}>
+									{stydyTime?.map((e) => {
+										return (
+											<Select.Option key={e.Id} label={e.Name} value={`${e.StartTime}&${e.EndTime}`}>
+												{e.Name}
+											</Select.Option>
+										)
+									})}
+								</Select>
+							</div>
+						</div>
+
 						<Form form={form} layout="vertical" onFinish={onSubmit}>
-							<DatePickerField
-								mode="single"
-								showTime={'HH:mm'}
-								picker="showTime"
-								format="DD/MM/YYYY HH:mm"
-								label="Giờ bắt đầu"
-								name="StartTime"
-								onChange={getDataAvailable}
-							/>
-							<DatePickerField
-								mode="single"
-								showTime={'HH:mm'}
-								picker="showTime"
-								format="DD/MM/YYYY HH:mm"
-								label="Giờ kết thúc"
-								name="EndTime"
-								onChange={getDataAvailable}
-							/>
+							{onShow == 2 && (
+								<>
+									<DatePickerField
+										mode="single"
+										showTime={'HH:mm'}
+										picker="showTime"
+										format="DD/MM/YYYY HH:mm"
+										label="Giờ bắt đầu"
+										name="StartTime"
+										onChange={getDataAvailable}
+									/>
+									<DatePickerField
+										mode="single"
+										showTime={'HH:mm'}
+										picker="showTime"
+										format="DD/MM/YYYY HH:mm"
+										label="Giờ kết thúc"
+										name="EndTime"
+										onChange={getDataAvailable}
+									/>
+								</>
+							)}
 							<Form.Item name="TeacherId" label="Giáo viên" rules={formRequired}>
 								<Select placeholder="Chọn giáo viên">
 									{teacher.map((item) => {

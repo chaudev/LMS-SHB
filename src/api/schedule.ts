@@ -7,6 +7,9 @@ export const scheduleApi = {
 			params: scheduleParams
 		})
 	},
+	getStudyTime() {
+		return instance.get<IApiResultData<any>>(`${url}/study-time-available`)
+	},
 	add(data) {
 		return instance.post(url, data)
 	},

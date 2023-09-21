@@ -800,7 +800,7 @@ button {
 		}
 	}
 }
-.ant-select-selector{
+.ant-select-selector {
 	width: 100%;
 }
 
@@ -810,7 +810,6 @@ button {
 	border-color: #fff !important;
 }
 
-
 .text-gv-in-calendar {
 	@media screen and (max-width: 1600px) {
 		text-align: start;
@@ -818,6 +817,21 @@ button {
 	}
 }
 
-.slot-event-calendar-cc{
+.slot-event-calendar-cc {
 	height: 0px !important;
+}
+
+.text-class-in-calendar {
+	&:hover {
+		text-decoration: underline !important;
+	}
+	@media screen and (max-width: 1600px) {
+		text-align: start;
+		white-space: pre-wrap;
+	}
+}
+.text-decoration-hover {
+	&:hover {
+		text-decoration: underline !important;
+	}
 }

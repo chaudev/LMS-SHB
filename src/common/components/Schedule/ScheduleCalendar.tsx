@@ -178,7 +178,16 @@ const ScheduleCalendar = (props) => {
 										<p className="text-gv-in-calendar" style={{ color: '#212121', alignSelf: 'start' }}>
 											<span className="title">GV:</span> {dataRow.event.extendedProps.TeacherName}
 										</p>
-										{!!dataRow.event.extendedProps?.RoomId ? (
+										<p className="text-gv-in-calendar " style={{ color: '#212121', alignSelf: 'start' }}>
+											<span className="title">Lớp:</span>
+											<Link
+												className="text-decoration-hover"
+												href={`/class/list-class/detail/?class=${dataRow.event.extendedProps.ClassId}`}
+											>
+												{dataRow.event.extendedProps.ClassName}
+											</Link>
+										</p>
+										{/* {!!dataRow.event.extendedProps?.RoomId ? (
 											<p className="text-gv-in-calendar" style={{ color: '#212121', alignSelf: 'start' }}>
 												<span className="title">Phòng:</span> {dataRow.event.extendedProps.RoomName}
 											</p>
@@ -186,7 +195,7 @@ const ScheduleCalendar = (props) => {
 											<p className="text-gv-in-calendar" style={{ color: '#212121', alignSelf: 'start' }}>
 												<span className="title">Phòng:</span> Online
 											</p>
-										)}
+										)} */}
 									</div>
 									{/* {moment(props?.dataRow?.event?._def?.extendedProps.StartTime).format('HH:mm')} -{' '}
 								{moment(props?.dataRow?.event?._def?.extendedProps.EndTime).format('HH:mm')} */}
@@ -272,24 +281,63 @@ const ScheduleCalendar = (props) => {
 								</div>
 								<div style={{ border: '0.5px solid #F0F2F4', margin: '2px 0', width: '100%' }} />
 								<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'start !important', width: '100%' }}>
-									<p style={{ color: '#212121', alignSelf: 'start', whiteSpace: 'pre-wrap', textAlign: 'start', fontSize: 11.9, fontWeight: '500' }}>
+									<p
+										style={{
+											color: '#212121',
+											alignSelf: 'start',
+											whiteSpace: 'pre-wrap',
+											textAlign: 'start',
+											fontSize: 11.9,
+											fontWeight: '500'
+										}}
+									>
 										<span className="title">GV:</span> {dataRow.event.extendedProps.TeacherName}
 									</p>
-									{!!dataRow.event.extendedProps?.RoomId ? (
+									<p
+										className="text-gv-in-calendar"
+										style={{
+											color: '#212121',
+											alignSelf: 'start',
+											whiteSpace: 'pre-wrap',
+											textAlign: 'start',
+											fontSize: 11.9,
+											fontWeight: '500'
+										}}
+									>
+										<span className="title">Lớp:</span>
+										<Link className="text-decoration-hover" href={`/class/list-class/detail/?class=${dataRow.event.extendedProps.ClassId}`}>
+											{dataRow.event.extendedProps.ClassName}
+										</Link>
+									</p>
+									{/* {!!dataRow.event.extendedProps?.RoomId ? (
 										<p
 											className="text-gv-in-calendar"
-											style={{ color: '#212121', alignSelf: 'start', whiteSpace: 'pre-wrap', textAlign: 'start', fontSize:  11.9, fontWeight: '500' }}
+											style={{
+												color: '#212121',
+												alignSelf: 'start',
+												whiteSpace: 'pre-wrap',
+												textAlign: 'start',
+												fontSize: 11.9,
+												fontWeight: '500'
+											}}
 										>
-											<span className="title">Phòng:</span> {dataRow.event.extendedProps.RoomName}
+											<span className="title">Phòngg:</span> {dataRow.event.extendedProps.RoomName}
 										</p>
 									) : (
 										<p
 											className="text-gv-in-calendar"
-											style={{ color: '#212121', alignSelf: 'start', whiteSpace: 'pre-wrap', textAlign: 'start', fontSize:  11.9, fontWeight: '500' }}
+											style={{
+												color: '#212121',
+												alignSelf: 'start',
+												whiteSpace: 'pre-wrap',
+												textAlign: 'start',
+												fontSize: 11.9,
+												fontWeight: '500'
+											}}
 										>
 											<span className="title">Phòng:</span> Online
 										</p>
-									)}
+									)} */}
 								</div>
 							</button>
 						</div>

@@ -159,8 +159,11 @@ const Schedule = () => {
 					events={listSchedule}
 					eventContent={(eventInfo) => <ScheduleCalendar dataRow={eventInfo} onRefresh={getAllSchedule} setIsHidden={setIsHidden} />}
 					eventTextColor="white"
-					eventsSet={(data) => setTimeStamp(new Date().getTime())}
-					eventChange={(data) => console.log('DATA: ', data)}
+					eventsSet={(data) => {
+						setTimeStamp(new Date().getTime())
+					}}
+					// eventChange={(data) => console.log('DATA: ', data)}
+
 					eventClassNames="ccc-event"
 					slotLaneClassNames="slot-event-calendar-cc"
 					headerToolbar={{ start: 'prev today next', center: 'title', end: 'dayGridMonth,timeGridWeek' }}

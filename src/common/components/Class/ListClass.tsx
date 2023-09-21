@@ -172,7 +172,7 @@ export const ListClass: React.FC<IClassListContent> = ({
 
 								<div className="inner-body-class-list">
 									<div className="inner-body-class-list-left">
-										<div >
+										<div>
 											{item?.Type !== 3 ? (
 												<Link href={returnPathName(item)}>
 													<Tooltip title={item?.Name}>
@@ -254,11 +254,9 @@ export const ListClass: React.FC<IClassListContent> = ({
 									</div>
 									<div className="inner-body-class-list-after-center">
 										<p>
-											Số buổi học: <span>{item.TotalLesson}</span>
+											Số buổi học: <span> {item.LessonCompleted || 0}</span>/<span>{item.TotalLesson}</span>
 										</p>
-										<p>
-											Số buổi đã học: <span>{item.LessonCompleted || 0}</span>
-										</p>
+										<p>GV: {item?.TeacherName || ''}</p>
 										<Popover content="Số học viên">
 											<div className="i">
 												<div className="icon">
