@@ -16,6 +16,12 @@ import { RiDeleteBin6Line } from 'react-icons/ri'
 import { formRequired } from '~/common/libs/others/form'
 import ModalFooter from '../Custom/Modal/ModalFooter'
 import dayjs from 'dayjs'
+import weekday from 'dayjs/plugin/weekday'
+import localeData from 'dayjs/plugin/localeData'
+
+dayjs.extend(weekday)
+
+dayjs.extend(localeData)
 
 type Schedule = {
 	Id: string
@@ -33,6 +39,8 @@ const ModalAddScheduleEdit = (props) => {
 	const [openModalAdd, setOpenModalAdd] = useState<boolean>(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [stydyTime, setStydyTime] = useState<any>()
+	const [timeStudySelect, setTimeStudySelect] = useState<any>(null)
+	const [studyDaySelect, setStudyDaySelect] = useState<any>(null)
 	const [onShow, setOnShow] = useState<number>(0)
 	const [scheduleList, setScheduleList] = useState<Schedule[]>([])
 	const [form] = Form.useForm()
@@ -149,6 +157,9 @@ const ModalAddScheduleEdit = (props) => {
 	}
 
 	function _cancel() {
+		setOnShow(0)
+		setStudyDaySelect(null)
+		setTimeStudySelect(null)
 		form.resetFields()
 		setTeacherEdit([])
 		setRoomEdit([])
@@ -195,19 +206,27 @@ const ModalAddScheduleEdit = (props) => {
 	}
 
 	const onChangeDate = (v) => {
+		setStudyDaySelect(v)
 		const date = new Date(v).toLocaleDateString()
 		const startTime = form.getFieldValue('StartTime')
 		const dateTime = new Date(startTime).toLocaleDateString()
-		if(!!dateTime){
+		if (!!dateTime) {
+			if (timeStudySelect) {
+				form.setFieldValue('StartTime', dayjs(`${date} ${timeStudySelect.split('&')[0]}`, 'MM/DD/YYYY HH:mm'))
+			} else {
+				form.setFieldValue('StartTime', dayjs(`${date} 00:00`, 'MM/DD/YYYY HH:mm'))
+			}
+		} else {
 			form.setFieldValue('StartTime', dayjs(`${date} 00:00`, 'MM/DD/YYYY HH:mm'))
 		}
-	
+
 		if (onShow < 2) {
 			setOnShow(onShow + 1)
 		}
 	}
 	const handleChange = (v: string) => {
-		console.log('Data quis haha: ', v)
+		setTimeStudySelect(v)
+		// console.log('Data quis haha: ', v)
 		const startTime = form.getFieldValue('StartTime')
 		const date = new Date(startTime).toLocaleDateString()
 		const time = v?.split('&')
@@ -277,6 +296,7 @@ const ModalAddScheduleEdit = (props) => {
 							>
 								<div style={{ fontWeight: '600', marginBottom: 6 }}>Ngày học</div>
 								<DatePicker
+									value={studyDaySelect}
 									format="DD/MM/YYYY"
 									placeholder="Chọn ngày học"
 									onChange={onChangeDate}
@@ -290,7 +310,13 @@ const ModalAddScheduleEdit = (props) => {
 								}}
 							>
 								<div style={{ fontWeight: '600', marginBottom: 6 }}>Ca học</div>
-								<Select style={{ width: '100%' }} placeholder="Chọn ca học" onChange={(v) => handleChange(v)}>
+								<Select
+									disabled={studyDaySelect === null}
+									value={timeStudySelect}
+									style={{ width: '100%' }}
+									placeholder="Chọn ca học"
+									onChange={(v) => handleChange(v)}
+								>
 									{stydyTime?.map((e) => {
 										return (
 											<Select.Option key={e.Id} label={e.Name} value={`${e.StartTime}&${e.EndTime}`}>
