@@ -35,3 +35,7 @@ export const scheduleApi = {
 		return instance.put(`${url}/rate-teacher`, data, {})
 	}
 }
+
+export const checkTime = (data) =>{
+	return instance.post(`${url}/validate`, data)
+}

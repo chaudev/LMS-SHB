@@ -33,6 +33,7 @@ import loadingJson from '~/common/components/json/loading-calendar.json'
 import { setBreadcrumb } from '~/store/globalState'
 import Head from 'next/head'
 import appConfigs from '~/appConfig'
+import ModalMutipleAddSchedule from './ModalMutipleAddSchedule'
 
 const CalenderClassEdit = () => {
 	const router = useRouter()
@@ -46,6 +47,8 @@ const CalenderClassEdit = () => {
 	const [timeStamp, setTimeStamp] = useState(0)
 	const thisCalendar = useRef(null)
 	const dispatch = useDispatch()
+
+	const [daySelected, setDaySelected] = useState<any>()
 
 	const getClassId = async () => {
 		try {
@@ -268,7 +271,7 @@ const CalenderClassEdit = () => {
 				className="card-calendar"
 				extra={
 					<>
-						{ user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
+						{user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
 							<>
 								<PrimaryButton background="yellow" type="button" icon="edit" onClick={() => dispatch(setIsEditSchedule(!isEditSchedule))}>
 									{isEditSchedule ? 'Hủy' : 'Chỉnh sửa'}
@@ -277,6 +280,14 @@ const CalenderClassEdit = () => {
 									checkTeacherAvailable={checkTeacherAvailable}
 									checkRoomAvailable={checkRoomAvailable}
 									getListSchedule={getListSchedule}
+									paramsSchedule={paramsSchedule}
+								/>
+								<ModalMutipleAddSchedule
+									checkTeacherAvailable={checkTeacherAvailable}
+									checkRoomAvailable={checkRoomAvailable}
+									getListSchedule={getListSchedule}
+									daySelected={daySelected}
+									isEditSchedule={isEditSchedule}
 									paramsSchedule={paramsSchedule}
 								/>
 							</>
@@ -292,7 +303,11 @@ const CalenderClassEdit = () => {
 						plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 						initialView="dayGridMonth"
 						droppable={true}
-						selectable={true}
+						selectable
+						select={(info) => {
+							console.log('Date quiss: ',[info.start, info.end], [info.startStr, info.endStr] )
+							setDaySelected([info.startStr, info.endStr])
+						}}
 						selectMirror={true}
 						editable={isEditSchedule}
 						weekends={true}

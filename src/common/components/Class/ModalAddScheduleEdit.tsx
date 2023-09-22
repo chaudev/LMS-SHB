@@ -116,7 +116,8 @@ const ModalAddScheduleEdit = (props) => {
 	}
 
 	const onSubmit = async (data) => {
-		if (moment(data.StartTime).format() < moment(data.EndTime).format()) {
+		// console.log('Date quis: ', new Date(data.StartTime).getTime())
+		if (new Date(data.StartTime).getTime() < new Date(data.EndTime).getTime()) {
 			let DATA_CHECK = {
 				ClassId: parseInt(slug.toString()),
 				RoomId: data.RoomId || 0,

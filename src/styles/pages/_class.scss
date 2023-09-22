@@ -441,7 +441,7 @@
 .schedule-list-container {
 	flex: 45;
 	// border: 1px solid #dadada;
-	margin-left: 20px;
+	// margin-left: 20px;
 	padding: 10px 10px 10px 10px;
 	max-height: 60vh;
 	overflow-x: hidden;
@@ -456,6 +456,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		cursor: pointer;
 		// border-bottom: 1px solid #dadada;
 		margin-bottom: 10px;
 		padding: 10px 15px;
@@ -466,7 +467,7 @@
 		&:hover {
 			transform: translateY(-2px);
 			// box-shadow: 0 1px 5px 0 #1b73e8;
-			background-color: #e3f2fd;
+			background-color: #b7dcf7 !important;
 		}
 	}
 	.schedule-list-footer {

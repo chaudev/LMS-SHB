@@ -62,7 +62,7 @@ const Schedule = () => {
 						allDay: true
 					}
 				})
-				console.log(newListSchedule)
+				console.log("newListSchedule: ", newListSchedule)
 
 				setListSchedule(newListSchedule)
 			}
@@ -153,7 +153,7 @@ const Schedule = () => {
 						let DATA_GET = { ...paramsSearch, from: moment(data.start).format(), to: moment(data.end).format() }
 						setParamsSearch(DATA_GET)
 					}}
-					contentHeight={isHidden ? 0 : 'auto'}
+					// contentHeight={isHidden ? 0 : 'auto'}
 					selectMirror={true}
 					weekends={true}
 					events={listSchedule}
