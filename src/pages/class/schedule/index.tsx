@@ -153,7 +153,7 @@ const Schedule = () => {
 						let DATA_GET = { ...paramsSearch, from: moment(data.start).format(), to: moment(data.end).format() }
 						setParamsSearch(DATA_GET)
 					}}
-					// contentHeight={isHidden ? 0 : 'auto'}
+					contentHeight={isHidden ? 0 : 'auto'}
 					selectMirror={true}
 					weekends={true}
 					events={listSchedule}
@@ -163,7 +163,7 @@ const Schedule = () => {
 						setTimeStamp(new Date().getTime())
 					}}
 					// eventChange={(data) => console.log('DATA: ', data)}
-
+				
 					eventClassNames="ccc-event"
 					slotLaneClassNames="slot-event-calendar-cc"
 					headerToolbar={{ start: 'prev today next', center: 'title', end: 'dayGridMonth,timeGridWeek' }}
