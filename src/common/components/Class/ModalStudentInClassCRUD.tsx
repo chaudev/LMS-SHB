@@ -256,7 +256,7 @@ export const ModalStudentInClassCRUD: React.FC<IModalStudentInClass> = ({ dataRo
 													<Select mode="multiple" maxTagCount={2} allowClear showSearch placeholder="Chọn học viên">
 														{student?.map((item: any) => {
 															return (
-																<Select.Option value={item?.FullName} label={item?.FullName} key={item?.UserInformationId}>
+																<Select.Option value={item?.UserInformationId} label={item?.FullName} key={item?.UserInformationId}>
 																	<div className="selected-option">{item?.FullName}</div>
 																	<div className="select-option-propdown">
 																		<div className="ml-[8px]">
