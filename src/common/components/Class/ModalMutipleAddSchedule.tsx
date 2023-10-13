@@ -310,14 +310,12 @@ const ModalMutipleAddSchedule = (props) => {
 		var date1 = new Date(studyDaySelect[0]).toLocaleDateString()
 		var date2 = new Date(studyDaySelect[1]).toLocaleDateString()
 		var time = v.split('&')
-		console.log('data: ', `${date1} ${time[0]}`)
 		setTimeStudySelect(v)
 		checkDataAvailable(moment(new Date(`${date1} ${time[0]}`)).format(), moment(new Date(`${date2} ${time[1]}`)).format())
 	}
 
 	const handleGenerate = () => {
 		setScheduleList([])
-		let DATA_SUBMIT = []
 		let dateTeam = new Date(studyDaySelect[0])
 		const timeStudy = timeStudySelect.split('&')
 		if (studyDaySelect && teacherId && timeStudySelect) {

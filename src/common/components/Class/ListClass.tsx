@@ -164,7 +164,7 @@ export const ListClass: React.FC<IClassListContent> = ({
 			<div className="content-class-list">
 				{dataSource.length > 0 &&
 					dataSource?.map((item: IClass) => (
-						<div className="item-class-list">
+						<div className="item-class-list bg-[#fff]">
 							<div className="inner-item-class-list">
 								<div className="image">
 									<AvatarComponent url={item.Thumbnail} type="class" />

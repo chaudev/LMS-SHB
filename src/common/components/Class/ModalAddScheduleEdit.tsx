@@ -70,14 +70,14 @@ const ModalAddScheduleEdit = (props) => {
 			await checkTeacherAvailable({
 				branchId: BranchId || infoClass?.BranchId,
 				curriculumId: CurriculumId || infoClass?.CurriculumId,
-				startTime: moment(form.getFieldValue('StartTime')).format(),
-				endTime: moment(form.getFieldValue('EndTime')).format()
+				startTime: moment(new Date(form.getFieldValue('StartTime'))).format(),
+				endTime: moment(new Date(form.getFieldValue('EndTime'))).format()
 			})
 
 			await checkRoomAvailable({
 				branchId: BranchId || infoClass?.BranchId,
-				startTime: moment(form.getFieldValue('StartTime')).format(),
-				endTime: moment(form.getFieldValue('EndTime')).format()
+				startTime: moment(new Date(form.getFieldValue('StartTime'))).format(),
+				endTime: moment(new Date(form.getFieldValue('EndTime'))).format()
 			})
 		}
 	}
@@ -116,13 +116,12 @@ const ModalAddScheduleEdit = (props) => {
 	}
 
 	const onSubmit = async (data) => {
-		// console.log('Date quis: ', new Date(data.StartTime).getTime())
 		if (new Date(data.StartTime).getTime() < new Date(data.EndTime).getTime()) {
 			let DATA_CHECK = {
 				ClassId: parseInt(slug.toString()),
 				RoomId: data.RoomId || 0,
-				StartTime: moment(data.StartTime).format(),
-				EndTime: moment(data.EndTime).format(),
+				StartTime: moment(new Date(data.StartTime)).format(),
+				EndTime: moment(new Date(data.EndTime)).format(),
 				TeacherId: data.TeacherId.split('-')[0]
 			}
 			try {
@@ -165,6 +164,7 @@ const ModalAddScheduleEdit = (props) => {
 		setTeacherEdit([])
 		setRoomEdit([])
 		setOpenModalAdd(false)
+		setScheduleList([])
 	}
 
 	const fromatTime = (date: any) => {
@@ -176,14 +176,14 @@ const ModalAddScheduleEdit = (props) => {
 	}
 
 	const handleSave = async () => {
-		setIsLoading(true)
+		// setIsLoading(true)
 		const DATA_SUBMIT = []
 		scheduleList?.map((e) =>
 			DATA_SUBMIT.push({
 				ClassId: parseInt(slug.toString()),
 				RoomId: e.RoomId || 0,
-				StartTime: moment(e.StartTime).format(),
-				EndTime: moment(e.EndTime).format(),
+				StartTime: moment(new Date(e.StartTime)).format(),
+				EndTime: moment(new Date(e.EndTime)).format(),
 				TeacherId: e.TeacherId.split('-')[0],
 				Note: e.Note,
 				TeachingFee: 0
@@ -200,7 +200,9 @@ const ModalAddScheduleEdit = (props) => {
 				ShowNoti('success', res.data.message)
 			}
 			setIsLoading(false)
+			_cancel()
 		} catch (err) {
+			_cancel()
 			setIsLoading(false)
 			ShowNoti('error', err.message)
 		}
@@ -220,22 +222,20 @@ const ModalAddScheduleEdit = (props) => {
 		} else {
 			form.setFieldValue('StartTime', dayjs(`${date} 00:00`, 'MM/DD/YYYY HH:mm'))
 		}
-
-		if (onShow < 2) {
-			setOnShow(onShow + 1)
-		}
 	}
+
+	const checkShow = () => {}
+
 	const handleChange = (v: string) => {
 		setTimeStudySelect(v)
-		// console.log('Data quis haha: ', v)
 		const startTime = form.getFieldValue('StartTime')
 		const date = new Date(startTime).toLocaleDateString()
 		const time = v?.split('&')
-		// var followingDay = new Date(new Date(startTime).getTime() + 86400000);
-		// console.log('quisssss: ',date,  followingDay.toLocaleDateString())
+		console.log('value: ', v)
 		if (date) {
 			const hhS = time[0].split(':')[0]
 			const hhE = time[1].split(':')[0]
+			console.log('hhS: ', hhS, 'hhE: ', hhE)
 			form.setFieldValue('StartTime', dayjs(`${date} ${time[0]}`, 'MM/DD/YYYY HH:mm'))
 			if (Number(hhS) <= Number(hhE)) {
 				form.setFieldValue('EndTime', dayjs(`${date} ${time[1]}`, 'MM/DD/YYYY HH:mm'))
@@ -246,11 +246,13 @@ const ModalAddScheduleEdit = (props) => {
 			}
 		} else {
 			const currenDate = new Date().toLocaleDateString()
+			console.log('currenDate: ', currenDate)
 			form.setFieldValue('StartTime', dayjs(`${currenDate} ${time[0]}`, 'MM/DD/YYYY HH:mm'))
 		}
 		if (onShow < 2) {
-			setOnShow(onShow + 1)
+			setOnShow(2)
 		}
+		getDataAvailable()
 	}
 
 	return (
@@ -316,7 +318,9 @@ const ModalAddScheduleEdit = (props) => {
 									value={timeStudySelect}
 									style={{ width: '100%' }}
 									placeholder="Chọn ca học"
-									onChange={(v) => handleChange(v)}
+									onChange={(v) => {
+										handleChange(v)
+									}}
 								>
 									{stydyTime?.map((e) => {
 										return (
@@ -400,9 +404,9 @@ const ModalAddScheduleEdit = (props) => {
 					</div>
 					{scheduleList?.length > 0 && (
 						<div
-							className="schedule-list-container"
+							className="schedule-list-container ml-[10px]"
 							style={{
-								maxHeight: Number(Type) === 1 ? '75vh' : '60vh'
+								maxHeight: Number(Type) === 1 ? '83vh' : '68vh'
 							}}
 						>
 							{scheduleList?.map((_item) => (
