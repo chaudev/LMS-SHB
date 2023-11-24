@@ -26,7 +26,7 @@ dayjs.extend(localeData)
 type Schedule = {
 	Id: string
 	ClassId: number
-	RoomId: number
+	RoomId: string
 	StartTime: string
 	EndTime: string
 	TeacherId: string
@@ -119,10 +119,11 @@ const ModalAddScheduleEdit = (props) => {
 		if (new Date(data.StartTime).getTime() < new Date(data.EndTime).getTime()) {
 			let DATA_CHECK = {
 				ClassId: parseInt(slug.toString()),
-				RoomId: data.RoomId || 0,
+				//RoomId: data.RoomId || 0,
 				StartTime: moment(new Date(data.StartTime)).format(),
 				EndTime: moment(new Date(data.EndTime)).format(),
-				TeacherId: data.TeacherId.split('-')[0]
+				TeacherId: data.TeacherId.split('-')[0],
+				RoomId: data.RoomId == null ? 0 : data.RoomId.split('-')[0]
 			}
 			try {
 				const res = await scheduleApi.checkTime(DATA_CHECK)
@@ -181,7 +182,8 @@ const ModalAddScheduleEdit = (props) => {
 		scheduleList?.map((e) =>
 			DATA_SUBMIT.push({
 				ClassId: parseInt(slug.toString()),
-				RoomId: e.RoomId || 0,
+				//RoomId: e.RoomId || 0,
+				RoomId: e.RoomId == null ? 0 : e.RoomId.split('-')[0],
 				StartTime: moment(new Date(e.StartTime)).format(),
 				EndTime: moment(new Date(e.EndTime)).format(),
 				TeacherId: e.TeacherId.split('-')[0],
@@ -357,10 +359,10 @@ const ModalAddScheduleEdit = (props) => {
 								</>
 							)}
 							<Form.Item name="TeacherId" label="Giáo viên" rules={formRequired}>
-								<Select placeholder="Chọn giáo viên">
+								<Select showSearch placeholder="Chọn giáo viên">
 									{teacher.map((item) => {
 										return (
-											<Select.Option disabled={!item.Fit} key={item.TeacherId} value={`${item.TeacherId}-${item.TeacherName}`}>
+											<Select.Option disabled={!item.Fit} key={item.TeacherId} value={`${item.TeacherId}-${item.TeacherName}-${item.TeacherCode}`}>
 												<div className="flex items-center justify-between w-full">
 													{item.TeacherName + ' - ' + item.TeacherCode}
 													{!item.Fit ? (
@@ -380,10 +382,10 @@ const ModalAddScheduleEdit = (props) => {
 
 							{!!Type && parseInt(Type.toString()) == 1 ? (
 								<Form.Item name="RoomId" label="Phòng học">
-									<Select placeholder="Chọn phòng học">
+									<Select placeholder="Chọn phòng học" showSearch> 
 										{room.map((item) => {
 											return (
-												<Select.Option disabled={!item.Fit} key={item.RoomId} value={item.RoomId}>
+												<Select.Option disabled={!item.Fit} key={item.RoomId} value={`${item.RoomId}-${item.RoomName}`}>
 													<div className="flex items-center justify-between w-full">
 														{item.RoomName}
 														{!item.Fit ? (
