@@ -92,7 +92,7 @@ const MajorsRegistrationPage = () => {
 			// const paymentType = await paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 })
 			// const paymentMethod = await paymentMethodsApi.getAll({ pageSize: 9999, pageIndex: 1 })
 
-			console.log('initPage majors ====>', majors)
+			// console.log('initPage majors ====>', majors)
 
 			if (students.status === 200) {
 				let templ = []
