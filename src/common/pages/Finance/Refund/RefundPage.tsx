@@ -1,4 +1,4 @@
-import { Input,  } from 'antd'
+import { Input } from 'antd'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -175,6 +175,7 @@ export default function RefundPage(props: IRefundPageProps) {
 					optionList: temp
 				})
 			}
+
 			if (paymentMethod.status == 200) {
 				let temp = []
 				paymentMethod.data.data.forEach((data) => temp.push({ title: data.Name, value: data.Id }))
@@ -183,7 +184,9 @@ export default function RefundPage(props: IRefundPageProps) {
 
 			setFilterList([...initialFilter, ...tempFilter])
 			setOptionList(tempOption)
-		} catch (error) {}
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	useEffect(() => {
