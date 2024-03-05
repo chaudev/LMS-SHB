@@ -79,12 +79,20 @@ const MajorsRegistrationPage = () => {
 			let templData = { students: [], majors: [], gift: [], payment: [] }
 
 			const [students, majors, gift, paymentType, paymentMethod] = await Promise.all([
-				await majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
+				majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
 				majorsApi.getAll({ pageSize: 9999, pageIndex: 1, status: 1 }),
 				giftApi.getAll({ pageSize: 9999, pageIndex: 1 }),
 				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 }),
 				paymentMethodsApi.getAll({ pageSize: 9999, pageIndex: 1 })
 			])
+
+			// const students = await majorsRegistrationApi.getAllMajorsRegistrationAvailble()
+			// const majors = await majorsApi.getAll({ pageSize: 9999, pageIndex: 1, status: 1 })
+			// const gift = await giftApi.getAll({ pageSize: 9999, pageIndex: 1 })
+			// const paymentType = await paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 })
+			// const paymentMethod = await paymentMethodsApi.getAll({ pageSize: 9999, pageIndex: 1 })
+
+			// console.log('initPage majors ====>', majors)
 
 			if (students.status === 200) {
 				let templ = []
@@ -305,16 +313,8 @@ const MajorsRegistrationPage = () => {
 							<div className="d-flex flex-col gap-3">
 								<Card title="Thông tin học viên" className="col-span-1">
 									{listData.students.length > 0 && (
-										// <SelectField
-										// 	className="col-span-2"
-										// 	name={'StudentId'}
-										// 	label="Chọn học viên"
-										// 	optionList={listOption.students}
-										// 	rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}
-										// />
-
 										<Form.Item name={'StudentId'} label="Chọn học viên" rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}>
-											<Select>
+											<Select showSearch showArrow optionFilterProp={'label'}>
 												{listData.students.map((item: IMajorsRegistrationAvailble, index) => {
 													return (
 														<Select.Option value={item?.StudentId} label={item?.StudentName} key={item?.StudentId}>
