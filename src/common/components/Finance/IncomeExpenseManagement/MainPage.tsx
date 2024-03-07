@@ -180,15 +180,17 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 							className=""
 							tooltip="In phiếu"
 						/>
-						<IncomeExpenseManagementModalCRUD
-							handleLoadOnScrollForOptionList={handleLoadOnScrollForOptionList}
-							handleSearchForOptionList={handleSearchForOptionList}
-							optionStudent={optionStudent}
-							dataOption={optionList}
-							mode="delete"
-							dataRow={item}
-							onSubmit={onSubmit}
-						/>
+						{(item.BillId == 0 || item.BillId == null) && (
+							<IncomeExpenseManagementModalCRUD
+								handleLoadOnScrollForOptionList={handleLoadOnScrollForOptionList}
+								handleSearchForOptionList={handleSearchForOptionList}
+								optionStudent={optionStudent}
+								dataOption={optionList}
+								mode="edit"
+								dataRow={item}
+								onSubmit={onSubmit}
+							/>
+						)}
 					</div>
 				)
 			}
@@ -286,7 +288,16 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 	const onSubmit = async (data) => {
 		setIsLoading(true)
 		try {
-			let res = data.Mode == 'add' ? await paymentSessionApi.add(data) : await paymentSessionApi.delete(data.Id)
+			let res = null
+
+			if (data.Mode == 'add') {
+				res = await paymentSessionApi.add(data)
+			}
+
+			if (data.Mode == 'edit') {
+				res = await paymentSessionApi.update(data)
+			}
+
 			if (res.status == 200) {
 				getDataPayment()
 				ShowNoti('success', res.data.message)
