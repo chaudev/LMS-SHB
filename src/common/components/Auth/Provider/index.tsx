@@ -83,7 +83,13 @@ function AuthProvider({ children }: IAuthLayout) {
 					dispatch(setAuthLoading(false))
 				}
 			}
-		} catch (error) {}
+		} catch (error) {
+			if (allowNoneLogin()) {
+				logOut()
+			} else {
+				dispatch(setAuthLoading(false))
+			}
+		}
 	}
 
 	return <>{children}</>
