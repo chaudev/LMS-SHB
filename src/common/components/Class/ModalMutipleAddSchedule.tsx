@@ -28,7 +28,7 @@ dayjs.extend(localeData)
 type Schedule = {
 	Id: string
 	ClassId: number
-	RoomId: number
+	RoomId: string
 	StartTime: string
 	EndTime: string
 	TeacherId: string
@@ -48,7 +48,7 @@ const ModalMutipleAddSchedule = (props) => {
 	const [teacherId, setTeacherId] = useState<string>(null)
 	const [studyDaySelect, setStudyDaySelect] = useState<any>(null)
 	const [onShow, setOnShow] = useState<number>(0)
-	const [roomId, setRoomId] = useState<number>(0)
+	const [roomId, setRoomId] = useState<string>(null)
 	const [showDetail, setShowDetail] = useState<string>(null)
 	const [scheduleList, setScheduleList] = useState<any[]>([])
 	const [daysOfBetween, setDaysOfBetween] = useState<number>(0)
@@ -183,7 +183,8 @@ const ModalMutipleAddSchedule = (props) => {
 		if (new Date(data.StartTime).getTime() < new Date(data.EndTime).getTime()) {
 			let DATA_CHECK = {
 				ClassId: parseInt(slug.toString()),
-				RoomId: data.RoomId || 0,
+				// RoomId: data.RoomId || 0,
+				RoomId: data.RoomId == null ? 0 : data.RoomId.split('-')[0],
 				StartTime: moment(new Date(data.StartTime)).format(),
 				EndTime: moment(new Date(data.EndTime)).format(),
 				TeacherId: data.TeacherId.split('-')[0]
@@ -248,7 +249,8 @@ const ModalMutipleAddSchedule = (props) => {
 		scheduleList?.map((e) =>
 			DATA_SUBMIT.push({
 				ClassId: parseInt(slug.toString()),
-				RoomId: e.RoomId || 0,
+				// RoomId: e.RoomId || 0,
+				RoomId: e.RoomId == null ? 0 : e.RoomId.split('-')[0],
 				StartTime: moment(new Date(e.StartTime)).format(),
 				EndTime: moment(new Date(e.EndTime)).format(),
 				TeacherId: e.TeacherId.split('-')[0],
@@ -322,7 +324,8 @@ const ModalMutipleAddSchedule = (props) => {
 			;[...Array(daysOfBetween + 1)].map(async (e, index) => {
 				let DATA_CHECK = {
 					ClassId: parseInt(slug.toString()),
-					RoomId: roomId || 0,
+					// RoomId: roomId || 0,
+				    RoomId: roomId == null ? 0 : roomId.split('-')[0],
 					StartTime: moment(new Date(`${dateTeam.toLocaleDateString()} ${timeStudy[0]}`)).format(),
 					EndTime: moment(new Date(`${dateTeam.toLocaleDateString()} ${timeStudy[1]}`)).format(),
 					TeacherId: teacherId.split('-')[0]
@@ -416,6 +419,7 @@ const ModalMutipleAddSchedule = (props) => {
 							<div style={{ marginBottom: 20 }}>
 								<div style={{ fontWeight: '600', marginBottom: 6 }}>Giáo viên</div>
 								<Select
+								    showSearch
 									disabled={daysOfBetween === 0}
 									value={teacherId}
 									onChange={setTeacherId}
@@ -424,7 +428,7 @@ const ModalMutipleAddSchedule = (props) => {
 								>
 									{teacher.map((item) => {
 										return (
-											<Select.Option disabled={!item.Fit} key={item.TeacherId} value={`${item.TeacherId}-${item.TeacherName}`}>
+											<Select.Option disabled={!item.Fit} key={item.TeacherId} value={`${item.TeacherId}-${item.TeacherName}-${item.TeacherCode}`}>
 												<div className="flex items-center justify-between w-full">
 													{item.TeacherName + ' - ' + item.TeacherCode}
 													{!item.Fit ? (
@@ -442,6 +446,7 @@ const ModalMutipleAddSchedule = (props) => {
 								<div>
 									<div style={{ fontWeight: '600', marginBottom: 6 }}>Phòng học</div>
 									<Select
+									    showSearch
 										onChange={setRoomId}
 										disabled={stydyTime === null}
 										style={{ width: '100%', height: 35 }}
@@ -449,7 +454,7 @@ const ModalMutipleAddSchedule = (props) => {
 									>
 										{room.map((item) => {
 											return (
-												<Select.Option disabled={!item.Fit} key={item.RoomId} value={item.RoomId}>
+												<Select.Option disabled={!item.Fit} key={item.RoomId} value={`${item.RoomId}-${item.RoomName}`}>
 													<div className="flex items-center justify-between w-full">
 														{item.RoomName}
 														{!item.Fit ? (
@@ -613,10 +618,10 @@ const ModalMutipleAddSchedule = (props) => {
 
 									{!!Type && parseInt(Type.toString()) == 1 ? (
 										<Form.Item name="RoomId" label="Phòng học">
-											<Select placeholder="Chọn phòng học">
+											<Select placeholder="Chọn phòng học" showSearch>
 												{room.map((item) => {
 													return (
-														<Select.Option disabled={!item.Fit} key={item.RoomId} value={item.RoomId}>
+														<Select.Option disabled={!item.Fit} key={item.RoomId} value={`${item.RoomId}-${item.RoomName}`}>
 															<div className="flex items-center justify-between w-full">
 																{item.RoomName}
 																{!item.Fit ? (

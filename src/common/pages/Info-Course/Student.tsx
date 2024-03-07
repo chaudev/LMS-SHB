@@ -23,7 +23,6 @@ import { purposeApi } from '~/api/purpose'
 import { setSource } from '~/store/sourceReducer'
 import { setLearningNeed } from '~/store/learningNeedReducer'
 import { setPurpose } from '~/store/purposeReducer'
-import { useRouter } from 'next/router'
 import { userInfoColumn } from '~/common/libs/columns/user-info'
 import { ButtonEye } from '~/common/components/TableButton'
 import { PrimaryTooltip } from '~/common/components'
@@ -436,8 +435,14 @@ const Student: FC<IPersonnel> = (props) => {
 			render: (value, item) => (
 				<div className="flex items-center">
 					<div className="ml-[8px]">
-						<p className="font-weight-primary"><b>Email: </b>{item?.Email}</p>
-						<p className="text-[14px] font-[400]"><b>Số điện thoại: </b>{item?.Mobile}</p>
+						<p className="font-weight-primary">
+							<b>Email: </b>
+							{item?.Email}
+						</p>
+						<p className="text-[14px] font-[400]">
+							<b>Số điện thoại: </b>
+							{item?.Mobile}
+						</p>
 					</div>
 				</div>
 			)
@@ -459,8 +464,7 @@ const Student: FC<IPersonnel> = (props) => {
 			width: 160,
 			dataIndex: 'DOB',
 			render: (value, item) => {
-				if (value === null)
-					return <>Không xác định</>
+				if (value === null) return <>Không xác định</>
 				return <>{moment(value).format('DD/MM/YYYY ')}</>
 			}
 		},
@@ -489,63 +493,62 @@ const Student: FC<IPersonnel> = (props) => {
 			width: 160,
 			dataIndex: 'ContractSigningDate',
 			render: (value, item) => {
-				if (value === null)
-					return <>Không xác định</>
+				if (value === null) return <>Không xác định</>
 				return <>{moment(value).format('DD/MM/YYYY ')}</>
 			}
 		},
 		{
 			title: 'Số hợp đồng',
 			width: 150,
-			dataIndex: 'ContractNumber',
+			dataIndex: 'ContractNumber'
 		},
 		{
 			title: 'Văn phòng',
 			width: 150,
-			dataIndex: 'OfficeName',
+			dataIndex: 'OfficeName'
 		},
 		{
 			title: 'Tư vấn viên',
 			width: 150,
-			dataIndex: 'SaleName',
+			dataIndex: 'SaleName'
 		},
 		{
 			title: 'Nguồn',
 			width: 150,
-			dataIndex: 'SourceName',
+			dataIndex: 'SourceName'
 		},
 		{
 			title: 'Trung tâm',
 			width: 160,
 			dataIndex: 'BranchNames',
 			render: (value, item) => {
-				return <div>
-					{
-						value.map((item) => (
+				return (
+					<div>
+						{value.map((item) => (
 							<p>{item}</p>
 						))}
-				</div>
+					</div>
+				)
 			}
 		},
 		{
 			title: 'Ngành',
 			width: 150,
-			dataIndex: 'MajorsName',
+			dataIndex: 'MajorsName'
 		},
 		{
 			title: 'Ngày nhập học',
 			width: 160,
 			dataIndex: 'EnrollmentDay',
 			render: (value, item) => {
-				if (value === null)
-					return <>Không xác định</>
+				if (value === null) return <>Không xác định</>
 				return <>{moment(value).format('DD/MM/YYYY ')}</>
 			}
 		},
 		{
 			title: 'Lớp đang học',
 			width: 150,
-			dataIndex: 'ClassName',
+			dataIndex: 'ClassName'
 		},
 		// {
 		// 	title: 'Trạng thái',

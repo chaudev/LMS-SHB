@@ -82,7 +82,7 @@ const ChangeMajorsPage = () => {
 			let templOption = { students: [], majors: [], gift: [], payment: [], paymentMethod: [] }
 			let templData = { students: [], majors: [], gift: [], payment: [] }
 			const [students, majors, gift, paymentType, paymentMethod] = await Promise.all([
-				await majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
+				majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
 				majorsApi.getAll({ pageSize: 9999, pageIndex: 1, status: 1 }),
 				giftApi.getAll({ pageSize: 9999, pageIndex: 1 }),
 				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 }),
