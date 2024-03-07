@@ -19,4 +19,7 @@ type IPrimaryTable = {
 	onChangePage?: Function
 	menuContext?: Array<any>
 	pageSize?: number
+	rowSelection?: TableRowSelection<any>
+	 
+	rowKey? : string | function(record): string
 }

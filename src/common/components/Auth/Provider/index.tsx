@@ -39,6 +39,7 @@ function AuthProvider({ children }: IAuthLayout) {
 			if (allowNoneLogin()) {
 				logOut()
 			}
+			dispatch(setAuthLoading(false))
 		}
 	}, [data])
 
@@ -50,7 +51,8 @@ function AuthProvider({ children }: IAuthLayout) {
 				playWithToken(response?.data, dispatch)
 			}
 		} catch (error) {
-			console.log('RefreshToken Error: ', error)
+			logOut()
+			dispatch(setAuthLoading(false))
 		}
 		console.timeEnd('Gọi api RefreshToken hết')
 	}
@@ -74,6 +76,8 @@ function AuthProvider({ children }: IAuthLayout) {
 							logOut()
 						}
 					} else {
+						console.log('_refreshToken')
+
 						_refreshToken({ RefreshToken: theRefresh?.refreshToken, token: response?.token })
 					}
 				}

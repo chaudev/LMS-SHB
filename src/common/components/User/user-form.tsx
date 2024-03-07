@@ -34,8 +34,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 
 	const { className, onOpen, roleStaff, source, purpose, process, visaStatus, profileStatus, foreignLanguage, sale, learningNeed } = props
 	const { onRefresh, isEdit, defaultData, isStudent, isChangeInfo } = props
-	console.log(defaultData);
-	
+
 	const [form] = Form.useForm()
 	const BranchIds = Form.useWatch('BranchIds', form)
 	const [districts, setDistricts] = useState([])
@@ -548,19 +547,28 @@ const CreateUser: FC<ICreateNew> = (props) => {
 						)}
 						{isStudent && (
 							<>
-							<InputTextField className="col-span-2" label="Trường THPT" name="HighSchool" />
+								<InputTextField className="col-span-2" label="Trường THPT" name="HighSchool" />
 							</>
 						)}
 						<TextBoxField name="Extension" label="Giới thiệu thêm" className="col-span-4" />
-						{isStudent ? 
-						(<>
-							<Divider className="col-span-4" orientation="center">
-							Thông tin hợp đồng
-						</Divider>
-						<DatePickerField className="col-span-2" label="Ngày ký hợp đồng" name="ContractSigningDate" mode="single" format="DD/MM/YYYY" />
-						<InputTextField className="col-span-2" label="Số hợp đồng" name="ContractNumber" />
-						<DatePickerField className="col-span-2" label="Ngày nhập học" name="EnrollmentDay" mode="single" format="DD/MM/YYYY" /></>
-						):(<></>)}
+						{isStudent ? (
+							<>
+								<Divider className="col-span-4" orientation="center">
+									Thông tin hợp đồng
+								</Divider>
+								<DatePickerField
+									className="col-span-2"
+									label="Ngày ký hợp đồng"
+									name="ContractSigningDate"
+									mode="single"
+									format="DD/MM/YYYY"
+								/>
+								<InputTextField className="col-span-2" label="Số hợp đồng" name="ContractNumber" />
+								<DatePickerField className="col-span-2" label="Ngày nhập học" name="EnrollmentDay" mode="single" format="DD/MM/YYYY" />
+							</>
+						) : (
+							<></>
+						)}
 						{isStudent ? (
 							<SelectField
 								className="col-span-4 antd-custom-wrap"
@@ -608,20 +616,8 @@ const CreateUser: FC<ICreateNew> = (props) => {
 								<Divider className="col-span-4" orientation="center">
 									Thông tin học
 								</Divider>
-								<SelectField
-									className="col-span-2"
-									label="Nguồn khách hàng"
-									name="SourceId"
-									optionList={source}
-									onChangeSelect={(value) => handleSelect('LearningNeedId', value)}
-								/>
-								<SelectField
-									className="col-span-2"
-									label="Nhu cầu học"
-									name="LearningNeedId"
-									optionList={learningNeed}
-									onChangeSelect={(value) => handleSelect('LearningNeedId', value)}
-								/>
+								<SelectField className="col-span-2" label="Nguồn khách hàng" name="SourceId" optionList={source} />
+								<SelectField className="col-span-2" label="Nhu cầu học" name="LearningNeedId" optionList={learningNeed} />
 
 								{!isSaler() ? <SelectField className="col-span-2" label="Tư vấn viên" name="SaleId" optionList={listSale} /> : ''}
 

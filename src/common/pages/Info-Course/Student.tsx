@@ -2,7 +2,7 @@ import React, { FC, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { areaApi } from '~/api/area'
 import { registerApi, userInformationApi } from '~/api/user/user'
-import { Input, Popconfirm, Popover } from 'antd'
+import { Alert, Form, Input, Modal, Popconfirm, Popover } from 'antd'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNostis, ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
@@ -38,13 +38,21 @@ import { permissionApi } from '~/api/permission'
 import PrimaryTag from '~/common/components/Primary/Tag'
 import moment from 'moment'
 import { useRole } from '~/common/hooks/useRole'
-import { object } from 'yup/lib/locale'
+import SelectField from '~/common/components/FormControl/SelectField'
+import DatePickerField from '~/common/components/FormControl/DatePickerField'
+import { officeApi } from '~/api/office'
+import { partnerApi } from '~/api/partner'
+import { Filter } from 'react-feather'
+import ModalFooter from '~/common/components/ModalFooter'
+import { useRouter } from 'next/router'
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
 	const state = useSelector((state: RootState) => state)
 	const userInformation = useSelector((state: RootState) => state.user.information)
 	const { isParents } = useRole()
+	const dispatch = useDispatch()
+
 	const initParamters = {
 		sort: 0,
 		sortType: false,
@@ -61,6 +69,9 @@ const Student: FC<IPersonnel> = (props) => {
 		visaStatusIds: null,
 		processIds: null
 	}
+	const [office, setOffice] = useState([])
+	const [partner, setPartner] = useState([])
+
 	const [process, setProcess] = useState([])
 	const [visaStatus, setVisaStatus] = useState([])
 	const [profileStatus, setProfileStatus] = useState([])
@@ -72,7 +83,9 @@ const Student: FC<IPersonnel> = (props) => {
 	const [totalRow, setTotalRow] = useState(1)
 	const [loading, setLoading] = useState(false)
 	const [loadingAllow, setLoadingAllow] = useState(false)
-	const dispatch = useDispatch()
+
+	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+	const [isFilter, setIsFilter] = useState<boolean>(false)
 
 	function isManager() {
 		return userInformation?.RoleId == 4
@@ -202,6 +215,36 @@ const Student: FC<IPersonnel> = (props) => {
 			console.error(error)
 		} finally {
 			setLoading(false)
+			setSelectedRowKeys([])
+		}
+	}
+	const getOffice = async () => {
+		try {
+			const res = await officeApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setOffice(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
+		}
+	}
+
+	const getPartner = async () => {
+		try {
+			const res = await partnerApi.getAll({ pageIndex: 1, pageSize: 99999 })
+			if (res.status === 200) {
+				let temp = []
+				res.data.data?.forEach((item) => {
+					temp.push({ title: item?.Name, value: item?.Id })
+				})
+				setPartner(temp)
+			}
+		} catch (err) {
+			ShowNoti('error', err.message)
 		}
 	}
 
@@ -216,6 +259,8 @@ const Student: FC<IPersonnel> = (props) => {
 			if (state.purpose.Purpose.length === 0) {
 				getAllPurpose()
 			}
+			getOffice()
+			getPartner()
 		}
 		if (state.area.Area.length == 0) {
 			getAllArea()
@@ -416,6 +461,13 @@ const Student: FC<IPersonnel> = (props) => {
 	]
 
 	const columnsStudent = [
+		{
+			title: 'STT',
+			dataIndex: 'ID',
+			align: 'center',
+			fixed: 'left',
+			render: (value, item, index) => index + 1
+		},
 		{ ...userInfoColumn, fixed: 'left' },
 		// {
 		// 	title: 'Email',
@@ -713,7 +765,7 @@ const Student: FC<IPersonnel> = (props) => {
 	}
 
 	const handleFilter = (params) => {
-		const paramsForrmat = {
+		const paramsFormat = {
 			...apiParameters,
 			pageIndex: 1,
 			branchIds: params.branchIds ? params.branchIds.join(',') : null,
@@ -723,9 +775,17 @@ const Student: FC<IPersonnel> = (props) => {
 			profileStatusIds: params.profileStatusIds ? params.profileStatusIds.join(',') : null,
 			visaStatusIds: params.visaStatusIds ? params.visaStatusIds.join(',') : null,
 			learningStatus: params.learningStatus ? params.learningStatus.join(',') : null,
-			statusId: params.statusId
+			officeId: params.officeId ? params.officeId : null,
+			partnerIds: params.partnerIds ? params.partnerIds.join(',') : null,
+			sourceIds: params.sourceIds ? params.sourceIds.join(',') : null,
+			LearningNeedIds: params.LearningNeedIds ? params.LearningNeedIds.join(',') : null,
+			purposeIds: params.purposeIds ? params.purposeIds.join(',') : null,
+			statusId: params.statusId,
+			enrollmentDayFrom: params.enrollment ? moment(params.enrollment[0]).format('DD/MM/YYYY') : null,
+			enrollmentDayTo: params.enrollment ? moment(params.enrollment[1]).format('DD/MM/YYYY') : null
 		}
-		setApiParameters(paramsForrmat)
+
+		setApiParameters(paramsFormat)
 	}
 
 	const dataFilterStudent = [
@@ -741,7 +801,7 @@ const Student: FC<IPersonnel> = (props) => {
 			name: 'genders',
 			title: 'Giới tính',
 			type: 'select',
-			col: 'col-span-2',
+			col: 'col-span-1',
 			optionList: [
 				{ value: 0, title: 'Khác' },
 				{ value: 1, title: 'Nam' },
@@ -752,8 +812,7 @@ const Student: FC<IPersonnel> = (props) => {
 			name: 'statusId',
 			title: 'Trạng thái',
 			type: 'select',
-			col: 'col-span-2',
-			// mode: 'multiple',
+			col: 'col-span-1',
 			optionList: [
 				{
 					value: 0,
@@ -821,6 +880,46 @@ const Student: FC<IPersonnel> = (props) => {
 			col: 'col-span-2',
 			mode: 'multiple',
 			optionList: process
+		},
+		{
+			name: 'officeId',
+			title: 'Văn phòng đại diện',
+			type: 'select',
+			col: 'col-span-2',
+			// mode: 'multiple',
+			optionList: office
+		},
+		// {
+		// 	name: 'partnerIds',
+		// 	title: 'Đối tác',
+		// 	type: 'select',
+		// 	col: 'col-span-2',
+		// 	mode: 'multiple',
+		// 	optionList: partner
+		// },
+		{
+			name: 'sourceIds',
+			title: 'Nguồn khách hàng',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: source
+		},
+		{
+			name: 'LearningNeedIds',
+			title: 'Nhu cầu học',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: learningNeed
+		},
+		{
+			name: 'purposeIds',
+			title: 'Mục đích học',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'multiple',
+			optionList: purpose
 		}
 	]
 
@@ -854,19 +953,38 @@ const Student: FC<IPersonnel> = (props) => {
 				total={totalRow}
 				loading={loading}
 				current={apiParameters.PageIndex}
+				key={'UserInformationId'}
+				rowSelection={{
+					type: 'checkbox',
+					fixed: true,
+					selectedRowKeys: selectedRowKeys,
+
+					onChange: (rowKeys) => {
+						setSelectedRowKeys(rowKeys)
+					}
+				}}
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, PageIndex: event })}
 				TitleCard={
 					<>
 						{role === 3 && !isParents && <OverviewStatusStudent />}
-						<FilterBaseVer2
-							dataFilter={role === 3 ? dataFilterStudent : dataFilterPersional}
-							handleFilter={handleFilter}
-							handleReset={(value) => {
-								setApiParameters(initParamters)
-							}}
-						/>
+						{role == 3 ? (
+							<button onClick={() => setIsFilter(!isFilter)} className="btn btn-secondary light btn-filter">
+								<Filter />
+							</button>
+						) : (
+							<>
+								<FilterBaseVer2
+									dataFilter={role === 3 ? dataFilterStudent : dataFilterPersional}
+									handleFilter={handleFilter}
+									handleReset={(value) => {
+										setApiParameters(initParamters)
+									}}
+								/>
+							</>
+						)}
+
 						<Input.Search
-							className="primary-search max-w-[250px] ml-[8px] "
+							className="primary-search max-w-[250px]  "
 							onChange={(event) => {
 								if (event.target.value == '') {
 									setApiParameters({ ...apiParameters, PageIndex: 1, Search: '' })
@@ -907,6 +1025,8 @@ const Student: FC<IPersonnel> = (props) => {
 						{role == 3 && (isAdmin() || isManage()) && (
 							<ImportStudent className="mr-1 btn-import" onFetchData={() => getUsers(apiParameters)} />
 						)}
+
+						{role == 3 && (isAdmin() || isManage()) && <ExportStudents filterOption={dataFilterStudent} />}
 
 						<Popover
 							placement="bottomLeft"
@@ -1006,9 +1126,204 @@ const Student: FC<IPersonnel> = (props) => {
 						)}
 					</>
 				}
-			/>
+			>
+				<div className="relative flex flex-col overflow-hidden ">
+					<div
+						className={` grid overflow-hidden transition-all duration-500 ease-out ${
+							isFilter ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+						}`}
+					>
+						<div className="overflow-hidden">
+							<FilterStudentForm
+								filterOption={dataFilterStudent}
+								onFilter={handleFilter}
+								onReset={() => {
+									setApiParameters(initParamters)
+								}}
+							/>
+						</div>
+					</div>
+					<div
+						className={` grid overflow-hidden transition-all duration-500 ease-out ${
+							selectedRowKeys.length > 0 ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+						}`}
+					>
+						<div className="overflow-hidden">
+							<AlertSelectStudent
+								selectedRowKeys={selectedRowKeys}
+								onRefresh={() => {
+									getUsers(apiParameters)
+								}}
+							/>
+						</div>
+					</div>
+				</div>
+			</PrimaryTable>
 		</div>
 	)
 }
 
+const AlertSelectStudent = ({ selectedRowKeys, onRefresh }) => {
+	const [isLoadingDelete, setIsLoadingDelete] = useState(false)
+
+	const handleDeleteMutibleUser = async () => {
+		try {
+			setIsLoadingDelete(true)
+			const userInformationIds = selectedRowKeys.join(',')
+			const res = await userInformationApi.deleteMultipleUser(userInformationIds)
+			if (res.status == 200) {
+				await onRefresh()
+			}
+			ShowNoti('success', 'Thành công.')
+			setIsLoadingDelete(false)
+		} catch (err) {
+			ShowNoti('error', err.message)
+			setIsLoadingDelete(false)
+		}
+	}
+	return (
+		<Alert
+			className="mb-3"
+			type="error"
+			message={
+				<div>
+					Đã chọn <span className="font-semibold">{selectedRowKeys.length}</span> học viên.
+				</div>
+			}
+			action={
+				<Popconfirm
+					placement="topLeft"
+					title={`Bạn muốn xóa ${selectedRowKeys.length} học viên?`}
+					onConfirm={handleDeleteMutibleUser}
+					okText="Yes"
+					cancelText="No"
+				>
+					<PrimaryButton background="red" icon="remove" type="button" loading={isLoadingDelete}>
+						Xóa
+					</PrimaryButton>
+				</Popconfirm>
+			}
+		/>
+	)
+}
+
+const ExportStudents = ({ filterOption }) => {
+	const [open, setOpen] = useState(false)
+	const [loading, setLoading] = useState(false)
+	const [form] = Form.useForm()
+
+	const handleExport = async (params) => {
+		try {
+			setLoading(true)
+			const paramsFormat = {
+				branchIds: params.branchIds ? params.branchIds.join(',') : null,
+				genders: params.genders,
+				foreignLanguageIds: params.foreignLanguageIds ? params.foreignLanguageIds.join(',') : null,
+				processIds: params.processIds ? params.processIds.join(',') : null,
+				profileStatusIds: params.profileStatusIds ? params.profileStatusIds.join(',') : null,
+				visaStatusIds: params.visaStatusIds ? params.visaStatusIds.join(',') : null,
+				learningStatus: params.learningStatus ? params.learningStatus.join(',') : null,
+				officeId: params.officeId ? params.officeId : null,
+				// partnerIds: params.partnerIds ? params.partnerIds.join(',') : null,
+				sourceIds: params.sourceIds ? params.sourceIds.join(',') : null,
+				LearningNeedIds: params.LearningNeedIds ? params.LearningNeedIds.join(',') : null,
+				purposeIds: params.purposeIds ? params.purposeIds.join(',') : null,
+				statusId: params.statusId,
+				enrollmentDayFrom: params.enrollment ? moment(params.enrollment[0]).format('DD/MM/YYYY') : null,
+				enrollmentDayTo: params.enrollment ? moment(params.enrollment[1]).format('DD/MM/YYYY') : null
+			}
+
+			const res = await userInformationApi.exportStudents(paramsFormat)
+			if (res.status == 200) {
+				window.open(res.data.data, '_blank')
+			}
+			ShowNoti('success', 'Thành công.')
+			setLoading(false)
+			handleCancel()
+		} catch (err) {
+			setLoading(false)
+			ShowNoti('success', err.message)
+		}
+	}
+	const handleOpen = () => {
+		setOpen(true)
+	}
+	const handleCancel = () => {
+		setOpen(false)
+	}
+
+	return (
+		<>
+			<PrimaryButton type="button" icon="excel" className="mr-2 btn-import" children="Export" background="orange" onClick={handleOpen} />
+			<Modal
+				title="Xuất danh sách học viên"
+				width={1200}
+				open={open}
+				footer={<ModalFooter loading={loading} okText="Xuất" onOK={form.submit} onCancel={handleCancel} />}
+				onCancel={handleCancel}
+			>
+				<Form
+					form={form}
+					layout="vertical"
+					className="grid grid-cols-3 w1400:grid-cols-12 w900:grid-cols-9 w600:grid-cols-6   gap-x-3"
+					onFinish={handleExport}
+				>
+					{filterOption.map((item) => {
+						if (item.type == 'select') {
+							return <SelectField key={item.name} className="col-span-3" label={item.title} {...item} />
+						}
+					})}
+					<DatePickerField
+						className="col-span-3 w1200:col-span-6"
+						mode="range"
+						format="DD/MM/YYYY"
+						label={'Ngày nhập học'}
+						name="enrollment"
+						allowClear
+					/>
+				</Form>
+			</Modal>
+		</>
+	)
+}
+
+const FilterStudentForm = ({ filterOption, onFilter, onReset }) => {
+	const [form] = Form.useForm()
+	const handleFinish = (data) => {
+		onFilter(data)
+	}
+
+	const handleReset = () => {
+		form.resetFields()
+		onReset()
+	}
+	return (
+		<div>
+			<Form
+				form={form}
+				layout="vertical"
+				className="grid grid-cols-3 w1400:grid-cols-12 w900:grid-cols-9 w600:grid-cols-6   gap-x-3"
+				onFinish={handleFinish}
+			>
+				{filterOption.map((item) => {
+					if (item.type == 'select') {
+						return <SelectField key={item.name} className="col-span-3" label={item.title} {...item} />
+					}
+				})}
+				<DatePickerField
+					className="col-span-3 w1200:col-span-6"
+					mode="range"
+					format="DD/MM/YYYY"
+					label={'Ngày nhập học'}
+					name="enrollment"
+					allowClear
+				/>
+			</Form>
+			<div className="flex justify-center gap-3 mb-3">
+				<PrimaryButton type="button" icon="reset" background="transparent" children="Khôi phục" onClick={handleReset} />
+				<PrimaryButton type="button" icon="search" background="green" children="Tìm kiếm" onClick={form.submit} />
+			</div>
+		</div>
+	)
+}
 export default Student
