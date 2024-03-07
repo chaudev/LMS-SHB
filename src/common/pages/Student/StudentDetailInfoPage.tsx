@@ -17,6 +17,7 @@ import { TabStudyRoute } from './Tab/TabStudyRoute'
 import { TabTestAppointment } from './Tab/TabTestAppointment'
 import TabMajors from './Tab/TabMajors'
 import { useRole } from '~/common/hooks/useRole'
+import TabPaymentSession from './Tab/TabPaymentSession'
 
 export interface IStudentDetailInfoPageProps {}
 
@@ -28,7 +29,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 	const [form] = Form.useForm()
 	const userInformation = useSelector((state: RootState) => state.user.information)
 
-	const { isStudent, isTeacher, isAdmin ,isParents} = useRole()
+	const { isStudent, isTeacher, isAdmin, isParents } = useRole()
 
 	const getStudentDetail = async () => {
 		try {
@@ -68,6 +69,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						children: <TabBill StudentDetail={studentDetail} />
 					},
 					// {
+					// 	key: '10',
+					// 	label: `Thu chi`,
+					// 	children: <TabPaymentSession StudentDetail={studentDetail} />
+					// },
+					// {
 					// 	key: '5',
 					// 	label: `Lịch sử học`,
 					// 	children: <TabClassListHistory StudentDetail={studentDetail} />
@@ -105,6 +111,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						key: '5',
 						label: `Thanh toán`,
 						children: <TabBill StudentDetail={studentDetail} />
+					},
+					{
+						key: '10',
+						label: `Thu chi`,
+						children: <TabPaymentSession StudentDetail={studentDetail} />
 					},
 					// {
 					// 	key: '6',
