@@ -17,6 +17,7 @@ export default function PrintPaymentSession(props: IPrintPaymentSessionProps) {
 	const [isLoading, setIsLoading] = useState(false)
 	const [isSubmit, setIsSubmit] = useState(false)
 	const [dataSource, setDataSource] = useState(null)
+	const [data, setData] = useState<any>()
 	const printAreaRef = useRef<HTMLTableElement>(null)
 
 	const getPaymentDetail = async () => {
@@ -25,6 +26,7 @@ export default function PrintPaymentSession(props: IPrintPaymentSessionProps) {
 			let res = await paymentSessionApi.getByID(router.query.paymentID)
 			if (res.status == 200) {
 				setDataSource(res.data.data.PrintContent)
+				setData(res.data.data)
 				form.setFieldValue('Content', res.data.data.PrintContent)
 			}
 		} catch (error) {
@@ -45,13 +47,14 @@ export default function PrintPaymentSession(props: IPrintPaymentSessionProps) {
 		removeAfterPrint: true
 	})
 
-	const onSubmit = async (data) => {
+	const onSubmit = async (params) => {
 		setIsSubmit(true)
 		try {
-			let res = await paymentSessionApi.update({ Id: router.query.paymentID, PrintContent: data.Content })
+			let temp = { Value: data.Value, Reason: data.Reason, Note: data.Note, Id: data.Id, PrintContent: params.Content }
+			let res = await paymentSessionApi.update(temp)
 			if (res.status == 200) {
 				ShowNoti('success', res.data.message)
-            getPaymentDetail()
+				getPaymentDetail()
 			}
 		} catch (error) {
 			ShowNoti('error', error.message)

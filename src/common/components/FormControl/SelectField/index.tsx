@@ -34,6 +34,7 @@ const SelectField = (props: IFormSelectField) => {
 				mode={mode}
 				className={`primary-input ${className}`}
 				showSearch
+				showArrow
 				allowClear={allowClear}
 				loading={isLoading}
 				style={style}

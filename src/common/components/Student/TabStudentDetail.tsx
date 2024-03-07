@@ -280,12 +280,12 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const updateUserInfo = async (key, value) => {
 		try {
 			setIsLoading(key)
+			console.log(value)
 
 			let payload = { ...StudentDetail, [key]: value }
-			console.log(payload)
 
 			if (key === 'BranchIds') {
-				if (isStudent || isParents) {
+				if (StudentDetail.RoleId == 3 || StudentDetail.RoleId === 7) {
 					payload = { ...payload, BranchIds: value }
 				} else {
 					payload = { ...payload, BranchIds: value ? value.join(',') : '' }
@@ -735,7 +735,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								<SelectField
 									className="border-none min-w-xs w-full  items-center m-0 hover:border-none focus:border-none"
 									name="ProfileStatusId"
-									label=""
+									label="Tình trạng thu hồ sơ"
 									placeholder="Chọn Tình trạng thu hồ sơ"
 									optionList={optionList.profileStatus}
 									disabled={isStudent || isParents || isTeacher}

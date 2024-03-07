@@ -1,10 +1,9 @@
-import { Form, Modal, Tabs } from 'antd'
+import { Form, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import PrimaryButton from '~/common/components/Primary/Button'
 import IconButton from '~/common/components/Primary/IconButton'
 import { parseStringToNumber } from '~/common/utils/common'
 import InputNumberField from '../../FormControl/InputNumberField'
-import InputTextField from '../../FormControl/InputTextField'
 import SelectField from '../../FormControl/SelectField'
 import SelectFieldSearch from '../../FormControl/SelectFieldSearch'
 import TextBoxField from '../../FormControl/TextBoxField'
@@ -45,8 +44,13 @@ export default function IncomeExpenseManagementModalCRUD(props: IIncomeExpenseMa
 	const _onSubmit = (data) => {
 		data.Mode = mode
 		data.Value = data.Value ? parseStringToNumber(data.Value) : null
+
 		if (mode == 'delete') {
 			data.Id = dataRow.Id
+		}
+		if (mode == 'edit') {
+			data.Id = dataRow.Id
+			data.PrintContent = dataRow.PrintContent
 		}
 		if (!onSubmit) return
 
@@ -127,6 +131,7 @@ export default function IncomeExpenseManagementModalCRUD(props: IIncomeExpenseMa
 										name="BranchId"
 										placeholder="Chọn chi nhánh"
 										isRequired={true}
+										disabled={mode == 'edit'}
 										rules={[{ required: true, message: 'Bạn không được để trống!' }]}
 									/>
 								</div>
@@ -138,12 +143,13 @@ export default function IncomeExpenseManagementModalCRUD(props: IIncomeExpenseMa
 										onScroll={() => {
 											handleLoadOnScrollForOptionList('student')
 										}}
+										disabled={mode == 'edit'}
 										optionList={optionStudent}
 										label="Học viên"
 										name="UserId"
 										placeholder="Chọn học viên"
-										isRequired={true}
-										rules={[{ required: true, message: 'Bạn không được để trống!' }]}
+										// isRequired={true}
+										// rules={[{ required: true, message: 'Bạn không được để trống!' }]}
 									/>
 								</div>
 								<div className="col-span-1">
@@ -153,6 +159,7 @@ export default function IncomeExpenseManagementModalCRUD(props: IIncomeExpenseMa
 										name="PaymentMethodId"
 										placeholder="Chọn phương thức thanh toán"
 										isRequired={true}
+										disabled={mode == 'edit'}
 										rules={[{ required: true, message: 'Bạn không được để trống!' }]}
 									/>
 								</div>
@@ -162,6 +169,7 @@ export default function IncomeExpenseManagementModalCRUD(props: IIncomeExpenseMa
 											{ title: 'Thu', value: 1 },
 											{ title: 'Chi', value: 2 }
 										]}
+										disabled={mode == 'edit'}
 										label="Loại phiếu"
 										name="Type"
 										placeholder="Chọn loại phiếu"

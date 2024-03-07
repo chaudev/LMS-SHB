@@ -10,7 +10,20 @@ export const userInformationApi = {
 			}
 		})
 	},
+	deleteMultipleUser(userIds: string) {
+		return instance.delete(url, {
+			params: {
+				userIds
+			}
+		})
+	},
 
+	exportStudents: (params) => {
+		return instance.get(url + '/export-student', {
+			params: params
+		})
+	},
+	// GET /api/UserInformation/export-student
 	getAllUserByRole(role) {
 		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/user-available/${role}`)
 	},

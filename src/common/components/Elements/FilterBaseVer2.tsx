@@ -128,14 +128,6 @@ export default function FilterBaseVer2(props: IProps) {
 				overlayClassName={`filter-popover`}
 				onOpenChange={handleChangeFilter}
 			>
-				{/* <IconButton
-					type="button"
-					icon={'filter'}
-					color="white"
-					background="disabled"
-					className="p-2 h-[34px] w768:h-[38px] w-[34px] w768:w-[38px] "
-					tooltip="Bộ Lọc"
-				/> */}
 				<button className="btn btn-secondary light btn-filter">
 					<Filter />
 				</button>
