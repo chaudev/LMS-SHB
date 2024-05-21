@@ -7,7 +7,7 @@ import PrimaryButton from '../Primary/Button'
 import IconButton from '../Primary/IconButton'
 
 const DeleteTableRow = (props) => {
-	const { handleDelete, text, title, setShowPop } = props
+	const { handleDelete, text, title, setShowPop, overrideText, warning } = props
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -67,9 +67,29 @@ const DeleteTableRow = (props) => {
 					</div>
 				}
 			>
-				<p className="mb-4 text-base">
-					Bạn có chắc muốn xóa <span className="text-[#f25767]">{text}</span> ?
-				</p>
+				{
+					!overrideText ? 
+				    (
+						<p className="mb-4 text-base">
+					       Bạn có chắc muốn xóa <span className="text-[#f25767]">{text}</span> ?
+				        </p>
+					) : 
+					(
+						<>
+                        <p className="mb-4 text-base">
+						{overrideText}
+				        </p>
+</>
+					)
+				}
+				{
+					warning && (
+                        <p className="mb-4 text-base">
+					       <span className="text-[#f25767]">{warning}</span>
+				        </p>
+					)
+				}
+				
 			</Modal>
 		</>
 	)

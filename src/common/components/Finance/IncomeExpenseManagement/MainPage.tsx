@@ -15,6 +15,7 @@ import IconButton from '../../Primary/IconButton'
 import PrimaryTable from '../../Primary/Table'
 import PrimaryTag from '../../Primary/Tag'
 import IncomeExpenseManagementModalCRUD from './ModalCRUD'
+import DeleteTableRow from '../../Elements/DeleteTableRow'
 
 export interface IIncomeExpenseManagementPageProps {}
 
@@ -54,7 +55,6 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 	const [filterList, setFilterList] = useState([])
 	const [todoApi, setTodoApi] = useState(initialParams)
 	const router = useRouter()
-
 	const getDataPayment = async () => {
 		setIsLoading(true)
 		try {
@@ -191,6 +191,10 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 								onSubmit={onSubmit}
 							/>
 						)}
+						<DeleteTableRow 
+						overrideText={`Bạn chắc chắn muốn xóa phiên thanh toán này?`} 
+						warning ={`Lưu ý: không thể khôi phục sau khi xóa`}
+						handleDelete={() => handleDelete(item.Id)} />
 					</div>
 				)
 			}
@@ -284,7 +288,24 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 
 		setTodoApi(params)
 	}
-
+	const handleDelete = async (id) => {
+		setIsLoading(true)
+		try {
+			let res = await paymentSessionApi.delete(id)
+			if (res.status == 200) {
+				getDataPayment()
+				ShowNoti('success', res.data.message)
+			}
+			else
+			{
+				ShowNoti('error', res.data.message)
+			}
+		} catch (error) {
+			ShowNoti('error', error.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
 	const onSubmit = async (data) => {
 		setIsLoading(true)
 		try {
