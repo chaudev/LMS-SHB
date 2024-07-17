@@ -15,6 +15,7 @@ const ToastifyContainer = () => {
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
+				limit={1}
 			/>
 
 			<div id="internet-container" className="hidden">
