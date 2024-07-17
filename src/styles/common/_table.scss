@@ -227,9 +227,9 @@
 	.ant-table-thead {
 		tr {
 			th {
+				@apply bg-primary;
 				padding: 6px 16px !important;
 				padding-left: 15px !important;
-				background: $primary-color;
 				color: white;
 				border-bottom: none;
 				white-space: nowrap;

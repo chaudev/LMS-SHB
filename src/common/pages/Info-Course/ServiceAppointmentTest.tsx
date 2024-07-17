@@ -330,7 +330,6 @@ export default function ServiceAppointmentTest(props) {
 	// USE EFFECT - FETCH DATA
 	useEffect(() => {
 		getDataSource()
-		console.log('todoApi', todoApi)
 	}, [todoApi])
 
 	useEffect(() => {

@@ -59,7 +59,7 @@ function RegisterForm(props) {
 		<Form autoComplete="on" form={form} onFinish={onRegister} className="w-100" layout="vertical">
 			<div className="login-forms">
 				<div className="login-form">
-					<img className="logo-login" src="/images/logo-2.jpg" alt="" />
+					<img className="logo-login" src="/logo/login-logo.png" alt="" />
 
 					<h6 className="login-title">Đăng ký</h6>
 					<Form.Item

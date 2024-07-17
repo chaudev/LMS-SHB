@@ -1,22 +1,26 @@
-## EDUGO LMS 🐶 🐹 🐰
+## SHB - Tư vấn du học ☘️
 
 <img src="https://img.shields.io/badge/mona--lms-v2.0-4CAF50"/> <img src="https://img.shields.io/badge/react-18.2.0-%23EC407A"/> <img src="https://img.shields.io/badge/next-12.2.2-orange"/> <img src="https://img.shields.io/badge/antd-4.21.6-42A5F5"/>
 
 ### Người mới vui lòng đọc hết và xem kĩ các lưu ý 🐥
+
+## File môi trường (.env)
+
+Chỉ cần thêm `NEXT_PUBLIC_API_ENDPOINT=Link api`
+
+👉 _Anh em hỏi BE phụ trách để lấy link api_
 
 ## Cài đặt nè ⚙️
 
 Clone source:
 
 ```sh
-git clone https://github.com/chaudev/edugo.git
+git clone https://github.com/chaudev/LMS-SHB
 ```
 
 Cài thư viện:
 
-```sh
-yarn install
-```
+`bun i` or `npm i --force` or `yarn install`
 
 Chạy dự án:
 
@@ -26,9 +30,7 @@ yarn dev
 
 Xuất dự án ( static ):
 
-```sh
-yarn export
-```
+`bun run export` or `yarn export` or `npm run export`
 
 ## Lưu ý 🗯
 
@@ -37,6 +39,10 @@ yarn export
 - Khi tạo page mới thì nhớ "export default" do cơ chế của Nextjs nó bắt vậy.
 - Tạo page mới có thể code trong page hoặc tạo components rồi import vào.
 - Code xong phần nào nhớ test thật kĩ trước khi next ( lỗi ngu phạt 5 xị ).
+
+## Quan trọng
+
+_Tài liệu có thể outdate từ khúc này trở xuống do đã quá cũ_
 
 ## Style guide 😜 :
 

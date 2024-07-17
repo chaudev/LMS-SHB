@@ -100,7 +100,7 @@
 			@apply text-[12px];
 		}
 		&.is-admin {
-			@apply text-[#ffffff] bg-[#002456];
+			@apply text-[#ffffff] bg-basicBlue;
 		}
 	}
 
@@ -111,6 +111,7 @@
 	.cc-news-comment {
 		//
 	}
+
 	.cc-comments {
 		@apply mt-[16px];
 	}

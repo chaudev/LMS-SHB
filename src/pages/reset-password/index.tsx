@@ -37,7 +37,7 @@ function ResetPasswordPage() {
 		<>
 			<div className="w-full scrollable login-forms">
 				<Form layout="vertical" form={form} onFinish={_submit} className="w-100 login-form center-column ">
-					<img className="logo-register" src="/white-logo.png" alt="" />
+					<img className="logo-register" src="/logo/login-logo.png" alt="" />
 
 					<h6 className="mt-5 mb-3 login-title">Lấy lại mật khẩu</h6>
 

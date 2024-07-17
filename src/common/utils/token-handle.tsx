@@ -21,6 +21,8 @@ function parseJwt(token) {
  * @param dispatch - This is the dispatch function that we can use to dispatch actions to the Redux store
  */
 async function playWithToken(params, dispatch) {
+	console.log('--- playWithToken: ', params)
+
 	const token = params?.token || ''
 	const user = parseJwt(token) || ''
 	const theRefresh = {
@@ -52,11 +54,13 @@ async function playWithToken(params, dispatch) {
  */
 async function logOut() {
 	localStorage.clear()
+
 	const redirect = Router.pathname
+
 	if (redirect == '/' || redirect == '/dashboard') {
 		Router.replace({ pathname: '/signin' })
 	} else {
-		Router.replace({ pathname: '/signin', query: { redirect: redirect } })
+		Router.replace({ pathname: '/signin' })
 	}
 }
 

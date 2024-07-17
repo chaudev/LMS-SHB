@@ -269,7 +269,6 @@ body {
 			color: #fff;
 			background-color: #24365c;
 			border-color: #24365c;
-
 		}
 	}
 
@@ -580,7 +579,6 @@ body {
 		}
 
 		&.hide-icon {
-
 			input::-webkit-outer-spin-button,
 			input::-webkit-inner-spin-button {
 				-webkit-appearance: none;
@@ -647,7 +645,6 @@ body {
 		}
 
 		.ant-select-selector {
-
 			.ant-select-selection-item,
 			.ant-select-selection-placeholder {
 				line-height: 34px !important;
@@ -678,7 +675,6 @@ body {
 	}
 
 	.style-input.multiple-select {
-
 		.ant-select-selector,
 		&.ant-input,
 		.ant-picker-input input,
@@ -690,7 +686,7 @@ body {
 		}
 	}
 
-	.ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional) {
+	.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional) {
 		flex-direction: row;
 
 		&::before {
@@ -715,7 +711,7 @@ body {
 		font-weight: 500;
 	}
 
-	.ant-btn>span {
+	.ant-btn > span {
 		vertical-align: middle;
 	}
 
@@ -806,7 +802,6 @@ body {
 		}
 
 		&:hover {
-
 			// background-color: $primary-color !important;
 			// border-color: $primary-color !important;
 			svg {
@@ -1652,7 +1647,6 @@ body {
 
 	.ant-card-head-wrapper {
 		@include max-media(800px) {
-
 			// flex-wrap: wrap;
 			// .ant-card-head-title,
 			// .ant-card-extra {
@@ -2011,7 +2005,6 @@ body {
 	}
 
 	.input-number {
-
 		&::-webkit-outer-spin-button,
 		&::-webkit-inner-spin-button {
 			-webkit-appearance: none;
@@ -2052,7 +2045,6 @@ body {
 	}
 
 	.input-number {
-
 		&::-webkit-outer-spin-button,
 		&::-webkit-inner-spin-button {
 			-webkit-appearance: none;
@@ -2076,7 +2068,6 @@ body {
 	}
 
 	.content_notification {
-
 		.ant-card-head,
 		.ant-card-head-title,
 		.ant-card-extra,

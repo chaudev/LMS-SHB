@@ -30,3 +30,7 @@ yarn-error.log*
 .zip
 *.zip
 *.rar
+package-lock.json
+yarn.lock
+bun.lockb
+.yarn

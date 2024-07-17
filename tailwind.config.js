@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const plugin = require('tailwindcss/plugin')
 module.exports = {
-	content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/common/pages/*.{js,ts,jsx,tsx}',  './src/common/**/*.{js,ts,jsx,tsx}', './src/common/components/**/*.{js,ts,jsx,tsx}'],
+	content: ['./src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		extend: {
 			gap: {
@@ -86,6 +86,10 @@ module.exports = {
 		colors: {
 			transparent: 'transparent',
 			current: 'currentColor',
+			primary: '#b32025',
+			primaryDark: '#7e1416',
+			basicBlue: '#096dd9',
+			basicBlueDark: '#0662c5',
 			'tw-white': '#ffffff',
 			'tw-gray': '#e2e8f0',
 			'tw-disable': '#cacaca',
@@ -99,7 +103,6 @@ module.exports = {
 			'tw-primary': '#002456',
 			'tw-primary-lightest': '#cc9fa7',
 			'tw-secondary': '#c94a4f'
-			 
 		},
 		screens: {
 			smartphone: '375px',

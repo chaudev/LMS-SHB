@@ -1,6 +1,6 @@
 import { Menu } from 'antd'
 import React, { useEffect, useState, useRef, FC } from 'react'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { AdminMenu, AdminChildMenu } from '~/common/libs/routers/admin'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
@@ -8,8 +8,6 @@ import { RootState } from '~/store'
 import { TeacherChildMenu, TeacherMenu } from '~/common/libs/routers/teacher'
 import { StudentChildMenu, StudentMenu } from '~/common/libs/routers/student'
 import ReactHtmlParser from 'react-html-parser'
-import { log } from '~/common/utils'
-import PrimaryTooltip from '../../PrimaryTooltip'
 import { ManagerChildMenu, ManagerMenu } from '~/common/libs/routers/manager'
 import { SalerChildMenu, SalerMenu } from '~/common/libs/routers/saler'
 import { AccountantChildMenu, AccountantMenu } from '~/common/libs/routers/accountant'
@@ -25,10 +23,6 @@ const PrimaryMenu: FC<IMainMenu> = ({ isOpen, openMenuMobile, funcMenuMobile, re
 	let pathname = router.pathname
 
 	const menuChild = useRef(null)
-
-	// if (pathname == '/') {
-	// 	pathname = '/user/student'
-	// }
 
 	const [isHover, setIsHover] = useState({ changeHeight: null, status: false, position: null })
 	const [posMenu, setPosMenu] = useState(null)
@@ -49,13 +43,8 @@ const PrimaryMenu: FC<IMainMenu> = ({ isOpen, openMenuMobile, funcMenuMobile, re
 	}, [parentMenu])
 
 	function getActiveTab() {
-		// console.time('- getActiveTab')
-
 		if (pathname == '/') {
-			//
 		}
-
-		// console.timeEnd('- getActiveTab')
 	}
 
 	const changeTabs = (e) => {
@@ -344,8 +333,8 @@ const PrimaryMenu: FC<IMainMenu> = ({ isOpen, openMenuMobile, funcMenuMobile, re
 
 			<div className={`menu-child  ${!isOpen && `close-app  ${isHover.status ? 'hover-open' : ''} `}`}>
 				<div className="app-header-logo flex items-center justify-center">
-					<a className='d-flex justify-center items-center' href="/">
-						<img className={isOpen ? 'logo-img h-[40px]' : 'logo-img-none'} src="/images/logo-2.jpg" />
+					<a className="d-flex justify-center items-center" href="/">
+						<img className={isOpen ? 'logo-img h-[40px]' : 'logo-img-none'} src="/logo/main-logo.png" />
 					</a>
 				</div>
 
@@ -359,7 +348,7 @@ const PrimaryMenu: FC<IMainMenu> = ({ isOpen, openMenuMobile, funcMenuMobile, re
 							<Menu
 								key={indexMenu}
 								onOpenChange={onOpenChange}
-								selectedKeys={[pathname == '/' ? '/dashboard' : pathname]}
+								selectedKeys={[Router.asPath == '/' ? '/news' : pathname]}
 								openKeys={[subMenuActive]}
 								mode="inline"
 								theme="light"

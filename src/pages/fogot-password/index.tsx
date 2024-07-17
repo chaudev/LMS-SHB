@@ -34,8 +34,8 @@ function ForgotPasswordPage() {
 	return (
 		<>
 			<div className="w-full scrollable login-forms">
-				<Form form={form} onFinish={_submit} className="w-100 login-form center-column ">
-					<img className="logo-register" src="/white-logo.png" alt="" />
+				<Form form={form} onFinish={_submit} className="w-full login-form center-column ">
+					<img className="logo-register !w-[60%]" src="/logo/login-logo.png" alt="" />
 
 					<h6 className="mt-5 mb-3 login-title">Lấy lại mật khẩu</h6>
 

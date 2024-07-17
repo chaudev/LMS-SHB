@@ -2,13 +2,13 @@ import { Card, Empty, List, Popover } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
-import { VscBell } from 'react-icons/vsc'
 import { useDispatch, useSelector } from 'react-redux'
 import { notificationApi } from '~/api/notification'
 import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
 import { getAll } from '~/store/notificateReducer'
 import ReactHtmlParser from 'react-html-parser'
+import { FaBell } from 'react-icons/fa'
 
 const Notification = () => {
 	const notification = useSelector((state: RootState) => state.notificate.dataNotificate)
@@ -190,9 +190,10 @@ const Notification = () => {
 				onVisibleChange={(visible) => setShow(visible)}
 			>
 				<div className="relative w-12 h-12 flex justify-center items-center rounded-xl bg-tw-gray cursor-pointer">
-					<VscBell className={`${countNotification > 0 ? 'animate-bell' : ''}`} size={26} />
+					<FaBell className={`${countNotification > 0 ? 'animate-bell' : ''}`} size={22} />
+
 					{countNotification > 0 && (
-						<div className="absolute flex justify-center items-center -top-2 -right-2 w-6 h-6 rounded-xl bg-tw-primary">
+						<div className="absolute flex justify-center items-center -top-2 -right-2 w-6 h-6 rounded-xl bg-basicBlue">
 							<p className="text-tw-white">{countNotification}</p>
 						</div>
 					)}

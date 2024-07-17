@@ -47,7 +47,7 @@ function NewsGroup(props) {
 
 	return (
 		<div className="p-[16px] cc-news-group">
-			<h4 className="font-semibold text-[16px]">Danh sách nhóm</h4>
+			<h4 className="font-semibold mb-[8px] text-[16px]">Danh sách nhóm</h4>
 
 			{(isAdmin() || isTeacher() || isManager() || isAcademic()) && (
 				<>
@@ -68,7 +68,6 @@ function NewsGroup(props) {
 			{!loading && !!groups && groups.length != 0 && (
 				<>
 					{groups.map((group, indexGroup) => {
-
 						return (
 							<div
 								key={`the-group-${indexGroup}`}

@@ -81,7 +81,7 @@ function AuthLayout({ children }: IAuthLayout) {
 		<>
 			<div className="login-container row m-0">
 				<div className="col-md-8 col-12 left-login p-0">
-					<div className="mask-background" />
+					{/* <div className="mask-background" />
 					<div className="mask-content !relative">
 						{dateState?.hour !== undefined ? (
 							<>
@@ -105,28 +105,28 @@ function AuthLayout({ children }: IAuthLayout) {
 							</>
 						)}
 						<h1 className="content-idiom">{ReactHtmlParser(contentIdiom?.Content)}</h1>
-					</div>
+					</div> */}
 				</div>
 				<div className="col-md-4 col-12 m-0 right-login">{children}</div>
-				<div className="form-term">
+				{/* <div className="form-term">
 					<div className="content">
 						<div className="item">
 							<div className="icon">
 								<MdPlace />
 							</div>
-							{/* <p>Công viên lê thị riêng</p> */}
+							<p>Công viên lê thị riêng</p>
 						</div>
 						<div className="item">
 							<div className="icon">
 								<FaPhoneSquareAlt />
 							</div>
-							{/* <p>1900 000 000</p> */}
+							<p>1900 000 000</p>
 						</div>
 						<div className="item">
 							<div className="icon">
 								<AiTwotoneMail />
 							</div>
-							{/* <p>INFO@CENTER.COM</p> */}
+							<p>INFO@CENTER.COM</p>
 						</div>
 						<div className="item cursor-pointer" onClick={() => setVisible(true)}>
 							<div className="icon">
@@ -135,7 +135,7 @@ function AuthLayout({ children }: IAuthLayout) {
 							<p>ĐIỀU KHOẢN</p>
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			<Modal
 				open={visible}

@@ -24,6 +24,7 @@ function AuthProvider({ children }: IAuthLayout) {
 		if (
 			router.pathname !== '/support-portal' &&
 			router.pathname.search('login') < 1 &&
+			router.pathname.search('hacked') < 1 &&
 			router.pathname.search('fogot-password') < 1 &&
 			router.pathname.search('reset-password') < 1 &&
 			router.pathname.search('register') < 1

@@ -91,21 +91,15 @@ function GroupForm(props) {
 	return (
 		<>
 			{!isEdit && (
-				<>
-					{/* <div onClick={() => setVisible(true)} className={`btn-create-group`}>
-						<AiOutlinePlus size={18} className="mr-2" />
-						<div>Tạo nhóm</div>
-					</div> */}
-					<PrimaryButton
-						onClick={() => setVisible(true)}
-						className="w-full  mt-1 d-flex items-center"
-						type="button"
-						icon="add"
-						background="primary"
-					>
-						Tạo nhóm
-					</PrimaryButton>
-				</>
+				<PrimaryButton
+					onClick={() => setVisible(true)}
+					className="w-full  mt-1 d-flex items-center"
+					type="button"
+					icon="add"
+					background="primary"
+				>
+					Tạo nhóm
+				</PrimaryButton>
 			)}
 
 			{!!isEdit && (

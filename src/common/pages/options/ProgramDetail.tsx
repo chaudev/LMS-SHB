@@ -23,10 +23,10 @@ const ProgramDetail = () => {
 	const [totalRow, setTotalRow] = useState(0)
 	const [isLoading, setIsLoading] = useState(false)
 	const [todoApi, setTodoApi] = useState(listTodoApi)
+
 	const getAllCurriculum = async () => {
 		try {
 			setIsLoading(true)
-			console.log('todoApi', todoApi)
 
 			const res = await curriculumApi.getAll(todoApi)
 			if (res.status === 200) {

@@ -13,7 +13,6 @@ import { ShowNoti } from '~/common/utils'
 import { setArea } from '~/store/areaReducer'
 import { permissionApi } from '~/api/permission'
 import AvatarComponent from '../AvatarComponent'
-import CartButton from '../Cart/button'
 import { logOut } from '~/common/utils/token-handle'
 
 let countOpen = 0
@@ -171,8 +170,8 @@ function Header({ isOpenMenu, isOpen, funcMenuMobile, openMenuMobile }: IHeader)
 	return (
 		<header className={`app-header ${openMenuMobile ? 'mobile' : ''}`}>
 			<div className={`app-header-logo ${!isOpen ? 'close-app' : countOpen > 0 ? 'open' : 'open-no-ani'}`}>
-				<a href="/" className='d-flex items-center justify-center w-[80%] h-[80%]'>
-					<img className={isOpen ? 'logo-img' : 'logo-img-none'} src="/images/logo-2.jpg"></img>
+				<a href="/" className="flex items-center duration-200">
+					<img className={isOpen ? 'h-[85%] w-[80%] ml-[12px]' : 'hidden'} src="/logo/main-logo.png"></img>
 				</a>
 			</div>
 

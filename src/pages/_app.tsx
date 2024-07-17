@@ -27,6 +27,7 @@ import { checkInternet } from '~/common/utils/main-function'
 import MainHeader from '~/common/libs/SEO/main-header'
 
 import { GoogleAnalytics } from 'nextjs-google-analytics'
+import Script from 'next/script'
 
 const gaMeasurementId = 'G-LX9VLW177F'
 
@@ -50,6 +51,8 @@ function App({ Component, pageProps }: AppProps & IViewProps) {
 	})
 	return (
 		<>
+			<Script src="/tinymce/tinymce.min.js" />
+
 			<GoogleAnalytics trackPageViews gaMeasurementId={gaMeasurementId} />
 
 			<MainHeader />

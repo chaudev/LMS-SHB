@@ -197,13 +197,9 @@ const Notification = () => {
 	//   );
 	// };
 
-	// console.log('todoApi: ', todoApi);
-
 	useEffect(() => {
 		getDataTable()
 		getDataBranch()
-
-		console.log('todoApi: ', todoApi)
 	}, [todoApi])
 
 	const columns = [

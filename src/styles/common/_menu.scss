@@ -19,7 +19,7 @@
 
 	.menu-parent {
 		@apply relative w-[70px] h-full z-10;
-		background: $primary-color;
+		@apply bg-primary;
 
 		.menu-parent-logo {
 			@apply w-full h-[65px] flex items-center justify-center;
@@ -43,19 +43,15 @@
 					transition: 0.3s;
 					position: relative;
 
-					// background: red;
-
-					// width: 50%;
-
 					b:nth-child(1) {
 						@apply w-[80%] bg-[#f8f7f7] block absolute right-0 top-[calc(-1rem-1px)];
 						height: calc(1rem + 2px);
 						transition: 0.3s;
 
 						&::before {
-							@apply absolute top-[-2px] right-0 w-[calc(100%+1px)] h-[calc(100%+1px)];
+							@apply bg-primary absolute top-[-2px] right-0 w-[calc(100%+1px)] h-[calc(100%+1px)];
 							content: '';
-							background-color: $primary-color;
+
 							border-bottom-right-radius: 2rem;
 							transition: 0.3s;
 						}
@@ -69,9 +65,8 @@
 						transition: 0.3s;
 
 						&::before {
-							@apply absolute bottom-[-2px] right-0 w-[calc(100%+1px)] h-[calc(100%+1px)];
+							@apply bg-primary absolute bottom-[-2px] right-0 w-[calc(100%+1px)] h-[calc(100%+1px)];
 							content: '';
-							background-color: $primary-color;
 							border-top-right-radius: 2rem;
 							transition: 0.3s;
 						}
@@ -82,7 +77,7 @@
 
 					&.active {
 						a {
-							color: $primary-color;
+							@apply text-primary;
 							background: #fff;
 						}
 					}
@@ -145,7 +140,7 @@
 	}
 
 	.main-menu-mark {
-		@apply bg-[#002456] w-[14px] h-[14px] absolute top-[-4px] left-[-4px];
+		@apply bg-primary w-[14px] h-[14px] absolute top-[-4px] left-[-4px];
 	}
 
 	.menu-child {
@@ -383,7 +378,7 @@
 
 				&:hover {
 					text-decoration: none;
-					color: $primary-color;
+					color: #000;
 				}
 			}
 
@@ -401,8 +396,7 @@
 			}
 
 			&.ant-menu-item-selected {
-				color: $primary-color;
-				background: #00245617;
+				background: #b51f251a;
 
 				&:after {
 					border-right: 0px solid $primary-color;
@@ -410,14 +404,14 @@
 					transition: 0s;
 				}
 				span {
-					color: $primary-color;
+					@apply text-primaryDark;
 				}
 				svg {
-					color: $primary-color !important;
+					@apply text-primaryDark;
 					transition: 0.3s;
 				}
 				a {
-					color: $primary-color !important;
+					@apply text-primaryDark font-[500];
 				}
 			}
 
