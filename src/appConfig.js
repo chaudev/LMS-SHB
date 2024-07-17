@@ -10,4 +10,4 @@ const appConfigs = {
 
 export default appConfigs
 
-// Test hooks 02
+// Test hooks 03
