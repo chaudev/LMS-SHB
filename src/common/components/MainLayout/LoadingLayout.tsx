@@ -1,84 +1,56 @@
-import React from 'react'
+import { motion } from 'framer-motion'
 
 const LoadingLayout = () => {
 	return (
-		<div className="loading-layout">
-			<div className="scene">
-				<div className="plane">
-					<div className="cube cube--0">
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-					</div>
-					<div className="shadow shadow--0"></div>
-					<div className="cube cube--1">
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-					</div>
-					<div className="shadow shadow--1"></div>
-					<div className="cube cube--2">
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-					</div>
-					<div className="shadow shadow--2"></div>
-					<div className="cube cube--3">
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-					</div>
-					<div className="shadow shadow--3"></div>
-					<div className="cube cube--4">
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-					</div>
-					<div className="shadow shadow--4"></div>
-					<div className="cube cube--5">
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-					</div>
-					<div className="shadow shadow--5"></div>
-					<div className="cube cube--6">
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-					</div>
-					<div className="shadow shadow--6"></div>
-					<div className="cube cube--7">
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-						<div className="cube__side"></div>
-					</div>
-					<div className="shadow shadow--7"></div>
-				</div>
-			</div>
+		<div className="w-screen h-screen flex items-center justify-center">
+			<motion.div
+				animate={{
+					scale: [1, 0.9, 0.9, 1, 1],
+					opacity: [1, 0.48, 0.48, 1, 1]
+				}}
+				transition={{
+					duration: 2,
+					ease: 'easeInOut',
+					repeatDelay: 1,
+					repeat: Infinity
+				}}
+			>
+				<img className="h-[60px] w-[60px]" src="/logo/loading.png" />
+			</motion.div>
+			<motion.div
+				animate={{
+					scale: [1, 1.2, 1.2, 1, 1],
+					rotate: [0, 270, 270, 0, 0],
+					opacity: [1, 0.25, 0.25, 0.25, 1],
+					borderRadius: ['25%', '25%', '50%', '50%', '25%']
+				}}
+				transition={{
+					ease: 'linear',
+					duration: 3.2,
+					repeat: Infinity
+				}}
+				style={{
+					width: 120,
+					height: 120,
+					position: 'absolute',
+					border: 'solid 8px #b32025'
+				}}
+			/>
+			<motion.div
+				animate={{
+					scale: [1.6, 1, 1, 1.6, 1.6],
+					rotate: [270, 0, 0, 270, 270],
+					opacity: [0.25, 1, 1, 1, 0.25],
+					borderRadius: ['25%', '25%', '50%', '50%', '25%']
+				}}
+				transition={{ ease: 'linear', duration: 3.2, repeat: Infinity }}
+				style={{
+					width: 100,
+					height: 100,
+					position: 'absolute',
+					border: `solid 3px #b32025`
+				}}
+			/>
 		</div>
 	)
 }
