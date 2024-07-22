@@ -17,6 +17,8 @@ import Filters from '~/common/components/Student/Filters'
 import Link from 'next/link'
 import { useRole } from '~/common/hooks/useRole'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import { CLASS_TYPES } from '~/common/utils/constants'
+import useClasses from '~/common/utils/hooks/useClasses'
 
 const initFilters = { PageSize: PAGE_SIZE, PageIndex: 1, Search: '' }
 
@@ -26,17 +28,13 @@ const StudentInClassPage = () => {
 	const [data, setData] = React.useState([])
 	const [filters, setFilter] = React.useState(initFilters)
 
-	const [listClass, setListClass] = React.useState([])
+	const { classes, isLoading } = useClasses()
 
 	const { isSaler } = useRole()
 
 	useEffect(() => {
 		getData()
 	}, [filters])
-
-	useEffect(() => {
-		getClasses()
-	}, [])
 
 	async function getData() {
 		setLoading(true)
@@ -53,27 +51,6 @@ const StudentInClassPage = () => {
 			ShowNostis.error(error?.message)
 		} finally {
 			setLoading(false)
-		}
-	}
-
-	const getClasses = async () => {
-		try {
-			const response = await RestApi.get<any>('Class', { pageIndex: 1, pageSize: 99999, types: '1,2' })
-			if (response.status == 200) {
-				let temp = []
-				response.data.data.map((item) => {
-					temp.push({
-						title: item.Name,
-						value: item.Id
-					})
-				})
-
-				setListClass(temp)
-			} else {
-				setListClass([])
-			}
-		} catch (error) {
-			ShowNostis.error(error?.message)
 		}
 	}
 
@@ -184,7 +161,7 @@ const StudentInClassPage = () => {
 			type: 'select',
 			col: 'col-span-2',
 			mode: 'multiple',
-			optionList: listClass
+			optionList: classes?.map((item) => ({ title: item?.Name, value: item?.Id }))
 		},
 		{
 			name: 'warning',

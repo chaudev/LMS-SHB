@@ -20,6 +20,10 @@ import Lottie from 'react-lottie-player'
 import loadingJson from '~/common/components/json/loading-calendar.json'
 import { userInformationApi } from '~/api/user/user'
 import PrimaryTag from '~/common/components/Primary/Tag'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import useClasses from '~/common/utils/hooks/useClasses'
+
+const initSearchParams = { teacherIds: '', branchIds: '', from: null, to: null, classId: null }
 
 const Schedule = () => {
 	const thisCalendar = useRef(null)
@@ -29,9 +33,10 @@ const Schedule = () => {
 	const [timeStamp, setTimeStamp] = useState(0)
 	const [isHidden, setIsHidden] = useState<boolean>()
 	const [isLoading, setIsLoading] = useState(false)
-	const [paramsSearch, setParamsSearch] = useState({ teacherIds: '', branchIds: '', from: null, to: null })
+	const [paramsSearch, setParamsSearch] = useState(initSearchParams)
 	const dispatch = useDispatch()
 	const user = useSelector((state: RootState) => state.user.information)
+	const { classes } = useClasses()
 
 	const getAllTeacher = async () => {
 		try {
@@ -62,7 +67,7 @@ const Schedule = () => {
 						allDay: true
 					}
 				})
-				console.log("newListSchedule: ", newListSchedule)
+				console.log('newListSchedule: ', newListSchedule)
 
 				setListSchedule(newListSchedule)
 			}
@@ -130,9 +135,40 @@ const Schedule = () => {
 		return userInformation?.RoleId == 7
 	}
 
+	const dataFilterStudent = [
+		{
+			name: 'classId',
+			title: 'Lớp học',
+			type: 'select',
+			col: 'col-span-2',
+			mode: 'single',
+			optionList: classes?.map((item) => ({ title: item?.Name, value: item?.Id }))
+		}
+	]
+
+	const handleFilter = (params) => {
+		const paramsForrmat = {
+			...paramsSearch,
+			// pageIndex: 1,
+			classId: params.classId ? params.classId : null
+		}
+		setParamsSearch(paramsForrmat)
+	}
+
 	return (
 		<div className="wrapper-class-schedule wrapper-calendar">
 			<Card
+				title={
+					<div>
+						<FilterBaseVer2
+							dataFilter={dataFilterStudent}
+							handleFilter={handleFilter}
+							handleReset={(value) => {
+								setParamsSearch(initSearchParams)
+							}}
+						/>
+					</div>
+				}
 				extra={
 					(isAdmin() || isManager() || isAcademic() || isAccountant() || isTeacher()) && (
 						<PopoverSearch setParamsSearch={setParamsSearch} teachers={teachers} isLoading={isLoading} />
@@ -163,7 +199,7 @@ const Schedule = () => {
 						setTimeStamp(new Date().getTime())
 					}}
 					// eventChange={(data) => console.log('DATA: ', data)}
-				
+
 					eventClassNames="ccc-event"
 					slotLaneClassNames="slot-event-calendar-cc"
 					headerToolbar={{ start: 'prev today next', center: 'title', end: 'dayGridMonth,timeGridWeek' }}

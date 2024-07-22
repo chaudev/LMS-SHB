@@ -24,6 +24,8 @@
     "@progress/kendo-licensing": "^1.2.2",
     "@progress/kendo-react-pdf": "^5.5.0",
     "@reduxjs/toolkit": "^1.8.3",
+    "@tanstack/react-query": "^5.51.11",
+    "@tanstack/react-query-devtools": "^5.51.11",
     "@tinymce/tinymce-react": "^4.1.0",
     "@zoomus/websdk": "^2.6.0",
     "antd": "^4.23.2",

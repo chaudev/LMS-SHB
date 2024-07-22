@@ -28,6 +28,7 @@ import MainHeader from '~/common/libs/SEO/main-header'
 
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 import Script from 'next/script'
+import ReactQueryProvider from '~/common/providers/ReactQuery/ReactQueryProvider'
 
 const gaMeasurementId = 'G-LX9VLW177F'
 
@@ -58,14 +59,16 @@ function App({ Component, pageProps }: AppProps & IViewProps) {
 			<MainHeader />
 
 			<StoreProvider store={store}>
-				<AuthProvider>
-					<ConfigProvider locale={locale}>
-						<ToastifyContainer />
-						<Layout breadcrumb={breadcrumb}>
-							<Component {...pageProps} />
-						</Layout>
-					</ConfigProvider>
-				</AuthProvider>
+				<ReactQueryProvider>
+					<AuthProvider>
+						<ConfigProvider locale={locale}>
+							<ToastifyContainer />
+							<Layout breadcrumb={breadcrumb}>
+								<Component {...pageProps} />
+							</Layout>
+						</ConfigProvider>
+					</AuthProvider>
+				</ReactQueryProvider>
 			</StoreProvider>
 		</>
 	)
