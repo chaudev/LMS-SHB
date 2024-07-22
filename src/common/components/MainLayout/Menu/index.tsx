@@ -380,7 +380,7 @@ const PrimaryMenu: FC<IMainMenu> = ({ isOpen, openMenuMobile, funcMenuMobile, re
 													const isActive = subitem?.Route == pathname
 													return (
 														<Menu.Item
-															className={`${isActive ? '!text-[#002456] bg-[#ecf2fd]' : ''}`}
+															className={`${isActive ? '!text-[#B32025] bg-[#ecf2fd]' : ''}`}
 															key={`sub-menu-${subitem?.Key}`}
 															icon={typeof subitem.Icon == 'string' ? ReactHtmlParser(subitem.Icon) : subitem.Icon}
 														>

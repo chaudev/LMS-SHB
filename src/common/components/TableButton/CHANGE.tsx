@@ -9,7 +9,7 @@ type TButtonChange = {
 }
 
 // Color: orange
-const mainClass = 'text-[#002456] hover:text-[#1976D2] active:text-[#002456] cursor-pointer none-selection'
+const mainClass = 'text-[#B32025] hover:text-[#1976D2] active:text-[#B32025] cursor-pointer none-selection'
 
 const ButtonChange: FC<TButtonChange> = (props) => {
 	const { className, onClick, onBlur, size } = props

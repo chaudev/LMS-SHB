@@ -123,7 +123,7 @@ const ReplyItem = (props) => {
 								) : (
 									<FaTelegramPlane
 										size={20}
-										color={!currentReply || currentReply == Content ? '#0000003d' : '#002456'}
+										color={!currentReply || currentReply == Content ? '#0000003d' : '#B32025'}
 										className="ml-[-2px]"
 									/>
 								)}
@@ -140,7 +140,7 @@ const ReplyItem = (props) => {
 							Nhấn ESC để hủy
 							{!!currentReply && currentReply != Content && (
 								<>
-									, <div className="text-[#002456] inline-flex">Enter để lưu</div>
+									, <div className="text-[#B32025] inline-flex">Enter để lưu</div>
 								</>
 							)}
 						</div>
@@ -217,7 +217,7 @@ function Reply(props) {
 						{loading ? (
 							<Loading.Blue />
 						) : (
-							<FaTelegramPlane size={20} color={!currentReply ? '#0000003d' : '#002456'} className="ml-[-2px]" />
+							<FaTelegramPlane size={20} color={!currentReply ? '#0000003d' : '#B32025'} className="ml-[-2px]" />
 						)}
 					</div>
 				</div>

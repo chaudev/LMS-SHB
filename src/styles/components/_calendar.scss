@@ -21,14 +21,14 @@
 		.fc-toolbar {
 			.fc-toolbar-chunk {
 				.fc-button {
-					@apply bg-[#002456] hover:bg-[#C94A4F] focus:bg-[#002456] border-none;
+					@apply bg-[#B32025] hover:bg-[#C94A4F] focus:bg-[#B32025] border-none;
 				}
 				.fc-button:enabled:hover{
-					@apply bg-[#002456] hover:bg-[#C94A4F] focus:bg-[#002456] border-none;
+					@apply bg-[#B32025] hover:bg-[#C94A4F] focus:bg-[#B32025] border-none;
 				}
 				.fc-today-button {
 					@apply font-medium border-none;
-					background: #002456 !important
+					background: #B32025 !important
 				
 				
 				}
@@ -40,11 +40,11 @@
 				}
 				.fc-button-group {
 					button.fc-button {
-						@apply font-medium bg-[#fff] hover:bg-[#C94A4F] focus:bg-[#002456] border-none;
+						@apply font-medium bg-[#fff] hover:bg-[#C94A4F] focus:bg-[#B32025] border-none;
 						 color :#495057;
 					}
 					button.fc-button-active {
-						@apply bg-[#002456] hover:bg-[#C94A4F] border-none;
+						@apply bg-[#B32025] hover:bg-[#C94A4F] border-none;
 						color :#fff;
 
 					}
@@ -67,7 +67,7 @@
 	.fc-col-header-cell {
 		@apply h-[44px] bg-tw-blue;
 		.fc-scrollgrid-sync-inner {
-			@apply flex items-center justify-center h-full bg-[#002456] text-tw-white;
+			@apply flex items-center justify-center h-full bg-[#B32025] text-tw-white;
 			a {
 				&:hover {
 					@apply text-tw-orange;
@@ -140,7 +140,7 @@
 		.wrapper-schedule-tablet {
 			@apply block;
 			button {
-				@apply flex items-center justify-center h-10 bg-[#002456] text-tw-white font-medium text-base rounded-lg mb-2 z-10 transition-all w-full;
+				@apply flex items-center justify-center h-10 bg-[#B32025] text-tw-white font-medium text-base rounded-lg mb-2 z-10 transition-all w-full;
 				&:hover {
 					@apply text-tw-orange;
 				}
@@ -176,7 +176,7 @@
 		.wrapper-schedule-tablet {
 			@apply block;
 			button {
-				@apply flex items-center justify-center h-10 bg-[#002456] text-tw-white font-medium text-base rounded-lg mb-2 z-10 transition-all w-full;
+				@apply flex items-center justify-center h-10 bg-[#B32025] text-tw-white font-medium text-base rounded-lg mb-2 z-10 transition-all w-full;
 				&:hover {
 					@apply text-tw-orange;
 				}

@@ -218,12 +218,12 @@ const PaymentManagementPage = () => {
 				<>
 					<p>
 						<span className="font-[400] text-gray">Mã thanh toán: </span>
-						<span className="font-[500] text-[#002456]">{item.Code}</span>
+						<span className="font-[500] text-[#B32025]">{item.Code}</span>
 					</p>
 					<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.StudentId}`}>
 						<p>
 							<span className="font-[400] text-gray">Người thanh toán: </span>
-							<span className="font-[600] text-[#002456]">
+							<span className="font-[600] text-[#B32025]">
 								<Link
 									href={{
 										pathname: '/info-course/student/detail',
@@ -300,7 +300,7 @@ const PaymentManagementPage = () => {
 			title: 'Người tạo',
 			dataIndex: 'ModifiedBy',
 			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#B32025]">{value}</p>
 		},
 		{
 			title: 'Ngày',

@@ -1,4 +1,5 @@
 import { wait } from './common'
+import ShowNoti from './ShowNoti'
 
 export const getFileThumbnails = (type, FileUrl) => {
 	if (type == 'pdf') {
@@ -168,4 +169,16 @@ export const domMastersContent = (section, group) => {
 	if (!section && !group) {
 		viewContent('', false, 'section')
 	}
+}
+
+/**
+ *  Hàm noti tất cả các lỗi
+ * @param error - Truyền error trong try catch
+ * @returns lỗi.
+ */
+export function ShowErrorToast(error) {
+	return ShowNoti(
+		'error',
+		error?.resultMessage || error?.response?.data?.resultMessage || error?.message || error?.ExceptionMessage || error?.MessageDetail
+	)
 }

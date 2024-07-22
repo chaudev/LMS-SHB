@@ -88,7 +88,7 @@ export const ListStudentInClass = () => {
 						title: 'Tên học viên',
 						width: 200,
 						dataIndex: 'FullName',
-						render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
+						render: (text) => <p className="font-semibold text-[#B32025]">{text}</p>
 					},
 					{
 						title: 'Số điện thoại',
@@ -143,7 +143,7 @@ export const ListStudentInClass = () => {
 						title: 'Tên học viên',
 						width: 200,
 						dataIndex: 'FullName',
-						render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
+						render: (text) => <p className="font-semibold text-[#B32025]">{text}</p>
 					},
 					{
 						title: 'Số điện thoại',

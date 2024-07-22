@@ -55,7 +55,7 @@ const ModalFooter = (props: IProps) => {
 					Huỷ
 				</PrimaryButton>
 			)}
-			{/* <Button className={buttonFull ? 'flex-1' : ''} onClick={onOK} style={{ background: '#002456' }} loading={loading}>
+			{/* <Button className={buttonFull ? 'flex-1' : ''} onClick={onOK} style={{ background: '#B32025' }} loading={loading}>
 				<AiOutlineSave className="text-[18px] mr-2" /> {isEdit ? 'Chỉnh sửa' : 'Lưu'}
 			</Button> */}
 			<PrimaryButton type="button" onClick={onOK} loading={loading} background="primary" className="w-full" icon="save">

@@ -178,12 +178,12 @@ function Header({ isOpenMenu, isOpen, funcMenuMobile, openMenuMobile }: IHeader)
 			<div className={`app-header-inner ${!isOpen && 'close-app'}`}>
 				<div className="right">
 					<div className="box-menu desktop" onClick={() => isOpenMenu()}>
-						<div className="icon-action">{!isOpen ? <MenuUnfoldOutlined color="#002456" /> : <MenuFoldOutlined color="#002456" />}</div>
+						<div className="icon-action">{!isOpen ? <MenuUnfoldOutlined color="#B32025" /> : <MenuFoldOutlined color="#B32025" />}</div>
 					</div>
 
 					<div className="box-menu mobile" onClick={() => funcMenuMobile()}>
 						<div className="icon-action">
-							{!openMenuMobile ? <MenuUnfoldOutlined color="#002456" /> : <MenuFoldOutlined color="#002456" />}
+							{!openMenuMobile ? <MenuUnfoldOutlined color="#B32025" /> : <MenuFoldOutlined color="#B32025" />}
 						</div>
 					</div>
 				</div>

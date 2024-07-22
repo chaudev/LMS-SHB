@@ -44,7 +44,7 @@ export const RollUpQRStudentPage = () => {
 			title: 'Học viên',
 			width: 180,
 			dataIndex: 'FullName',
-			render: (text) => <p className="text-semibold text-[#002456]">{text}</p>
+			render: (text) => <p className="text-semibold text-[#B32025]">{text}</p>
 		},
 		{
 			title: 'Mã',

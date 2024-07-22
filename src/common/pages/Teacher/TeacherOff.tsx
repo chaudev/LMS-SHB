@@ -143,7 +143,7 @@ const TeacherOff = () => {
 			title: 'Tên nhân viên',
 			dataIndex: 'FullName',
 			key: 'FullName',
-			className: 'text-[#002456] font-[500]',
+			className: 'text-[#B32025] font-[500]',
 			...FilterColumn('FullName', onSearch, onResetSearch, 'text')
 		},
 		{

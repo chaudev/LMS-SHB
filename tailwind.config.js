@@ -100,7 +100,7 @@ module.exports = {
 			'tw-red': '#e21b1b',
 			'tw-green': '#38853b',
 			'tw-success': '#32c6a4',
-			'tw-primary': '#002456',
+			'tw-primary': '#B32025',
 			'tw-primary-lightest': '#cc9fa7',
 			'tw-secondary': '#c94a4f'
 		},

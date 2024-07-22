@@ -128,7 +128,7 @@ function GroupForm(props) {
 			>
 				<Form form={form} className="grid grid-cols-2 gap-x-4 " layout="vertical" onFinish={onFinish} autoComplete="on">
 					<Form.Item label="Ảnh bìa" name="Background" className="col-span-2">
-						<div {...getRootProps()} className={`cc-form-new-group-item border-[${isDragActive ? '#002456' : '#d9d9d9'}]  `}>
+						<div {...getRootProps()} className={`cc-form-new-group-item border-[${isDragActive ? '#B32025' : '#d9d9d9'}]  `}>
 							<input {...getInputProps()} />
 
 							{files[0]?.preview || defaultData ? (

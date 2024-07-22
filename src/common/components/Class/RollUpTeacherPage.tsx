@@ -90,7 +90,7 @@ export const RollUpTeacherPage = () => {
 		{
 			title: 'Giáo viên',
 			dataIndex: 'TeacherName',
-			render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
+			render: (text) => <p className="font-semibold text-[#B32025]">{text}</p>
 		},
 		{
 			title: 'Ngày',

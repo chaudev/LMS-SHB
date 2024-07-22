@@ -42,7 +42,7 @@ function App({ Component, pageProps }: AppProps & IViewProps) {
 	ConfigProvider.config({
 		prefixCls: 'custom',
 		theme: {
-			primaryColor: '#002456',
+			primaryColor: '#B32025',
 			errorColor: '#ff4d4f',
 			warningColor: '#faad14',
 			successColor: '#52c41a',

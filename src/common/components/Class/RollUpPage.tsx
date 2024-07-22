@@ -236,7 +236,7 @@ export const RollUpPage = () => {
 			title: 'Học viên',
 			dataIndex: 'FullName',
 			width: 200,
-			render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
+			render: (text) => <p className="font-semibold text-[#B32025]">{text}</p>
 		},
 		{
 			title: 'Điểm danh',

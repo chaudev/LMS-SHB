@@ -50,12 +50,12 @@ const CardLearningHistory: React.FC<ICardLearningHistory> = ({ majorsId, student
 				<Timeline className="p-3">
 					{learningHistorys.map((item) => {
 						return (
-							<Timeline.Item color="blue" key={item.Id} dot={<BsClockHistory size={22} color='#002456' />}>
+							<Timeline.Item color="blue" key={item.Id} dot={<BsClockHistory size={22} color='#B32025' />}>
 								<Card>
 									<Card.Meta
 										description={
 											<div className="d-flex flex-col gap-3  radius-lg">
-												<span className={`text-base	text-[#002456]`}>{moment(item.CreatedOn).format('HH:MM DD/MM/YYYY')}</span>
+												<span className={`text-base	text-[#B32025]`}>{moment(item.CreatedOn).format('HH:MM DD/MM/YYYY')}</span>
 												<span className={`text-[black]`}>{item.Description}</span>
 											</div>
 										}

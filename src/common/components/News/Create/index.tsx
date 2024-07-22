@@ -196,7 +196,7 @@ const CreateNews: FC<TCreateNews> = (props) => {
 
 			{isEdit && (
 				<div className="cc-comment-menu-item" onClick={() => _openEdit()}>
-					<FaEdit className="text-[#002456] ml-[2px]" size={18} />
+					<FaEdit className="text-[#B32025] ml-[2px]" size={18} />
 					<span>Chỉnh sửa</span>
 				</div>
 			)}

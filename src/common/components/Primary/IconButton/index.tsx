@@ -32,7 +32,7 @@ const IconButton: FC<IIconButton> = (props) => {
 			return 'bg-[#000] hover:bg-[#191919] focus:bg-[#313131]'
 		}
 		if (background == 'primary') {
-			return 'bg-[#002456] hover:bg-[#002456] focus:bg-[#002456]'
+			return 'bg-[#B32025] hover:bg-[#B32025] focus:bg-[#B32025]'
 		}
 		if (background == 'disabled') {
 			return 'bg-[#cacaca] hover:bg-[#bababa] focus:bg-[#acacac] cursor-not-allowed'
@@ -66,7 +66,7 @@ const IconButton: FC<IIconButton> = (props) => {
 			return 'text-[#000] hover:text-[#191919] focus:text-[#313131]'
 		}
 		if (color == 'primary') {
-			return 'text-[#002456] hover:text-[#00337A] focus:text-[#002456]'
+			return 'text-[#B32025] hover:text-[#00337A] focus:text-[#B32025]'
 		}
 		if (color == 'disabled') {
 			return 'text-[#cacaca] hover:text-[#bababa] focus:text-[#acacac] cursor-not-allowed'

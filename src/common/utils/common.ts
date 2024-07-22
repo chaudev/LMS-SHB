@@ -108,3 +108,35 @@ export const parseToMoney = (value: any) => {
 import { logOut, parseJwt } from './token-handle'
 
 export { logOut, parseJwt }
+
+/**
+ * Hàm kiểm tra vai trò của người dùng
+ *
+ * @param params - `params` thông tin của thằng đang đăng nhập`.
+ *
+ * Trả ra (true or false): nó có phải là "admin", "giáo viên", ...
+ *
+ * Cách xài: is(userInfo).admin
+ * 1. Admin
+ * 2. Teacher
+ * 3. Student
+ * 4. Manager
+ * 5. Saler
+ * 6. Accountant
+ * 7. Academic
+ * 8. Parent
+ * 9. TeachingAssistant
+ */
+export function is(params) {
+	return {
+		admin: params?.RoleId == 1,
+		teacher: params?.RoleId == 2,
+		student: params?.RoleId == 3,
+		manager: params?.RoleId == 4,
+		saler: params?.RoleId == 5,
+		accountant: params?.RoleId == 6,
+		academic: params?.RoleId == 7,
+		parent: params?.RoleId == 8,
+		teachingAssistant: params?.RoleId == 9
+	}
+}

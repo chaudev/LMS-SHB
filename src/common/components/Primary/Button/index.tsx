@@ -46,9 +46,9 @@ const PrimaryButton: FC<IPrimaryButton> = (props) => {
 			}
 		}
 	}
-	// #002456    #C94A4F #C94A4F
+	// #B32025    #C94A4F #C94A4F
 
-	// primary #002456
+	// primary #B32025
 	function getColor() {
 		if (!!disable || !!loading) {
 			return 'text-white'

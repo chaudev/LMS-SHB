@@ -212,7 +212,7 @@ export const ClassListContent: React.FC<IClassListContent> = ({
 																}
 															>
 																<p>
-																	Lớp học đang có <span className="font-medium text-[#002456]">{item.TotalStudent}</span> học viên. Bạn có
+																	Lớp học đang có <span className="font-medium text-[#B32025]">{item.TotalStudent}</span> học viên. Bạn có
 																	chắc muốn xóa?
 																</p>
 															</Modal>

@@ -61,11 +61,11 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 				<>
 					<p>
 						<span className="font-[400] text-gray">Mã thanh toán: </span>
-						<span className="font-[500] text-[#002456]">{item.Code}</span>
+						<span className="font-[500] text-[#B32025]">{item.Code}</span>
 					</p>
 					<p>
 						<span className="font-[400] text-gray">Người thanh toán: </span>
-						<span className="font-[600] text-[#002456]">{value}</span>
+						<span className="font-[600] text-[#B32025]">{value}</span>
 					</p>
 				</>
 			)
@@ -129,7 +129,7 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 			width: 220,
 			render: (value, item) => (
 				<>
-					<p className="font-[600] text-[#002456]">{value}</p>
+					<p className="font-[600] text-[#B32025]">{value}</p>
 					<p>
 						<span className="font-[400] text-gray">Ngày tạo: </span>
 						<span>{moment(item.ModifiedOn).format('DD/MM/YYYY HH:mm')}</span>
@@ -190,8 +190,8 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 									}}
 								>
 									<div className="d-flex justify-between">
-										<div className="font-[500] text-[#002456]">{item.Code}</div>
-										<div className="text-[#002456]">{moment(item.ModifiedOn).format('DD/MM/YYYY HH:mm')}</div>
+										<div className="font-[500] text-[#B32025]">{item.Code}</div>
+										<div className="text-[#B32025]">{moment(item.ModifiedOn).format('DD/MM/YYYY HH:mm')}</div>
 									</div>
 									<div className="border-solid border-[1px] border-[#00337A] my-[8px]"></div>
 									{!isStudent && (
@@ -247,7 +247,7 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 			<Modal
 				title={
 					<p>
-						Chi tiết hóa đơn <span className="font-[500] text-[#002456]">{bill?.Code ? bill.Code : ''}</span>
+						Chi tiết hóa đơn <span className="font-[500] text-[#B32025]">{bill?.Code ? bill.Code : ''}</span>
 					</p>
 				}
 				centered
