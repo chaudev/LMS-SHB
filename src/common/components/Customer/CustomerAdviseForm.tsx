@@ -163,7 +163,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 			getJobs()
 			if (rowData) {
 				if (isStudent) {
-					form.setFieldsValue({ Password: '123456' })
+					form.setFieldsValue({ Password: '' })
 					form.setFieldsValue({ BranchIds: !!rowData.BranchId ? parseInt(rowData.BranchId) : null })
 				}
 				!!rowData.AreaId && getDistrictByArea(rowData.AreaId)

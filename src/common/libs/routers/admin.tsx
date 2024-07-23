@@ -303,7 +303,7 @@ export const AdminChildMenu = [
 				Icon: '',
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
-			},
+			}
 			// {
 			// 	TypeItem: 'single',
 			// 	Key: '/class/register',
@@ -438,8 +438,14 @@ export const AdminChildMenu = [
 						Route: '/options/study-time',
 						Text: 'Ca học',
 						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/grade-templates',
+						Route: '/options/grade-templates',
+						Text: 'Bảng điểm mẫu',
+						Icon: ''
 					}
-
 					// {
 					// 	ItemType: 'single',
 					// 	Key: '/options/zoom',
@@ -484,7 +490,7 @@ export const AdminChildMenu = [
 						Text: 'Ngày nghỉ',
 						Icon: ''
 					},
- 
+
 					{
 						ItemType: 'single',
 						Key: '/options/jobs',

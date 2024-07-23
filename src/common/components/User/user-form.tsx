@@ -165,7 +165,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			getAllBranch()
 		}
 		if (!isEdit && !isChangeInfo) {
-			form.setFieldsValue({ Password: '123456' })
+			form.setFieldsValue({ Password: '' })
 		}
 		if (!!isModalVisible && jobs.length == 0) {
 			getJobs()

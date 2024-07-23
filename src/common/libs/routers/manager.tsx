@@ -257,7 +257,7 @@ export const ManagerChildMenu = [
 				Icon: '',
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
-			},
+			}
 			// {
 			// 	TypeItem: 'single',
 			// 	Key: '/class/register',
@@ -380,7 +380,7 @@ export const ManagerChildMenu = [
 						Text: 'Ngày nghỉ',
 						Icon: ''
 					},
- 
+
 					{
 						ItemType: 'single',
 						Key: '/options/jobs',
@@ -429,7 +429,7 @@ export const ManagerChildMenu = [
 						Route: '/options/faq',
 						Text: 'Câu hỏi thường gặp',
 						Icon: ''
-					},
+					}
 					// {
 					// 	ItemType: 'single',
 					// 	Key: '/options/tags',

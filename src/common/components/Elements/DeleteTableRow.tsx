@@ -1,6 +1,6 @@
 import { Spin, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Trash } from 'react-feather'
 import { IoMdTrash } from 'react-icons/io'
 import PrimaryButton from '../Primary/Button'
@@ -67,29 +67,20 @@ const DeleteTableRow = (props) => {
 					</div>
 				}
 			>
-				{
-					!overrideText ? 
-				    (
-						<p className="mb-4 text-base">
-					       Bạn có chắc muốn xóa <span className="text-[#f25767]">{text}</span> ?
-				        </p>
-					) : 
-					(
-						<>
-                        <p className="mb-4 text-base">
-						{overrideText}
-				        </p>
-</>
-					)
-				}
-				{
-					warning && (
-                        <p className="mb-4 text-base">
-					       <span className="text-[#f25767]">{warning}</span>
-				        </p>
-					)
-				}
-				
+				{!overrideText ? (
+					<p className="mb-4 text-base">
+						Bạn có chắc muốn xóa <span className="text-[#f25767]">{text}</span> ?
+					</p>
+				) : (
+					<>
+						<p className="mb-4 text-base">{overrideText}</p>
+					</>
+				)}
+				{warning && (
+					<p className="mb-4 text-base">
+						<span className="text-[#f25767]">{warning}</span>
+					</p>
+				)}
 			</Modal>
 		</>
 	)
