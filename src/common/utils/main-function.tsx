@@ -182,3 +182,11 @@ export function ShowErrorToast(error) {
 		error?.resultMessage || error?.response?.data?.resultMessage || error?.message || error?.ExceptionMessage || error?.MessageDetail
 	)
 }
+
+/**
+ * Function check is data null or empty, undefined
+ * @returns boolean
+ */
+export function isNull(data) {
+	return data === null || data === '' || data === undefined || data?.length === 0
+}

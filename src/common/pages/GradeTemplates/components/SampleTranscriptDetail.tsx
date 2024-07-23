@@ -7,7 +7,7 @@ import TranscriptColumnModal from './TranscriptColumnModal'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import MyLoadingSmallContent from '~/atomic/atoms/MyLoadingSmallContent'
 import SampleColumn from './SampleColumn'
-import { ShowErrorToast } from '~/common/utils/main-function'
+import { isNull, ShowErrorToast } from '~/common/utils/main-function'
 
 interface ISampleTranscriptDetail {
 	defaultData: TSampleTranscript
@@ -92,7 +92,7 @@ const SampleTranscriptDetail: React.FC<ISampleTranscriptDetail> = (props) => {
 				</div>
 
 				{isLoading && <MyLoadingSmallContent />}
-				{!isLoading && (
+				{!isLoading && !isNull(data) && (
 					<div className="mt-4 max-w-[1250px] overflow-x-auto">
 						<DragDropContext onDragEnd={handleDragEnd}>
 							<Droppable droppableId="droppable-id-grades" direction="horizontal">
@@ -125,6 +125,9 @@ const SampleTranscriptDetail: React.FC<ISampleTranscriptDetail> = (props) => {
 							</Droppable>
 						</DragDropContext>
 					</div>
+				)}
+				{!isLoading && isNull(data) && (
+					<div className="font-medium mt-4 w-full text-center !text-primary">Không có dữ liệu nào để hiển thị</div>
 				)}
 			</MyModal>
 		</div>
