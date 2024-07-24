@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { Form } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { classTranscriptDetailApi } from '~/api/class-transcript'
 import { sampleTranscriptDetailApi } from '~/api/grade-templates'
 import MyModal from '~/atomic/atoms/MyModal'
 import InputTextField from '~/common/components/FormControl/InputTextField'
@@ -11,14 +12,14 @@ import { ShowNostis } from '~/common/utils'
 import { SAMPLE_GRADE_COLUMN_TYPES } from '~/common/utils/constants'
 import { ShowErrorToast } from '~/common/utils/main-function'
 
-interface ITranscriptColumnModal {
+interface IModalTranscriptColumn {
 	refreshData: any
 	defaultData?: any
-	sampleTranscriptData: TSampleTranscript
+	classTranscriptData: TClassTranscript
 }
 
-const TranscriptColumnModal: React.FC<ITranscriptColumnModal> = (props) => {
-	const { refreshData, defaultData, sampleTranscriptData } = props
+const ModalTranscriptColumn: React.FC<IModalTranscriptColumn> = (props) => {
+	const { refreshData, defaultData, classTranscriptData } = props
 	const [isModalVisible, setIsModalVisible] = useState(false)
 
 	const [form] = Form.useForm()
@@ -33,9 +34,9 @@ const TranscriptColumnModal: React.FC<ITranscriptColumnModal> = (props) => {
 	const mutation = useMutation({
 		mutationFn: (data: any) => {
 			if (defaultData) {
-				return sampleTranscriptDetailApi.update({ ...data, Id: defaultData?.Id })
+				return classTranscriptDetailApi.update({ ...data, Id: defaultData?.Id })
 			} else {
-				return sampleTranscriptDetailApi.add(data)
+				return classTranscriptDetailApi.add(data)
 			}
 		},
 		onSuccess(data, variables, context) {
@@ -54,7 +55,8 @@ const TranscriptColumnModal: React.FC<ITranscriptColumnModal> = (props) => {
 			const DATA_SUBMIT = {
 				Name: data?.Name,
 				Type: data?.Type,
-				SampleTranscriptId: sampleTranscriptData.Id
+				ClassTranscriptId: classTranscriptData.Id,
+				MaxValue: data?.MaxValue
 			}
 			mutation.mutateAsync(DATA_SUBMIT)
 		} catch (error) {
@@ -89,15 +91,26 @@ const TranscriptColumnModal: React.FC<ITranscriptColumnModal> = (props) => {
 								/>
 							</div>
 							<div className="col-12">
-								<SelectField
-									placeholder="Loại cột điểm"
-									name="Type"
-									label="Loại"
-									optionList={SAMPLE_GRADE_COLUMN_TYPES}
-									isRequired
-									rules={[{ required: true, message: 'Bạn không được để trống' }]}
+								<InputTextField
+									placeholder="Nhập điểm tối đa"
+									name="MaxValue"
+									label="Điểm tối đa"
+									// isRequired
+									// rules={[{ required: true, message: 'Bạn không được để trống' }]}
 								/>
 							</div>
+							{!defaultData && (
+								<div className="col-12">
+									<SelectField
+										placeholder="Loại cột điểm"
+										name="Type"
+										label="Loại"
+										optionList={SAMPLE_GRADE_COLUMN_TYPES}
+										isRequired
+										rules={[{ required: true, message: 'Bạn không được để trống' }]}
+									/>
+								</div>
+							)}
 						</div>
 						<div className="row ">
 							<div className="col-12 flex-all-center">
@@ -119,4 +132,4 @@ const TranscriptColumnModal: React.FC<ITranscriptColumnModal> = (props) => {
 	)
 }
 
-export default TranscriptColumnModal
+export default ModalTranscriptColumn

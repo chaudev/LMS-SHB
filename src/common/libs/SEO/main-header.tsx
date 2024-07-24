@@ -23,7 +23,7 @@ const MainHeader = () => {
 			<meta name="twitter:card" content="summary_large_image" />
 			<meta name="twitter:title" content={`${appConfigs.appName} - Du học nghề Đức`} />
 			<meta name="twitter:description" content={description} />
-			<meta name="twitter:site" content="@du-hoc-nghe-duc-shb" />
+			<meta name="twitter:site" content="du-hoc-nghe-duc-shb" />
 
 			<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 			<meta http-equiv="Pragma" content="no-cache" />

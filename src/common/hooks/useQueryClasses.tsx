@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { classApi } from '~/api/class'
-import { CLASS_TYPES } from '../constants'
+import { CLASS_TYPES } from '../utils/constants'
 
-const useClasses = (visible?: boolean) => {
+const useQueryClasses = (visible?: boolean) => {
 	const data = useQuery({
 		queryKey: ['get-all-classes'],
 		queryFn: () =>
@@ -14,4 +14,4 @@ const useClasses = (visible?: boolean) => {
 	return { ...data, classes: data.data }
 }
 
-export default useClasses
+export default useQueryClasses

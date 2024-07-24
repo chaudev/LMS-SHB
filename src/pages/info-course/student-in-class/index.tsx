@@ -18,7 +18,7 @@ import Link from 'next/link'
 import { useRole } from '~/common/hooks/useRole'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 import { CLASS_TYPES } from '~/common/utils/constants'
-import useClasses from '~/common/utils/hooks/useClasses'
+import useQueryClasses from '~/common/hooks/useQueryClasses'
 
 const initFilters = { PageSize: PAGE_SIZE, PageIndex: 1, Search: '' }
 
@@ -28,7 +28,7 @@ const StudentInClassPage = () => {
 	const [data, setData] = React.useState([])
 	const [filters, setFilter] = React.useState(initFilters)
 
-	const { classes, isLoading } = useClasses()
+	const { classes, isLoading } = useQueryClasses()
 
 	const { isSaler } = useRole()
 

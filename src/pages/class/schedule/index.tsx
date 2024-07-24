@@ -21,7 +21,7 @@ import loadingJson from '~/common/components/json/loading-calendar.json'
 import { userInformationApi } from '~/api/user/user'
 import PrimaryTag from '~/common/components/Primary/Tag'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
-import useClasses from '~/common/utils/hooks/useClasses'
+import useQueryClasses from '~/common/hooks/useQueryClasses'
 
 const initSearchParams = { teacherIds: '', branchIds: '', from: null, to: null, classId: null }
 
@@ -36,7 +36,7 @@ const Schedule = () => {
 	const [paramsSearch, setParamsSearch] = useState(initSearchParams)
 	const dispatch = useDispatch()
 	const user = useSelector((state: RootState) => state.user.information)
-	const { classes } = useClasses()
+	const { classes } = useQueryClasses()
 
 	const getAllTeacher = async () => {
 		try {

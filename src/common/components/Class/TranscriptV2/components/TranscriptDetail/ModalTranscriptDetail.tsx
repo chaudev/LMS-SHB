@@ -1,35 +1,37 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
-import { sampleTranscriptDetailApi } from '~/api/grade-templates'
+import { classTranscriptDetailApi } from '~/api/class-transcript'
 import MyModal from '~/atomic/atoms/MyModal'
-import IconButton from '~/common/components/Primary/IconButton'
-import TranscriptColumnModal from './TranscriptColumnModal'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import MyLoadingSmallContent from '~/atomic/atoms/MyLoadingSmallContent'
-import SampleColumn from './SampleColumn'
 import { isNull, ShowErrorToast } from '~/common/utils/main-function'
+import ModalTranscriptColumn from './ModalTranscriptColumn'
+import MyLoadingSmallContent from '~/atomic/atoms/MyLoadingSmallContent'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import SampleColumn from '~/common/pages/GradeTemplates/components/SampleColumn'
+import ClassTransColumn from './ClassTransColumn'
+import PrimaryButton from '~/common/components/Primary/Button'
 
-interface ISampleTranscriptDetail {
-	defaultData: TSampleTranscript
+interface IModalTranscriptDetail {
+	defaultData: TClassTranscript
 }
 
-const SampleTranscriptDetail: React.FC<ISampleTranscriptDetail> = (props) => {
+const ModalTranscriptDetail: React.FC<IModalTranscriptDetail> = (props) => {
 	const { defaultData } = props
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const queryClient = useQueryClient()
+
 	// ** get data
 	const { data, isLoading, refetch } = useQuery({
-		queryKey: ['get/sample-transcript-detail-column', defaultData?.Id],
+		queryKey: ['get/class-transcript-detail-column', defaultData?.Id],
 		queryFn: () => {
-			return sampleTranscriptDetailApi.getTranscriptColumns(defaultData?.Id).then((data) => data.data)
+			return classTranscriptDetailApi.getTranscriptColumns(defaultData?.Id).then((data) => data.data)
 		},
 		enabled: !!defaultData?.Id && isModalVisible
 	})
 
 	const mutationChangeIndex = useMutation({
-		mutationKey: ['CHANGE-INDEX'],
+		mutationKey: ['CHANGE-INDEX-CLASS-TRANSCRIPT'],
 		mutationFn(payload: { Id: number; Index: number }[]) {
-			return sampleTranscriptDetailApi.changeIndex({ Items: payload })
+			return classTranscriptDetailApi.changeIndex({ Items: payload })
 		},
 		// onMutate() {
 		// 	setIsSaving(true)
@@ -61,7 +63,7 @@ const SampleTranscriptDetail: React.FC<ISampleTranscriptDetail> = (props) => {
 			Index: index + 1
 		}))
 		mutationChangeIndex.mutate(payloadChange)
-		queryClient.setQueryData(['get/sample-transcript-detail-column', defaultData?.Id], (pre: any) => {
+		queryClient.setQueryData(['get/class-transcript-detail-column', defaultData?.Id], (pre: any) => {
 			// console.log('PROFILE', {
 			// 	...pre,
 			// 	items: result
@@ -78,7 +80,9 @@ const SampleTranscriptDetail: React.FC<ISampleTranscriptDetail> = (props) => {
 
 	return (
 		<div>
-			<IconButton type="button" color="orange" icon="eye" onClick={() => setIsModalVisible(true)} tooltip="Cấu hình bảng điểm" />
+			<PrimaryButton background="orange" type="button" icon="none" onClick={() => setIsModalVisible(true)}>
+				Cấu hình bảng điểm
+			</PrimaryButton>
 
 			<MyModal width={1200} title={'Cấu hình bảng điểm'} open={isModalVisible} onCancel={() => setIsModalVisible(false)} footer={null}>
 				<div className="flex justify-between">
@@ -87,7 +91,7 @@ const SampleTranscriptDetail: React.FC<ISampleTranscriptDetail> = (props) => {
 						<div className="p-2 outline-2 outline-primary outline bg-primaryExtraLight w-fit">Điểm</div>
 						<div className="p-2 outline-2 outline-primary outline bg-[#fffbe7] w-fit">Nhận xét</div>
 					</div>
-					<TranscriptColumnModal refreshData={refetch} sampleTranscriptData={defaultData} />
+					<ModalTranscriptColumn refreshData={refetch} classTranscriptData={defaultData} />
 				</div>
 
 				{isLoading && <MyLoadingSmallContent />}
@@ -108,11 +112,11 @@ const SampleTranscriptDetail: React.FC<ISampleTranscriptDetail> = (props) => {
 														{...provided.dragHandleProps}
 														className=""
 													>
-														<SampleColumn
+														<ClassTransColumn
 															key={`properties-${item.Id}`}
 															data={item}
 															refreshData={refetch}
-															sampleTranscriptData={defaultData}
+															classTranscriptData={defaultData}
 														/>
 													</div>
 												)}
@@ -133,4 +137,4 @@ const SampleTranscriptDetail: React.FC<ISampleTranscriptDetail> = (props) => {
 	)
 }
 
-export default SampleTranscriptDetail
+export default ModalTranscriptDetail

@@ -28,6 +28,7 @@ import Head from 'next/head'
 import appConfigs from '~/appConfig'
 import { TbReportAnalytics } from 'react-icons/tb'
 import { StudentReport } from './Details/Report'
+import TranscriptPageV2 from './TranscriptV2'
 
 const itemsAdmin = [
 	'Lịch học',
@@ -74,7 +75,7 @@ const MenuClass = () => {
 			case 4:
 				return <RollUpPage />
 			case 5:
-				return <TranscriptPage />
+				return <TranscriptPageV2 />
 			case 6:
 				return <StudentReport />
 			case 7:
@@ -166,7 +167,7 @@ const MenuClass = () => {
 			case 3:
 				return <StudentReport />
 			case 4:
-				return <TranscriptPage />
+				return <TranscriptPageV2 />
 			case 5:
 				return <RollUpStudent />
 			default:
@@ -237,7 +238,7 @@ const MenuClass = () => {
 			case 4:
 				return <RollUpPage />
 			case 5:
-				return <TranscriptPage />
+				return <TranscriptPageV2 />
 			case 6:
 				return <RollUpTeacherPage />
 			case 7:
@@ -322,7 +323,7 @@ const MenuClass = () => {
 				return <RollUpPage />
 
 			case 3:
-				return <TranscriptPage />
+				return <TranscriptPageV2 />
 
 			default:
 				return <CalendarClassEdit />
