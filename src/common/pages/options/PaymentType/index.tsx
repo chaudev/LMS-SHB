@@ -5,16 +5,22 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { paymentTypeApi } from '~/api/option/payment-type'
 import { studyRouteTemplateApi } from '~/api/option/study-route-template'
+import MyInfo from '~/atomic/atoms/MyInfo'
+import MyInputNumber from '~/atomic/atoms/MyInputNumber'
+import InputNumberField from '~/common/components/FormControl/InputNumberField'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import PrimaryButton from '~/common/components/Primary/Button'
 import IconButton from '~/common/components/Primary/IconButton'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
+import { formRequired } from '~/common/libs/others/form'
 import { ShowNostis } from '~/common/utils'
+import { ShowErrorToast } from '~/common/utils/main-function'
 
 const PaymentTypePage = () => {
 	const [form] = Form.useForm()
 	const router = useRouter()
+	const { slug } = router.query
 	const initParamters = {
 		pageSize: PAGE_SIZE,
 		pageIndex: 1,
@@ -31,7 +37,7 @@ const PaymentTypePage = () => {
 	const getAllPaymentType = async () => {
 		try {
 			setLoading('GET_ALL')
-			const res = await paymentTypeApi.getAllPaymentType(apiParameters)
+			const res = await paymentTypeApi.getAllPaymentType({ ...apiParameters, majorId: slug })
 
 			if (res.status === 200) {
 				setPaymentType(res.data.data)
@@ -49,8 +55,10 @@ const PaymentTypePage = () => {
 	}
 
 	useEffect(() => {
-		getAllPaymentType()
-	}, [apiParameters])
+		if (slug) {
+			getAllPaymentType()
+		}
+	}, [apiParameters, slug])
 
 	useEffect(() => {
 		if (isShow === 'UPDATE' && paymentTypeItem) {
@@ -142,21 +150,24 @@ const PaymentTypePage = () => {
 			setLoading(``)
 		} catch (error) {
 			setLoading(``)
-			ShowNostis.error(error.message)
+			ShowErrorToast(error)
 		}
 	}
 
 	const _onFinish = async (params) => {
 		try {
 			if (isShow === 'CREATE') {
-				const response = await paymentTypeApi.createPaymentType(params)
+				setLoading('CREATING')
+				const response = await paymentTypeApi.createPaymentType({ ...params, MajorId: slug })
 				if (response.status === 200) {
 					ShowNostis.success(response.data.message)
 					await getAllPaymentType()
+					form.resetFields()
 					setIsShow('')
 				}
 			}
 			if (isShow === 'UPDATE') {
+				setLoading('UPDATING')
 				const payload = {
 					Id: paymentTypeItem.Id,
 					Name: params.Name
@@ -169,7 +180,9 @@ const PaymentTypePage = () => {
 				}
 			}
 		} catch (error) {
-			ShowNostis.error(error.message)
+			ShowErrorToast(error)
+		} finally {
+			setLoading('')
 		}
 	}
 
@@ -210,10 +223,29 @@ const PaymentTypePage = () => {
 				footer={false}
 			>
 				<Form form={form} layout="vertical" onFinish={_onFinish}>
-					<InputTextField name="Name" label="Tên hình thức thanh toán" />
-					{isShow !== 'UPDATE' ? <InputTextField name="Times" label="Số lần thanh toán" /> : ''}
+					<InputTextField name="Name" label="Tên hình thức thanh toán" isRequired rules={formRequired} />
+					{isShow !== 'UPDATE' ? <InputNumberField name="Times" label="Số lần thanh toán" isRequired rules={formRequired} /> : ''}
+					{isShow !== 'UPDATE' ? (
+						<InputNumberField
+							name="PriceInstallment"
+							label={
+								<div>
+									Số tiền thanh toán dự kiến cho từng đợt <MyInfo noDetails content={'Số tiền thanh toán dự kiến cho từng đợt. '} />
+								</div>
+							}
+							isRequired
+							rules={formRequired}
+						/>
+					) : (
+						''
+					)}
 					<div className="d-flex justify-center ">
-						<PrimaryButton type="submit" icon={isShow === 'UPDATE' ? 'save' : 'add'} background="primary">
+						<PrimaryButton
+							disable={loading === 'CREATING' || loading === 'UPDATING'}
+							type="submit"
+							icon={isShow === 'UPDATE' ? 'save' : 'add'}
+							background="primary"
+						>
 							{isShow == 'UPDATE' ? 'Cập nhật' : 'Thêm mới'}
 						</PrimaryButton>
 					</div>

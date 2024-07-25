@@ -547,13 +547,13 @@ export const AdminChildMenu = [
 						Text: 'Phương thức thanh toán',
 						Icon: ''
 					},
-					{
-						ItemType: 'single',
-						Key: '/options/payment-type',
-						Route: '/options/payment-type',
-						Text: 'Hình thức thanh toán',
-						Icon: ''
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/payment-type',
+					// 	Route: '/options/payment-type',
+					// 	Text: 'Hình thức thanh toán',
+					// 	Icon: ''
+					// },
 					// {
 					// 	ItemType: 'single',
 					// 	Key: '/options/tags',

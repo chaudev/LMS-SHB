@@ -9,7 +9,7 @@ import IconButton from '~/common/components/Primary/IconButton'
 import { useRouter } from 'next/router'
 import { nanoid } from '@reduxjs/toolkit'
 import { Input, Tag, Tooltip } from 'antd'
- 
+
 export const MajorsPage = () => {
 	const router = useRouter()
 	const init = { pageIndex: 1, pageSize: PAGE_SIZE, search: null }
@@ -61,7 +61,8 @@ export const MajorsPage = () => {
 			title: 'Giá',
 			width: 180,
 			dataIndex: 'Price',
-			render: (text) => <p className="">{parseToMoney(text)}₫</p>
+			align: 'right',
+			render: (text) => <p className="">{parseToMoney(text)}</p>
 		},
 		{
 			title: 'Trạng thái',
@@ -74,7 +75,7 @@ export const MajorsPage = () => {
 			width: 200,
 			dataIndex: 'Description',
 			render: (text, item) => (
-				<Tooltip title={text} >
+				<Tooltip title={text}>
 					<p className="max-w-[150px] in-3-line">{text}</p>
 				</Tooltip>
 			)
@@ -82,6 +83,7 @@ export const MajorsPage = () => {
 		{
 			title: 'Thao tác',
 			dataIndex: 'Action',
+			fixed: 'right',
 			width: 50,
 			render: (text, item) => (
 				<div className="flex items-center">
@@ -103,6 +105,24 @@ export const MajorsPage = () => {
 							})
 						}}
 						tooltip="Xem danh sách học viên trong ngành học"
+					/>
+
+					<IconButton
+						type="button"
+						icon={'salary'}
+						color="blue"
+						onClick={() => {
+							router.push({
+								pathname: '/majors/payment-type',
+								query: {
+									slug: item.Id,
+									key: nanoid(),
+									name: item.Name
+								}
+							})
+						}}
+						tooltipPlacement="left"
+						tooltip="Hình thức thanh toán"
 					/>
 				</div>
 			)

@@ -1,7 +1,7 @@
 type IIconButton = {
 	disabled?: boolean
-	background?: 'green' | 'yellow' | 'blue' | 'red' | 'black' | 'disabled' | 'primary' | 'transparent'|'orange'
-	color: 'green' | 'yellow' | 'blue' | 'red' | 'black' | 'disabled' | 'primary' | 'transparent' | 'white' | 'orange'|'purple'
+	background?: 'green' | 'yellow' | 'blue' | 'red' | 'black' | 'disabled' | 'primary' | 'transparent' | 'orange'
+	color: 'green' | 'yellow' | 'blue' | 'red' | 'black' | 'disabled' | 'primary' | 'transparent' | 'white' | 'orange' | 'purple'
 	icon?:
 		| 'add'
 		| 'up-arrow'
@@ -32,7 +32,8 @@ type IIconButton = {
 		| 'reset'
 		| 'study'
 		| 'hide'
-		| 'salary'|'reserved'
+		| 'salary'
+		| 'reserved'
 	type: 'button' | 'submit'
 	onClick?: Function
 	className?: string
@@ -41,4 +42,17 @@ type IIconButton = {
 	placementTooltip?: any
 	titleTooltip?: string
 	loading?: boolean
+	tooltipPlacement?:
+		| 'top'
+		| 'left'
+		| 'right'
+		| 'bottom'
+		| 'topLeft'
+		| 'topRight'
+		| 'bottomLeft'
+		| 'bottomRight'
+		| 'leftTop'
+		| 'leftBottom'
+		| 'rightTop'
+		| 'rightBottom'
 }

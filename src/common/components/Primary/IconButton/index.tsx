@@ -13,7 +13,7 @@ import { TbDownload, TbReportMoney, TbSchool, TbUpload } from 'react-icons/tb'
 import { VscRootFolderOpened } from 'react-icons/vsc'
 
 const IconButton: FC<IIconButton> = (props) => {
-	const { tooltip, background, icon, type, onClick, className, color, size, disabled, loading } = props
+	const { tooltip, background, icon, type, onClick, className, color, size, disabled, loading, tooltipPlacement } = props
 	const refTooltip = useRef(null)
 	function getBG() {
 		if (background == 'green') {
@@ -126,19 +126,19 @@ const IconButton: FC<IIconButton> = (props) => {
 			return <MdOutlineCancel size={!!size ? size : 22} />
 		}
 		if (icon == 'x') {
-			return <X  size={!!size ? size : 22} />
+			return <X size={!!size ? size : 22} />
 		}
 		if (icon == 'login') {
-			return <LogIn  size={!!size ? size : 22} />
+			return <LogIn size={!!size ? size : 22} />
 		}
 		if (icon == 'send') {
 			return <FiSend size={22} />
 		}
 		if (icon == 'file') {
-			return <FileMinus  size={!!size ? size : 22} />
+			return <FileMinus size={!!size ? size : 22} />
 		}
 		if (icon == 'print') {
-			return <FiPrinter  size={!!size ? size : 22} />
+			return <FiPrinter size={!!size ? size : 22} />
 		}
 		if (icon == 'user-group') {
 			return <AiOutlineUsergroupAdd size={!!size ? size : 22} />
@@ -176,7 +176,6 @@ const IconButton: FC<IIconButton> = (props) => {
 		if (icon == 'reserved') {
 			return <MdPendingActions size={!!size ? size : 20} />
 		}
-		
 	}
 
 	const _onClick = (event) => {
@@ -187,7 +186,7 @@ const IconButton: FC<IIconButton> = (props) => {
 	}
 
 	return (
-		<Tooltip title={tooltip} ref={refTooltip}>
+		<Tooltip title={tooltip} ref={refTooltip} placement={tooltipPlacement}>
 			{/* <button
 				type={type}
 				onClick={_onClick}

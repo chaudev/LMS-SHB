@@ -13,7 +13,7 @@ import { BsThreeDots } from 'react-icons/bs'
 import ImportStudent from '~/common/components/User/ImportStudent'
 import CreateUser from '~/common/components/User/user-form'
 import appConfigs from '~/appConfig'
-import { parseSelectArray } from '~/common/utils/common'
+import { is, parseSelectArray } from '~/common/utils/common'
 import { branchApi } from '~/api/branch'
 import { setBranch } from '~/store/branchReducer'
 import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
@@ -45,6 +45,7 @@ import { partnerApi } from '~/api/partner'
 import { Filter } from 'react-feather'
 import ModalFooter from '~/common/components/ModalFooter'
 import { useRouter } from 'next/router'
+import { ShowErrorToast } from '~/common/utils/main-function'
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
@@ -61,7 +62,7 @@ const Student: FC<IPersonnel> = (props) => {
 		PageIndex: 1,
 		RoleIds: role,
 		Search: null,
-		parentIds: userInformation?.RoleId == '8' ? userInformation.UserInformationId.toString() : '',
+		parentIds: is(userInformation)?.parent ? userInformation.UserInformationId.toString() : '',
 		branchIds: null,
 		genders: null,
 		profileStatusIds: null,
@@ -88,7 +89,7 @@ const Student: FC<IPersonnel> = (props) => {
 	const [isFilter, setIsFilter] = useState<boolean>(false)
 
 	function isManager() {
-		return userInformation?.RoleId == 4
+		return is(userInformation).manager
 	}
 
 	const sale = useMemo(() => {
@@ -131,7 +132,7 @@ const Student: FC<IPersonnel> = (props) => {
 				dispatch(setSource([]))
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -145,7 +146,7 @@ const Student: FC<IPersonnel> = (props) => {
 				dispatch(setLearningNeed([]))
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -159,7 +160,7 @@ const Student: FC<IPersonnel> = (props) => {
 				dispatch(setPurpose([]))
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 	const getRoleStaff = async () => {
@@ -173,7 +174,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setRoleStaff([])
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -184,7 +185,7 @@ const Student: FC<IPersonnel> = (props) => {
 				dispatch(setBranch(res.data.data))
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -229,7 +230,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setOffice(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -244,7 +245,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setPartner(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -318,7 +319,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setProcess(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -333,7 +334,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setVisaStatus(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -348,7 +349,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setForeignLanguage(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -363,7 +364,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setProfileStatus(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -541,6 +542,11 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'HighSchool'
 		},
 		{
+			title: 'Ký túc xá',
+			width: 150,
+			dataIndex: 'Dormitory'
+		},
+		{
 			title: 'Ngày ký hợp đồng',
 			width: 160,
 			dataIndex: 'ContractSigningDate',
@@ -676,7 +682,7 @@ const Student: FC<IPersonnel> = (props) => {
 							</Link>
 						</PrimaryTooltip>
 
-						{role !== 3 && (isAdmin() || isManage()) && (
+						{role !== 3 && (isAdmin() || is(userInformation).manager) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}
@@ -691,7 +697,7 @@ const Student: FC<IPersonnel> = (props) => {
 							/>
 						)}
 
-						{role == 3 && (isAdmin() || isManage()) && (
+						{role == 3 && (isAdmin() || is(userInformation).manager) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}
@@ -709,10 +715,10 @@ const Student: FC<IPersonnel> = (props) => {
 								isStudent={true}
 							/>
 						)}
-						{(isAdmin() || isManage()) && (
+						{(isAdmin() || is(userInformation).manager) && (
 							<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
 						)}
-						{((role == 3 && isAdmin()) || isManage()) && item.LearningStatus !== 1 && (
+						{((role == 3 && isAdmin()) || is(userInformation).manager) && item.LearningStatus !== 1 && (
 							<Popconfirm
 								title={
 									item.LearningStatus === 4
@@ -753,15 +759,11 @@ const Student: FC<IPersonnel> = (props) => {
 	}
 
 	function isAdmin() {
-		return userInformation?.RoleId == 1
-	}
-
-	function isManage() {
-		return userInformation?.RoleId == 4
+		return is(userInformation)?.admin
 	}
 
 	function isAcademic() {
-		return userInformation?.RoleId == 7
+		return is(userInformation).academic
 	}
 
 	const handleFilter = (params) => {
@@ -997,7 +999,7 @@ const Student: FC<IPersonnel> = (props) => {
 				}
 				Extra={
 					<>
-						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager) && (
 							<PrimaryButton
 								loading={loadingAllow}
 								className="mr-2 btn-block-registration"
@@ -1010,7 +1012,7 @@ const Student: FC<IPersonnel> = (props) => {
 							</PrimaryButton>
 						)}
 
-						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager) && (
 							<PrimaryButton
 								className="mr-2 btn-download"
 								type="button"
@@ -1022,11 +1024,11 @@ const Student: FC<IPersonnel> = (props) => {
 							</PrimaryButton>
 						)}
 
-						{role == 3 && (isAdmin() || isManage()) && (
+						{role == 3 && (isAdmin() || is(userInformation).manager) && (
 							<ImportStudent className="mr-1 btn-import" onFetchData={() => getUsers(apiParameters)} />
 						)}
 
-						{role == 3 && (isAdmin() || isManage()) && <ExportStudents filterOption={dataFilterStudent} />}
+						{role == 3 && (isAdmin() || is(userInformation).manager) && <ExportStudents filterOption={dataFilterStudent} />}
 
 						<Popover
 							placement="bottomLeft"
@@ -1083,7 +1085,7 @@ const Student: FC<IPersonnel> = (props) => {
 							}
 							trigger="click"
 						>
-							{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+							{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager) && (
 								<PrimaryButton
 									onClick={() => setVisible(!visible)}
 									className={`${role == 3 ? 'btn-popover-student' : 'btn-popover-personel'} btn-popover`}
@@ -1095,7 +1097,7 @@ const Student: FC<IPersonnel> = (props) => {
 							)}
 						</Popover>
 
-						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}
@@ -1112,7 +1114,7 @@ const Student: FC<IPersonnel> = (props) => {
 							/>
 						)}
 
-						{role !== 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+						{role !== 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}
@@ -1177,7 +1179,7 @@ const AlertSelectStudent = ({ selectedRowKeys, onRefresh }) => {
 			ShowNoti('success', 'Thành công.')
 			setIsLoadingDelete(false)
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 			setIsLoadingDelete(false)
 		}
 	}

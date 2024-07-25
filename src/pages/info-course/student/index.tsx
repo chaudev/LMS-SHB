@@ -3,6 +3,7 @@ import { registerApi } from '~/api/user/user'
 import MainLayout from '~/common/components/MainLayout'
 import Student from '~/common/pages/Info-Course/Student'
 import { ShowNoti } from '~/common/utils'
+import { ShowErrorToast } from '~/common/utils/main-function'
 
 const StudentPage = () => {
 	const [allowed, setAllow] = useState<any>()
@@ -18,7 +19,7 @@ const StudentPage = () => {
 				setAllow(response.data.data == 'Allow' ? true : false)
 			}
 		} catch (error) {
-			ShowNoti('error', error?.message)
+			ShowErrorToast(error)
 		}
 	}
 

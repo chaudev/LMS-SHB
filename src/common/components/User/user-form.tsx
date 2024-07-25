@@ -444,7 +444,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 					</>
 				}
 			>
-				<Form form={form} layout="vertical" initialValues={{ remember: true }} onFinish={onFinish}>
+				<Form form={form} layout="vertical" initialValues={{ remember: true }} onFinish={onFinish} scrollToFirstError>
 					<div className="grid grid-cols-4 gap-x-4">
 						<div className="col-span-4">
 							<UploadImageField form={form} label="Hình đại diện" name="Avatar" />
@@ -663,6 +663,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 									optionList={visaStatus}
 									disabled={user.RoleId == 3 || user.RoleId == 8 || user.RoleId == 2}
 								/>
+								<InputTextField className="col-span-2" label="Ký túc xá" name="Dormitory" />
 							</>
 						)}
 					</div>
