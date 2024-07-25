@@ -35,6 +35,12 @@ export const OfficePage = () => {
 
 	const columns = [
 		{
+			title: 'Mã',
+			width: 100,
+			dataIndex: 'Code',
+			render: (name) => <span className="font-medium">{name}</span>
+		},
+		{
 			title: 'Văn phòng',
 			width: 150,
 			dataIndex: 'Name',
