@@ -6,7 +6,10 @@
 
 ## File môi trường (.env)
 
-Chỉ cần thêm `NEXT_PUBLIC_API_ENDPOINT=Link api`
+Thêm 3 file môi trường
+- .env.development: `NEXT_PUBLIC_API_ENDPOINT=Link api dùng trong quá trình dev`
+- .env.mona: `NEXT_PUBLIC_API_ENDPOINT=Link api dùng để build lên domain mona.media`
+- .env.live: `NEXT_PUBLIC_API_ENDPOINT=Link api dùng trong domain live của khách`
 
 👉 _Anh em hỏi BE phụ trách để lấy link api_
 
