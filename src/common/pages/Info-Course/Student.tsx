@@ -1156,6 +1156,7 @@ const Student: FC<IPersonnel> = (props) => {
 								onRefresh={() => {
 									getUsers(apiParameters)
 								}}
+								role={role}
 							/>
 						</div>
 					</div>
@@ -1165,7 +1166,7 @@ const Student: FC<IPersonnel> = (props) => {
 	)
 }
 
-const AlertSelectStudent = ({ selectedRowKeys, onRefresh }) => {
+const AlertSelectStudent = ({ selectedRowKeys, onRefresh, role }) => {
 	const [isLoadingDelete, setIsLoadingDelete] = useState(false)
 
 	const handleDeleteMutibleUser = async () => {
@@ -1189,7 +1190,7 @@ const AlertSelectStudent = ({ selectedRowKeys, onRefresh }) => {
 			type="error"
 			message={
 				<div>
-					Đã chọn <span className="font-semibold">{selectedRowKeys.length}</span> học viên.
+					Đã chọn <span className="font-semibold">{selectedRowKeys.length}</span> {role == 3 ? 'học viên' : 'nhân viên'}.
 				</div>
 			}
 			action={
