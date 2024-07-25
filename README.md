@@ -30,7 +30,7 @@ yarn dev
 
 Xuất dự án ( static ):
 
-`bun run export` or `yarn export` or `npm run export`
+`bun run export` or `yarn export:mona` (export live domain mona.media) or `yarn export:live` (export live domain live) or `npm run export`
 
 ## Lưu ý 🗯
 
