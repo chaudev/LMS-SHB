@@ -14,7 +14,7 @@ import { setBranch } from '~/store/branchReducer'
 import { areaApi } from '~/api/area'
 import { setArea } from '~/store/areaReducer'
 import { sourceApi } from '~/api/source'
-import { parseSelectArray } from '~/common/utils/common'
+import { is, parseSelectArray } from '~/common/utils/common'
 import { userInformationApi } from '~/api/user/user'
 import { learningNeedApi } from '~/api/learning-needs'
 import { purposeApi } from '~/api/purpose'
@@ -34,6 +34,7 @@ import { BsThreeDots } from 'react-icons/bs'
 import appConfigs from '~/appConfig'
 import ImportCustomer from './ImportCustomer'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import CustomerStatusHistory from '~/common/components/Customer/CustomerStatusHistory'
 
 let pageIndex = 1
 let dataOption = [
@@ -428,6 +429,7 @@ const CustomerAdvisory = () => {
 							setTodoApi={setTodoApi}
 						/>
 						<CustomerAdvisoryMail dataRow={data} listTodoApi={listTodoApi} setTodoApi={setTodoApi} />
+						<CustomerStatusHistory customer={data} />
 						{data.CustomerStatusId !== 2 && (
 							<CustomerAdviseForm
 								isStudent={true}
@@ -488,11 +490,11 @@ const CustomerAdvisory = () => {
 	]
 	const content = (
 		<div className="flex flex-col gap-3">
-			{(userInformation?.RoleId == 1 ||
-				userInformation?.RoleId == 2 ||
-				userInformation?.RoleId == 4 ||
-				userInformation?.RoleId == 5 ||
-				userInformation?.RoleId == 7) && (
+			{(is(userInformation).admin ||
+				is(userInformation).teacher ||
+				is(userInformation).manager ||
+				is(userInformation).saler ||
+				is(userInformation).academic) && (
 				<PrimaryButton
 					className="w-full btn-download"
 					type="button"
@@ -503,11 +505,11 @@ const CustomerAdvisory = () => {
 					File mẫu
 				</PrimaryButton>
 			)}
-			{(userInformation?.RoleId == 1 ||
-				userInformation?.RoleId == 2 ||
-				userInformation?.RoleId == 4 ||
-				userInformation?.RoleId == 5 ||
-				userInformation?.RoleId == 7) && <ImportCustomer className="w-full btn-import" onFetchData={() => getAllCustomer()} />}
+			{(is(userInformation).admin ||
+				is(userInformation).teacher ||
+				is(userInformation).manager ||
+				is(userInformation).saler ||
+				is(userInformation).academic) && <ImportCustomer className="w-full btn-import" onFetchData={() => getAllCustomer()} />}
 
 			<PrimaryButton
 				className="!w-full "
@@ -570,11 +572,11 @@ const CustomerAdvisory = () => {
 					<div className="extra-table">
 						<div className="wrap-btn-customer">
 							<div className="flex">
-								{(userInformation?.RoleId == 1 ||
-									userInformation?.RoleId == 2 ||
-									userInformation?.RoleId == 4 ||
-									userInformation?.RoleId == 5 ||
-									userInformation?.RoleId == 7) && (
+								{(is(userInformation).admin ||
+									is(userInformation).teacher ||
+									is(userInformation).manager ||
+									is(userInformation).saler ||
+									is(userInformation).academic) && (
 									<PrimaryButton
 										className="mr-2 btn-download"
 										type="button"
@@ -585,11 +587,11 @@ const CustomerAdvisory = () => {
 										File mẫu
 									</PrimaryButton>
 								)}
-								{(userInformation?.RoleId == 1 ||
-									userInformation?.RoleId == 2 ||
-									userInformation?.RoleId == 4 ||
-									userInformation?.RoleId == 5 ||
-									userInformation?.RoleId == 7) && <ImportCustomer className="mr-1 btn-import" onFetchData={() => getAllCustomer()} />}
+								{(is(userInformation).admin ||
+									is(userInformation).teacher ||
+									is(userInformation).manager ||
+									is(userInformation).saler ||
+									is(userInformation).academic) && <ImportCustomer className="mr-1 btn-import" onFetchData={() => getAllCustomer()} />}
 
 								<PrimaryButton
 									background="orange"

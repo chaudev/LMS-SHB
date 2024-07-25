@@ -12,6 +12,10 @@ export const customerAdviseApi = {
 		return instance.get<IApiResultData<ICustomerAdvise>>(url + ID)
 	},
 
+	getHistoryChange(ID: number) {
+		return instance.get<IApiResultData<TCustomerHistory[]>>(url + '/history-change-status/' + ID)
+	},
+
 	add(data: ICustomer) {
 		return instance.post(url, data, {})
 	},

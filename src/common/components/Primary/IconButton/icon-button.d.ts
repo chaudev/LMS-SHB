@@ -34,6 +34,7 @@ type IIconButton = {
 		| 'hide'
 		| 'salary'
 		| 'reserved'
+		| 'history'
 	type: 'button' | 'submit'
 	onClick?: Function
 	className?: string
