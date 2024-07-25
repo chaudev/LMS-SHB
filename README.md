@@ -6,7 +6,10 @@
 
 ## File môi trường (.env)
 
-Chỉ cần thêm `NEXT_PUBLIC_API_ENDPOINT=Link api`
+Thêm 3 file môi trường
+- .env.development: `NEXT_PUBLIC_API_ENDPOINT=Link api dùng trong quá trình dev`
+- .env.mona: `NEXT_PUBLIC_API_ENDPOINT=Link api dùng để build lên domain mona.media`
+- .env.live: `NEXT_PUBLIC_API_ENDPOINT=Link api dùng trong domain live của khách`
 
 👉 _Anh em hỏi BE phụ trách để lấy link api_
 
@@ -30,7 +33,7 @@ yarn dev
 
 Xuất dự án ( static ):
 
-`bun run export` or `yarn export` or `npm run export`
+`bun run export` or `yarn export:mona` (export live domain mona.media) or `yarn export:live` (export live domain live) or `npm run export`
 
 ## Lưu ý 🗯
 
