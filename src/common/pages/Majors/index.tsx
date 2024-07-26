@@ -58,6 +58,11 @@ export const MajorsPage = () => {
 			// render: (text) => <p className="font-[700]">{text}</p>
 		},
 		{
+			title: 'Nhóm ngành',
+			width: 180,
+			dataIndex: 'MajorGroupName'
+		},
+		{
 			title: 'Giá',
 			width: 180,
 			dataIndex: 'Price',

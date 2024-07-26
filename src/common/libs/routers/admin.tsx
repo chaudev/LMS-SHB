@@ -445,6 +445,13 @@ export const AdminChildMenu = [
 						Route: '/options/grade-templates',
 						Text: 'Bảng điểm mẫu',
 						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/major-group',
+						Route: '/options/major-group',
+						Text: 'Nhóm ngành học',
+						Icon: ''
 					}
 					// {
 					// 	ItemType: 'single',

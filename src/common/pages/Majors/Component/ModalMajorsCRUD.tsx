@@ -6,9 +6,16 @@ import TextBoxField from '~/common/components/FormControl/TextBoxField'
 import UploadImageField from '~/common/components/FormControl/UploadImageField'
 import PrimaryButton from '~/common/components/Primary/Button'
 import IconButton from '~/common/components/Primary/IconButton'
-import { ShowNoti } from '~/common/utils'
+import { ShowNostis, ShowNoti } from '~/common/utils'
 import InputNumberField from '~/common/components/FormControl/InputNumberField'
 import SelectField from '~/common/components/FormControl/SelectField'
+import MySelectCustomAdd from '~/atomic/molecules/MySelectCustomAdd'
+import MyFormItem from '~/atomic/atoms/MyFormItem'
+import { formRequired } from '~/common/libs/others/form'
+import useQueryMajorGroup from '~/common/hooks/useQueryMajorGroup'
+import { ShowErrorToast } from '~/common/utils/main-function'
+import { useMutation } from '@tanstack/react-query'
+import { majorGroupApi } from '~/api/major-group'
 
 type I = {
 	mode: 'add' | 'edit' | 'delete'
@@ -21,6 +28,10 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 	const [visible, setVisible] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [form] = Form.useForm()
+
+	const { data: majorGroups, isLoading: isLoadingMajorGroup, refetch } = useQueryMajorGroup(visible)
+
+	const [newMajorGroupName, setNewMajorGroupName] = useState('')
 
 	const onClose = () => {
 		setVisible(false)
@@ -104,6 +115,22 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 			handleRemove(data)
 		}
 	}
+
+	// ** handle add major group
+	const mutationAddMajorGroup = useMutation({
+		mutationFn: (data: any) => {
+			return majorGroupApi.add({ Name: data })
+		},
+		onSuccess(data, variables, context) {
+			ShowNostis.success('Tạo thành công')
+			setNewMajorGroupName('')
+			refetch()
+		},
+		onError(data, variables, context) {
+			ShowErrorToast(data)
+		}
+	})
+
 	return (
 		<>
 			{mode == 'add' && (
@@ -145,10 +172,11 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 			<Modal
 				title={mode === 'add' ? 'Thêm mới' : mode === 'edit' ? 'Cập nhật' : 'Xác nhận xóa'}
 				open={visible}
-				onCancel={onClose} 	centered
+				onCancel={onClose}
+				centered
 				footer={
 					<>
-						<PrimaryButton onClick={() => onClose()} className='btn-outline' background="transparent" icon="cancel" type="button">
+						<PrimaryButton onClick={() => onClose()} className="btn-outline" background="transparent" icon="cancel" type="button">
 							Huỷ
 						</PrimaryButton>
 						<PrimaryButton
@@ -177,6 +205,25 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 									<div className="col-span-2">
 										<UploadImageField form={form} name="Thumbnail" label="Hình ảnh" />
 									</div>
+									<MyFormItem className="col-span-2" name="MajorGroupId" label="Nhóm ngành học" required rules={formRequired}>
+										<MySelectCustomAdd
+											disabled={isLoadingMajorGroup}
+											loading={isLoadingMajorGroup}
+											placeholder="Chọn nhóm ngành học"
+											showSearch
+											optionFilterProp="label"
+											options={majorGroups?.map((item) => ({ label: item.Name, value: item?.Id }))}
+											inputProps={{
+												placeholder: 'Tên nhóm ngành',
+												onChange: (e) => setNewMajorGroupName(e.target.value),
+												value: newMajorGroupName
+											}}
+											buttonProps={{
+												onClick: () => mutationAddMajorGroup.mutateAsync(newMajorGroupName),
+												disabled: newMajorGroupName == '' || mutationAddMajorGroup?.isPending
+											}}
+										/>
+									</MyFormItem>
 									<div className="col-span-2">
 										<InputTextField
 											isRequired
