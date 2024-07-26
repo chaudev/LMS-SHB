@@ -117,7 +117,7 @@ const PaymentTypePage = () => {
 						></IconButton>
 						<Link
 							href={{
-								pathname: '/options/payment-type/detail',
+								pathname: '/majors/payment-type/detail',
 								query: { slug: item.Id, key: nanoid(), name: item.Name }
 							}}
 						>
@@ -230,7 +230,17 @@ const PaymentTypePage = () => {
 							name="PriceInstallment"
 							label={
 								<div>
-									Số tiền thanh toán dự kiến cho từng đợt <MyInfo noDetails content={'Số tiền thanh toán dự kiến cho từng đợt. '} />
+									Số tiền thanh toán dự kiến cho từng đợt{' '}
+									<MyInfo
+										noDetails
+										content={
+											<p>
+												Hệ thống sẽ chia số tiền cần thanh toán cho từng đợt tương ứng với{' '}
+												<span className="font-medium !text-primary">Số lần thanh toán</span> đã nhập phía trên.{' '}
+												<span className="font-medium">(có thể chỉnh sửa trong chi tiết hình thức thanh toán)</span>
+											</p>
+										}
+									/>
 								</div>
 							}
 							isRequired

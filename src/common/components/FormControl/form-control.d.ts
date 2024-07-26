@@ -33,7 +33,7 @@ type IUploadImageField = {
 
 type IFormInputNumber = {
 	style?: object
-	name: string
+	name: string | [number, string]
 	label: React.ReactNode
 	isRequired?: boolean
 	className?: string

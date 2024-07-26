@@ -152,7 +152,6 @@ function NewsFeed() {
 						</div>
 					)}
 
-
 					{!currentGroup && (
 						<div className="cc-new-mobile-group mx-[3px] mb-3">
 							<div className="bg-[#fff] shadow-md w-full rounded-[6px]">
@@ -184,7 +183,7 @@ function NewsFeed() {
 						>
 							<List
 								dataSource={data}
-								grid={{ gutter: 16, column: 1 }}
+								// grid={{ gutter: 16, column: 1 }}
 								renderItem={(item, index) => (
 									<>
 										<List.Item>

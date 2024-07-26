@@ -8,10 +8,12 @@ import { paymentTypeApi } from '~/api/option/payment-type'
 import { processApi } from '~/api/process'
 import { profileStatusApi } from '~/api/profile-status'
 import { visaStatusApi } from '~/api/visa-status'
+import InputNumberField from '~/common/components/FormControl/InputNumberField'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import SelectField from '~/common/components/FormControl/SelectField'
 import PrimaryButton from '~/common/components/Primary/Button'
 import { ShowNostis } from '~/common/utils'
+import { ShowErrorToast } from '~/common/utils/main-function'
 
 interface IOptionType {
 	foreignLanguage: IOption[]
@@ -38,7 +40,7 @@ const PaymentDetailPage = () => {
 		if (Items) {
 			let initValue = 0
 			Items.forEach((element) => {
-				initValue = initValue + Number(element.Percent)
+				initValue = initValue + Number(element.Price)
 			})
 			setProgress(initValue)
 		}
@@ -86,7 +88,9 @@ const PaymentDetailPage = () => {
 			}
 			setOptionType(tempOption)
 			setLoading('')
-		} catch (error) {}
+		} catch (error) {
+			ShowErrorToast(error)
+		}
 	}
 
 	useEffect(() => {
@@ -97,10 +101,10 @@ const PaymentDetailPage = () => {
 
 	const _onFinish = async (params) => {
 		try {
-			if (progress != 100) {
-				ShowNostis.error('Tổng tiến trình phải bằng 100%!')
-				return
-			}
+			// if (progress != 100) {
+			// 	ShowNostis.error('Tổng tiến trình phải bằng 100%!')
+			// 	return
+			// }
 			setLoading('UPDATE')
 			const payload = {
 				PaymentTypeName: params.Name,
@@ -113,7 +117,7 @@ const PaymentDetailPage = () => {
 			}
 			setLoading('')
 		} catch (error) {
-			ShowNostis.error(error.message)
+			ShowErrorToast(error)
 			setLoading('')
 		}
 	}
@@ -126,121 +130,122 @@ const PaymentDetailPage = () => {
 	}
 
 	return (
-		<div className='d-flex justify-center'>
-	<Card className='w-full max-w-[1200px]'>
-			<Spin spinning={loading === 'INIT_PAGE'}>
-				<Form form={form} onFinish={_onFinish} layout="vertical">
-					<Divider>Hình thức thanh toán</Divider>
-					<InputTextField
-						name="Name"
-						label="Tên hình thức thanh toán"
-						rules={[{ required: true, message: 'Vui lòng nhập tên hình thức  thanh toán' }]}
-					/>
-					<Divider>Các đợt thanh toán</Divider>
+		<div className="d-flex justify-center">
+			<Card className="w-full max-w-[1200px]">
+				<Spin spinning={loading === 'INIT_PAGE'}>
+					<Form form={form} onFinish={_onFinish} layout="vertical">
+						<Divider>Hình thức thanh toán</Divider>
+						<InputTextField
+							name="Name"
+							label="Tên hình thức thanh toán"
+							rules={[{ required: true, message: 'Vui lòng nhập tên hình thức  thanh toán' }]}
+						/>
+						<Divider>Các đợt thanh toán</Divider>
 
-					<Form.List name="Items">
-						{(fields) =>
-							fields.map((field, index) => {
-								return (
-									<Row key={index} gutter={{ md: 16 }}>
-										<Col xs={24} md={8}>
-											<SelectField
-												{...field}
-												className="col-span-2"
-												name={[field.name, 'Type']}
-												label="Loại"
-												optionList={[
-													{
-														value: 1,
-														title: 'Đăng ký ngành học',
-														disabled: field.name !== 0 ? true : false
-													},
-													{
-														value: 2,
-														title: 'Thay đổi Tình trạng thu hồ sơ'
-													},
-													{
-														value: 3,
-														title: 'Thay đổi tình trạng tiếng'
-													},
-													{
-														value: 4,
-														title: 'Thay đổi tình trạng visa'
-													},
-													{
-														value: 5,
-														title: 'Thay đổi Tiến trình xử lý hồ sơ'
+						<Form.List name="Items">
+							{(fields) =>
+								fields.map((field, index) => {
+									return (
+										<Row key={index} gutter={{ md: 16 }}>
+											<Col xs={24} md={8}>
+												<SelectField
+													{...field}
+													className="col-span-2"
+													name={[field.name, 'Type']}
+													label="Loại"
+													isRequired
+													optionList={[
+														{
+															value: 1,
+															title: 'Đăng ký ngành học',
+															disabled: field.name !== 0 ? true : false
+														},
+														{
+															value: 2,
+															title: 'Thay đổi tình trạng thu hồ sơ'
+														},
+														{
+															value: 3,
+															title: 'Thay đổi tình trạng tiếng'
+														},
+														{
+															value: 4,
+															title: 'Thay đổi tình trạng visa'
+														},
+														{
+															value: 5,
+															title: 'Thay đổi tiến trình xử lý hồ sơ'
+														}
+													]}
+													onChangeSelect={(value) => {
+														_handleUpdateTypeIndex(value, index)
+													}}
+													rules={[{ required: true, message: 'Vui lòng chọn loại' }]}
+												/>
+											</Col>
+											<Col xs={24} md={8}>
+												<SelectField
+													{...field}
+													className="col-span-2"
+													isRequired
+													name={[field.name, 'ValueId']}
+													label="Tình trạng"
+													disabled={Items[index].Type === 1 ? true : false}
+													optionList={
+														!Items[index].Type || !optionType
+															? []
+															: Items[index].Type == 1
+															? []
+															: Items[index].Type == 2
+															? optionType.profileStatus
+															: Items[index].Type == 3
+															? optionType.foreignLanguage
+															: Items[index].Type == 4
+															? optionType.visaStatus
+															: optionType.processingStatus
 													}
-												]}
-												onChangeSelect={(value) => {
-													_handleUpdateTypeIndex(value, index)
-												}}
-												rules={[{ required: true, message: 'Vui lòng chọn loại' }]}
-											/>
-										</Col>
-										<Col xs={24} md={8}>
-											<SelectField
-												{...field}
-												className="col-span-2"
-												name={[field.name, 'ValueId']}
-												label="Tình trạng"
-												disabled={Items[index].Type === 1 ? true : false}
-												optionList={
-													!Items[index].Type || !optionType
-														? []
-														: Items[index].Type == 1
-														? []
-														: Items[index].Type == 2
-														? optionType.profileStatus
-														: Items[index].Type == 3
-														? optionType.foreignLanguage
-														: Items[index].Type == 4
-														? optionType.visaStatus
-														: optionType.processingStatus
-												}
-												rules={[{ required: Items[index].Type === 1 ? false : true, message: 'Vui lòng chọn tình trạng' }]}
-											/>
-										</Col>
-										<Col xs={24} md={8}>
-											<InputTextField
-												className="col-span-2"
-												{...field}
-												name={[field.name, 'Percent']}
-												label="Phần trăm"
-												rules={[
-													{ required: true, message: 'Vui lòng phần trăm' },
-													{
-														validator: (_, value) =>
-															value > 1 ? Promise.resolve() : Promise.reject(new Error('Phần trăm phải lớn hơn 1%'))
-													},
-													{
-														validator: (_, value) =>
-															value <= 100 ? Promise.resolve() : Promise.reject(new Error('Phần trăm phải nhỏ hơn hoặc bằng 100%'))
-													}
-												]}
-											/>
-										</Col>
-										<Col xs={24}>{fields.length - 1 === index ? '' : <Divider />}</Col>
-									</Row>
-								)
-							})
-						}
-					</Form.List>
+													rules={[{ required: Items[index].Type === 1 ? false : true, message: 'Vui lòng chọn tình trạng' }]}
+												/>
+											</Col>
+											<Col xs={24} md={8}>
+												<InputNumberField
+													className="col-span-2"
+													{...field}
+													name={[field.name, 'Price']}
+													label="Số tiền thu"
+													isRequired
+													rules={[
+														{ required: true, message: 'Vui lòng nhập số tiền thu' }
+														// {
+														// 	validator: (_, value) =>
+														// 		value > 1 ? Promise.resolve() : Promise.reject(new Error('Phần trăm phải lớn hơn 1%'))
+														// },
+														// {
+														// 	validator: (_, value) =>
+														// 		value <= 100 ? Promise.resolve() : Promise.reject(new Error('Phần trăm phải nhỏ hơn hoặc bằng 100%'))
+														// }
+													]}
+												/>
+											</Col>
+											<Col xs={24}>{fields.length - 1 === index ? '' : <Divider />}</Col>
+										</Row>
+									)
+								})
+							}
+						</Form.List>
 
-					<div className="w-[90%]">
-						<Progress percent={progress} status={progress == 100 ? 'active' : 'exception'} format={(percent) => `${progress}% / 100% `} />
-					</div>
-					<div className="py-2 d-flex justify-center">
-						<PrimaryButton loading={loading === 'UPDATE'} type="submit" icon="save" background="primary">
-							Cập nhật
-						</PrimaryButton>
-					</div>
-				</Form>
-			</Spin>
-		</Card>
-
+						{/* <div className="w-[90%]">
+							<Progress percent={progress} status={progress == 100 ? 'active' : 'exception'} format={(Price) => `${progress}% / 100% `} />
+						</div> */}
+						<div className="py-2 d-flex justify-center">
+							<PrimaryButton loading={loading === 'UPDATE'} type="submit" icon="save" background="primary">
+								Cập nhật
+							</PrimaryButton>
+						</div>
+					</Form>
+				</Spin>
+			</Card>
 		</div>
-	
 	)
 }
 
