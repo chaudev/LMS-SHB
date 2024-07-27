@@ -215,3 +215,27 @@ export function formatNumberToMillions(number) {
 		return number
 	}
 }
+
+/**
+ * Function to check if object has any correct keys and have value
+ * @param obj string
+ * @param keysToCheck string[]
+ * @returns true | false
+ */
+export function hasAnyKey(obj, keysToCheck) {
+	for (const key of keysToCheck) {
+		if (obj.hasOwnProperty(key) && obj[key] !== undefined && obj[key] !== null && obj[key] !== '') {
+			return true
+		}
+	}
+
+	return false
+}
+
+/**
+ * Function check is data null or empty, undefined
+ * @returns boolean
+ */
+export function isNullOrEmptyOrUndefined(data) {
+	return data === null || data === '' || data === undefined || data?.length === 0
+}
