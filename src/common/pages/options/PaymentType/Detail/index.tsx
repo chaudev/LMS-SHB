@@ -13,6 +13,7 @@ import InputTextField from '~/common/components/FormControl/InputTextField'
 import SelectField from '~/common/components/FormControl/SelectField'
 import PrimaryButton from '~/common/components/Primary/Button'
 import { ShowNostis } from '~/common/utils'
+import { PAYMENT_TYPES } from '~/common/utils/constants'
 import { ShowErrorToast } from '~/common/utils/main-function'
 
 interface IOptionType {
@@ -156,24 +157,24 @@ const PaymentDetailPage = () => {
 													isRequired
 													optionList={[
 														{
-															value: 1,
+															value: PAYMENT_TYPES.majorRegistration,
 															title: 'Đăng ký ngành học',
 															disabled: field.name !== 0 ? true : false
 														},
 														{
-															value: 2,
+															value: PAYMENT_TYPES.profileCollectionStatus,
 															title: 'Thay đổi tình trạng thu hồ sơ'
 														},
 														{
-															value: 3,
+															value: PAYMENT_TYPES.languageStatus,
 															title: 'Thay đổi tình trạng tiếng'
 														},
 														{
-															value: 4,
+															value: PAYMENT_TYPES.visaStatus,
 															title: 'Thay đổi tình trạng visa'
 														},
 														{
-															value: 5,
+															value: PAYMENT_TYPES.profileProcessStatus,
 															title: 'Thay đổi tiến trình xử lý hồ sơ'
 														}
 													]}

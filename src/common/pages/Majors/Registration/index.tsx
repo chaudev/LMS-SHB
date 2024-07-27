@@ -18,6 +18,9 @@ import { optionPaymentType } from '~/common/constant/PaymentType'
 import { useRouter } from 'next/router'
 import Avatar from '~/common/components/Avatar'
 import { paymentMethodsApi } from '~/api/payment-method'
+import { PAYMENT_TYPES } from '~/common/utils/constants'
+import { isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
+import PaymentTypesDetails from '../Component/PaymentTypesDetails'
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -56,7 +59,7 @@ const MajorsRegistrationPage = () => {
 	const [listOption, setListOption] = useState<IListOption>(initValue)
 	const [listData, setListData] = useState<IListData>(initValue)
 
-	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL'>('')
+	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL' | 'PAYMENT'>('')
 
 	const [paymentTypeDetail, setPaymentTypeDetail] = useState<IPaymentTypeDetail[]>([])
 
@@ -78,11 +81,11 @@ const MajorsRegistrationPage = () => {
 			let templOption = { students: [], majors: [], gift: [], payment: [], paymentMethod: [] }
 			let templData = { students: [], majors: [], gift: [], payment: [] }
 
-			const [students, majors, gift, paymentType, paymentMethod] = await Promise.all([
+			const [students, majors, gift, paymentMethod] = await Promise.all([
 				majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
 				majorsApi.getAll({ pageSize: 9999, pageIndex: 1, status: 1 }),
 				giftApi.getAll({ pageSize: 9999, pageIndex: 1 }),
-				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 }),
+				// paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 }),
 				paymentMethodsApi.getAll({ pageSize: 9999, pageIndex: 1 })
 			])
 
@@ -117,11 +120,11 @@ const MajorsRegistrationPage = () => {
 				templData.gift = gift.data.data
 			}
 
-			if (paymentType.status === 200) {
-				let templ = formatOption(paymentType.data.data)
-				templOption.payment = templ
-				templData.payment = paymentType.data.data
-			}
+			// if (paymentType.status === 200) {
+			// 	let templ = formatOption(paymentType.data.data)
+			// 	templOption.payment = templ
+			// 	templData.payment = paymentType.data.data
+			// }
 
 			if (paymentMethod.status === 200) {
 				let templ = formatOption(paymentMethod.data.data)
@@ -138,7 +141,7 @@ const MajorsRegistrationPage = () => {
 
 			setLoading('')
 		} catch (error) {
-			ShowNostis.error(error.message)
+			ShowErrorToast(error)
 			setLoading('')
 		}
 	}
@@ -164,7 +167,23 @@ const MajorsRegistrationPage = () => {
 				setListOption(templOption)
 			}
 		} catch (error) {
-			ShowNostis.error(error.message)
+			ShowErrorToast(error)
+			setLoading('')
+		}
+	}
+
+	const getPaymentByMajor = async (majorId) => {
+		try {
+			setLoading('PAYMENT')
+			const res = await paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1, majorId: majorId })
+			if (res.status == 200) {
+				setListOption({ ...listOption, payment: formatOption(res.data.data) })
+			} else {
+				setListOption({ ...listOption, payment: formatOption([]) })
+			}
+		} catch (error) {
+			ShowErrorToast(error)
+		} finally {
 			setLoading('')
 		}
 	}
@@ -176,7 +195,7 @@ const MajorsRegistrationPage = () => {
 			const response = await paymentTypeApi.getAllPaymentTypeDetail(PaymentTypeId)
 			if (response.status === 200) {
 				let detail = response.data.data[0]
-				if (detail.Type == 1) {
+				if (detail.Type == PAYMENT_TYPES.majorRegistration) {
 					const countTotal = (TotalPrice * detail.Percent) / 100
 					form.setFieldValue('countTotal', countTotal ? countTotal : 0)
 				} else {
@@ -185,6 +204,12 @@ const MajorsRegistrationPage = () => {
 				form.setFieldValue('Type', Number(detail.Type))
 				form.setFieldValue('Percent', detail.Percent)
 				form.setFieldValue('Paid', null)
+
+				// ** dynamic set form Prices
+				const datas = response.data.data
+				datas?.forEach((item) => {
+					form.setFieldValue(`Price_${item.Id}`, item?.Price)
+				})
 			}
 			setPaymentTypeDetail(response.data.data)
 			setLoading('')
@@ -233,9 +258,12 @@ const MajorsRegistrationPage = () => {
 
 	useEffect(() => {
 		if (MajorsId) {
+			getPaymentByMajor(MajorsId)
 			const templ = listData.majors.find((value) => {
 				return value.Id == MajorsId
 			})
+			setPaymentTypeDetail([])
+			form.setFieldValue('PaymentTypeId', null)
 			form.setFieldValue('MajorsId', templ.Id)
 			form.setFieldValue('TotalPrice', templ.Price)
 			form.setFieldValue('Description', templ.Description)
@@ -270,7 +298,6 @@ const MajorsRegistrationPage = () => {
 	const _onFinish = async (params) => {
 		try {
 			setLoading('CREATE')
-
 			const payload = {
 				MajorsId: params.MajorsId,
 				StudentId: params.StudentId,
@@ -279,7 +306,13 @@ const MajorsRegistrationPage = () => {
 				GiftId: params.GiftId,
 				PaymentTypeId: params.PaymentTypeId,
 				Note: params.Note,
-				PaymentMethodId: params.PaymentMethodId
+				PaymentMethodId: params.PaymentMethodId,
+				Details: Object.keys(params)
+					.filter((key) => key.startsWith('Price_'))
+					.map((key) => ({
+						Price: params[key],
+						PaymentTypeDetailId: Number(key.split('_')[1])
+					}))
 			}
 
 			const response = await majorsRegistrationApi.majorsRegistration(payload)
@@ -344,7 +377,7 @@ const MajorsRegistrationPage = () => {
 										name={'MajorsId'}
 										label="Chọn ngành học"
 										optionList={listOption.majors}
-										rules={[{ required: true, message: 'Vui lòng ngành học' }]}
+										rules={[{ required: true, message: 'Vui lòng chọn ngành học' }]}
 									/>
 
 									<InputNumberField
@@ -360,7 +393,7 @@ const MajorsRegistrationPage = () => {
 								<SelectField
 									className="col-span-2"
 									name={'PaymentTypeId'}
-									isLoading={loading === 'PAYMENT_DETAIL'}
+									isLoading={loading === 'PAYMENT'}
 									label={
 										<div className="d-flex items-center">
 											Hình thức thanh toán
@@ -374,6 +407,7 @@ const MajorsRegistrationPage = () => {
 									optionList={listOption.payment}
 									rules={[{ required: true, message: 'Vui lòng chọn hình thức thanh toán' }]}
 								/>
+								{!isNullOrEmptyOrUndefined(PaymentTypeId) && <PaymentTypesDetails datas={paymentTypeDetail} />}
 								<SelectField
 									className="col-span-2"
 									hidden={Type === 1 ? false : true}
@@ -382,14 +416,14 @@ const MajorsRegistrationPage = () => {
 									disabled
 									optionList={optionPaymentType}
 								/>
-
+								{/* 
 								<InputTextField
 									name="Percent"
 									label="Phần trăm"
 									disabled
 									hidden={Type === 1 ? false : true}
 									rules={[{ required: true, message: 'Vui lòng nhập số tiền phải đóng' }]}
-								/>
+								/> */}
 								<InputNumberField
 									name="countTotal"
 									disabled={true}

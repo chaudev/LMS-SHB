@@ -15,6 +15,7 @@ type IPaymentTypeDetail = {
 	Type: number
 	ValueId: number
 	Percent: number
+	Price?: number
 	TypeName: string
 	ValueName: string
 	Id: number

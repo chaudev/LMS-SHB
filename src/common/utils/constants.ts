@@ -20,3 +20,18 @@ export const STATISTIC_USER_STATUS_TYPES_OBJECTS = {
 	profileStatus: 'ProfileStatus',
 	process: 'Process'
 }
+
+/**
+ * 1. majorRegistration: Đăng ký ngành học
+ * 2. profileCollectionStatus: Tình trạng thu hồ sơ
+ * 3. languageStatus: Tình trạng tiếng
+ * 4. visaStatus: Tình trạng visa
+ * 5. profileProcessStatus: Tình trạng xử lý hồ sơ
+ */
+export const PAYMENT_TYPES = {
+	majorRegistration: 1,
+	profileCollectionStatus: 2,
+	languageStatus: 3,
+	visaStatus: 4,
+	profileProcessStatus: 5
+}
