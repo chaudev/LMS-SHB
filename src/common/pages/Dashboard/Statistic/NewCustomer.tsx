@@ -1,6 +1,7 @@
 import { Card } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { staticsticalApi } from '~/api/statistic'
+import MyStatisticCard from '~/atomic/molecules/MyStatisticCard'
 import { StatisticClassNew } from '~/common/components/Dashboard/StatisticClassNew'
 
 interface INewCustomer {
@@ -23,13 +24,9 @@ const NewCustomer: React.FC<INewCustomer> = ({ todoApi }) => {
 		getNewCustomer()
 	}, [todoApi])
 	return (
-		<Card title={<h1 className="text-2xl font-medium">Khách mới mỗi tháng</h1>}>
-			<StatisticClassNew
-				data={statisticNewCustomer}
-				titleBar="Khách mới mỗi tháng"
-				type={1}
-			/>
-		</Card>
+		<MyStatisticCard title={'Khách mới mỗi tháng'}>
+			<StatisticClassNew data={statisticNewCustomer} titleBar="Khách mới mỗi tháng" type={1} />
+		</MyStatisticCard>
 	)
 }
 

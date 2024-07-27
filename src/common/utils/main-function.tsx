@@ -190,3 +190,28 @@ export function ShowErrorToast(error) {
 export function isNull(data) {
 	return data === null || data === '' || data === undefined || data?.length === 0
 }
+
+/**
+ * Hàm truncate chữ quá dài => ...
+ * @returns truncated text
+ */
+export function truncate(str, n) {
+	return str?.length > n ? str.substr(0, n - 1) + '...' : str
+}
+
+/**
+ *  Hàm format số sang hàng chục, hàng triệu
+ * @param number
+ * @returns number đã format.
+ */
+export function formatNumberToMillions(number) {
+	if (number >= 1e6) {
+		const millions = Math.floor(number / 1e6)
+		return millions + 'm'
+	} else {
+		if (number >= 1000) {
+			return Math.round(number / 1000) + 'k'
+		}
+		return number
+	}
+}

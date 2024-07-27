@@ -1,6 +1,7 @@
 import { Card } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { staticsticalApi } from '~/api/statistic'
+import MyStatisticCard from '~/atomic/molecules/MyStatisticCard'
 import StatisticTop5Course from '~/common/components/Dashboard/StatisticTop5Course'
 
 const TopJob = ({ todoApi }) => {
@@ -22,9 +23,9 @@ const TopJob = ({ todoApi }) => {
 	}, [todoApi])
 
 	return (
-		<Card title={<h1 className="text-2xl font-medium">Top 5 công việc của học viên </h1>}>
+		<MyStatisticCard title={'Top 5 công việc của học viên'}>
 			<StatisticTop5Course data={statisticTopJob} titleBar="Học viên " type={1} />
-		</Card>
+		</MyStatisticCard>
 	)
 }
 

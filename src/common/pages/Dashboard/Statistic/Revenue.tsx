@@ -1,6 +1,7 @@
 import { Card } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { staticsticalApi } from '~/api/statistic'
+import MyStatisticCard from '~/atomic/molecules/MyStatisticCard'
 import StatisticPositiveAndNegativeChart from '~/common/components/Dashboard/StatisticPositiveAndNegativeChart'
 
 interface IClassNew {
@@ -25,9 +26,9 @@ const Revenue: React.FC<IClassNew> = ({ todoApi }) => {
 		getRevenue()
 	}, [todoApi])
 	return (
-		<Card title={<h1 className="text-2xl font-medium">Doanh Thu</h1>}>
+		<MyStatisticCard title={'Doanh Thu'}>
 			<StatisticPositiveAndNegativeChart data={statisticRevenue} titleBar="Doanh thu" />
-		</Card>
+		</MyStatisticCard>
 	)
 }
 

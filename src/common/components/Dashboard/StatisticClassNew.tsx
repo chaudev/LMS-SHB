@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { AreaChart, CartesianGrid, ComposedChart, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import MyLineChart from '~/common/antv-charts/Line/basic/MyLineChart'
 
 export const StatisticClassNew = (props) => {
-	const { data, titleBar, type } = props
+	const { data, titleBar, type, loading } = props
 	const [hideXAxis, setHideXAxis] = useState(false)
 
 	const renderLegend = (props) => {
@@ -30,9 +31,16 @@ export const StatisticClassNew = (props) => {
 			</ul>
 		)
 	}
+	const convertChartData = (data) => {
+		return data?.map((item) => ({
+			Name: `Tháng ${item?.Name}`,
+			Value: item.Value
+		}))
+	}
+
 	return (
 		<>
-			<ResponsiveContainer width="100%" height={280}>
+			{/* <ResponsiveContainer width="100%" height={280}>
 				<LineChart width={500} height={500} data={data}>
 					<CartesianGrid stroke="#f5f5f5" />
 					{hideXAxis ? <XAxis hide dataKey="Name" /> : <XAxis dataKey="Name" />}
@@ -46,7 +54,17 @@ export const StatisticClassNew = (props) => {
 						stroke={type == 1 ? '#8884d8' : '#D44141'}
 					/>
 				</LineChart>
-			</ResponsiveContainer>
+			</ResponsiveContainer> */}
+			<MyLineChart
+				color={['#338BF1', '#F7401A']}
+				loading={loading}
+				data={!!data ? convertChartData(data) : []}
+				xField="Name"
+				yField="Value"
+				// seriesField="type"
+				haveSlider={false}
+				smooth={true}
+			/>
 		</>
 	)
 }

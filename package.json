@@ -15,7 +15,9 @@
 		"npm": "please-use-yarn"
 	},
 	"dependencies": {
+		"@ant-design/charts": "1.4.2",
 		"@ant-design/icons": "4.8.0",
+		"@ant-design/plots": "1.2.1",
 		"@fullcalendar/core": "^6.0.0",
 		"@fullcalendar/daygrid": "^6.0.0",
 		"@fullcalendar/interaction": "^6.0.0",

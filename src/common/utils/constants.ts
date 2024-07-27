@@ -13,3 +13,10 @@ export const SAMPLE_GRADE_COLUMN_TYPES_OBJECTS = {
 	grades: 'Grades',
 	comments: 'Comments'
 }
+
+export const STATISTIC_USER_STATUS_TYPES_OBJECTS = {
+	foreginLangugage: 'ForeignLangugage',
+	visaStatus: 'VisaStatus',
+	profileStatus: 'ProfileStatus',
+	process: 'Process'
+}

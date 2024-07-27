@@ -84,6 +84,20 @@ export const AdminChildMenu = [
 				Route: '/statistic-teaching',
 				Icon: '',
 				Text: 'Thống kê giảng dạy'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-profile',
+				Route: '/statistic-profile',
+				Icon: '',
+				Text: 'Tình trạng hồ sơ'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-salary',
+				Route: '/statistic-salary',
+				Icon: '',
+				Text: 'Thống kê lương'
 			}
 		]
 	},

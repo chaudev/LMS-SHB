@@ -1,6 +1,7 @@
 import { Card } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { staticsticalApi } from '~/api/statistic'
+import MyStatisticCard from '~/atomic/molecules/MyStatisticCard'
 import StatisticTop5Course from '~/common/components/Dashboard/StatisticTop5Course'
 
 interface ITopPurpose {
@@ -11,9 +12,9 @@ const TopPurpose: React.FC<ITopPurpose> = ({ todoApi }) => {
 	const getTopPurpose = async () => {
 		try {
 			const res = await staticsticalApi.getTopPurpose(todoApi)
-			console.log(res);
-			console.log(todoApi);
-			
+			console.log(res)
+			console.log(todoApi)
+
 			if (res.status === 200) {
 				setStatisticTopPurpose(res.data.data)
 			}
@@ -26,9 +27,9 @@ const TopPurpose: React.FC<ITopPurpose> = ({ todoApi }) => {
 		getTopPurpose()
 	}, [todoApi])
 	return (
-		<Card title={<h1 className="text-2xl font-medium">Top 5 mục đích học</h1>}>
+		<MyStatisticCard title={'Top 5 mục đích học'}>
 			<StatisticTop5Course data={statisticTopPurpose} titleBar="Mục đích học " type={2} />
-		</Card>
+		</MyStatisticCard>
 	)
 }
 
