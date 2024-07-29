@@ -82,23 +82,21 @@ export default function TabStudentContract(props: ITabStudentContractProps) {
 
 	const onSubmit = async (data) => {
 		try {
-			const res =
-				modeEdit == 'add'
-					? await contractApi.addContract({ Name: data.Name, Content: data.Content, StudentId: StudentDetail.UserInformationId })
-					: await contractApi.update({ Name: data.Name, Content: data.Content, Id: data.ContractID })
-
-			if (res.status === 200) {
-				ShowNoti('success', res.data.message)
-				getContractList(StudentDetail.UserInformationId)
-				setModeEdit('edit')
-				handleChangeContract(contracts.option[0].value, contracts.option[0].title)
-				form.setFieldValue('ContractID', contracts.option[0].value)
-				form.setFieldValue('Name', null)
-				form.setFieldValue('Content', null)
-			}
-
-			if (res.status === 204) {
-			}
+			// const res =
+			// 	modeEdit == 'add'
+			// 		? await contractApi.addContract({ Name: data.Name, Content: data.Content, StudentId: StudentDetail.UserInformationId })
+			// 		: await contractApi.update({ Name: data.Name, Content: data.Content, Id: data.ContractID })
+			// if (res.status === 200) {
+			// 	ShowNoti('success', res.data.message)
+			// 	getContractList(StudentDetail.UserInformationId)
+			// 	setModeEdit('edit')
+			// 	handleChangeContract(contracts.option[0].value, contracts.option[0].title)
+			// 	form.setFieldValue('ContractID', contracts.option[0].value)
+			// 	form.setFieldValue('Name', null)
+			// 	form.setFieldValue('Content', null)
+			// }
+			// if (res.status === 204) {
+			// }
 		} catch (err) {
 			// ShowNoti('error', err.message)
 		}
