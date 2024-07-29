@@ -223,6 +223,13 @@ export const AdminChildMenu = [
 				Route: '/info-course/parents',
 				Text: 'Phụ huynh',
 				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/contract',
+				Route: '/info-course/contract',
+				Text: 'Hợp đồng',
+				Icon: ''
 			}
 		]
 	},

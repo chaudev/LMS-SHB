@@ -16,7 +16,10 @@ export const contractApi = {
 	update(data) {
 		return instance.put(url, data)
 	},
-	addContract(data) {
+	addContract(data: TPostContract) {
 		return instance.post(url, data)
+	},
+	delete(id) {
+		return instance.delete(url + `/${id}`)
 	}
 }

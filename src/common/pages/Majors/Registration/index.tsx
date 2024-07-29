@@ -10,7 +10,7 @@ import SelectField from '~/common/components/FormControl/SelectField'
 import TextBoxField from '~/common/components/FormControl/TextBoxField'
 import PrimaryButton from '~/common/components/Primary/Button'
 import { ShowNostis, log } from '~/common/utils'
-import { removeCommas } from '~/common/utils/super-functions'
+import { getDate, removeCommas } from '~/common/utils/super-functions'
 import ModalViewPaymenTypeDetail from '../Component/ModalViewPaymenTypeDetail'
 import CardInfomation from '../Component/CardInfomation'
 import { ISelectOptionList } from '~/common/components/FormControl/form-control'
@@ -21,6 +21,8 @@ import { paymentMethodsApi } from '~/api/payment-method'
 import { PAYMENT_TYPES } from '~/common/utils/constants'
 import { isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
 import PaymentTypesDetails from '../Component/PaymentTypesDetails'
+import CreateContract from '../Component/CreateContract'
+import moment from 'moment'
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -62,6 +64,10 @@ const MajorsRegistrationPage = () => {
 	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL' | 'PAYMENT'>('')
 
 	const [paymentTypeDetail, setPaymentTypeDetail] = useState<IPaymentTypeDetail[]>([])
+
+	const [contractData, setContractData] = useState({ ContractNumber: null, ContractContent: null, ContractSigningDate: null })
+
+	const [majorDescription, setMajorDescription] = useState('')
 
 	const formatOption = (data) => {
 		let templ = []
@@ -149,8 +155,6 @@ const MajorsRegistrationPage = () => {
 	const getAllMajorsRegistrationAvailble = async () => {
 		try {
 			const response = await majorsRegistrationApi.getAllMajorsRegistrationAvailble()
-			let templOption = { ...listOption }
-			let templData = { ...listData }
 			if (response.status === 200) {
 				let templ = []
 				response.data.data.map((item, index) => {
@@ -159,12 +163,10 @@ const MajorsRegistrationPage = () => {
 						value: item.StudentId
 					})
 				})
-				templData.students = response.data.data
-				templOption.students = templ
-				console.log('templData', templData)
+				// console.log('templData', templData, templOption)
 
-				setListData(templData)
-				setListOption(templOption)
+				setListData({ ...listData, students: response.data.data })
+				// setListOption({ ...listOption, students: templ })
 			}
 		} catch (error) {
 			ShowErrorToast(error)
@@ -267,10 +269,12 @@ const MajorsRegistrationPage = () => {
 			form.setFieldValue('MajorsId', templ.Id)
 			form.setFieldValue('TotalPrice', templ.Price)
 			form.setFieldValue('Description', templ.Description)
+			setMajorDescription(templ.Description)
 		} else {
 			form.setFieldValue('MajorsId', '')
 			form.setFieldValue('TotalPrice', '')
 			form.setFieldValue('Description', '')
+			setMajorDescription('')
 		}
 	}, [MajorsId])
 
@@ -298,32 +302,38 @@ const MajorsRegistrationPage = () => {
 	const _onFinish = async (params) => {
 		try {
 			setLoading('CREATE')
-			const payload = {
-				MajorsId: params.MajorsId,
-				StudentId: params.StudentId,
-				TotalPrice: removeCommas(params.TotalPrice),
-				Paid: removeCommas(params.Paid),
-				GiftId: params.GiftId,
-				PaymentTypeId: params.PaymentTypeId,
-				Note: params.Note,
-				PaymentMethodId: params.PaymentMethodId,
-				Details: Object.keys(params)
-					.filter((key) => key.startsWith('Price_'))
-					.map((key) => ({
-						Price: params[key],
-						PaymentTypeDetailId: Number(key.split('_')[1])
-					}))
+			if (!isNullOrEmptyOrUndefined(contractData?.ContractContent)) {
+				const payload = {
+					MajorsId: params.MajorsId,
+					StudentId: params.StudentId,
+					TotalPrice: removeCommas(params.TotalPrice),
+					Paid: removeCommas(params.Paid),
+					GiftId: params.GiftId,
+					PaymentTypeId: params.PaymentTypeId,
+					Note: params.Note,
+					PaymentMethodId: params.PaymentMethodId,
+					ContractContent: contractData?.ContractContent,
+					ContractNumber: contractData?.ContractNumber,
+					ContractSigningDate: moment(contractData?.ContractSigningDate).toISOString(),
+					Details: Object.keys(params)
+						.filter((key) => key.startsWith('Price_'))
+						.map((key) => ({
+							Price: params[key],
+							PaymentTypeDetailId: Number(key.split('_')[1])
+						}))
+				}
+				const response = await majorsRegistrationApi.majorsRegistration(payload)
+				if (response.status === 200) {
+					ShowNostis.success(response.data.message)
+					await getAllMajorsRegistrationAvailble()
+				}
+				form.resetFields()
+			} else {
+				ShowNostis.warning('Chưa tạo hợp đồng cam kết')
 			}
-
-			const response = await majorsRegistrationApi.majorsRegistration(payload)
-			if (response.status === 200) {
-				ShowNostis.success(response.data.message)
-				await getAllMajorsRegistrationAvailble()
-			}
-			form.resetFields()
-			setLoading('')
 		} catch (error) {
-			ShowNostis.error(error.message)
+			ShowErrorToast(error)
+		} finally {
 			setLoading('')
 		}
 	}
@@ -385,7 +395,13 @@ const MajorsRegistrationPage = () => {
 										label="Giá ngành học"
 										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
 									/>
-									<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
+									{/* <TextBoxField name="Description" label={'Mô tả ngành học'} readOnly bordered={false} /> */}
+									{majorDescription !== '' && (
+										<div className="">
+											<p className="font-medium mb-2">Mô tả ngành học</p>
+											<p className="whitespace-pre-wrap">{majorDescription}</p>
+										</div>
+									)}
 								</Card>
 							</div>
 
@@ -404,10 +420,21 @@ const MajorsRegistrationPage = () => {
 											/>
 										</div>
 									}
+									isRequired
 									optionList={listOption.payment}
 									rules={[{ required: true, message: 'Vui lòng chọn hình thức thanh toán' }]}
 								/>
 								{!isNullOrEmptyOrUndefined(PaymentTypeId) && <PaymentTypesDetails datas={paymentTypeDetail} />}
+								{!isNullOrEmptyOrUndefined(StudentId) && !isNullOrEmptyOrUndefined(MajorsId) && (
+									<CreateContract
+										datas={{
+											studentId: StudentId,
+											majorId: MajorsId
+										}}
+										setContractData={setContractData}
+										contractData={contractData}
+									/>
+								)}
 								<SelectField
 									className="col-span-2"
 									hidden={Type === 1 ? false : true}

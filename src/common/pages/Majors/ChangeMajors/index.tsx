@@ -22,6 +22,8 @@ import { paymentMethodsApi } from '~/api/payment-method'
 import { isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
 import { PAYMENT_TYPES } from '~/common/utils/constants'
 import PaymentTypesDetails from '../Component/PaymentTypesDetails'
+import CreateContract from '../Component/CreateContract'
+import moment from 'moment'
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -66,6 +68,10 @@ const ChangeMajorsPage = () => {
 	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL' | 'PAYMENT'>('')
 
 	const [paymentTypeDetail, setPaymentTypeDetail] = useState<IPaymentTypeDetail[]>([])
+
+	const [contractData, setContractData] = useState({ ContractNumber: null, ContractContent: null, ContractSigningDate: null })
+
+	const [majorDescription, setMajorDescription] = useState('')
 
 	const formatOption = (data) => {
 		let templ = []
@@ -274,10 +280,12 @@ const ChangeMajorsPage = () => {
 			form.setFieldValue('MajorsId', templ.Id)
 			form.setFieldValue('TotalPrice', templ.Price)
 			form.setFieldValue('Description', templ.Description)
+			setMajorDescription(templ.Description)
 		} else {
 			form.setFieldValue('MajorsId', '')
 			form.setFieldValue('TotalPrice', '')
 			form.setFieldValue('Description', '')
+			setMajorDescription('')
 		}
 	}, [MajorsId])
 
@@ -305,33 +313,37 @@ const ChangeMajorsPage = () => {
 	const _onFinish = async (params) => {
 		try {
 			setLoading('CREATE')
-			const payload = {
-				MajorsId: params.MajorsId,
-				StudentId: params.StudentId,
-				TotalPrice: removeCommas(params.TotalPrice),
-				Paid: params.Paid ? removeCommas(params.Paid) : 0,
-				GiftId: params.GiftId,
-				PaymentTypeId: params.PaymentTypeId,
-				Note: params.Note,
-				Details: Object.keys(params)
-					.filter((key) => key.startsWith('Price_'))
-					.map((key) => ({
-						Price: params[key],
-						PaymentTypeDetailId: Number(key.split('_')[1])
-					}))
-			}
+			if (!isNullOrEmptyOrUndefined(contractData?.ContractContent)) {
+				const payload = {
+					MajorsId: params.MajorsId,
+					StudentId: params.StudentId,
+					TotalPrice: removeCommas(params.TotalPrice),
+					Paid: params.Paid ? removeCommas(params.Paid) : 0,
+					GiftId: params.GiftId,
+					PaymentTypeId: params.PaymentTypeId,
+					Note: params.Note,
+					ContractContent: contractData?.ContractContent,
+					ContractNumber: contractData?.ContractNumber,
+					ContractSigningDate: moment(contractData?.ContractSigningDate).toISOString(),
+					Details: Object.keys(params)
+						.filter((key) => key.startsWith('Price_'))
+						.map((key) => ({
+							Price: params[key],
+							PaymentTypeDetailId: Number(key.split('_')[1])
+						}))
+				}
 
-			const response = await majorsRegistrationApi.changeMajors(payload)
-			if (response.status === 200) {
-				ShowNostis.success(response.data.message)
-				form.resetFields()
-				setOldMajors(null)
-				setTuitionInOld(0)
+				const response = await majorsRegistrationApi.changeMajors(payload)
+				if (response.status === 200) {
+					ShowNostis.success(response.data.message)
+					form.resetFields()
+					setOldMajors(null)
+					setTuitionInOld(0)
+				}
 			}
-
-			setLoading('')
 		} catch (error) {
 			ShowNostis.error(error.message)
+		} finally {
 			setLoading('')
 		}
 	}
@@ -414,7 +426,13 @@ const ChangeMajorsPage = () => {
 										label="Giá ngành học"
 										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
 									/>
-									<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
+									{/* <TextBoxField name="Description" label={'Mô tả ngành học'} disabled /> */}
+									{majorDescription !== '' && (
+										<div className="">
+											<p className="font-medium mb-2">Mô tả ngành học</p>
+											<p className="whitespace-pre-wrap">{majorDescription}</p>
+										</div>
+									)}
 								</Card>
 							</div>
 							<Card title="Thanh toán" className="col-span-1 ">
@@ -432,10 +450,21 @@ const ChangeMajorsPage = () => {
 											/>
 										</div>
 									}
+									isRequired
 									optionList={listOption.payment}
 									rules={[{ required: true, message: 'Vui lòng chọn hình thức thanh toán' }]}
 								/>
 								{!isNullOrEmptyOrUndefined(PaymentTypeId) && <PaymentTypesDetails datas={paymentTypeDetail} />}
+								{!isNullOrEmptyOrUndefined(StudentId) && !isNullOrEmptyOrUndefined(MajorsId) && (
+									<CreateContract
+										datas={{
+											studentId: StudentId,
+											majorId: MajorsId
+										}}
+										setContractData={setContractData}
+										contractData={contractData}
+									/>
+								)}
 								<SelectField
 									className="col-span-2"
 									hidden={Type === 1 ? false : true}
