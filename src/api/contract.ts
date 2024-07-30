@@ -11,6 +11,9 @@ export const contractApi = {
 	getByStudentID(studentID) {
 		return instance.get<IApiResultData<IContract[]>>(`${url}template/${studentID}`)
 	},
+	getStudentContract(params) {
+		return instance.get<IApiResultData<IContract[]>>(`${url}Me`, { params })
+	},
 
 	// Cập nhật data
 	update(data) {

@@ -18,6 +18,8 @@ import { TabTestAppointment } from './Tab/TabTestAppointment'
 import TabMajors from './Tab/TabMajors'
 import { useRole } from '~/common/hooks/useRole'
 import TabPaymentSession from './Tab/TabPaymentSession'
+import TabStudentContract from '~/common/components/Student/TabStudentContract'
+import { is } from '~/common/utils/common'
 
 export interface IStudentDetailInfoPageProps {}
 
@@ -44,7 +46,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 	}
 
 	const items: TabsProps['items'] =
-		userInformation?.RoleId === '3' || userInformation?.RoleId === '8'
+		is(userInformation).student || is(userInformation).parent
 			? [
 					{
 						key: '1',
@@ -53,11 +55,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
 						)
 					},
-					// {
-					// 	key: '2',
-					// 	label: `Hợp đồng`,
-					// 	children: <TabStudentContract StudentDetail={studentDetail} />
-					// },
+					{
+						key: '2',
+						label: `Hợp đồng`,
+						children: <TabStudentContract StudentDetail={studentDetail} />
+					},
 					{
 						key: '3',
 						label: `Lộ trình`,
