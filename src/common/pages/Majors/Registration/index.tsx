@@ -210,7 +210,7 @@ const MajorsRegistrationPage = () => {
 				// ** dynamic set form Prices
 				const datas = response.data.data
 				datas?.forEach((item) => {
-					form.setFieldValue(`Price_${item.Id}`, item?.Price)
+					form.setFieldValue(`Price_${item?.Id}`, item?.Price)
 				})
 			}
 			setPaymentTypeDetail(response.data.data)
@@ -266,10 +266,10 @@ const MajorsRegistrationPage = () => {
 			})
 			setPaymentTypeDetail([])
 			form.setFieldValue('PaymentTypeId', null)
-			form.setFieldValue('MajorsId', templ.Id)
-			form.setFieldValue('TotalPrice', templ.Price)
-			form.setFieldValue('Description', templ.Description)
-			setMajorDescription(templ.Description)
+			form.setFieldValue('MajorsId', templ?.Id)
+			form.setFieldValue('TotalPrice', templ?.Price)
+			form.setFieldValue('Description', templ?.Description)
+			setMajorDescription(templ?.Description)
 		} else {
 			form.setFieldValue('MajorsId', '')
 			form.setFieldValue('TotalPrice', '')

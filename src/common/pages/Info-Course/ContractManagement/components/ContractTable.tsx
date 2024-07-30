@@ -6,6 +6,7 @@ import PrimaryTable from '~/common/components/Primary/Table'
 import { ShowNostis } from '~/common/utils'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import ContractModal from './ContractModal'
+import { getDate } from '~/common/utils/super-functions'
 
 type TContractTable = {
 	total: number
@@ -19,9 +20,27 @@ const ContractTable: React.FC<TContractTable> = (props) => {
 	const { refreshData } = props
 	const columns = [
 		{
+			title: 'Mã hợp đồng',
+			className: 'min-w-[100px]',
+			dataIndex: 'ContractNumber'
+		},
+		{
 			title: 'Tên bảng điểm',
 			className: 'min-w-[120px] font-medium',
 			dataIndex: 'Name'
+		},
+		{
+			title: 'Ngành học',
+			className: 'min-w-[100px]',
+			dataIndex: 'MajorName'
+		},
+		{
+			title: 'Ngày ký',
+			dataIndex: 'ContractSigningDate',
+			className: 'min-w-[100px]',
+			render: (value) => {
+				return <p>{getDate(value).stringDate}</p>
+			}
 		},
 		{
 			title: 'Chức năng',

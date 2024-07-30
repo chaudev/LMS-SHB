@@ -1,8 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
 import { Form } from 'antd'
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { contractApi } from '~/api/contract'
 import MyModal from '~/atomic/atoms/MyModal'
+import DatePickerField from '~/common/components/FormControl/DatePickerField'
 import EditorField from '~/common/components/FormControl/EditorField'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import PrimaryButton from '~/common/components/Primary/Button'
@@ -22,10 +24,13 @@ const ContractModal: React.FC<IContractModal> = (props) => {
 	const [contractContent, setContractContent] = useState('')
 
 	useEffect(() => {
-		if (defaultData) {
-			form.setFieldsValue({ ...defaultData })
+		if (defaultData && isModalVisible) {
+			form.setFieldsValue({
+				...defaultData,
+				ContractSigningDate: defaultData?.ContractSigningDate ? moment(defaultData.ContractSigningDate) : undefined
+			})
 		}
-	}, [defaultData])
+	}, [defaultData, isModalVisible])
 
 	// * handle mutation
 	const mutation = useMutation({
@@ -50,8 +55,12 @@ const ContractModal: React.FC<IContractModal> = (props) => {
 	const onSubmit = (data) => {
 		try {
 			const DATA_SUBMIT = {
-				Name: data?.Name
+				Name: data?.Name,
+				...data,
+				MajorId: defaultData?.MajorId,
+				ContractSigningDate: moment(data?.ContractSigningDate).toISOString()
 			}
+			console.log('---datahihi', DATA_SUBMIT)
 			mutation.mutateAsync(DATA_SUBMIT)
 		} catch (error) {
 			ShowErrorToast(error)
@@ -60,6 +69,7 @@ const ContractModal: React.FC<IContractModal> = (props) => {
 
 	const changeContractContent = (value) => {
 		setContractContent(value)
+		form.setFieldValue('Content', value)
 	}
 
 	return (
@@ -82,12 +92,23 @@ const ContractModal: React.FC<IContractModal> = (props) => {
 				<div className="container-fluid">
 					<Form form={form} layout="vertical" onFinish={onSubmit}>
 						<div className="row">
-							<div className="col-12">
+							<div className="col-6">
 								<InputTextField
-									placeholder="Nhập tên hợp đồng mẫu"
-									name="Name"
-									label="Tên bảng điểm mẫu"
+									placeholder="Nhập tên hợp đồng"
+									name="ContractNumber"
+									label="Mã hợp đồng"
 									isRequired
+									rules={[{ required: true, message: 'Bạn không được để trống' }]}
+								/>
+							</div>
+							<div className="col-6">
+								<DatePickerField
+									mode="single"
+									placeholder="Chọn ngày ký hợp đồng"
+									name="ContractSigningDate"
+									label="Ngày ký hợp đồng"
+									isRequired
+									format="DD-MM-YYYY"
 									rules={[{ required: true, message: 'Bạn không được để trống' }]}
 								/>
 							</div>
