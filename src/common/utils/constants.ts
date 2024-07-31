@@ -35,3 +35,9 @@ export const PAYMENT_TYPES = {
 	visaStatus: 4,
 	profileProcessStatus: 5
 }
+
+export const FEEDBACK_STATUS = {
+	sent: 'Sent',
+	processing: 'Processing',
+	done: 'Done'
+}

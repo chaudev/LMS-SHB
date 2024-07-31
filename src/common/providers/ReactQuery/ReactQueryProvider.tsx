@@ -1,6 +1,7 @@
 import React from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ShowErrorToast } from '~/common/utils/main-function'
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -8,6 +9,11 @@ const queryClient = new QueryClient({
 			// staleTime: 10000,
 			refetchOnWindowFocus: false,
 			refetchOnMount: true
+		},
+		mutations: {
+			onError(error, variables, context) {
+				ShowErrorToast(error)
+			}
 		}
 	}
 })

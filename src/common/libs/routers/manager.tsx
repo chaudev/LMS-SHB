@@ -1,5 +1,5 @@
 import { AiFillSetting } from 'react-icons/ai'
-import { BsFillGridFill } from 'react-icons/bs'
+import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
 import { FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { RiFileList2Fill } from 'react-icons/ri'
@@ -20,6 +20,11 @@ export const ManagerMenu = [
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />
+	},
+	{
+		Key: 'feedback',
+		TabName: 'Phản hồi',
+		Icon: <BsChatLeftTextFill size={20} />
 	},
 	{
 		Key: 'staff',
@@ -113,6 +118,35 @@ export const ManagerChildMenu = [
 				Key: '/finance/refund',
 				Route: '/finance/refund',
 				Text: 'Hoàn tiền'
+			}
+		]
+	},
+	{
+		MenuName: 'Quản lý phản hồi',
+		MenuTitle: 'Quản lý phản hồi',
+		MenuKey: '/feedback',
+		Parent: 'feedback',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/feedback/list',
+				Route: '/feedback/list',
+				Text: 'Danh sách phản hồi',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/feedback/group',
+				Route: '/feedback/group',
+				Text: 'Quản lý nhóm phản hồi',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/feedback/permission',
+				Route: '/feedback/permission',
+				Text: 'Phân quyền phản hồi',
+				Icon: ''
 			}
 		]
 	},

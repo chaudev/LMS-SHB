@@ -1,5 +1,5 @@
 import { BiBookBookmark } from 'react-icons/bi'
-import { BsFillGridFill } from 'react-icons/bs'
+import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
 import { FaUserGraduate } from 'react-icons/fa'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { MdAirplay } from 'react-icons/md'
@@ -21,6 +21,11 @@ export const StudentMenu = [
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />
+	},
+	{
+		Key: 'feedback',
+		TabName: 'Phản hồi',
+		Icon: <BsChatLeftTextFill size={20} />
 	}
 	// {
 	// 	Key: 'video',
@@ -76,6 +81,35 @@ export const StudentChildMenu = [
 				Text: 'Lịch học',
 				Icon: ''
 			}
+		]
+	},
+	{
+		MenuName: 'Quản lý phản hồi',
+		MenuTitle: 'Quản lý phản hồi',
+		MenuKey: '/feedback',
+		Parent: 'feedback',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/feedback/list',
+				Route: '/feedback/list',
+				Text: 'Danh sách phản hồi',
+				Icon: ''
+			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/feedback/group',
+			// 	Route: '/feedback/group',
+			// 	Text: 'Quản lý nhóm phản hồi',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/feedback/permission',
+			// 	Route: '/feedback/permission',
+			// 	Text: 'Phân quyền phản hồi',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{

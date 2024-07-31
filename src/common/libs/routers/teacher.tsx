@@ -1,6 +1,6 @@
 import { UserCheck } from 'react-feather'
 import { BiBookBookmark } from 'react-icons/bi'
-import { BsFillGridFill } from 'react-icons/bs'
+import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
 import { FaMoneyBillAlt, FaUserCheck, FaUserGraduate } from 'react-icons/fa'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { MdAirplay } from 'react-icons/md'
@@ -23,6 +23,11 @@ export const TeacherMenu = [
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />
+	},
+	{
+		Key: 'feedback',
+		TabName: 'Phản hồi',
+		Icon: <BsChatLeftTextFill size={20} />
 	},
 	{
 		Key: 'finance',
@@ -93,6 +98,35 @@ export const TeacherChildMenu = [
 				Text: 'Lịch dạy',
 				Icon: ''
 			}
+		]
+	},
+	{
+		MenuName: 'Quản lý phản hồi',
+		MenuTitle: 'Quản lý phản hồi',
+		MenuKey: '/feedback',
+		Parent: 'feedback',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/feedback/list',
+				Route: '/feedback/list',
+				Text: 'Danh sách phản hồi',
+				Icon: ''
+			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/feedback/group',
+			// 	Route: '/feedback/group',
+			// 	Text: 'Quản lý nhóm phản hồi',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/feedback/permission',
+			// 	Route: '/feedback/permission',
+			// 	Text: 'Phân quyền phản hồi',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{
@@ -195,7 +229,7 @@ export const TeacherChildMenu = [
 				Route: '/users/teacher/teacher-off',
 				Text: 'Đăng ký lịch nghỉ',
 				Icon: ''
-			},
+			}
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/users/teacher/open-calender',

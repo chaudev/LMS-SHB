@@ -17,7 +17,7 @@ const PrimaryTooltip: FC<TPrimaryTooltip> = (props) => {
 			<div className={className + ' none-selection' || 'none-selection'} id={id + '' || ''}>
 				{children}
 			</div>
-			<ReactTooltip anchorId={`${id}`} place={place} content={content || ''} />
+			<ReactTooltip id="primary-tooltip" anchorId={`${id}`} place={place} content={content || ''} />
 		</>
 	)
 }

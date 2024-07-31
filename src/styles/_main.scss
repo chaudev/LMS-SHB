@@ -9,6 +9,20 @@ body {
 	// color: #636363 !important;
 }
 
+.primary-tooltip {
+	z-index: 999999;
+}
+
+#primary-tooltip {
+	z-index: 999999999999 !important;
+	max-width: 300px;
+	padding: 4px 8px !important;
+	font-weight: 500 !important;
+	overflow-wrap: break-word;
+	white-space: pre-wrap;
+	text-decoration: none;
+}
+
 .ant-card {
 	color: #414141;
 }

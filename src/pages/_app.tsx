@@ -3,6 +3,9 @@ import React, { useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import AuthProvider from '~/common/components/Auth/Provider'
 
+//moment vi
+import 'moment/locale/vi'
+
 // ant
 import { ConfigProvider } from 'antd'
 import locale from 'antd/lib/locale/vi_VN'

@@ -2,23 +2,20 @@ import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { sampleTranscriptApi } from '~/api/grade-templates'
-import PrimaryTable from '~/common/components/Primary/Table'
+import { feedbackPermissionApi } from '~/api/feedback-permission'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { is } from '~/common/utils/common'
 import { RootState } from '~/store'
-import SampleTranscriptTable from './components/SampleTranscriptTable'
-import SampleTranscriptModal from './components/SampleTranscriptModal'
+import FeedbackPermissionTable from './components/FeedbackPermissionTable'
+import FeedbackPermissionModal from './components/FeedbackPermissionModal'
 import { ShowErrorToast } from '~/common/utils/main-function'
 
-const GradeTemplatesPage = () => {
+const FeedbackPermission = () => {
 	const router = useRouter()
-	const { pageIndex } = router.query
 	const { push, query } = router
-	const DEFAULT_FILTER = { pageSize: PAGE_SIZE, pageIndex: 1 }
 	const userInfo = useSelector((state: RootState) => state.user.information)
 	const isAllow = () => {
-		if (is(userInfo).admin) {
+		if (is(userInfo).admin || is(userInfo).manager) {
 			return true
 		}
 		return false
@@ -31,9 +28,9 @@ const GradeTemplatesPage = () => {
 	}, [])
 
 	const { data, isLoading, refetch } = useQuery({
-		queryKey: ['Get/SampleTranscript', query],
+		queryKey: ['Get/feedback-permission', query],
 		queryFn: () => {
-			return sampleTranscriptApi
+			return feedbackPermissionApi
 				.getAll({
 					...query,
 					pageSize: query.pageSize || PAGE_SIZE,
@@ -51,11 +48,11 @@ const GradeTemplatesPage = () => {
 	return (
 		<div>
 			{isAllow() && (
-				<SampleTranscriptTable
+				<FeedbackPermissionTable
 					total={data?.totalRow || 0}
 					loading={isLoading}
 					onChangePage={(pageIndex) => router.push({ query: { ...query, pageIndex: pageIndex } })}
-					Extra={<SampleTranscriptModal refreshData={refetch} />}
+					Extra={<FeedbackPermissionModal refreshData={refetch} />}
 					data={data?.data || []}
 					refreshData={refetch}
 				/>
@@ -64,4 +61,4 @@ const GradeTemplatesPage = () => {
 	)
 }
 
-export default GradeTemplatesPage
+export default FeedbackPermission
