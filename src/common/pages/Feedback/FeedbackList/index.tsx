@@ -82,7 +82,7 @@ const FeedbackList = () => {
 									}
 								]}
 								handleFilter={(values) => {
-									router.push({ query: { ...query, ...values } })
+									router.push({ query: { ...query, ...values, pageIndex: 1 } })
 								}}
 								handleReset={(value) => {
 									router.push({ query: { ...query, status: null, feedbackGroupId: null } })

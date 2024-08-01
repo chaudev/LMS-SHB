@@ -1,16 +1,18 @@
 import { Form, Popover } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Filter } from 'react-feather'
 import DatePickerField from '../FormControl/DatePickerField'
 import InputTextField from '../FormControl/InputTextField'
 import SelectFieldSearch from '../FormControl/SelectFieldSearch'
 import PrimaryButton from '../Primary/Button'
+import InputNumberField from '../FormControl/InputNumberField'
+import { useRouter } from 'next/router'
 
 type IProps = {
 	dataFilter: {
 		name: string
 		title: string
-		type: 'select' | 'date-range' | 'date-single' | 'text' | string
+		type: 'select' | 'date-range' | 'date-single' | 'text' | 'number' | string
 		col?: string //col-span-2 hoặc col-span-1
 		mode?: 'multiple' | 'tag' | string
 		optionList?: { title: string; value: any }[]
@@ -76,6 +78,12 @@ export default function FilterBaseVer2(props: IProps) {
 				return (
 					<div key={index} className={item.col}>
 						<InputTextField name={item.name} label={item.title} placeholder={item.title} />
+					</div>
+				)
+			case 'number':
+				return (
+					<div key={index} className={item.col}>
+						<InputNumberField name={item.name} label={item.title} placeholder={item.title} />
 					</div>
 				)
 			case 'date-range':

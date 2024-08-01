@@ -279,10 +279,12 @@ const ChangeMajorsPage = () => {
 			})
 			setPaymentTypeDetail([])
 			form.setFieldValue('PaymentTypeId', null)
-			form.setFieldValue('MajorsId', templ?.Id)
-			form.setFieldValue('TotalPrice', templ?.Price)
-			form.setFieldValue('Description', templ?.Description)
-			setMajorDescription(templ?.Description)
+			if (templ) {
+				form.setFieldValue('MajorsId', templ?.Id)
+				form.setFieldValue('TotalPrice', templ?.Price)
+				form.setFieldValue('Description', templ?.Description)
+				setMajorDescription(templ?.Description)
+			}
 		} else {
 			form.setFieldValue('MajorsId', '')
 			form.setFieldValue('TotalPrice', '')
@@ -429,7 +431,7 @@ const ChangeMajorsPage = () => {
 									<InputNumberField
 										name="TotalPrice"
 										label="Giá ngành học"
-										disabled
+										// disabled
 										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
 									/>
 									{/* <TextBoxField name="Description" label={'Mô tả ngành học'} disabled /> */}
