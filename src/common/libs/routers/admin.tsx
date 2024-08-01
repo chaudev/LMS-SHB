@@ -1,6 +1,7 @@
 import { AiFillSetting } from 'react-icons/ai'
 import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
-import { FaLayerGroup, FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { FaLayerGroup, FaMoneyBillAlt, FaNewspaper, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { HiMiniNewspaper } from 'react-icons/hi2'
 
 import { TiHome } from 'react-icons/ti'
 
@@ -24,6 +25,11 @@ export const AdminMenu = [
 		Key: 'feedback',
 		TabName: 'Phản hồi',
 		Icon: <BsChatLeftTextFill size={20} />
+	},
+	{
+		Key: 'evaluation',
+		TabName: 'Đánh giá',
+		Icon: <HiMiniNewspaper size={22} />
 	},
 	{
 		Key: 'majors',
@@ -147,6 +153,21 @@ export const AdminChildMenu = [
 		]
 	},
 	{
+		MenuName: 'Quản lý đánh giá',
+		MenuTitle: 'Quản lý đánh giá',
+		MenuKey: '/evaluation',
+		Parent: 'evaluation',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/evaluation/list',
+				Route: '/evaluation/list',
+				Text: 'Danh sách phiếu đánh giá',
+				Icon: ''
+			}
+		]
+	},
+	{
 		MenuName: 'Quản lý phản hồi',
 		MenuTitle: 'Quản lý phản hồi',
 		MenuKey: '/feedback',
@@ -221,6 +242,13 @@ export const AdminChildMenu = [
 				Key: '/info-course/changed',
 				Route: '/info-course/changed',
 				Text: 'Học viên chuyển lớp',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/about-to-finish',
+				Route: '/info-course/about-to-finish',
+				Text: 'Học viên sắp học xong',
 				Icon: ''
 			},
 			// {
