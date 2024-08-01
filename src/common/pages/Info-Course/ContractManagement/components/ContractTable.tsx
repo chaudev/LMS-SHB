@@ -21,11 +21,16 @@ const ContractTable: React.FC<TContractTable> = (props) => {
 	const columns = [
 		{
 			title: 'Mã hợp đồng',
-			className: 'min-w-[100px]',
+			className: 'min-w-[110px]',
 			dataIndex: 'ContractNumber'
 		},
 		{
-			title: 'Tên bảng điểm',
+			title: 'Học viên',
+			className: 'min-w-[100px]',
+			dataIndex: 'StudentName'
+		},
+		{
+			title: 'Tên hợp đồng',
 			className: 'min-w-[120px] font-medium',
 			dataIndex: 'Name'
 		},

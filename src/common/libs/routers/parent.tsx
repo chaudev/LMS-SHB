@@ -131,14 +131,14 @@ export const ParentStudentChildMenu = [
 				Route: '/info-course/student/warning',
 				Text: 'Thông tin cảnh báo',
 				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/feedbacks',
-				Route: '/info-course/feedbacks',
-				Text: 'Thông tin phản hồi',
-				Icon: ''
 			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/feedbacks',
+			// 	Route: '/info-course/feedbacks',
+			// 	Text: 'Thông tin phản hồi',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{

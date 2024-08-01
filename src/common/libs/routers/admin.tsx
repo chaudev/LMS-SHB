@@ -237,13 +237,13 @@ export const AdminChildMenu = [
 				Text: 'Cảnh báo học viên',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/feedbacks',
-				Route: '/info-course/feedbacks',
-				Text: 'Phản hồi học viên',
-				Icon: ''
-			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/feedbacks',
+			// 	Route: '/info-course/feedbacks',
+			// 	Text: 'Phản hồi học viên',
+			// 	Icon: ''
+			// },
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/rollup',

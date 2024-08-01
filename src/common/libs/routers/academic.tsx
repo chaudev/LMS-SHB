@@ -163,14 +163,14 @@ export const AcademicChildMenu = [
 				Route: '/info-course/student/warning',
 				Text: 'Cảnh báo học viên',
 				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/feedbacks',
-				Route: '/info-course/feedbacks',
-				Text: 'Phản hồi học viên',
-				Icon: ''
 			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/feedbacks',
+			// 	Route: '/info-course/feedbacks',
+			// 	Text: 'Phản hồi học viên',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{
@@ -192,7 +192,7 @@ export const AcademicChildMenu = [
 				Route: '/users/salary',
 				Text: 'Bảng lương',
 				Icon: ''
-			},
+			}
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/users/teacher/open-calender',
@@ -243,7 +243,7 @@ export const AcademicChildMenu = [
 				Icon: '',
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
-			},
+			}
 			// {
 			// 	TypeItem: 'single',
 			// 	Key: '/class/register',
@@ -352,7 +352,7 @@ export const AcademicChildMenu = [
 						Text: 'Ngày nghỉ',
 						Icon: ''
 					},
- 					{
+					{
 						ItemType: 'single',
 						Key: '/options/jobs',
 						Route: '/options/jobs',
