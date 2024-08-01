@@ -19,7 +19,7 @@ import { useRouter } from 'next/router'
 import Avatar from '~/common/components/Avatar'
 import { paymentMethodsApi } from '~/api/payment-method'
 import { PAYMENT_TYPES } from '~/common/utils/constants'
-import { isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
+import { isNull, isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
 import PaymentTypesDetails from '../Component/PaymentTypesDetails'
 import CreateContract from '../Component/CreateContract'
 import moment from 'moment'
@@ -197,12 +197,14 @@ const MajorsRegistrationPage = () => {
 			const response = await paymentTypeApi.getAllPaymentTypeDetail(PaymentTypeId)
 			if (response.status === 200) {
 				let detail = response.data.data[0]
-				if (detail.Type == PAYMENT_TYPES.majorRegistration) {
-					const countTotal = (TotalPrice * detail.Percent) / 100
-					form.setFieldValue('countTotal', countTotal ? countTotal : 0)
-				} else {
-					form.setFieldValue('countTotal', '')
-				}
+				// if (detail.Type == PAYMENT_TYPES.majorRegistration) {
+				// 	const countTotal = (TotalPrice * detail.Percent) / 100
+				// 	form.setFieldValue('countTotal', countTotal ? countTotal : 0)
+				// } else {
+				// 	form.setFieldValue('countTotal', '')
+				// }
+				const countTotal = detail.Price
+				form.setFieldValue('countTotal', countTotal ? countTotal : 0)
 				form.setFieldValue('Type', Number(detail.Type))
 				form.setFieldValue('Percent', detail.Percent)
 				form.setFieldValue('Paid', null)
@@ -290,14 +292,14 @@ const MajorsRegistrationPage = () => {
 		}
 	}, [PaymentTypeId])
 
-	useEffect(() => {
-		if (TotalPrice && PaymentTypeId) {
-			if (Percent) {
-				let countPaid = (removeCommas(TotalPrice) * Percent) / 100
-				form.setFieldValue('countTotal', countPaid)
-			}
-		}
-	}, [TotalPrice])
+	// useEffect(() => {
+	// 	if (TotalPrice && PaymentTypeId) {
+	// 		if (Percent) {
+	// 			let countPaid = (removeCommas(TotalPrice) * Percent) / 100
+	// 			form.setFieldValue('countTotal', countPaid)
+	// 		}
+	// 	}
+	// }, [TotalPrice])
 
 	const _onFinish = async (params) => {
 		try {
@@ -393,6 +395,7 @@ const MajorsRegistrationPage = () => {
 									<InputNumberField
 										name="TotalPrice"
 										label="Giá ngành học"
+										disabled
 										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
 									/>
 									{/* <TextBoxField name="Description" label={'Mô tả ngành học'} readOnly bordered={false} /> */}
@@ -435,14 +438,15 @@ const MajorsRegistrationPage = () => {
 										contractData={contractData}
 									/>
 								)}
-								<SelectField
+								{/* <SelectField
 									className="col-span-2"
-									hidden={Type === 1 ? false : true}
+									// hidden={Type === 1 ? false : true}
+									hidden={isNull(paymentTypeDetail)}
 									name={'Type'}
 									label="Loại thanh toán"
 									disabled
 									optionList={optionPaymentType}
-								/>
+								/> */}
 								{/* 
 								<InputTextField
 									name="Percent"
@@ -454,19 +458,22 @@ const MajorsRegistrationPage = () => {
 								<InputNumberField
 									name="countTotal"
 									disabled={true}
-									hidden={Type === 1 ? false : true}
+									// hidden={Type === 1 ? false : true}
+									hidden={isNull(paymentTypeDetail)}
 									label="Số tiền phải đóng"
 									rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
 								/>
 								<InputNumberField
 									name="Paid"
 									label="Thanh toán"
-									hidden={Type === 1 ? false : true}
+									// hidden={Type === 1 ? false : true}
+									hidden={isNull(paymentTypeDetail)}
 									// rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
 								/>
 								<SelectField
 									className="col-span-2"
-									hidden={Type === 1 ? false : true}
+									// hidden={Type === 1 ? false : true}
+									hidden={isNull(paymentTypeDetail)}
 									name={'PaymentMethodId'}
 									label="Phương thức thanh toán"
 									rules={[{ required: Type === 1 ? true : false, message: 'Vui lòng chọn phương thức thanh toán' }]}

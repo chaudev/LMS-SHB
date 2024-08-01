@@ -19,7 +19,7 @@ import CardOldMajors from '../Component/CardOldMajors'
 import { useRouter } from 'next/router'
 import Avatar from '~/common/components/Avatar'
 import { paymentMethodsApi } from '~/api/payment-method'
-import { isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
+import { isNull, isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
 import { PAYMENT_TYPES } from '~/common/utils/constants'
 import PaymentTypesDetails from '../Component/PaymentTypesDetails'
 import CreateContract from '../Component/CreateContract'
@@ -165,12 +165,14 @@ const ChangeMajorsPage = () => {
 			const response = await paymentTypeApi.getAllPaymentTypeDetail(PaymentTypeId)
 			if (response.status === 200) {
 				let detail = response.data.data[0]
-				if (detail.Type == PAYMENT_TYPES.majorRegistration) {
-					const countTotal = (TotalPrice * detail.Percent) / 100
-					form.setFieldValue('countTotal', countTotal ? countTotal : 0)
-				} else {
-					form.setFieldValue('countTotal', '')
-				}
+				// if (detail.Type == PAYMENT_TYPES.majorRegistration) {
+				// 	const countTotal = (TotalPrice * detail.Percent) / 100
+				// 	form.setFieldValue('countTotal', countTotal ? countTotal : 0)
+				// } else {
+				// 	form.setFieldValue('countTotal', '')
+				// }
+				const countTotal = detail.Price
+				form.setFieldValue('countTotal', countTotal ? countTotal : 0)
 				form.setFieldValue('Type', Number(detail.Type))
 				form.setFieldValue('Percent', detail.Percent)
 				form.setFieldValue('Paid', null)
@@ -301,18 +303,19 @@ const ChangeMajorsPage = () => {
 		}
 	}, [PaymentTypeId])
 
-	useEffect(() => {
-		if (TotalPrice && PaymentTypeId) {
-			if (Percent) {
-				let countPaid = (removeCommas(TotalPrice) * Percent) / 100
-				form.setFieldValue('countTotal', countPaid)
-			}
-		}
-	}, [TotalPrice])
+	// useEffect(() => {
+	// 	if (TotalPrice && PaymentTypeId) {
+	// 		if (Percent) {
+	// 			let countPaid = (removeCommas(TotalPrice) * Percent) / 100
+	// 			form.setFieldValue('countTotal', countPaid)
+	// 		}
+	// 	}
+	// }, [TotalPrice])
 
 	const _onFinish = async (params) => {
 		try {
 			setLoading('CREATE')
+			console.log(contractData, 'first')
 			if (!isNullOrEmptyOrUndefined(contractData?.ContractContent)) {
 				const payload = {
 					MajorsId: params.MajorsId,
@@ -340,9 +343,11 @@ const ChangeMajorsPage = () => {
 					setOldMajors(null)
 					setTuitionInOld(0)
 				}
+			} else {
+				ShowNostis.warning('Chưa tạo hợp đồng cam kết')
 			}
 		} catch (error) {
-			ShowNostis.error(error.message)
+			ShowErrorToast(error)
 		} finally {
 			setLoading('')
 		}
@@ -424,6 +429,7 @@ const ChangeMajorsPage = () => {
 									<InputNumberField
 										name="TotalPrice"
 										label="Giá ngành học"
+										disabled
 										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
 									/>
 									{/* <TextBoxField name="Description" label={'Mô tả ngành học'} disabled /> */}
@@ -465,21 +471,33 @@ const ChangeMajorsPage = () => {
 										contractData={contractData}
 									/>
 								)}
-								<SelectField
+								{/* <SelectField
 									className="col-span-2"
 									hidden={Type === 1 ? false : true}
 									name={'Type'}
 									label="Loại thanh toán"
 									disabled
 									optionList={optionPaymentType}
-								/>
+								/> */}
 
 								{/* <InputTextField name="Percent" label="Phần trăm" disabled hidden={Type === 1 ? false : true} /> */}
-								<InputNumberField name="countTotal" disabled={true} hidden={Type === 1 ? false : true} label="Số tiền phải đóng" />
-								<InputNumberField name="Paid" hidden={Type != 1 ? true : false} label="Thanh toán" />
+								<InputNumberField
+									name="countTotal"
+									disabled={true}
+									// hidden={Type === 1 ? false : true}
+									hidden={isNull(paymentTypeDetail)}
+									label="Số tiền phải đóng"
+								/>
+								<InputNumberField
+									name="Paid"
+									// hidden={Type != 1 ? true : false}
+									hidden={isNull(paymentTypeDetail)}
+									label="Thanh toán"
+								/>
 								<SelectField
 									className="col-span-2"
-									hidden={Type === 1 ? false : true}
+									// hidden={Type === 1 ? false : true}
+									hidden={isNull(paymentTypeDetail)}
 									name={'PaymentMethodId'}
 									label="Phương thức thanh toán"
 									isRequired

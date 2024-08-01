@@ -13,6 +13,7 @@ import { ShowErrorToast } from '~/common/utils/main-function'
 import { LiaFileContractSolid } from 'react-icons/lia'
 import DatePickerField from '~/common/components/FormControl/DatePickerField'
 import { resolveSoa } from 'dns'
+import { formRequired } from '~/common/libs/others/form'
 
 interface ICreateContract {
 	datas: {
@@ -25,12 +26,11 @@ interface ICreateContract {
 
 const CreateContract: React.FC<ICreateContract> = (props) => {
 	const { datas, setContractData, contractData } = props
-	const [contractContent, setContractContent] = useState('')
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [formContract] = Form.useForm()
 	const changeContractContent = (value) => {
-		setContractContent(value)
 		setContractData({ ...contractData, ContractContent: value })
+		formContract.setFieldValue('ContractContent', value)
 	}
 
 	// ** get contract template
@@ -103,7 +103,7 @@ const CreateContract: React.FC<ICreateContract> = (props) => {
 					<Form form={formContract} layout="vertical" onFinish={onSubmit}>
 						<div className="grid grid-cols-12 gap-x-4">
 							<div className="w780:col-span-6 col-span-12">
-								<InputTextField placeholder="Nhập mã hợp đồng" name="ContractNumber" label="Mã hợp đồng" />
+								<InputTextField placeholder="Nhập mã hợp đồng" name="ContractNumber" label="Mã hợp đồng" isRequired rules={formRequired} />
 							</div>
 							<div className="w780:col-span-6 col-span-12">
 								<DatePickerField
@@ -112,10 +112,18 @@ const CreateContract: React.FC<ICreateContract> = (props) => {
 									label="Ngày ký hợp đồng"
 									mode="single"
 									format="DD-MM-YYYY"
+									isRequired
+									rules={formRequired}
 								/>
 							</div>
 							<div className="col-span-12">
-								<EditorField label="Nội dung hợp đồng" name="ContractContent" onChangeEditor={changeContractContent} />
+								<EditorField
+									label="Nội dung hợp đồng"
+									name="ContractContent"
+									onChangeEditor={changeContractContent}
+									isRequired
+									rules={formRequired}
+								/>
 							</div>
 							<div className="col-span-12 flex-all-center gap-2">
 								<PrimaryButton icon={'add'} type="submit" background={'green'}>
