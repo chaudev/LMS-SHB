@@ -5,13 +5,7 @@ import PrimaryTable from '~/common/components/Primary/Table'
 import { ButtonEye } from '~/common/components/TableButton'
 import { userInfoColumn } from '~/common/libs/columns/user-info'
 
-type TAboutToFinishTable = {
-	total: number
-	loading: boolean
-	onChangePage: any
-	data: any[]
-	refreshData: any
-} & Omit<IPrimaryTable, 'columns'>
+type TAboutToFinishTable = {} & TMyTable
 
 const AboutToFinishTable: React.FC<TAboutToFinishTable> = (props) => {
 	const { refreshData } = props

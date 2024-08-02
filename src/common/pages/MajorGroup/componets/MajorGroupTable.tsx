@@ -7,13 +7,7 @@ import { ShowNostis } from '~/common/utils'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import MajorGroupModal from './MajorGroupModal'
 
-type TMajorGroupTable = {
-	total: number
-	loading: boolean
-	onChangePage: any
-	data: any[]
-	refreshData: any
-} & Omit<IPrimaryTable, 'columns'>
+type TMajorGroupTable = {} & TMyTable
 
 const MajorGroupTable: React.FC<TMajorGroupTable> = (props) => {
 	const { refreshData } = props

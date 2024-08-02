@@ -15,13 +15,7 @@ import { FEEDBACK_STATUS } from '~/common/utils/constants'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import { getDate } from '~/common/utils/super-functions'
 
-type TFeedbackTable = {
-	total: number
-	loading: boolean
-	onChangePage: any
-	data: TFeedbackItem[]
-	refreshData: any
-} & Omit<IPrimaryTable, 'columns'>
+type TFeedbackTable = {} & TMyTable
 
 const FeedbackTable: React.FC<TFeedbackTable> = (props) => {
 	const { refreshData } = props

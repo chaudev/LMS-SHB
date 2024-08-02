@@ -8,13 +8,7 @@ import { ShowNostis } from '~/common/utils'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import SampleTranscriptDetail from './SampleTranscriptDetail'
 
-type TSampleTranscriptTable = {
-	total: number
-	loading: boolean
-	onChangePage: any
-	data: any[]
-	refreshData: any
-} & Omit<IPrimaryTable, 'columns'>
+type TSampleTranscriptTable = {} & TMyTable
 
 const SampleTranscriptTable: React.FC<TSampleTranscriptTable> = (props) => {
 	const { refreshData } = props

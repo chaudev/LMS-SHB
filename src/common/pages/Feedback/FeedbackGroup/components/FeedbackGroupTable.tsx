@@ -8,13 +8,7 @@ import { ShowErrorToast } from '~/common/utils/main-function'
 import FeedbackGroupModal from './FeedbackGroupModal'
 import { getDate } from '~/common/utils/super-functions'
 
-type TFeedbackGroupTable = {
-	total: number
-	loading: boolean
-	onChangePage: any
-	data: any[]
-	refreshData: any
-} & Omit<IPrimaryTable, 'columns'>
+type TFeedbackGroupTable = {} & TMyTable
 
 const FeedbackGroupTable: React.FC<TFeedbackGroupTable> = (props) => {
 	const { refreshData } = props

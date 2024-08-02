@@ -8,13 +8,7 @@ import { ShowErrorToast } from '~/common/utils/main-function'
 import ContractModal from './ContractModal'
 import { getDate } from '~/common/utils/super-functions'
 
-type TContractTable = {
-	total: number
-	loading: boolean
-	onChangePage: any
-	data: IContract[]
-	refreshData: any
-} & Omit<IPrimaryTable, 'columns'>
+type TContractTable = {} & TMyTable
 
 const ContractTable: React.FC<TContractTable> = (props) => {
 	const { refreshData } = props

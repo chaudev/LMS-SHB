@@ -47,19 +47,19 @@ const appointmenInitFilter = [
 			{ value: 2, title: 'Đã kiểm tra' }
 		],
 		value: null
-	},
-	{
-		name: 'Type',
-		title: 'Địa điểm làm bài',
-		col: 'col-md-12 col-12',
-		type: 'select',
-		mode: 'multiple',
-		optionList: [
-			{ value: 1, title: 'Tại trung tâm' },
-			{ value: 2, title: 'Làm bài trực tuyến' }
-		],
-		value: null
 	}
+	// {
+	// 	name: 'Type',
+	// 	title: 'Địa điểm làm bài',
+	// 	col: 'col-md-12 col-12',
+	// 	type: 'select',
+	// 	mode: 'multiple',
+	// 	optionList: [
+	// 		{ value: 1, title: 'Tại trung tâm' },
+	// 		{ value: 2, title: 'Làm bài trực tuyến' }
+	// 	],
+	// 	value: null
+	// }
 ]
 
 const appointmenDataOption = [
@@ -417,7 +417,7 @@ export default function ServiceAppointmentTest(props) {
 						{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && data.Type === 1 && (
 							<ScoreModal rowData={data} listTodoApi={listTodoApi} setTodoApi={setTodoApi} />
 						)}
-						{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && data.Status == 2 && (
+						{/* {(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && data.Status == 2 && (
 							<IconButton
 								icon="study"
 								tooltip="Đăng ký học"
@@ -425,7 +425,7 @@ export default function ServiceAppointmentTest(props) {
 								type="button"
 								onClick={() => router.push({ pathname: '/class/register', query: { userId: data?.StudentId } })}
 							/>
-						)}
+						)} */}
 					</div>
 				)
 			}

@@ -8,13 +8,7 @@ import { ShowErrorToast } from '~/common/utils/main-function'
 import { getDate } from '~/common/utils/super-functions'
 import FeedbackPermissionModal from './FeedbackPermissionModal'
 
-type TFeedbackPermissionTable = {
-	total: number
-	loading: boolean
-	onChangePage: any
-	data: any[]
-	refreshData: any
-} & Omit<IPrimaryTable, 'columns'>
+type TFeedbackPermissionTable = {} & TMyTable
 
 const FeedbackPermissionTable: React.FC<TFeedbackPermissionTable> = (props) => {
 	const { refreshData } = props
