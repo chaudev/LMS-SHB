@@ -11,6 +11,7 @@ const MyInputNumber: React.FC<TMyInputNumberProps> = (props) => {
 				className={`w-full ${styles.root} ${className}`}
 				formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 				{...rest}
+				style={{ textAlign: 'center' }}
 			/>
 		</div>
 	)

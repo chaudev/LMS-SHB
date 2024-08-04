@@ -1,25 +1,26 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
+import { evaluationGroupOptionApi } from '~/api/evaluation'
 import PrimaryButton from '~/common/components/Primary/Button'
 import { isNull, ShowErrorToast } from '~/common/utils/main-function'
-import GroupQuestionForm from './components/GroupQuestionForm'
+import GroupOptionForm from './components/GroupOptionForm'
+import { PlusCircle } from 'react-feather'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { evaluationQuestionApi } from '~/api/evaluation'
+import GroupOptionColumn from './components/GroupOptionColumn'
 
-interface IGroupQuestion {
+interface IGroupOption {
 	evaluationGroupData: TSampleEvaluationGroup
 }
 
-const GroupQuestion: React.FC<IGroupQuestion> = (props) => {
+const GroupOption: React.FC<IGroupOption> = (props) => {
 	const { evaluationGroupData } = props
-	const [isCreating, setIsCreating] = useState(false)
 	const queryClient = useQueryClient()
 
-	// ** get questions in group
+	// ** get option evaluation in group
 	const { data, isLoading, refetch } = useQuery({
-		queryKey: ['get-sample-question-in-group', evaluationGroupData.Id],
+		queryKey: ['get-option-evaluation-in-group', evaluationGroupData.Id],
 		queryFn: () => {
-			return evaluationQuestionApi
+			return evaluationGroupOptionApi
 				.getDetail(evaluationGroupData.Id)
 				.then((res) => res.data.data || [])
 				.catch((err) => {
@@ -30,16 +31,11 @@ const GroupQuestion: React.FC<IGroupQuestion> = (props) => {
 		enabled: !!evaluationGroupData.Id
 	})
 
-	// ** handle click create question
-	const handleCreateQuestion = () => {
-		setIsCreating(true)
-	}
-
 	// ** handle change index
 	const mutationChangeIndex = useMutation({
-		mutationKey: ['CHANGE-INDEX-QUESTION'],
+		mutationKey: ['CHANGE-INDEX-GROUP-OPTION'],
 		mutationFn(payload: { Id: number; Index: number }[]) {
-			return evaluationQuestionApi.changeIndex({ Items: payload })
+			return evaluationGroupOptionApi.changeIndex({ Items: payload })
 		}
 		// onMutate() {
 		// 	setIsSaving(true)
@@ -68,7 +64,7 @@ const GroupQuestion: React.FC<IGroupQuestion> = (props) => {
 			Index: index + 1
 		}))
 		mutationChangeIndex.mutate(payloadChange)
-		queryClient.setQueryData(['get-sample-question-in-group', evaluationGroupData.Id], (pre: any) => {
+		queryClient.setQueryData(['get-option-evaluation-in-group', evaluationGroupData.Id], (pre: any) => {
 			return result
 		})
 
@@ -76,24 +72,15 @@ const GroupQuestion: React.FC<IGroupQuestion> = (props) => {
 	}
 
 	return (
-		<div className="col-span-4">
-			{/* {isLoading && isNull(data) && <FormLoading />} */}
-			{!isLoading && isNull(data) && !isCreating && (
-				<div className="flex items-center flex-col bg-white rounded-[6px]">
-					<div className="flex items-center gap-2">
-						{/* <p className="font-medium text-[18px]">Tạo nhóm câu hỏi đầu tiên để bắt đầu</p> */}
-						<PrimaryButton background="transparent" type="button" icon="add" onClick={() => handleCreateQuestion()}>
-							Thêm câu hỏi
-						</PrimaryButton>
-					</div>
-				</div>
-			)}
+		<div className="">
+			{!isLoading && isNull(data) && <GroupOptionForm refreshData={refetch} evaluationGroupData={evaluationGroupData} />}
+
 			{!isLoading && !isNull(data) && (
-				<div>
+				<div className="">
 					<DragDropContext onDragEnd={handleDragEnd}>
-						<Droppable droppableId="droppable-id-evaluation-group-question">
+						<Droppable droppableId="droppable-id-evaluation-group-option" direction="horizontal">
 							{(provided, snapshot) => (
-								<div {...provided.droppableProps} ref={provided.innerRef}>
+								<div {...provided.droppableProps} ref={provided.innerRef} className="p-2 flex overflow-x-auto">
 									{data?.map((item, index) => (
 										<Draggable key={item.Id} draggableId={`${item.Id}`} index={index}>
 											{(provided, snapshot) => (
@@ -102,16 +89,15 @@ const GroupQuestion: React.FC<IGroupQuestion> = (props) => {
 													key={item?.Id + 'nopls'}
 													ref={provided.innerRef}
 													{...provided.draggableProps}
-													// {...provided.dragHandleProps}
-													className="first:mt-0 mt-3"
+													{...provided.dragHandleProps}
 												>
-													<GroupQuestionForm
-														dragProps={provided.dragHandleProps}
+													<GroupOptionColumn
+														// dragProps={provided.dragHandleProps}
 														evaluationGroupData={evaluationGroupData}
 														key={`properties-${item.Id}`}
 														refreshData={refetch}
-														defaultData={item}
-														isDragging={snapshot.isDragging}
+														data={item}
+														// isDragging={snapshot.isDragging}
 													/>
 												</div>
 											)}
@@ -122,22 +108,13 @@ const GroupQuestion: React.FC<IGroupQuestion> = (props) => {
 							)}
 						</Droppable>
 					</DragDropContext>
-					{!isCreating && (
-						<div className="flex justify-center my-4">
-							<PrimaryButton background="transparent" type="button" icon="add" onClick={() => handleCreateQuestion()}>
-								Thêm câu hỏi
-							</PrimaryButton>
-						</div>
-					)}
-				</div>
-			)}
-			{isCreating && (
-				<div className="mt-3">
-					<GroupQuestionForm setIsCreating={setIsCreating} refreshData={refetch} evaluationGroupData={evaluationGroupData} />
+					<div className="mt-3 ml-1">
+						<GroupOptionForm refreshData={refetch} evaluationGroupData={evaluationGroupData} />
+					</div>
 				</div>
 			)}
 		</div>
 	)
 }
 
-export default GroupQuestion
+export default GroupOption

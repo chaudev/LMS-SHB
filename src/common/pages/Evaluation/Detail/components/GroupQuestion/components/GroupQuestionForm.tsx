@@ -83,7 +83,7 @@ const GroupQuestionForm: React.FC<IGroupQuestionForm> = (props) => {
 			return evaluationQuestionApi.delete(id)
 		},
 		onSuccess(data, variables, context) {
-			ShowNostis.success(`Đã xóa nhóm câu hỏi`)
+			ShowNostis.success(`Đã xóa câu hỏi`)
 			!!refreshData && refreshData()
 
 			// ** refetch lại list tổng để cập nhật lại state isHaveQuestion

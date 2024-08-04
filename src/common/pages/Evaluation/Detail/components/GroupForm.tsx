@@ -16,6 +16,7 @@ import { ShowNostis } from '~/common/utils'
 import { EVALUATION_TYPES } from '~/common/utils/constants'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import GroupQuestion from './GroupQuestion'
+import GroupOption from './GroupOption'
 
 interface IGroupForm {
 	setIsCreating?: Function
@@ -145,6 +146,13 @@ const GroupForm: React.FC<IGroupForm> = (props) => {
 
 					{/* form của questions */}
 					{defaultData && !isEditing && <GroupQuestion evaluationGroupData={defaultData} />}
+
+					{/* form của dạng đánh giá */}
+					{defaultData && !isEditing && defaultData?.Type == EVALUATION_TYPES.evaluate && (
+						<div className="mt-4 col-span-4">
+							<GroupOption evaluationGroupData={defaultData} />
+						</div>
+					)}
 
 					{/* nút hiển thị lúc tạo mới */}
 					{!defaultData && (

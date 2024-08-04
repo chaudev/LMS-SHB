@@ -109,22 +109,22 @@ export const evaluationOptionApi = {
 
 // ** api/SampleEvaluationGroupOption
 
-// export const evaluationGroupOptionApi = {
-// 	getDetail(sampleEvaluationQuestionId) {
-// 		return instance.get<IApiResultData<TSampleEvaluationOption[]>>(
-// 			urlSampleEvaluationGroupOption + '/by-sample-evaluation-question' + `/${sampleEvaluationQuestionId}`
-// 		)
-// 	},
-// 	add(data: TPostSampleEvaluationOption) {
-// 		return instance.post(urlSampleEvaluationGroupOption, data)
-// 	},
-// 	update(data: TPutSampleEvaluationOption) {
-// 		return instance.put(urlSampleEvaluationGroupOption, data, {})
-// 	},
-// 	changeIndex(data: TChangeIndexSampleEvaluationOption) {
-// 		return instance.put(urlSampleEvaluationGroupOption + '/change-index', data, {})
-// 	},
-// 	delete(id) {
-// 		return instance.delete(`${urlSampleEvaluationGroupOption}/${id}`)
-// 	}
-// }
+export const evaluationGroupOptionApi = {
+	getDetail(sampleEvaluationGroupId) {
+		return instance.get<IApiResultData<TSampleEvaluationGroupOption[]>>(
+			urlSampleEvaluationGroupOption + '/by-sample-evaluation-group' + `/${sampleEvaluationGroupId}`
+		)
+	},
+	add(data: TPostSampleEvaluationGroupOption) {
+		return instance.post(urlSampleEvaluationGroupOption, data)
+	},
+	update(data: TPutSampleEvaluationGroupOption) {
+		return instance.put(urlSampleEvaluationGroupOption, data, {})
+	},
+	changeIndex(data: TChangeIndexSampleEvaluationGroupOption) {
+		return instance.put(urlSampleEvaluationGroupOption + '/change-index', data, {})
+	},
+	delete(id) {
+		return instance.delete(`${urlSampleEvaluationGroupOption}/${id}`)
+	}
+}
