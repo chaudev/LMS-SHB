@@ -1,11 +1,21 @@
 import { Select, SelectProps } from 'antd'
-
-export type TMySelectProps = {} & SelectProps
+import styles from './styles.module.scss'
+export type TMySelectProps = {
+	originalStyle?: boolean
+} & SelectProps
 
 const MySelect: React.FC<TMySelectProps> = (props) => {
-	const { className = '', ...rest } = props
+	const { originalStyle = true, className = '', ...rest } = props
 
-	return <Select className={`${className}`} allowClear {...rest} showArrow />
+	if (originalStyle) {
+		return <Select showSearch optionFilterProp="children" className={`primary-input ${className}`} allowClear {...rest} />
+	}
+
+	return (
+		<div className={styles.wrapper}>
+			<Select className={`${className}`} {...rest} />
+		</div>
+	)
 }
 
 export default MySelect

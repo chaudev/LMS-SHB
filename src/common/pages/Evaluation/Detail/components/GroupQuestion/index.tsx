@@ -1,45 +1,45 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { evaluationGroupApi } from '~/api/evaluation'
-import FormLoading from './components/FormLoading'
-import { isNull, ShowErrorToast } from '~/common/utils/main-function'
-import Lottie from 'react-lottie-player'
-import empty from '~/common/components/json/empty-table.json'
+import React, { useState } from 'react'
 import PrimaryButton from '~/common/components/Primary/Button'
-import GroupForm from './components/GroupForm'
+import { isNull, ShowErrorToast } from '~/common/utils/main-function'
+import GroupQuestionForm from './components/GroupQuestionForm'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { evaluationQuestionApi } from '~/api/evaluation'
 
-const EvaluationDetail = () => {
-	const router = useRouter()
-	const { evaluationFormId } = router.query
+interface IGroupQuestion {
+	evaluationGroupData: TSampleEvaluationGroup
+}
+
+const GroupQuestion: React.FC<IGroupQuestion> = (props) => {
+	const { evaluationGroupData } = props
 	const [isCreating, setIsCreating] = useState(false)
 	const queryClient = useQueryClient()
 
+	// ** get questions in group
 	const { data, isLoading, refetch } = useQuery({
-		queryKey: ['get-sample-group-in-form', evaluationFormId],
+		queryKey: ['get-sample-question-in-group', evaluationGroupData.Id],
 		queryFn: () => {
-			return evaluationGroupApi
-				.getDetail(evaluationFormId)
+			return evaluationQuestionApi
+				.getDetail(evaluationGroupData.Id)
 				.then((res) => res.data.data || [])
 				.catch((err) => {
 					ShowErrorToast(err)
 					throw err
 				})
 		},
-		enabled: router.isReady && !!evaluationFormId
+		enabled: !!evaluationGroupData.Id
 	})
 
-	// ** handle click create group
-	const handleCreateGroup = () => {
+	// ** handle click create question
+	const handleCreateQuestion = () => {
 		setIsCreating(true)
 	}
 
 	// ** handle change index
 	const mutationChangeIndex = useMutation({
-		mutationKey: ['CHANGE-INDEX'],
+		mutationKey: ['CHANGE-INDEX-QUESTION'],
 		mutationFn(payload: { Id: number; Index: number }[]) {
-			return evaluationGroupApi.changeIndex({ Items: payload })
+			return evaluationQuestionApi.changeIndex({ Items: payload })
 		}
 		// onMutate() {
 		// 	setIsSaving(true)
@@ -68,7 +68,7 @@ const EvaluationDetail = () => {
 			Index: index + 1
 		}))
 		mutationChangeIndex.mutate(payloadChange)
-		queryClient.setQueryData(['get-sample-group-in-form', evaluationFormId], (pre: any) => {
+		queryClient.setQueryData(['get-sample-question-in-group', evaluationGroupData.Id], (pre: any) => {
 			return result
 		})
 
@@ -76,15 +76,14 @@ const EvaluationDetail = () => {
 	}
 
 	return (
-		<div className="w750:max-w-[800px] mx-auto">
-			{isLoading && isNull(data) && <FormLoading />}
+		<div className="col-span-4">
+			{/* {isLoading && isNull(data) && <FormLoading />} */}
 			{!isLoading && isNull(data) && !isCreating && (
-				<div className="flex items-center flex-col bg-white rounded-[6px] p-4">
-					<Lottie loop animationData={empty} play className="inner w-[300px] mx-auto" />
+				<div className="flex items-center flex-col bg-white rounded-[6px]">
 					<div className="flex items-center gap-2">
-						<p className="font-medium text-[18px]">Tạo nhóm đánh giá đầu tiên để bắt đầu</p>
-						<PrimaryButton background="green" type="button" icon="add" onClick={() => handleCreateGroup()}>
-							Thêm nhóm đánh giá
+						{/* <p className="font-medium text-[18px]">Tạo nhóm câu hỏi đầu tiên để bắt đầu</p> */}
+						<PrimaryButton background="transparent" type="button" icon="add" onClick={() => handleCreateQuestion()}>
+							Thêm nhóm câu hỏi
 						</PrimaryButton>
 					</div>
 				</div>
@@ -92,7 +91,7 @@ const EvaluationDetail = () => {
 			{!isLoading && !isNull(data) && (
 				<div>
 					<DragDropContext onDragEnd={handleDragEnd}>
-						<Droppable droppableId="droppable-id-evaluation">
+						<Droppable droppableId="droppable-id-evaluation-group-question">
 							{(provided, snapshot) => (
 								<div {...provided.droppableProps} ref={provided.innerRef}>
 									{data?.map((item, index) => (
@@ -106,11 +105,13 @@ const EvaluationDetail = () => {
 													// {...provided.dragHandleProps}
 													className="first:mt-0 mt-3"
 												>
-													<GroupForm
+													<GroupQuestionForm
 														dragProps={provided.dragHandleProps}
+														evaluationGroupData={evaluationGroupData}
 														key={`properties-${item.Id}`}
 														refreshData={refetch}
 														defaultData={item}
+														isDragging={snapshot.isDragging}
 													/>
 												</div>
 											)}
@@ -123,8 +124,8 @@ const EvaluationDetail = () => {
 					</DragDropContext>
 					{!isCreating && (
 						<div className="flex justify-center my-4">
-							<PrimaryButton background="green" type="button" icon="add" onClick={() => handleCreateGroup()}>
-								Thêm nhóm đánh giá
+							<PrimaryButton background="transparent" type="button" icon="add" onClick={() => handleCreateQuestion()}>
+								Thêm nhóm câu hỏi
 							</PrimaryButton>
 						</div>
 					)}
@@ -132,11 +133,11 @@ const EvaluationDetail = () => {
 			)}
 			{isCreating && (
 				<div className="mt-3">
-					<GroupForm setIsCreating={setIsCreating} refreshData={refetch} />
+					<GroupQuestionForm setIsCreating={setIsCreating} refreshData={refetch} evaluationGroupData={evaluationGroupData} />
 				</div>
 			)}
 		</div>
 	)
 }
 
-export default EvaluationDetail
+export default GroupQuestion

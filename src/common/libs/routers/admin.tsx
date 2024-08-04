@@ -26,11 +26,11 @@ export const AdminMenu = [
 		TabName: 'Phản hồi',
 		Icon: <BsChatLeftTextFill size={20} />
 	},
-	// {
-	// 	Key: 'evaluation',
-	// 	TabName: 'Đánh giá',
-	// 	Icon: <HiMiniNewspaper size={22} />
-	// },
+	{
+		Key: 'evaluation',
+		TabName: 'Đánh giá',
+		Icon: <HiMiniNewspaper size={22} />
+	},
 	{
 		Key: 'majors',
 		TabName: 'Ngành học',

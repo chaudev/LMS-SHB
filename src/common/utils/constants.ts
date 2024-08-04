@@ -41,3 +41,9 @@ export const FEEDBACK_STATUS = {
 	processing: 'Processing',
 	done: 'Done'
 }
+
+export const EVALUATION_TYPES = {
+	multipleChoice: 'MultipleChoice',
+	essay: 'Essay',
+	evaluate: 'Evaluate'
+}
