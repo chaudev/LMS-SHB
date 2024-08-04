@@ -15,6 +15,7 @@ import { instance } from '~/api/instance'
 // nếu là dạng trắc nghiệm thì xài chung với SampleEvaluationOption
 // nếu là dạng tự luận (Essay) thì chỉ cần cái SampleEvaluationQuestion thôi
 // nếu là dạng bảng (Evaluation) thì xài cái SampleEvaluationGroupOption
+// (chỉ tạo 1 danh sách đáp án chung xài SampleEvaluationGroupOption, còn lại là tạo các câu hỏi xài SampleEvaluationQuestion)
 
 const urlSampleEvaluationForm = '/api/SampleEvaluationForm'
 const urlSampleEvaluationGroup = '/api/SampleEvaluationGroup'

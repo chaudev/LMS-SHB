@@ -47,3 +47,15 @@ export const EVALUATION_TYPES = {
 	essay: 'Essay',
 	evaluate: 'Evaluate'
 }
+
+export const USER_ROLES = {
+	admin: 1,
+	teacher: 2,
+	student: 3,
+	manager: 4,
+	saler: 5,
+	accountant: 6,
+	academic: 7,
+	parent: 8,
+	teachingAssistant: 9
+}
