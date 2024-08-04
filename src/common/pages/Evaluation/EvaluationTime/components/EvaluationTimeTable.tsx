@@ -15,7 +15,7 @@ const EvaluationTimeTable: React.FC<TEvaluationTimeTable> = (props) => {
 	const columns = [
 		{
 			title: 'Tên đợt đánh giá',
-			className: 'min-w-[120px] font-medium',
+			className: 'min-w-[140px] font-medium',
 			dataIndex: 'Name'
 		},
 		{
@@ -35,7 +35,7 @@ const EvaluationTimeTable: React.FC<TEvaluationTimeTable> = (props) => {
 			}
 		},
 		{
-			title: 'Chức vụ',
+			title: 'Đánh giá cho',
 			className: 'min-w-[120px]',
 			dataIndex: 'RoleName'
 		},
@@ -61,7 +61,7 @@ const EvaluationTimeTable: React.FC<TEvaluationTimeTable> = (props) => {
 			render: (text, data: TSampleEvaluationFormItem, index) => (
 				<div className="flex items-center">
 					<EvaluationTimeForm defaultData={data} refreshData={refreshData} />
-					<DeleteTableRow text={`đợt đánh giá ${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					<DeleteTableRow text={`đợt đánh giá ${data?.Name || ''}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
 				</div>
 			)
 		}

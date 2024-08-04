@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { Form } from 'antd'
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { evaluationTimeApi } from '~/api/evaluation-time'
 import MyFormItem from '~/atomic/atoms/MyFormItem'
@@ -27,7 +28,7 @@ const EvaluationTimeForm: React.FC<IEvaluationTimeForm> = (props) => {
 
 	useEffect(() => {
 		if (defaultData) {
-			form.setFieldsValue({ ...defaultData })
+			form.setFieldsValue({ ...defaultData, Date: defaultData?.Date ? moment(defaultData?.Date) : undefined })
 		}
 	}, [defaultData])
 
@@ -108,7 +109,12 @@ const EvaluationTimeForm: React.FC<IEvaluationTimeForm> = (props) => {
 						<MyFormItem name="BranchId" label="Chọn trung tâm" required rules={[{ required: true, message: 'Bạn không được để trống' }]}>
 							<MySelectBranch disabled={defaultData} />
 						</MyFormItem>
-						<MyFormItem name="RoleId" label="Chọn chức vụ" required rules={[{ required: true, message: 'Bạn không được để trống' }]}>
+						<MyFormItem
+							name="RoleId"
+							label="Chức vụ được đánh giá"
+							required
+							rules={[{ required: true, message: 'Bạn không được để trống' }]}
+						>
 							<MySelectRoleStaff />
 						</MyFormItem>
 						<div className="w750:col-span-2 flex-all-center">
