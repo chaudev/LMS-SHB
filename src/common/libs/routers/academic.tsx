@@ -1,6 +1,7 @@
 import { AiFillSetting } from 'react-icons/ai'
 import { BsFillGridFill } from 'react-icons/bs'
 import { FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { HiMiniNewspaper } from 'react-icons/hi2'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { RiFileList2Fill } from 'react-icons/ri'
 import { TiHome } from 'react-icons/ti'
@@ -30,6 +31,11 @@ export const AcademicMenu = [
 		Key: 'finance',
 		TabName: 'Tài chính',
 		Icon: <FaMoneyBillAlt size={20} />
+	},
+	{
+		Key: 'evaluation',
+		TabName: 'Đánh giá',
+		Icon: <HiMiniNewspaper size={22} />
 	},
 	// {
 	// 	Key: 'video',
@@ -99,6 +105,21 @@ export const AcademicChildMenu = [
 				Route: '/finance/payment-approve',
 				Icon: '',
 				Text: 'Duyệt thanh toán'
+			}
+		]
+	},
+	{
+		MenuName: 'Đánh giá',
+		MenuTitle: 'Đánh giá',
+		MenuKey: '/evaluation',
+		Parent: 'evaluation',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/evaluation/me',
+				Route: '/evaluation/me',
+				Text: 'Danh sách phiếu đánh giá',
+				Icon: ''
 			}
 		]
 	},

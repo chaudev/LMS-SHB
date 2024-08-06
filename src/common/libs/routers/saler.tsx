@@ -1,6 +1,7 @@
 import { AiFillSetting } from 'react-icons/ai'
 import { BsFillGridFill } from 'react-icons/bs'
 import { FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { HiMiniNewspaper } from 'react-icons/hi2'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { TiHome } from 'react-icons/ti'
 
@@ -24,6 +25,11 @@ export const SalerMenu = [
 		Key: 'staff',
 		TabName: 'Nhân viên',
 		Icon: <FaUserTie size={20} />
+	},
+	{
+		Key: 'evaluation',
+		TabName: 'Đánh giá',
+		Icon: <HiMiniNewspaper size={22} />
 	}
 ]
 
@@ -76,6 +82,21 @@ export const SalerChildMenu = [
 			// 	Route: '/class/register',
 			// 	Text: 'Đăng ký học'
 			// }
+		]
+	},
+	{
+		MenuName: 'Đánh giá',
+		MenuTitle: 'Đánh giá',
+		MenuKey: '/evaluation',
+		Parent: 'evaluation',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/evaluation/me',
+				Route: '/evaluation/me',
+				Text: 'Danh sách phiếu đánh giá',
+				Icon: ''
+			}
 		]
 	},
 	{

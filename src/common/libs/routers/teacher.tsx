@@ -2,6 +2,7 @@ import { UserCheck } from 'react-feather'
 import { BiBookBookmark } from 'react-icons/bi'
 import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
 import { FaMoneyBillAlt, FaUserCheck, FaUserGraduate } from 'react-icons/fa'
+import { HiMiniNewspaper } from 'react-icons/hi2'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { MdAirplay } from 'react-icons/md'
 import { RiFileList2Fill } from 'react-icons/ri'
@@ -28,6 +29,11 @@ export const TeacherMenu = [
 		Key: 'feedback',
 		TabName: 'Phản hồi',
 		Icon: <BsChatLeftTextFill size={20} />
+	},
+	{
+		Key: 'evaluation',
+		TabName: 'Đánh giá',
+		Icon: <HiMiniNewspaper size={22} />
 	},
 	{
 		Key: 'finance',
@@ -96,6 +102,21 @@ export const TeacherChildMenu = [
 				Key: '/class/schedule',
 				Route: '/class/schedule',
 				Text: 'Lịch dạy',
+				Icon: ''
+			}
+		]
+	},
+	{
+		MenuName: 'Đánh giá',
+		MenuTitle: 'Đánh giá',
+		MenuKey: '/evaluation',
+		Parent: 'evaluation',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/evaluation/me',
+				Route: '/evaluation/me',
+				Text: 'Danh sách phiếu đánh giá',
 				Icon: ''
 			}
 		]
@@ -218,8 +239,8 @@ export const TeacherChildMenu = [
 		]
 	},
 	{
-		MenuName: 'Phân công',
-		MenuTitle: 'Phân công',
+		MenuName: 'Tài khoản',
+		MenuTitle: 'Tài khoản',
 		Parent: 'assignment',
 		MenuKey: '/users',
 		MenuItem: [

@@ -91,7 +91,7 @@ type TPostUserEvaluationForm = {
 }
 
 // get me
-type TParamsGetMe = {} & TParamsGetUserEvaluationForm
+type TParamsGetMe = {} & Omit<TParamsGetUserEvaluationForm, 'evaluationTimeId'>
 
 type TUserEvaluationFormMe = {
 	UserId: number

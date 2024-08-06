@@ -12,7 +12,7 @@ export const userEvaluationFormApi = {
 		return instance.get<IApiResultData<TUserEvaluationDetail>>(url + `/detail/${id}`)
 	},
 	getMe(todoApi: TParamsGetMe) {
-		return instance.get<IApiResultData<TUserEvaluationFormMe>>(url + `/me`, {
+		return instance.get<IApiResultData<TUserEvaluationFormMe[]>>(url + `/me`, {
 			params: todoApi
 		})
 	},

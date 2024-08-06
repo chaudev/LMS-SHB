@@ -1,6 +1,7 @@
 import { AiFillSetting } from 'react-icons/ai'
 import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
 import { FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { HiMiniNewspaper } from 'react-icons/hi2'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { RiFileList2Fill } from 'react-icons/ri'
 import { TiHome } from 'react-icons/ti'
@@ -25,6 +26,11 @@ export const ManagerMenu = [
 		Key: 'feedback',
 		TabName: 'Phản hồi',
 		Icon: <BsChatLeftTextFill size={20} />
+	},
+	{
+		Key: 'evaluation',
+		TabName: 'Đánh giá',
+		Icon: <HiMiniNewspaper size={22} />
 	},
 	{
 		Key: 'staff',
@@ -118,6 +124,28 @@ export const ManagerChildMenu = [
 				Key: '/finance/refund',
 				Route: '/finance/refund',
 				Text: 'Hoàn tiền'
+			}
+		]
+	},
+	{
+		MenuName: 'Quản lý đánh giá',
+		MenuTitle: 'Quản lý đánh giá',
+		MenuKey: '/evaluation',
+		Parent: 'evaluation',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/evaluation/list',
+				Route: '/evaluation/list',
+				Text: 'Phiếu đánh giá mẫu',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/evaluation/evaluation-time',
+				Route: '/evaluation/evaluation-time',
+				Text: 'Danh sách đợt đánh giá',
+				Icon: ''
 			}
 		]
 	},
