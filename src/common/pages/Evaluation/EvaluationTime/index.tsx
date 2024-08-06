@@ -19,7 +19,7 @@ const EvaluationTime = () => {
 	const userInfo = useSelector((state: RootState) => state.user.information)
 	const { data: branch } = useQueryAllBranch()
 	const isAllow = () => {
-		if (is(userInfo).admin) {
+		if (is(userInfo).admin || is(userInfo).manager) {
 			return true
 		}
 		return false

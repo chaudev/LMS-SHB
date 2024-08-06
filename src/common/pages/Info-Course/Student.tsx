@@ -968,7 +968,7 @@ const Student: FC<IPersonnel> = (props) => {
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, PageIndex: event })}
 				TitleCard={
 					<>
-						{role === 3 && !isParents && <OverviewStatusStudent />}
+						{role === 3 && !isParents && !is(userInformation).teacher && !is(userInformation).accountant && <OverviewStatusStudent />}
 						{role == 3 ? (
 							<button onClick={() => setIsFilter(!isFilter)} className="btn btn-secondary light btn-filter">
 								<Filter />
