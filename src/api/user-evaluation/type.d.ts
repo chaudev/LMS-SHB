@@ -36,6 +36,7 @@ type TUserEvaluationDetail = {
 	AssessorCode: string
 	AssessorId: number
 	AssessorName: string
+	EvaluationFormDescription: string
 	EvaluationFormName: string
 	EvaluationTimeName: string
 	FullName: string

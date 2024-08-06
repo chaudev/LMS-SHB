@@ -131,15 +131,15 @@ const GroupForm: React.FC<IGroupForm> = (props) => {
 						/>
 					</MyFormItem>
 
-					{/* form của questions */}
-					{defaultData && !isEditing && <GroupQuestion evaluationGroupData={defaultData} />}
-
 					{/* form của dạng đánh giá */}
 					{defaultData && !isEditing && defaultData?.Type == EVALUATION_TYPES.evaluate && (
-						<div className="mt-4 col-span-4">
+						<div className="mb-4 col-span-4">
 							<GroupOption evaluationGroupData={defaultData} />
 						</div>
 					)}
+
+					{/* form của questions */}
+					{defaultData && !isEditing && <GroupQuestion evaluationGroupData={defaultData} />}
 
 					{/* nút hiển thị lúc tạo mới */}
 					{!defaultData && (

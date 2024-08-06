@@ -65,7 +65,7 @@ const Evaluate = () => {
 		<div className="w750:max-w-[800px] mx-auto">
 			{/* tiêu đề phiếu đánh giá */}
 			{!isNull(data) && (
-				<EvaluationCard type="header" title={data?.EvaluationFormName}>
+				<EvaluationCard type="header" title={data?.EvaluationFormName} description={data?.EvaluationFormDescription}>
 					{/* role nào được đánh giá thì xem được status */}
 					{(!is(userInfo).admin || !is(userInfo).manager) && (
 						<div className="mt-3">

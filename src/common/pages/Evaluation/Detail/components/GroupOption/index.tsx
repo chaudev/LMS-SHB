@@ -73,14 +73,21 @@ const GroupOption: React.FC<IGroupOption> = (props) => {
 
 	return (
 		<div className="">
-			{!isLoading && isNull(data) && <GroupOptionForm refreshData={refetch} evaluationGroupData={evaluationGroupData} />}
+			{!isLoading && isNull(data) && (
+				<div className="flex justify-center w-full">
+					<GroupOptionForm refreshData={refetch} evaluationGroupData={evaluationGroupData} />
+				</div>
+			)}
 
 			{!isLoading && !isNull(data) && (
 				<div className="">
+					<div className="mb-2 ml-1 flex justify-end">
+						<GroupOptionForm refreshData={refetch} evaluationGroupData={evaluationGroupData} />
+					</div>
 					<DragDropContext onDragEnd={handleDragEnd}>
 						<Droppable droppableId="droppable-id-evaluation-group-option" direction="horizontal">
 							{(provided, snapshot) => (
-								<div {...provided.droppableProps} ref={provided.innerRef} className="p-2 flex overflow-x-auto">
+								<div {...provided.droppableProps} ref={provided.innerRef} className="p-2 flex justify-end overflow-x-auto">
 									{data?.map((item, index) => (
 										<Draggable key={item.Id} draggableId={`${item.Id}`} index={index}>
 											{(provided, snapshot) => (
@@ -108,9 +115,6 @@ const GroupOption: React.FC<IGroupOption> = (props) => {
 							)}
 						</Droppable>
 					</DragDropContext>
-					<div className="mt-3 ml-1">
-						<GroupOptionForm refreshData={refetch} evaluationGroupData={evaluationGroupData} />
-					</div>
 				</div>
 			)}
 		</div>

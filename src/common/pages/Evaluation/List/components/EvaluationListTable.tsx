@@ -22,6 +22,11 @@ const EvaluationListTable: React.FC<TEvaluationListTable> = (props) => {
 			dataIndex: 'Name'
 		},
 		{
+			title: 'Mô tả',
+			className: 'min-w-[120px] max-w-[150px]',
+			dataIndex: 'Description'
+		},
+		{
 			title: 'Ngày tạo',
 			className: 'min-w-[120px]',
 			dataIndex: 'CreatedOn',

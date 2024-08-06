@@ -2,7 +2,9 @@ import { useMutation } from '@tanstack/react-query'
 import { Form } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { evaluationApi } from '~/api/evaluation'
+import MyFormItem from '~/atomic/atoms/MyFormItem'
 import MyModal from '~/atomic/atoms/MyModal'
+import MyTextArea from '~/atomic/atoms/MyTextArea'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import PrimaryButton from '~/common/components/Primary/Button'
 import IconButton from '~/common/components/Primary/IconButton'
@@ -48,7 +50,8 @@ const EvaluationForm: React.FC<IEvaluationForm> = (props) => {
 	const onSubmit = (data) => {
 		try {
 			const DATA_SUBMIT = {
-				Name: data?.Name
+				Name: data?.Name,
+				...data
 			}
 			mutation.mutateAsync(DATA_SUBMIT)
 		} catch (error) {
@@ -72,34 +75,29 @@ const EvaluationForm: React.FC<IEvaluationForm> = (props) => {
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}
 			>
-				<div className="container-fluid">
-					<Form form={form} layout="vertical" onFinish={onSubmit}>
-						<div className="row">
-							<div className="col-12">
-								<InputTextField
-									placeholder="Nhập tên phiếu đánh giá mẫu"
-									name="Name"
-									label="Tên phiếu đánh giá mẫu"
-									isRequired
-									rules={[{ required: true, message: 'Bạn không được để trống' }]}
-								/>
-							</div>
-						</div>
-						<div className="row ">
-							<div className="col-12 flex-all-center">
-								<PrimaryButton
-									icon={defaultData ? 'save' : 'add'}
-									type="submit"
-									disable={mutation?.isPending}
-									loading={mutation?.isPending}
-									background={defaultData ? 'primary' : 'green'}
-								>
-									{defaultData ? 'Lưu' : 'Thêm mới'}
-								</PrimaryButton>
-							</div>
-						</div>
-					</Form>
-				</div>
+				<Form form={form} layout="vertical" onFinish={onSubmit} className="grid gap-x-4">
+					<InputTextField
+						placeholder="Nhập tên phiếu đánh giá mẫu"
+						name="Name"
+						label="Tên phiếu đánh giá mẫu"
+						isRequired
+						rules={[{ required: true, message: 'Bạn không được để trống' }]}
+					/>
+					<MyFormItem name="Description" label="Mô tả">
+						<MyTextArea placeholder="Nhập mô tả" autoSize={{ minRows: 2 }} style={{ borderRadius: '6px' }} />
+					</MyFormItem>
+					<div className="col-12 flex-all-center">
+						<PrimaryButton
+							icon={defaultData ? 'save' : 'add'}
+							type="submit"
+							disable={mutation?.isPending}
+							loading={mutation?.isPending}
+							background={defaultData ? 'primary' : 'green'}
+						>
+							{defaultData ? 'Lưu' : 'Thêm mới'}
+						</PrimaryButton>
+					</div>
+				</Form>
 			</MyModal>
 		</>
 	)
