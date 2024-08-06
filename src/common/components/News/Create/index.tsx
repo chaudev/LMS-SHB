@@ -63,7 +63,7 @@ const CreateNews: FC<TCreateNews> = (props) => {
 	const uploadButton = (
 		<div>
 			<PlusOutlined />
-			<div style={{ marginTop: 8 }}>Thêm ảnh</div>
+			<div style={{ marginTop: 8 }}>Thêm file</div>
 		</div>
 	)
 

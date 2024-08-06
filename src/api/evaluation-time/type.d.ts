@@ -28,3 +28,30 @@ type TPutEvaluationTime = {
 	Name: string
 	Id: number
 }
+
+// statistical
+type TEvaluationStatistical = {
+	Name: string
+	Code: string
+	ListGroup: TListGroup[]
+}
+
+type TListGroup = {
+	Name: string
+	Description: string
+	Type: 'MultipleChoice' | 'Essay' | 'Evaluate'
+	ListQuestion: TListQuestion[]
+}
+
+type TListQuestion = {
+	Content: string
+	Type: 'MultipleChoice' | 'Essay' | 'Evaluate'
+	ListEssay: string[]
+	ListOption: TListOption[]
+}
+
+type TListOption = {
+	Content: string
+	Point: number
+	TotalChoose: number
+}

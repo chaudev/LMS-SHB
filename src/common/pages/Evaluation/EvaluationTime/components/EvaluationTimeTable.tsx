@@ -9,6 +9,8 @@ import { ShowNostis } from '~/common/utils'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import UserEvaluationFormTable from './UserEvaluationFormTable'
+import Link from 'next/link'
+import IconButton from '~/common/components/Primary/IconButton'
 
 type TEvaluationTimeTable = { totalPage: number; getPagination: Function; currentPage: number } & Omit<TMyTable, 'total' | 'onChangePage'>
 
@@ -60,8 +62,14 @@ const EvaluationTimeTable: React.FC<TEvaluationTimeTable> = (props) => {
 		{
 			title: 'Chức năng',
 			width: 120,
+			fixed: 'right',
 			render: (text, data: TSampleEvaluationFormItem, index) => (
 				<div className="flex items-center">
+					<Link href={`/evaluation/evaluation-time/statistical?id=${data?.Id}`}>
+						<a>
+							<IconButton type="button" color="blue" icon="pieChart" tooltip="Thống kê" />
+						</a>
+					</Link>
 					<EvaluationTimeForm defaultData={data} refreshData={refreshData} />
 					<DeleteTableRow text={`đợt đánh giá ${data?.Name || ''}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
 				</div>

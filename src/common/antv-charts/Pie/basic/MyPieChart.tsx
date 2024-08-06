@@ -13,7 +13,7 @@ interface IMyPieChart extends IChartProps, PieConfig {
 	className?: HTMLAttributes<HTMLDivElement>['className']
 }
 
-const defaultColor = ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e', '#f1c40f', '#e67e22', '#e74c3c', '#95a5a6']
+const defaultColor = ['#C40C0C', '#FF6500', '#FF8A08', '#FFC100', '#FFAF45', '#FB6D48', '#D74B76', '#673F69']
 
 const MyPieChart: React.FC<IMyPieChart> = (props) => {
 	const { loading, colorFunction, legendPosition, isDonut, isPercent, className, ...rest } = props

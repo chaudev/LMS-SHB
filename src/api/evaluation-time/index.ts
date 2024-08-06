@@ -11,6 +11,9 @@ export const evaluationTimeApi = {
 	getDetail(id) {
 		return instance.get<IApiResultData<TEvaluationTime>>(url + `/${id}`)
 	},
+	getStatistic(id) {
+		return instance.get<IApiResultData<TEvaluationStatistical>>(url + `/statistical/${id}`)
+	},
 	add(data: TPostEvaluationTime) {
 		return instance.post(url, data)
 	},

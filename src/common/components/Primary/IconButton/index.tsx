@@ -7,8 +7,8 @@ import { CgAddR, CgFileDocument } from 'react-icons/cg'
 import { FaChalkboardTeacher } from 'react-icons/fa'
 import { FiArrowDownCircle, FiArrowUpCircle, FiMenu, FiMoreVertical, FiPrinter, FiSave, FiSend } from 'react-icons/fi'
 import { HiOutlineFilter } from 'react-icons/hi'
-import { MdOutlineCancel, MdOutlineHistory, MdPendingActions } from 'react-icons/md'
-import { RiExchangeLine } from 'react-icons/ri'
+import { MdOutlineCancel, MdOutlineHistory, MdPendingActions, MdPieChartOutline } from 'react-icons/md'
+import { RiExchangeLine, RiPieChart2Fill } from 'react-icons/ri'
 import { TbDownload, TbReportMoney, TbSchool, TbUpload } from 'react-icons/tb'
 import { VscRootFolderOpened } from 'react-icons/vsc'
 
@@ -178,6 +178,9 @@ const IconButton: FC<IIconButton> = (props) => {
 		}
 		if (icon == 'history') {
 			return <MdOutlineHistory size={!!size ? size : 20} />
+		}
+		if (icon == 'pieChart') {
+			return <MdPieChartOutline size={!!size ? size : 20} />
 		}
 	}
 
