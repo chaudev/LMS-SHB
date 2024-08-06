@@ -52,9 +52,11 @@ const EvaluationTime = () => {
 		<div>
 			{isAllow() && (
 				<EvaluationTimeTable
-					total={data?.totalRow || 0}
+					totalPage={data?.totalRow || 0}
+					currentPage={Number(query.pageIndex) || 1}
+					pageSize={PAGE_SIZE}
 					loading={isLoading}
-					onChangePage={(pageIndex) => router.push({ query: { ...query, pageIndex: pageIndex } })}
+					getPagination={(pageIndex) => router.push({ query: { ...query, pageIndex: pageIndex } })}
 					Extra={<EvaluationTimeForm refreshData={refetch} />}
 					data={data?.data || []}
 					refreshData={refetch}

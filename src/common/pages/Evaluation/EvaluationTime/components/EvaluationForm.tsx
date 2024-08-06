@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { Form } from 'antd'
+import { Form, Tag } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { evaluationTimeApi } from '~/api/evaluation-time'
@@ -99,13 +99,17 @@ const EvaluationTimeForm: React.FC<IEvaluationTimeForm> = (props) => {
 						/>
 						<MyFormItem
 							name="SampleEvaluationFormId"
-							label="Phiếu đánh giá"
+							label="Phiếu đánh giá mẫu"
 							required
 							className="w750:col-span-2"
 							rules={[{ required: true, message: 'Bạn không được để trống' }]}
 						>
-							<MySelectSampleEvaluation />
+							<MySelectSampleEvaluation placeholder={'Chọn phiếu đánh giá mẫu'} />
 						</MyFormItem>
+						<div className="w750:col-span-2 rounded mb-4 px-2 py-1 text-[14px] w-full border !border-primary bg-primaryExtraLight !text-primary">
+							Nội dung phiếu đánh giá sẽ dựa trên mẫu tại thời điểm mẫu được tạo và sẽ không bị ảnh hưởng bởi những thay đổi sau này của
+							mẫu.
+						</div>
 						<MyFormItem name="BranchId" label="Chọn trung tâm" required rules={[{ required: true, message: 'Bạn không được để trống' }]}>
 							<MySelectBranch disabled={defaultData} />
 						</MyFormItem>

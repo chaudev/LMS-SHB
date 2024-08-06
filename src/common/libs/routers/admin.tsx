@@ -162,7 +162,7 @@ export const AdminChildMenu = [
 				ItemType: 'single',
 				Key: '/evaluation/list',
 				Route: '/evaluation/list',
-				Text: 'Danh sách phiếu đánh giá',
+				Text: 'Phiếu đánh giá mẫu',
 				Icon: ''
 			},
 			{

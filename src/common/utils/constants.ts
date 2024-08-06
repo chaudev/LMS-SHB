@@ -59,3 +59,8 @@ export const USER_ROLES = {
 	parent: 8,
 	teachingAssistant: 9
 }
+
+export const USER_EVALUATION_FORM_STATUS = {
+	waiting: 'Waiting',
+	done: 'Done'
+}

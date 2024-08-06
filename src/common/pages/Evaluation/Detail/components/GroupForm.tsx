@@ -17,6 +17,7 @@ import { EVALUATION_TYPES } from '~/common/utils/constants'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import GroupQuestion from './GroupQuestion'
 import GroupOption from './GroupOption'
+import { getBorderStyle } from '../../functions'
 
 interface IGroupForm {
 	setIsCreating?: Function
@@ -97,20 +98,6 @@ const GroupForm: React.FC<IGroupForm> = (props) => {
 		form.setFieldsValue({ ...defaultData })
 	}
 
-	// ** get border style
-	const getBorderStyle = (type) => {
-		switch (type) {
-			case EVALUATION_TYPES.multipleChoice:
-				return 'border-l-tw-blue'
-			case EVALUATION_TYPES.essay:
-				return 'border-l-tw-orange'
-			case EVALUATION_TYPES.evaluate:
-				return 'border-l-tw-secondary'
-			default:
-				break
-		}
-	}
-
 	return (
 		<Card className={`border-l-[5px] ${getBorderStyle(defaultData?.Type)} group`}>
 			<Form form={form} onFinish={onSubmit} disabled={false}>
@@ -123,9 +110,9 @@ const GroupForm: React.FC<IGroupForm> = (props) => {
 						<MyFormItem name="Type" label="" className="col-span-1" required rules={formRequired}>
 							<MySelect
 								options={[
-									{ label: <p className="text-tw-orange">Đoạn văn</p>, value: EVALUATION_TYPES.essay },
+									{ label: <p className="text-tw-orange">Nhận xét</p>, value: EVALUATION_TYPES.essay },
 									{ label: <p className="text-tw-blue">Trắc nghiệm</p>, value: EVALUATION_TYPES.multipleChoice },
-									{ label: <p className="text-tw-secondary">Bảng</p>, value: EVALUATION_TYPES.evaluate }
+									{ label: <p className="text-tw-secondary">Bảng đánh giá</p>, value: EVALUATION_TYPES.evaluate }
 								]}
 								placeholder="Loại đánh giá"
 								allowClear={false}

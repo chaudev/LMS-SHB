@@ -8,12 +8,12 @@ const MySelect: React.FC<TMySelectProps> = (props) => {
 	const { originalStyle = true, className = '', ...rest } = props
 
 	if (originalStyle) {
-		return <Select showSearch optionFilterProp="children" className={`primary-input ${className}`} allowClear {...rest} />
+		return <Select showArrow showSearch optionFilterProp="children" className={` ${className}`} allowClear {...rest} />
 	}
 
 	return (
 		<div className={styles.wrapper}>
-			<Select className={`${className}`} {...rest} />
+			<Select className={`${className}`} {...rest} showArrow />
 		</div>
 	)
 }

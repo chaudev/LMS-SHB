@@ -7,8 +7,10 @@ import { useMutation } from '@tanstack/react-query'
 import { evaluationTimeApi } from '~/api/evaluation-time'
 import { ShowNostis } from '~/common/utils'
 import { ShowErrorToast } from '~/common/utils/main-function'
+import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
+import UserEvaluationFormTable from './UserEvaluationFormTable'
 
-type TEvaluationTimeTable = {} & TMyTable
+type TEvaluationTimeTable = { totalPage: number; getPagination: Function; currentPage: number } & Omit<TMyTable, 'total' | 'onChangePage'>
 
 const EvaluationTimeTable: React.FC<TEvaluationTimeTable> = (props) => {
 	const { refreshData } = props
@@ -80,9 +82,13 @@ const EvaluationTimeTable: React.FC<TEvaluationTimeTable> = (props) => {
 		}
 	})
 
+	const expandedRowRender = (data) => {
+		return <UserEvaluationFormTable evaluationTimeId={data.Id} />
+	}
+
 	return (
 		<div>
-			<PrimaryTable columns={columns} {...props} />
+			<ExpandTable dataSource={props?.data} columns={columns} {...props} expandable={expandedRowRender} />
 		</div>
 	)
 }

@@ -67,7 +67,7 @@ const EvaluationForm: React.FC<IEvaluationForm> = (props) => {
 			)}
 
 			<MyModal
-				title={defaultData ? 'Cập nhật phiếu đánh giá' : 'Thêm phiếu đánh giá'}
+				title={defaultData ? 'Cập nhật phiếu đánh giá mẫu' : 'Thêm phiếu đánh giá mẫu'}
 				open={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}
@@ -77,9 +77,9 @@ const EvaluationForm: React.FC<IEvaluationForm> = (props) => {
 						<div className="row">
 							<div className="col-12">
 								<InputTextField
-									placeholder="Nhập tên phiếu đánh giá"
+									placeholder="Nhập tên phiếu đánh giá mẫu"
 									name="Name"
-									label="Tên phiếu đánh giá"
+									label="Tên phiếu đánh giá mẫu"
 									isRequired
 									rules={[{ required: true, message: 'Bạn không được để trống' }]}
 								/>
