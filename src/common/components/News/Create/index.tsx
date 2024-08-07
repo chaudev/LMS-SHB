@@ -251,6 +251,9 @@ const CreateNews: FC<TCreateNews> = (props) => {
 								onPreview={handlePreview}
 								onRemove={(event) => {}}
 								onChange={handleChange}
+								beforeUpload={() => {
+									return false
+								}}
 							>
 								{fileList.length >= 8 ? null : uploadButton}
 							</Upload>
