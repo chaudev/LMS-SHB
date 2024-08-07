@@ -63,7 +63,7 @@ const NewsFiles: FC<TNewsFiles> = React.memo(({ files }) => {
 						<div key={crypto.randomUUID()}>
 							{
 								<Link href={item?.src}>
-									<a className="!text-primary hover:underline">
+									<a className="!text-primary hover:underline" target="_blank">
 										<div className="">
 											<FaFile /> {item?.alt}
 										</div>
