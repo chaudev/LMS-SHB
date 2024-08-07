@@ -2,6 +2,7 @@ import { Image, Modal } from 'antd'
 import Link from 'next/link'
 import React, { FC, useEffect, useState } from 'react'
 import { FaFile, FaPlay } from 'react-icons/fa'
+import ModalViewFile from './ModalViewFile/ModalViewFile'
 
 type TNewsFiles = {
 	files: Array<{ FileType: string; FileUrl: string; FileName: string }>
@@ -61,16 +62,17 @@ const NewsFiles: FC<TNewsFiles> = React.memo(({ files }) => {
 				{otherFiles?.length > 0 &&
 					otherFiles?.map((item) => (
 						<div key={crypto.randomUUID()}>
-							{
-								<Link href={item?.src}>
-									<a className="!text-primary hover:underline" target="_blank">
-										<div className="">
-											<FaFile /> {item?.alt}
-										</div>
-									</a>
-								</Link>
-							}
+							<ModalViewFile file={item} />
 						</div>
+						// <div key={crypto.randomUUID()}>
+						// 	{/* // <Link href={item?.src}>
+						// 		// 	<a className="!text-primary hover:underline" target="_blank">
+						// 		// 		<div className="">
+						// 		// 			<FaFile /> {item?.alt}
+						// 		// 		</div>
+						// 		// 	</a>
+						// 		// </Link> */}
+						// </div>
 					))}
 			</div>
 			<div className={`grid grid-cols-${imagesLength} gap-x-2 gap-y-2`}>

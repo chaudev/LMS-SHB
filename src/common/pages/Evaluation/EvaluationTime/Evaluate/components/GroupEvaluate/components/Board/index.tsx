@@ -103,12 +103,12 @@ const Board: React.FC<IBoard> = (props) => {
 							onChange={onChange}
 							name={`${item?.Id}`}
 							noSpace
-							className="w-full"
+							className="w-full h-full"
 							disabled={disabled}
 							defaultValue={disabled ? getCheckedValue(item) : null}
 						>
 							<div
-								className="grid"
+								className="grid h-full"
 								style={{
 									gridTemplateColumns: `repeat(${item?.EvaluationOptionDetails?.length}, minmax(0, 1fr))`
 								}}
