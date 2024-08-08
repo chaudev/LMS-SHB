@@ -230,24 +230,23 @@ const Programs = () => {
 	const columns = [
 		{
 			title: 'Mã Khung đào tạo',
-			width: 170,
 			dataIndex: 'Code',
-			className:'font-weight-black',
-			...FilterColumn('Code', onSearch, handleReset, 'text'),
+			className: 'font-weight-black min-w-[120px]',
+			...FilterColumn('Code', onSearch, handleReset, 'text')
 			// render: (value) => <span className="weight-600">{value}</span>
 		},
 		{
 			title: 'Tên Khung đào tạo',
 			dataIndex: 'Name',
-			minWidth: 150,
 			...FilterColumn('Name', onSearch, handleReset, 'text'),
 			render: (text) => {
-				return <p className="font-weight-primary">{text}</p>
+				return <p className="font-weight-primary min-w-[120px]">{text}</p>
 			}
 		},
 		{
 			title: 'Trình độ tiếng',
 			dataIndex: 'GradeName',
+			className: 'min-w-[120px]',
 			render: (text) => {
 				return <p className="font-weight-black">{text}</p>
 			}
@@ -266,12 +265,12 @@ const Programs = () => {
 		// },
 		{
 			title: 'Người tạo',
-
+			className: 'min-w-[100px]',
 			dataIndex: 'ModifiedBy'
 		},
 		{
 			title: 'Ngày tạo',
-
+			className: 'min-w-[100px]',
 			dataIndex: 'ModifiedOn',
 			render: (date: any) => moment(date).format('DD/MM/YYYY')
 		},

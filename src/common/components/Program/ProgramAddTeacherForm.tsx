@@ -25,23 +25,22 @@ const ProgramAddTeacherForm = (props) => {
 	const columns = [
 		{
 			title: 'Mã giáo viên',
-			width: 250,
 			dataIndex: 'TeacherCode',
+			className: 'min-w-[100px]',
 			render: (text) => {
 				return <p className="font-weight-black">{text}</p>
 			}
 		},
 		{
 			title: 'Tên giáo viên',
-			width: 300,
-			className: 'font-weight-primary',
+			className: 'font-weight-primary min-w-[120px]',
 			dataIndex: 'TeacherName'
 		},
 		{
 			title: 'Thêm vào Khung đào tạo',
 			dataIndex: 'Allow',
 			align: 'center',
-			width: 170,
+			className: 'min-w-[120px]',
 			render: (allow, data) => {
 				return (
 					<>
