@@ -22,6 +22,7 @@ const TranscriptPageV2 = () => {
 	const [openDelete, setOpenDelete] = useState(false)
 	const [isEditStudentGrades, setIsEditStudentGrades] = useState(false)
 	const [saveStudentGrades, setSaveStudentGrades] = useState<TPostSaveGradesInClass[]>([])
+	const [isCreate, setIsCreate] = useState(false)
 
 	// ** handle cancel delete
 	const handleCancel = () => {
@@ -115,7 +116,12 @@ const TranscriptPageV2 = () => {
 			className="shadow-sm"
 			title={
 				<div className="flex items-center gap-2">
-					<ModalCreateClassTranscript refreshData={() => refreshData()} />
+					<ModalCreateClassTranscript
+						refreshData={() => {
+							refreshData()
+							setIsCreate(true)
+						}}
+					/>
 
 					<MySelectClassTranscript
 						classId={router.query.class}
@@ -126,6 +132,9 @@ const TranscriptPageV2 = () => {
 						placeholder="Chọn bảng điểm"
 						value={selectedClassTranscript?.Id}
 						onChange={(e, item: any) => setSelectedClassTranscript(item?.obj)}
+						setSelectedClassTranscript={setSelectedClassTranscript}
+						isCreate={isCreate}
+						setIsCreate={setIsCreate}
 					/>
 
 					{!isNull(selectedClassTranscript) && (
