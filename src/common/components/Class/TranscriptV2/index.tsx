@@ -14,6 +14,9 @@ import ModalTranscriptDetail from './components/TranscriptDetail/ModalTranscript
 import TranscriptStudentTable from './components/TranscriptStudentTable'
 import { useRouter } from 'next/router'
 import { saveGradesInClassApi } from '~/api/save-grades-in-class'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
+import { is } from '~/common/utils/common'
 
 const TranscriptPageV2 = () => {
 	const [selectedClassTranscript, setSelectedClassTranscript] = useState(null)
@@ -23,6 +26,7 @@ const TranscriptPageV2 = () => {
 	const [isEditStudentGrades, setIsEditStudentGrades] = useState(false)
 	const [saveStudentGrades, setSaveStudentGrades] = useState<TPostSaveGradesInClass[]>([])
 	const [isCreate, setIsCreate] = useState(false)
+	const userInfo = useSelector((state: RootState) => state.user.information)
 
 	// ** handle cancel delete
 	const handleCancel = () => {
@@ -116,12 +120,14 @@ const TranscriptPageV2 = () => {
 			className="shadow-sm"
 			title={
 				<div className="flex items-center gap-2">
-					<ModalCreateClassTranscript
-						refreshData={() => {
-							refreshData()
-							setIsCreate(true)
-						}}
-					/>
+					{is(userInfo).admin && (
+						<ModalCreateClassTranscript
+							refreshData={() => {
+								refreshData()
+								setIsCreate(true)
+							}}
+						/>
+					)}
 
 					<MySelectClassTranscript
 						classId={router.query.class}
@@ -137,10 +143,10 @@ const TranscriptPageV2 = () => {
 						setIsCreate={setIsCreate}
 					/>
 
-					{!isNull(selectedClassTranscript) && (
+					{!isNull(selectedClassTranscript) && is(userInfo).admin && (
 						<ModalCreateClassTranscript defaultData={selectedClassTranscript} refreshData={() => refreshData()} />
 					)}
-					{!isNull(selectedClassTranscript) && (
+					{!isNull(selectedClassTranscript) && is(userInfo).admin && (
 						<Popconfirm
 							title={`Xóa ${selectedClassTranscript.Name}?`}
 							open={openDelete}
@@ -156,8 +162,8 @@ const TranscriptPageV2 = () => {
 			}
 			extra={
 				<div className="flex flex-wrap items-center gap-2">
-					{!isNull(selectedClassTranscript) && <ModalTranscriptDetail defaultData={selectedClassTranscript} />}
-					{!isNull(selectedClassTranscript) && (
+					{!isNull(selectedClassTranscript) && is(userInfo).admin && <ModalTranscriptDetail defaultData={selectedClassTranscript} />}
+					{!isNull(selectedClassTranscript) && is(userInfo).admin && (
 						<>
 							{!isEditStudentGrades && (
 								<PrimaryButton background="blue" type="button" icon="none" onClick={() => setIsEditStudentGrades(true)}>
@@ -192,15 +198,23 @@ const TranscriptPageV2 = () => {
 			}
 		>
 			{isNull(selectedClassTranscript) && (
-				<div className="h-[200px] flex items-center flex-col justify-center">
-					<div>
-						<p className="text-left font-medium">
-							<span className="!text-primary">Bước 1.</span> Chọn bảng điểm mong muốn hoặc thêm mới
-						</p>
-						<p className="text-left font-medium">
-							<span className="!text-primary">Bước 2.</span> Xem xét, điều chỉnh điểm số của học viên trong bảng điểm
-						</p>
-					</div>
+				<div className="min-h-[200px] flex items-center flex-col justify-center">
+					{is(userInfo).admin && (
+						<div>
+							<p className="text-left font-medium">
+								<span className="!text-primary">Bước 1.</span> Chọn bảng điểm mong muốn hoặc thêm mới
+							</p>
+							<p className="text-left font-medium">
+								<span className="!text-primary">Bước 2.</span> Xem xét, điều chỉnh điểm số của học viên trong bảng điểm
+							</p>
+						</div>
+					)}
+					{!is(userInfo).admin && (
+						<div>
+							<img src="/images/choice.svg" draggable={false} className="w-[200px] mb-2" />
+							<p className="text-left font-medium">Chọn bảng điểm để xem thông tin</p>
+						</div>
+					)}
 				</div>
 			)}
 			{!isNull(selectedClassTranscript) && (
