@@ -9,6 +9,7 @@ import MyInput from '~/atomic/atoms/MyInput'
 import MyInputNumber from '~/atomic/atoms/MyInputNumber'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
+import { SAMPLE_GRADE_COLUMN_TYPES_OBJECTS } from '~/common/utils/constants'
 import { ShowErrorToast } from '~/common/utils/main-function'
 
 const DEFAULT_FILTER = { pageSize: PAGE_SIZE, pageIndex: 1 }
@@ -73,7 +74,21 @@ const TranscriptStudentTable: React.FC<ITranscriptStudentTable> = (props) => {
 			render: (value, data) => (
 				<div>
 					{isEditStudentGrades ? (
-						<MyInputNumber defaultValue={getStudentGrade(data?.StudentId, item.Id)} onChange={(e) => handleOnChangeGrade(e, data, item)} />
+						<>
+							{item?.Type == SAMPLE_GRADE_COLUMN_TYPES_OBJECTS.grades && (
+								<MyInputNumber
+									defaultValue={getStudentGrade(data?.StudentId, item.Id)}
+									onChange={(e) => handleOnChangeGrade(e, data, item)}
+								/>
+							)}
+							{item?.Type == SAMPLE_GRADE_COLUMN_TYPES_OBJECTS.comments && (
+								<MyInput
+									allowClear={false}
+									defaultValue={getStudentGrade(data?.StudentId, item.Id)}
+									onChange={(e) => handleOnChangeGrade(e.target.value, data, item)}
+								/>
+							)}
+						</>
 					) : (
 						<p>{getStudentGrade(data?.StudentId, item.Id)}</p>
 					)}
