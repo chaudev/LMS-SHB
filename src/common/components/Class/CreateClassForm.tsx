@@ -90,7 +90,7 @@ const CreateClassForm = (props) => {
 		Name: yup.string().required('Bạn không được để trống'),
 		GradeId: yup.string().required('Bạn không được để trống'),
 		ProgramId: yup.string().required('Bạn không được để trống'),
-		AcademicId: yup.string().required('Bạn không được để trống'),
+		// AcademicId: yup.string().required('Bạn không được để trống'),
 		TeacherId: yup.string().required('Bạn không được để trống'),
 		CurriculumId: yup.string().required('Bạn không được để trống'),
 		StartDay: yup.string().required('Bạn không được để trống')
@@ -605,8 +605,8 @@ const CreateClassForm = (props) => {
 						{!isAcademic() ? (
 							<div className="col-md-6 col-12">
 								<SelectField
-									isRequired
-									rules={[yupSync]}
+									// isRequired
+									// rules={[yupSync]}
 									placeholder="Chọn học vụ"
 									label="Học vụ"
 									name="AcademicId"

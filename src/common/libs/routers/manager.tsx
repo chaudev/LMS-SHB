@@ -157,6 +157,13 @@ export const ManagerChildMenu = [
 		MenuItem: [
 			{
 				ItemType: 'single',
+				Key: '/options/general-notification',
+				Route: '/options/general-notification',
+				Text: 'Tạo thông báo',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
 				Key: '/feedback/list',
 				Route: '/feedback/list',
 				Text: 'Danh sách phản hồi',
@@ -180,7 +187,7 @@ export const ManagerChildMenu = [
 	},
 	{
 		MenuName: 'Quản lý thông tin học',
-		MenuTitle: 'Thông tin học',
+		MenuTitle: 'Tuyển sinh',
 		MenuKey: '/info-course',
 		Parent: 'student',
 		MenuItem: [
@@ -188,7 +195,7 @@ export const ManagerChildMenu = [
 				ItemType: 'single',
 				Key: '/info-course/customer',
 				Route: '/info-course/customer',
-				Text: 'Leads',
+				Text: 'Tư vấn',
 				Icon: ''
 			},
 			{
@@ -198,20 +205,27 @@ export const ManagerChildMenu = [
 				Text: 'Hẹn kiểm tra đầu vào',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student',
-				Route: '/info-course/student',
-				Text: 'Danh sách học viên',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student-in-class',
-				Route: '/info-course/student-in-class',
-				Text: 'Học viên trong lớp',
-				Icon: ''
-			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student',
+			// 	Route: '/info-course/student',
+			// 	Text: 'Danh sách học viên',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student-in-class',
+			// 	Route: '/info-course/student-in-class',
+			// 	Text: 'Học viên trong lớp',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/changed',
+			// 	Route: '/info-course/changed',
+			// 	Text: 'Học viên chuyển lớp',
+			// 	Icon: ''
+			// },
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/reserved',
@@ -219,13 +233,6 @@ export const ManagerChildMenu = [
 			// 	Text: 'Học viên bảo lưu',
 			// 	Icon: ''
 			// },
-			{
-				ItemType: 'single',
-				Key: '/info-course/changed',
-				Route: '/info-course/changed',
-				Text: 'Học viên chuyển lớp',
-				Icon: ''
-			},
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/registration',
@@ -319,7 +326,28 @@ export const ManagerChildMenu = [
 				Icon: '',
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
-			}
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student',
+				Route: '/info-course/student',
+				Text: 'Danh sách học viên',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student-in-class',
+				Route: '/info-course/student-in-class',
+				Text: 'Học viên trong lớp',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/changed',
+				Route: '/info-course/changed',
+				Text: 'Học viên chuyển lớp',
+				Icon: ''
+			},
 			// {
 			// 	TypeItem: 'single',
 			// 	Key: '/class/register',
@@ -464,13 +492,13 @@ export const ManagerChildMenu = [
 						Text: 'Mục đích học',
 						Icon: ''
 					},
-					{
-						ItemType: 'single',
-						Key: '/options/general-notification',
-						Route: '/options/general-notification',
-						Text: 'Tạo thông báo',
-						Icon: ''
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/general-notification',
+					// 	Route: '/options/general-notification',
+					// 	Text: 'Tạo thông báo',
+					// 	Icon: ''
+					// },
 					{
 						ItemType: 'single',
 						Key: '/options/idiom',

@@ -103,7 +103,14 @@ export const TeacherChildMenu = [
 				Route: '/class/schedule',
 				Text: 'Lịch dạy',
 				Icon: ''
-			}
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student',
+				Route: '/info-course/student',
+				Text: 'Danh sách học viên',
+				Icon: ''
+			},
 		]
 	},
 	{
@@ -181,7 +188,7 @@ export const TeacherChildMenu = [
 	},
 	{
 		MenuName: 'Quản lý thông tin học',
-		MenuTitle: 'Thông tin học',
+		MenuTitle: 'Tuyền sinh',
 		MenuKey: '/info-course',
 		Parent: 'student',
 		MenuItem: [
@@ -192,13 +199,13 @@ export const TeacherChildMenu = [
 				Text: 'Hẹn kiểm tra đầu vào',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student',
-				Route: '/info-course/student',
-				Text: 'Danh sách học viên',
-				Icon: ''
-			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student',
+			// 	Route: '/info-course/student',
+			// 	Text: 'Danh sách học viên',
+			// 	Icon: ''
+			// },
 			{
 				ItemType: 'single',
 				Key: '/info-course/student/warning',

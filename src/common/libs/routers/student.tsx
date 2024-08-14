@@ -114,7 +114,7 @@ export const StudentChildMenu = [
 	},
 	{
 		MenuName: 'Quản lý thông tin học',
-		MenuTitle: 'Thông tin học',
+		MenuTitle: 'Tuyền sinh',
 		MenuKey: '/info-course',
 		Parent: 'student',
 		MenuItem: [
