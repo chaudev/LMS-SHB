@@ -125,7 +125,7 @@ export const AcademicChildMenu = [
 	},
 	{
 		MenuName: 'Quản lý thông tin học',
-		MenuTitle: 'Thông tin học',
+		MenuTitle: 'Tuyển sinh',
 		MenuKey: '/info-course',
 		Parent: 'student',
 		MenuItem: [
@@ -133,7 +133,7 @@ export const AcademicChildMenu = [
 				ItemType: 'single',
 				Key: '/info-course/customer',
 				Route: '/info-course/customer',
-				Text: 'Leads',
+				Text: 'Tư vấn',
 				Icon: ''
 			},
 			{
@@ -143,20 +143,27 @@ export const AcademicChildMenu = [
 				Text: 'Hẹn kiểm tra đầu vào',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student',
-				Route: '/info-course/student',
-				Text: 'Danh sách học viên',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student-in-class',
-				Route: '/info-course/student-in-class',
-				Text: 'Học viên trong lớp',
-				Icon: ''
-			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student',
+			// 	Route: '/info-course/student',
+			// 	Text: 'Danh sách học viên',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student-in-class',
+			// 	Route: '/info-course/student-in-class',
+			// 	Text: 'Học viên trong lớp',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/changed',
+			// 	Route: '/info-course/changed',
+			// 	Text: 'Học viên chuyển lớp',
+			// 	Icon: ''
+			// },
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/reserved',
@@ -164,13 +171,6 @@ export const AcademicChildMenu = [
 			// 	Text: 'Học viên bảo lưu',
 			// 	Icon: ''
 			// },
-			{
-				ItemType: 'single',
-				Key: '/info-course/changed',
-				Route: '/info-course/changed',
-				Text: 'Học viên chuyển lớp',
-				Icon: ''
-			},
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/registration',
@@ -264,7 +264,28 @@ export const AcademicChildMenu = [
 				Icon: '',
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
-			}
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student',
+				Route: '/info-course/student',
+				Text: 'Danh sách học viên',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student-in-class',
+				Route: '/info-course/student-in-class',
+				Text: 'Học viên trong lớp',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/changed',
+				Route: '/info-course/changed',
+				Text: 'Học viên chuyển lớp',
+				Icon: ''
+			},
 			// {
 			// 	TypeItem: 'single',
 			// 	Key: '/class/register',

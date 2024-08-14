@@ -12,6 +12,8 @@ import InputTextField from '../FormControl/InputTextField'
 import IconButton from '../Primary/IconButton'
 import PrimaryTable from '../Primary/Table'
 import StudentByAttenance from './ByAttenance'
+import PrimaryButton from '../Primary/Button'
+import { TableRowSelection } from 'antd/lib/table/interface'
 
 const InputNote = ({ value, onChange, index }) => {
 	const [note, setNote] = useState('')
@@ -326,6 +328,12 @@ export const RollUpPage = () => {
 		// }
 	]
 
+	// thêm rowSelection để điểm danh nhanh
+
+	const rowSelection: TableRowSelection<any> = {
+
+	}
+
 	return (
 		<>
 			<StudentByAttenance scheduleId={apiParameters.scheduleId} isUpdate={isUpdate} />
@@ -365,15 +373,15 @@ export const RollUpPage = () => {
 						</div>
 						<div>
 							{user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
-								<IconButton
-									tooltip="Cập nhật"
-									color={dataUpdate.length > 0 ? 'green' : 'disabled'}
+								<PrimaryButton
+									// color={dataUpdate.length > 0 ? 'green' : 'disabled'}
 									icon="save"
 									type="button"
 									onClick={() => {
 										handleUpdateRollUp(dataUpdate)
 									}}
-									size={25}
+									background={'blue'} // size={25}
+									children="Cập nhật"
 								/>
 							) : (
 								''
@@ -383,6 +391,7 @@ export const RollUpPage = () => {
 				}
 				data={dataTable}
 				columns={columns}
+				// rowSelection={rowSelection}
 			/>
 		</>
 	)

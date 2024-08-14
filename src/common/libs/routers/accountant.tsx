@@ -110,49 +110,49 @@ export const AccountantChildMenu = [
 			}
 		]
 	},
-	{
-		MenuName: 'Quản lý thông tin học',
-		MenuTitle: 'Thông tin học',
-		MenuKey: '/info-course',
-		Parent: 'student',
-		MenuItem: [
-			{
-				ItemType: 'single',
-				Key: '/info-course/student',
-				Route: '/info-course/student',
-				Text: 'Danh sách học viên',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student-in-class',
-				Route: '/info-course/student-in-class',
-				Text: 'Học viên trong lớp',
-				Icon: ''
-			},
-			// {
-			// 	ItemType: 'single',
-			// 	Key: '/info-course/reserved',
-			// 	Route: '/info-course/reserved',
-			// 	Text: 'Học viên bảo lưu',
-			// 	Icon: ''
-			// },
-			{
-				ItemType: 'single',
-				Key: '/info-course/changed',
-				Route: '/info-course/changed',
-				Text: 'Học viên chuyển lớp',
-				Icon: ''
-			}
-			// {
-			// 	ItemType: 'single',
-			// 	Key: '/info-course/registration',
-			// 	Route: '/info-course/registration',
-			// 	Text: 'Hẹn đăng ký',
-			// 	Icon: ''
-			// }
-		]
-	},
+	// {
+	// 	MenuName: 'Quản lý thông tin học',
+	// 	MenuTitle: 'Tuyển sinh',
+	// 	MenuKey: '/info-course',
+	// 	Parent: 'student',
+	// 	MenuItem: [
+	// 		{
+	// 			ItemType: 'single',
+	// 			Key: '/info-course/student',
+	// 			Route: '/info-course/student',
+	// 			Text: 'Danh sách học viên',
+	// 			Icon: ''
+	// 		},
+	// 		{
+	// 			ItemType: 'single',
+	// 			Key: '/info-course/student-in-class',
+	// 			Route: '/info-course/student-in-class',
+	// 			Text: 'Học viên trong lớp',
+	// 			Icon: ''
+	// 		},
+	// 		{
+	// 			ItemType: 'single',
+	// 			Key: '/info-course/changed',
+	// 			Route: '/info-course/changed',
+	// 			Text: 'Học viên chuyển lớp',
+	// 			Icon: ''
+	// 		}
+	// 		// {
+	// 		// 	ItemType: 'single',
+	// 		// 	Key: '/info-course/reserved',
+	// 		// 	Route: '/info-course/reserved',
+	// 		// 	Text: 'Học viên bảo lưu',
+	// 		// 	Icon: ''
+	// 		// },
+	// 		// {
+	// 		// 	ItemType: 'single',
+	// 		// 	Key: '/info-course/registration',
+	// 		// 	Route: '/info-course/registration',
+	// 		// 	Text: 'Hẹn đăng ký',
+	// 		// 	Icon: ''
+	// 		// }
+	// 	]
+	// },
 	{
 		MenuName: 'Quản lý tài khoản',
 		MenuTitle: 'Quản lý tài khoản',
@@ -194,6 +194,27 @@ export const AccountantChildMenu = [
 				Icon: '',
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student',
+				Route: '/info-course/student',
+				Text: 'Danh sách học viên',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student-in-class',
+				Route: '/info-course/student-in-class',
+				Text: 'Học viên trong lớp',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/changed',
+				Route: '/info-course/changed',
+				Text: 'Học viên chuyển lớp',
+				Icon: ''
 			}
 			// {
 			// 	TypeItem: 'single',

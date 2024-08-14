@@ -500,7 +500,7 @@ const CustomerAdvisory = () => {
 					type="button"
 					icon="download"
 					background="blue"
-					onClick={() => window.open(`${appConfigs.linkDownloadExcel}?key=${new Date().getTime()}`)}
+					onClick={() => window.open(`${appConfigs.linkDownloadExcelCustomer}?key=${new Date().getTime()}`)}
 				>
 					File mẫu
 				</PrimaryButton>
@@ -582,7 +582,7 @@ const CustomerAdvisory = () => {
 										type="button"
 										icon="download"
 										background="blue"
-										onClick={() => window.open(`${appConfigs.linkDownloadExcel}?key=${new Date().getTime()}`)}
+										onClick={() => window.open(`${appConfigs.linkDownloadExcelCustomer}?key=${new Date().getTime()}`)}
 									>
 										File mẫu
 									</PrimaryButton>
