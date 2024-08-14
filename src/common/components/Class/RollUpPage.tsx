@@ -1,19 +1,28 @@
-import { Input, Select, Spin } from 'antd'
+import { Divider, Form, Input, Select, Tooltip } from 'antd'
+import { TableRowSelection } from 'antd/lib/table/interface'
 import moment from 'moment'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { rollUpApi } from '~/api/rollup'
 import { scheduleApi } from '~/api/schedule'
+import MyModal from '~/atomic/atoms/MyModal'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
-import InputTextField from '../FormControl/InputTextField'
-import IconButton from '../Primary/IconButton'
+import PrimaryButton from '../Primary/Button'
 import PrimaryTable from '../Primary/Table'
 import StudentByAttenance from './ByAttenance'
-import PrimaryButton from '../Primary/Button'
-import { TableRowSelection } from 'antd/lib/table/interface'
+import { useMutation } from '@tanstack/react-query'
+
+const dataRollUp = [
+	{ value: 1, label: 'Có mặt' },
+	{ value: 2, label: 'Vắng có phép' },
+	{ value: 3, label: 'Vắng không phép' },
+	{ value: 4, label: 'Đi muộn' },
+	{ value: 5, label: 'Về sớm' },
+	{ value: 6, label: 'Nghĩ lễ' }
+]
 
 const InputNote = ({ value, onChange, index }) => {
 	const [note, setNote] = useState('')
@@ -36,6 +45,94 @@ const InputNote = ({ value, onChange, index }) => {
 			value={note}
 			className="rounded-lg mb-0"
 		/>
+	)
+}
+
+const ModalForm = ({ RoleId, rowSelected, onCancel, refetch }) => {
+	const [form] = Form.useForm()
+	const status = Form.useWatch('Status', form)
+
+	const handleUpdateStatus = useMutation({
+		mutationKey: ['PUT /api/RollUp/items'],
+		mutationFn: async (data: { Items: any[] }) => await rollUpApi.adds(data),
+		onSuccess: () => {
+			ShowNoti('success', 'Điểm danh thành công !')
+			onCancel()
+			form.resetFields()
+			refetch()
+		},
+		onError: (error) => ShowNoti('error', error.message)
+	})
+
+	const onFinish = async () => {
+		const dataSend = {
+			Items: [
+				...rowSelected.map((item) => ({
+					...item,
+					Status: status
+				}))
+			]
+		}
+		await handleUpdateStatus.mutateAsync(dataSend)
+	}
+
+	return (
+		<div className="grid grid-cols-2 gap-2">
+			<div className="">
+				<span className="mb-4 font-bold text-[14px]">Học viên</span>
+				<div className="mt-2 max-h-[300px] scrollable">
+					<div className=" h-fit">
+						{rowSelected?.map((item, index) => (
+							<div key={item?.UserCode} className="py-1">
+								<Tooltip
+									title={
+										<div>
+											<span>Mã học viên </span>
+											<span> - </span>
+											<span>{item?.UserCode}</span>
+										</div>
+									}
+								>
+									<span className="font-semibold">
+										{++index}. {item?.FullName}
+									</span>
+								</Tooltip>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			<Form form={form} layout="vertical" className="" onFinish={onFinish}>
+				<Form.Item name={'Status'} label="Điểm danh">
+					<Select
+						className="col-12"
+						options={dataRollUp}
+						// disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
+						disabled={![1, 2, 4, 7].includes(Number(RoleId))}
+					/>
+				</Form.Item>
+			</Form>
+
+			<Divider className="col-span-full !my-2" />
+
+			<div className="col-span-full flex items-center justify-center gap-2">
+				<PrimaryButton
+					background={'red'}
+					type={'button'}
+					icon="cancel"
+					onClick={() => {
+						form.resetFields()
+						onCancel()
+					}}
+				>
+					Hủy
+				</PrimaryButton>
+				<PrimaryButton disable={!status} background={'green'} type={'button'} icon="check" onClick={() => form.submit()}>
+					Điểm danh
+				</PrimaryButton>
+			</div>
+		</div>
 	)
 }
 
@@ -209,17 +306,17 @@ export const RollUpPage = () => {
 		}
 	}
 
-	const handleChangeRollUp = (data, index) => {
-		const dataSubmit = {
-			Id: index,
-			StudentId: data?.StudentId,
-			ScheduleId: data?.ScheduleId,
-			Status: data?.Status,
-			LearningStatus: data?.LearningStatus,
-			Note: data?.Note
-		}
-		handleUpdateRollUp(dataSubmit)
-	}
+	// const handleChangeRollUp = (data, index) => {
+	// 	const dataSubmit = {
+	// 		Id: index,
+	// 		StudentId: data?.StudentId,
+	// 		ScheduleId: data?.ScheduleId,
+	// 		Status: data?.Status,
+	// 		LearningStatus: data?.LearningStatus,
+	// 		Note: data?.Note
+	// 	}
+	// 	handleUpdateRollUp(dataSubmit)
+	// }
 
 	useEffect(() => {
 		if (router?.query?.class) {
@@ -249,14 +346,7 @@ export const RollUpPage = () => {
 					<Select
 						className="w-[220px] ml-tw-4"
 						onChange={(val) => handleChangeStatus(val, index)}
-						options={[
-							{ value: 1, label: 'Có mặt' },
-							{ value: 2, label: 'Vắng có phép' },
-							{ value: 3, label: 'Vắng không phép' },
-							{ value: 4, label: 'Đi muộn' },
-							{ value: 5, label: 'Về sớm' },
-							{ value: 6, label: 'Nghĩ lễ' }
-						]}
+						options={dataRollUp}
 						disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
 						value={item?.Status}
 					/>
@@ -330,8 +420,14 @@ export const RollUpPage = () => {
 
 	// thêm rowSelection để điểm danh nhanh
 
-	const rowSelection: TableRowSelection<any> = {
+	const [rowSelected, setRowSelected] = useState([])
+	const [showModal, setShowModal] = useState<boolean>(false)
 
+	const rowSelection: TableRowSelection<any> = {
+		selectedRowKeys: rowSelected?.map(item => item.StudentId.toString()),
+		onChange(_, selectedRows) {
+			setRowSelected(selectedRows)
+		}
 	}
 
 	return (
@@ -372,7 +468,19 @@ export const RollUpPage = () => {
 							</Select>
 						</div>
 						<div>
-							{user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? (
+							{[1, 2, 4, 7].includes(Number(user?.RoleId)) && !!rowSelected.length && (
+								<PrimaryButton
+									// color={dataUpdate.length > 0 ? 'green' : 'disabled'}
+									icon="check"
+									type="button"
+									onClick={() => setShowModal(!showModal)}
+									background={'green'} // size={25}
+									children="Điểm danh"
+									className="mr-2"
+								/>
+							)}
+
+							{[1, 2, 4, 7].includes(Number(user?.RoleId)) && !!scheduleId ? (
 								<PrimaryButton
 									// color={dataUpdate.length > 0 ? 'green' : 'disabled'}
 									icon="save"
@@ -389,10 +497,27 @@ export const RollUpPage = () => {
 						</div>
 					</div>
 				}
+				rowKey={'StudentId'}
 				data={dataTable}
 				columns={columns}
-				// rowSelection={rowSelection}
+				rowSelection={rowSelection}
 			/>
+
+			<MyModal open={showModal} onCancel={() => setShowModal(!showModal)} title="Cập nhật điểm danh học viên" footer={null}>
+				<ModalForm
+					RoleId={user?.RoleId}
+					rowSelected={rowSelected}
+					onCancel={() => {
+						setShowModal(!showModal)
+						setRowSelected([])
+					}}
+					refetch={() => {
+						if (apiParameters) {
+							getRollUp(apiParameters)
+						}
+					}}
+				/>
+			</MyModal>
 		</>
 	)
 }
