@@ -97,8 +97,11 @@ const PrimaryTable: FC<IPrimaryTable> = (props) => {
 								if (record.Id) {
 									return String(record.Id)
 								}
-								if (record.UserInformationId) {
-									return String(record.UserInformationId)
+
+								let newRowKey = rowKey ? record[rowKey.toString()] : record.UserInformationId
+
+								if (newRowKey) {
+									return String(newRowKey)
 								}
 								return `${record}`
 							}}

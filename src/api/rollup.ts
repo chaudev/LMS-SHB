@@ -10,16 +10,17 @@ export const rollUpApi = {
 		})
 	},
 
-    // thêm data
-    add(data) {
+	// thêm data
+	add(data) {
 		return instance.post(`${url}/InsertOrUpdate`, data)
 	},
-    adds(data) {
-		return instance.put(`${url}/items`, { Items: data })
+	adds(data) {
+		console.log("data: ", data.data);
+		return instance.put(`${url}/items`, { ...data })
 	},
 
-    // xóa data
-    delete(ID) {
+	// xóa data
+	delete(ID) {
 		return instance.delete(`${url}/${ID}`)
 	},
 
