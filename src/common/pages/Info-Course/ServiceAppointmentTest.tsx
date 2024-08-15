@@ -417,15 +417,15 @@ export default function ServiceAppointmentTest(props) {
 						{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && data.Type === 1 && (
 							<ScoreModal rowData={data} listTodoApi={listTodoApi} setTodoApi={setTodoApi} />
 						)}
-						{/* {(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && data.Status == 2 && (
+						{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && data.Status == 2 && (
 							<IconButton
 								icon="study"
 								tooltip="Đăng ký học"
 								color="green"
 								type="button"
-								onClick={() => router.push({ pathname: '/class/register', query: { userId: data?.StudentId } })}
+								onClick={() => router.push({ pathname: '/majors/registration', query: { studentId: data?.StudentId } })}
 							/>
-						)} */}
+						)}
 					</div>
 				)
 			}
