@@ -220,7 +220,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 
 	function formatCustomerStatus(arr) {
 		let templ = []
-		arr.forEach((element) => {
+		arr?.forEach((element) => {
 			if (element.value == 2) {
 				templ.push({
 					...element,

@@ -1,17 +1,14 @@
-import { Form, Modal, Tooltip } from 'antd'
-import React, { useState } from 'react'
-import { Eye } from 'react-feather'
+import { Modal } from 'antd'
+import { useState } from 'react'
 import { generalNotificationApi } from '~/api/general-notification'
 import { ShowNoti } from '~/common/utils'
-import { parseSelectArrayUser } from '~/common/utils/common'
-import SelectField from '../FormControl/SelectField'
 import IconButton from '../Primary/IconButton'
 
 const GeneralNotificationUserReceiver = (props) => {
 	const { dataRow } = props
-	const [form] = Form.useForm()
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [dataReceiver, setDataReceiver] = useState([])
+
 	const showModal = () => {
 		getUserReceiver(dataRow?.Id)
 		setIsModalOpen(true)
@@ -19,39 +16,38 @@ const GeneralNotificationUserReceiver = (props) => {
 	const handleCancel = () => {
 		setIsModalOpen(false)
 	}
+	
 	const getUserReceiver = async (id) => {
 		try {
 			const res = await generalNotificationApi.getReceiverById(id)
 			if (res.status === 200) {
-				const convertDataReceiver = parseSelectArrayUser(res.data.data, 'FullName', 'UserCode', 'UserInformationId')
-				const selectDefault = convertDataReceiver.map((data) => data.value)
-				form.setFieldsValue({ receiver: selectDefault })
-				setDataReceiver(convertDataReceiver)
-			}
-			if (res.status === 204) {
-				setDataReceiver([])
+				setDataReceiver(res.data.data)
 			}
 		} catch (err) {
 			ShowNoti('error', err.message)
 		}
 	}
+
 	return (
 		<>
 			<IconButton color="orange" tooltip="Danh sách người nhận" onClick={showModal} icon="eye" type="button" />
-			<Modal
-				title="Danh sách người nhận"
-				open={isModalOpen}
-				onCancel={handleCancel}
-				footer={
-					<button onClick={handleCancel} className="btn btn-primary">
-						Đóng
-					</button>
-				}
-				width={800}
-			>
-				<Form form={form} layout="vertical">
-					<SelectField disabled className="label-full" mode="multiple" optionList={dataReceiver} label="" name="receiver" />
-				</Form>
+			<Modal title="Danh sách người nhận" open={isModalOpen} onCancel={handleCancel} footer={null} width={400}>
+				{dataReceiver?.length > 0 && (
+					<div className="">
+						{dataReceiver?.map((item) => (
+							<div key={item?.UserInformationId}>
+								<span className='font-semibold'>{item?.UserCode}</span>
+								<span> - </span>
+								<span className='font-blod'>{item?.FullName}</span>
+							</div>
+						))}
+					</div>
+				)}
+				{dataReceiver?.length <= 0 && (
+					<div className="w-full text-center">
+						Chưa có người nhận thông báo
+					</div>
+				)}
 			</Modal>
 		</>
 	)

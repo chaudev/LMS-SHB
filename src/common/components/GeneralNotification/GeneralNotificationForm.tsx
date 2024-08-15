@@ -134,43 +134,51 @@ const GeneralNotificationForm = (props) => {
 	}
 	return (
 		<>
-			<Card title="Tạo thông báo">
+			<Card>
 				<Form layout="vertical" form={form} onFinish={onSubmit} initialValues={{ IsSendMail: false }}>
 					<div className="grid gap-4 grid-cols-2">
-						<SelectField
-							className="col-span-1 antd-custom-wrap"
-							label={`Trung tâm ${window?.innerWidth < 767 ? '' : '(Mặc định tất cả)'}`}
-							name="branchIds"
-							mode="multiple"
-							optionList={convertBranchSelect}
-							onChangeSelect={(value) => handleChangeSelect('branchIds', value)}
-						/>
-						<SelectField
-							className="col-span-1 antd-custom-wrap"
-							mode="multiple"
-							name="roleIds"
-							label="Chức vụ"
-							optionList={allRole}
-							onChangeSelect={(value) => handleChangeSelect('roleIds', value)}
-						/>
+						<div>
+							<InputTextField name="Title" label="Tiêu đề thống báo" isRequired rules={[{ required: true, message: 'Không để trống tiêu đề!' }]} />
+
+							<SelectField
+								className="col-span-1 antd-custom-wrap"
+								label={`Trung tâm ${window?.innerWidth < 767 ? '' : '(Mặc định tất cả)'}`}
+								name="branchIds"
+								mode="multiple"
+								optionList={convertBranchSelect}
+								onChangeSelect={(value) => handleChangeSelect('branchIds', value)}
+							/>
+							<SelectField
+								className="col-span-1 antd-custom-wrap"
+								mode="multiple"
+								name="roleIds"
+								label="Chức vụ"
+								optionList={allRole}
+								onChangeSelect={(value) => handleChangeSelect('roleIds', value)}
+							/>
+
+							<SelectField
+								className="label-full"
+								mode="multiple"
+								name="UserIds"
+								label={
+									<div className="antd-custom-wrap ant-form-item-label flex items-center justify-between">
+										<span>Tài khoản</span>
+										<div>
+											<span className="mr-2">Chọn tất cả</span>
+											<Switch checked={selectAllUser} onChange={handleSelectAllUser} />
+										</div>
+									</div>
+								}
+								optionList={userSelect}
+								isLoading={isLoading}
+							/>
+						</div>
+						<div>
+							<EditorField name="Content" label="Nội dung" onChangeEditor={(value) => form.setFieldsValue({ Content: value })} />
+						</div>
 					</div>
-					<SelectField
-						className="label-full"
-						mode="multiple"
-						name="UserIds"
-						label={
-							<div className="antd-custom-wrap ant-form-item-label flex items-center justify-between">
-								<span>Tài khoản</span>
-								<div>
-									<span className="mr-2">Chọn tất cả</span>
-									<Switch checked={selectAllUser} onChange={handleSelectAllUser} />
-								</div>
-							</div>
-						}
-						optionList={userSelect}
-					/>
-					<InputTextField name="Title" label="Tiêu đề" />
-					<EditorField name="Content" label="Nội dung" onChangeEditor={(value) => form.setFieldsValue({ Content: value })} />
+
 					<div className="antd-custom-wrap ant-form-item-label flex items-center justify-between">
 						<div>
 							<Form.Item name="IsSendMail">

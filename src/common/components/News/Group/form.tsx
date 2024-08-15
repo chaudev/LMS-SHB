@@ -1,14 +1,15 @@
+import { PlusOutlined } from '@ant-design/icons'
 import { Form, Input, Modal, Select } from 'antd'
 import { useCallback, useEffect, useState } from 'react'
-import { AiOutlinePlus } from 'react-icons/ai'
-import ModalFooter from '../../Modal/ModalFooter'
-import { PlusOutlined } from '@ant-design/icons'
 import { useDropzone } from 'react-dropzone'
-import { ShowNostis } from '~/common/utils'
+import { MdSettings } from 'react-icons/md'
 import RestApi from '~/api/RestApi'
 import { UploadFileApi } from '~/api/common/upload-image'
-import { MdSettings } from 'react-icons/md'
+import { ShowNostis, ShowNoti } from '~/common/utils'
+import ModalFooter from '../../Modal/ModalFooter'
 import PrimaryButton from '../../Primary/Button'
+
+const maxSize = 2 * 1024 * 1024 // Giới hạn kích thước ảnh 2MB
 
 function GroupForm(props) {
 	const { onRefresh, defaultData, isEdit = false } = props
@@ -18,6 +19,7 @@ function GroupForm(props) {
 	const [files, setFiles] = useState([])
 
 	const onDrop = useCallback((acceptedFiles) => {
+		console.log(acceptedFiles)
 		setFiles(
 			acceptedFiles.map((file) =>
 				Object.assign(file, {
@@ -27,7 +29,13 @@ function GroupForm(props) {
 		)
 	}, [])
 
-	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({
+		onDrop,
+		maxSize: maxSize,
+		onDropRejected() {
+			ShowNoti('error', 'File quá lớn. Kích thước tối đa là 2MB.');
+		}
+	})
 	const [form] = Form.useForm()
 
 	const getAllClass = async () => {
