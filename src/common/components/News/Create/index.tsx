@@ -9,11 +9,9 @@ import { useSelector } from 'react-redux'
 import { UploadFileApi } from '~/api/common/upload-image'
 import RestApi from '~/api/RestApi'
 import { useNewsContext } from '~/common/providers/News'
-import { log, ShowNostis } from '~/common/utils'
+import { ShowNostis, ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
 import Avatar from '../../Avatar'
-import BaseLoading from '../../BaseLoading'
-import SelectField from '../../FormControl/SelectField'
 import PrimaryTooltip from '../../PrimaryTooltip'
 import MainCreate from './main-create'
 
@@ -47,7 +45,6 @@ const CreateNews: FC<TCreateNews> = (props) => {
 	const handleCancel = () => setPreviewOpen(false)
 
 	const handlePreview = async (file: UploadFile) => {
-		console.log('đang ở trên đây')
 
 		if (!file.url && !file.preview) {
 			file.preview = await getBase64(file.originFileObj as RcFile)
@@ -55,7 +52,6 @@ const CreateNews: FC<TCreateNews> = (props) => {
 		setPreviewImage(file.url || (file.preview as string))
 		setPreviewOpen(true)
 		setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1))
-		console.log('dang ở đây')
 	}
 
 	const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => setFileList(newFileList)
@@ -190,6 +186,14 @@ const CreateNews: FC<TCreateNews> = (props) => {
 		setVisible(true)
 	}
 
+	const handleBeforeUpload = (file) => {
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      ShowNoti('error', 'File quá lớn. Kích thước tối đa là 2MB.');
+    }
+    return isLt2M ? true : Upload.LIST_IGNORE; // Ngăn upload nếu file lớn hơn 2MB
+  };
+
 	return (
 		<>
 			{!isEdit && <MainCreate onClick={() => setVisible(true)} setHaveImage={setHaveImage} />}
@@ -248,12 +252,11 @@ const CreateNews: FC<TCreateNews> = (props) => {
 								disabled={posting}
 								listType="picture-card"
 								fileList={fileList}
+								
 								onPreview={handlePreview}
 								onRemove={(event) => {}}
 								onChange={handleChange}
-								beforeUpload={() => {
-									return false
-								}}
+								beforeUpload={handleBeforeUpload}
 							>
 								{fileList.length >= 8 ? null : uploadButton}
 							</Upload>

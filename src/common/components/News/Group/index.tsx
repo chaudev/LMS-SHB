@@ -67,7 +67,7 @@ function NewsGroup(props) {
 
 			{!loading && !!groups && groups.length != 0 && (
 				<>
-					{groups.map((group, indexGroup) => {
+					{groups?.map((group, indexGroup) => {
 						return (
 							<div
 								key={`the-group-${indexGroup}`}

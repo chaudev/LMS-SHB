@@ -1,40 +1,36 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { customerAdviseApi } from '~/api/customer'
-import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { ShowNoti } from '~/common/utils'
-import FilterTable from '~/common/utils/table-filter'
-import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
-import CustomerAdviseForm from '~/common/components/Customer/CustomerAdviseForm'
-import CustomerAdvisoryMail from '~/common/components/Customer/CustomerAdvisory/CustomerAdvisoryMail'
-import { useSelector } from 'react-redux'
-import { RootState } from '~/store'
-import { useDispatch } from 'react-redux'
-import { branchApi } from '~/api/branch'
-import { setBranch } from '~/store/branchReducer'
+import { Input, Popover } from 'antd'
+import { useRouter } from 'next/router'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { BsThreeDots } from 'react-icons/bs'
+import { useDispatch, useSelector } from 'react-redux'
 import { areaApi } from '~/api/area'
-import { setArea } from '~/store/areaReducer'
-import { sourceApi } from '~/api/source'
-import { is, parseSelectArray } from '~/common/utils/common'
-import { userInformationApi } from '~/api/user/user'
+import { branchApi } from '~/api/branch'
+import { customerAdviseApi } from '~/api/customer'
+import { customerStatusApi } from '~/api/customer-status'
 import { learningNeedApi } from '~/api/learning-needs'
 import { purposeApi } from '~/api/purpose'
-import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
-import FilterBase from '~/common/components/Elements/FilterBase'
-import { customerStatusApi } from '~/api/customer-status'
-import SortBox from '~/common/components/Elements/SortBox'
+import { sourceApi } from '~/api/source'
+import CustomerAdviseForm from '~/common/components/Customer/CustomerAdviseForm'
+import CustomerAdvisoryMail from '~/common/components/Customer/CustomerAdvisory/CustomerAdvisoryMail'
 import CustomerAdvisoryNote from '~/common/components/Customer/CustomerAdvisory/CustomerAdvisoryNote'
-import { useRouter } from 'next/router'
-import { setSource } from '~/store/sourceReducer'
+import CustomerStatusHistory from '~/common/components/Customer/CustomerStatusHistory'
+import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import PrimaryButton from '~/common/components/Primary/Button'
+import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
+import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
+import { ShowNoti } from '~/common/utils'
+import { is, parseSelectArray } from '~/common/utils/common'
+import FilterTable from '~/common/utils/table-filter'
+import { RootState } from '~/store'
+import { setArea } from '~/store/areaReducer'
+import { setBranch } from '~/store/branchReducer'
+import { setCustomerStatus } from '~/store/customerStatusReducer'
 import { setLearningNeed } from '~/store/learningNeedReducer'
 import { setPurpose } from '~/store/purposeReducer'
-import { setCustomerStatus } from '~/store/customerStatusReducer'
-import { Input, Popover } from 'antd'
-import PrimaryButton from '~/common/components/Primary/Button'
-import { BsThreeDots } from 'react-icons/bs'
-import appConfigs from '~/appConfig'
+import { setSource } from '~/store/sourceReducer'
 import ImportCustomer from './ImportCustomer'
-import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
-import CustomerStatusHistory from '~/common/components/Customer/CustomerStatusHistory'
+import CustomerExportImport from './CustomerExportImport'
 
 let pageIndex = 1
 let dataOption = [
@@ -488,28 +484,30 @@ const CustomerAdvisory = () => {
 			}
 		}
 	]
+
+	const rolePermission =
+		is(userInformation).admin ||
+		is(userInformation).teacher ||
+		is(userInformation).manager ||
+		is(userInformation).saler ||
+		is(userInformation).academic
+
 	const content = (
 		<div className="flex flex-col gap-3">
-			{(is(userInformation).admin ||
-				is(userInformation).teacher ||
-				is(userInformation).manager ||
-				is(userInformation).saler ||
-				is(userInformation).academic) && (
+			<CustomerExportImport rolePermission={rolePermission} getAllCustomer={() => getAllCustomer()} />
+
+			{/* {rolePermission && (
 				<PrimaryButton
 					className="w-full btn-download"
 					type="button"
 					icon="download"
 					background="blue"
-					onClick={() => window.open(`${appConfigs.linkDownloadExcelCustomer}?key=${new Date().getTime()}`)}
+					// onClick={() => window.open(`${appConfigs.linkDownloadExcelCustomer}?key=${new Date().getTime()}`)}
 				>
 					File mẫu
 				</PrimaryButton>
 			)}
-			{(is(userInformation).admin ||
-				is(userInformation).teacher ||
-				is(userInformation).manager ||
-				is(userInformation).saler ||
-				is(userInformation).academic) && <ImportCustomer className="w-full btn-import" onFetchData={() => getAllCustomer()} />}
+			{rolePermission && <ImportCustomer className="w-full btn-import" onFetchData={() => getAllCustomer()} />} */}
 
 			<PrimaryButton
 				className="!w-full "
@@ -534,6 +532,7 @@ const CustomerAdvisory = () => {
 			/>
 		</div>
 	)
+
 	return (
 		<div className="info-course-customer">
 			<ExpandTable
@@ -572,26 +571,19 @@ const CustomerAdvisory = () => {
 					<div className="extra-table">
 						<div className="wrap-btn-customer">
 							<div className="flex">
-								{(is(userInformation).admin ||
-									is(userInformation).teacher ||
-									is(userInformation).manager ||
-									is(userInformation).saler ||
-									is(userInformation).academic) && (
+								<CustomerExportImport rolePermission={rolePermission} getAllCustomer={getAllCustomer} />
+								{/* {rolePermission && (
 									<PrimaryButton
 										className="mr-2 btn-download"
 										type="button"
 										icon="download"
 										background="blue"
-										onClick={() => window.open(`${appConfigs.linkDownloadExcelCustomer}?key=${new Date().getTime()}`)}
+										// onClick={() => window.open(`${appConfigs.linkDownloadExcelCustomer}?key=${new Date().getTime()}`)}
 									>
 										File mẫu
 									</PrimaryButton>
 								)}
-								{(is(userInformation).admin ||
-									is(userInformation).teacher ||
-									is(userInformation).manager ||
-									is(userInformation).saler ||
-									is(userInformation).academic) && <ImportCustomer className="mr-1 btn-import" onFetchData={() => getAllCustomer()} />}
+								{rolePermission && <ImportCustomer className="mr-1 btn-import" onFetchData={() => getAllCustomer()} />} */}
 
 								<PrimaryButton
 									background="orange"
