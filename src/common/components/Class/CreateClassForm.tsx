@@ -408,11 +408,19 @@ const CreateClassForm = (props) => {
 		} else {
 			setTeacher([])
 		}
-		form.setFieldValue('TeacherId', '')
+
+		// if (form.getFieldValue("TeacherId")) {
+		// 	form.setFieldValue('TeacherId', '')
+		// }
+
 	}, [form.getFieldValue('BranchId'), form.getFieldValue('ProgramId')])
-	useEffect(() => {
-		form.setFieldValue('AcademicId', '')
-	}, [form.getFieldValue('BranchId')])
+
+	// useEffect(() => {
+	// 	if (form.getFieldValue('AcademicId')) {
+	// 		form.setFieldValue('AcademicId', '')
+	// 	}
+	// }, [form.getFieldValue('BranchId')])
+
 	useEffect(() => {
 		form.setFieldValue('TeachingFee', 0)
 	}, [])
@@ -484,7 +492,7 @@ const CreateClassForm = (props) => {
 							/>
 						</div>
 						{!isOnline && (
-							<div className="col-md-6 col-12"> 
+							<div className="col-md-6 col-12">
 								<SelectField
 									isRequired
 									rules={formRequired}

@@ -69,12 +69,13 @@ const CreateUser: FC<ICreateNew> = (props) => {
 		Email: yup.string().email('Email nhập sai cú pháp').required('Bạn không được để trống'),
 		Mobile: yup.string().required('Bạn không được để trống'),
 		Gender: yup.string().required('Bạn không được để trống'),
-		BranchIds: yup.mixed().required('Bạn không được để trống')
+		BranchIds: yup.mixed().required('Bạn không được để trống'),
+		Password: yup.string().required('Bạn không được để trống')
 	})
 
 	const yupSync = {
 		async validator({ field }, value) {
-			await schema.validateSyncAt(field, { [field]: value })
+			schema.validateSyncAt(field, { [field]: value })
 		}
 	}
 
@@ -455,9 +456,18 @@ const CreateUser: FC<ICreateNew> = (props) => {
 							name="FullName"
 							isRequired
 							rules={[yupSync]}
+							placeholder="Họ tên"
 						/>
 
-						<InputTextField className={'col-span-2'} label="Tên đăng nhập" name="UserName" isRequired rules={[yupSync]} />
+						<InputTextField
+							className={'col-span-2'}
+							label="Tên đăng nhập"
+							placeholder="Tên đăng nhập"
+							name="UserName"
+							isRequired
+							rules={[yupSync]}
+						/>
+						<InputTextField className={'col-span-2'} label="Mã học viên" name="UserCode" placeholder="Mã học viên" />
 
 						{!isEdit && !isStudent && !isChangeInfo && (
 							<SelectField
@@ -465,6 +475,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 								label="Chức vụ"
 								name="RoleId"
 								isRequired
+								placeholder="Chức vụ"
 								rules={[yupSync]}
 								optionList={roleStaff}
 								onChangeSelect={(val) => {
@@ -481,6 +492,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 							className="col-span-2"
 							label="Giới tính"
 							name="Gender"
+							placeholder="Giới tính"
 							isRequired
 							rules={[yupSync]}
 							optionList={[
@@ -518,13 +530,34 @@ const CreateUser: FC<ICreateNew> = (props) => {
 							</Form.Item>
 						)}
 
-						<InputTextField className="col-span-2" label="Địa chỉ Email" name="Email" isRequired rules={[yupSync]} />
-						<InputTextField className="col-span-2" label="Số điện thoại" name="Mobile" isRequired rules={[yupSync]} />
-						<DatePickerField className="col-span-2" label="Ngày sinh" name="DOB" mode="single" format="DD/MM/YYYY" />
+						<InputTextField
+							className="col-span-2"
+							label="Địa chỉ Email"
+							placeholder="Địa chỉ Email"
+							name="Email"
+							isRequired
+							rules={[yupSync]}
+						/>
+						<InputTextField
+							className="col-span-2"
+							label="Số điện thoại"
+							placeholder="Số điện thoại"
+							name="Mobile"
+							isRequired
+							rules={[yupSync]}
+						/>
+						<DatePickerField
+							className="col-span-2"
+							label="Ngày sinh"
+							placeholder="Ngày sinh"
+							name="DOB"
+							mode="single"
+							format="DD/MM/YYYY"
+						/>
 						{isStudent && (
 							<>
-								<InputTextField className="col-span-2" label="Nơi sinh" name="BirthPlace" />
-								<InputTextField className="col-span-2" label="Quê quán" name="NativeLand" />
+								<InputTextField className="col-span-2" label="Nơi sinh" placeholder="Nơi sinh" name="BirthPlace" />
+								<InputTextField className="col-span-2" label="Quê quán" placeholder="Quê quán" name="NativeLand" />
 							</>
 						)}
 
@@ -543,7 +576,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 						{user?.RoleId == 1 && isEdit ? (
 							<InputPassField className="col-span-2" label="Mật khẩu" name="Password" />
 						) : (
-							<InputTextField className="col-span-2" label="Mật khẩu" name="Password" />
+							<InputTextField className="col-span-2" label="Mật khẩu" name="Password" isRequired rules={[yupSync]} />
 						)}
 						{isStudent && (
 							<>
