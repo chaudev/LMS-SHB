@@ -1,8 +1,27 @@
-import { Modal } from 'antd'
+import { Divider, Modal, Tooltip } from 'antd'
 import { useState } from 'react'
+import { BsFillFileEarmarkPdfFill } from 'react-icons/bs'
+import { FaImages } from 'react-icons/fa'
 import { generalNotificationApi } from '~/api/general-notification'
 import { ShowNoti } from '~/common/utils'
+import { downloadByFileSaver } from '~/common/utils/donwloadFile'
 import IconButton from '../Primary/IconButton'
+
+const RenderFile = ({ fileLink }: { fileLink: string }) => {
+	const extension = fileLink.split('.').pop().toLowerCase()
+	const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'tiff', 'svg']
+
+	return (
+		<Tooltip placement="top" title={fileLink} key={fileLink}>
+			<div
+				onClick={() => downloadByFileSaver({ FileName: fileLink, FileUrl: fileLink })}
+				className="w-[24px] cursor-pointer h-[24px] flex items-center justify-center"
+			>
+				{imageExtensions.includes(extension) ? <FaImages size={18} color="#1E88E5"/> : <BsFillFileEarmarkPdfFill size={18} color="#1E88E5" />}
+			</div>
+		</Tooltip>
+	)
+}
 
 const GeneralNotificationUserReceiver = (props) => {
 	const { dataRow } = props
@@ -16,7 +35,7 @@ const GeneralNotificationUserReceiver = (props) => {
 	const handleCancel = () => {
 		setIsModalOpen(false)
 	}
-	
+
 	const getUserReceiver = async (id) => {
 		try {
 			const res = await generalNotificationApi.getReceiverById(id)
@@ -36,17 +55,28 @@ const GeneralNotificationUserReceiver = (props) => {
 					<div className="">
 						{dataReceiver?.map((item) => (
 							<div key={item?.UserInformationId}>
-								<span className='font-semibold'>{item?.UserCode}</span>
+								<span className="font-semibold">{item?.UserCode}</span>
 								<span> - </span>
-								<span className='font-blod'>{item?.FullName}</span>
+								<span className="font-blod">{item?.FullName}</span>
 							</div>
 						))}
 					</div>
 				)}
-				{dataReceiver?.length <= 0 && (
-					<div className="w-full text-center">
-						Chưa có người nhận thông báo
-					</div>
+				{dataReceiver?.length <= 0 && <div className="w-full text-center">Chưa có người nhận thông báo</div>}
+
+				{dataReceiver[0]?.Achievements && (
+					<>
+						<Divider />
+						<div className="flex flex-col">
+							<span className="font-semibold mb-2 py-2">File đính kèm</span>
+
+							<div className="flex gap-4">
+								{JSON.parse(dataReceiver[0]?.Achievements)?.map((item, index) => (
+									<RenderFile fileLink={item} key={item} />
+								))}
+							</div>
+						</div>
+					</>
 				)}
 			</Modal>
 		</>

@@ -6,6 +6,9 @@ import { formNoneRequired, formRequired } from '~/common/libs/others/form'
 import ModalFooter from '../../ModalFooter'
 import { studentPointRecordApi } from '~/api/class/report'
 import { ShowNostis } from '~/common/utils'
+import { RootState } from '~/store'
+import { useSelector } from 'react-redux'
+import { is } from '~/common/utils/common'
 
 type TReportForm = {
 	data: any
@@ -13,6 +16,8 @@ type TReportForm = {
 }
 
 const ReportForm: FC<TReportForm> = (props) => {
+	const user = useSelector((state: RootState) => state.user.information)
+
 	const { data, onUpdateItem } = props
 
 	const [visible, setVisible] = useState<boolean>(false)
@@ -20,8 +25,6 @@ const ReportForm: FC<TReportForm> = (props) => {
 	function toggle() {
 		setVisible(!visible)
 	}
-
-	console.log('data: ', data)
 
 	const formattedData = [
 		{
@@ -67,9 +70,11 @@ const ReportForm: FC<TReportForm> = (props) => {
 				Extra="Nhận xét của GVCN"
 				TitleCard={
 					<div className="w-full">
-						<PrimaryButton onClick={handleOpenEdit} icon="edit" type="button" background="primary">
-							Cập nhật
-						</PrimaryButton>
+						{!(is(user).student || is(user).parent) && (
+							<PrimaryButton onClick={handleOpenEdit} icon="edit" type="button" background="primary">
+								Cập nhật
+							</PrimaryButton>
+						)}
 					</div>
 				}
 				addClass="basic-header hide-pani"

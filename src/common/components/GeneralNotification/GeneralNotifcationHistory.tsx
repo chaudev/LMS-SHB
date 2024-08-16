@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import ExpandTable from '../Primary/Table/ExpandTable'
-import GeneralNotificationUserReceiver from './GeneralNotificationUserReceiver'
+import { useQuery } from '@tanstack/react-query'
 import moment from 'moment'
+import { useEffect, useState } from 'react'
 import ReactHtmlParser from 'react-html-parser'
 import { generalNotificationApi } from '~/api/general-notification'
+import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
-import { useQuery } from '@tanstack/react-query'
+import ExpandTable from '../Primary/Table/ExpandTable'
+import GeneralNotificationUserReceiver from './GeneralNotificationUserReceiver'
 
 const GeneralNotificationHistory = () => {
 	const [filter, setFilter] = useState({
@@ -14,7 +14,7 @@ const GeneralNotificationHistory = () => {
 		pageIndex: 1,
 		totalPage: 0
 	})
-	const [generalNotification, setGeneralNotification] = useState<IGeneralNotification[]>([])
+	const [generalNotification, setGeneralNotification] = useState<TGeneralNotification[]>([])
 
 	const getAllGeneralNotifications = async () => {
 		try {
@@ -31,12 +31,18 @@ const GeneralNotificationHistory = () => {
 		}
 	}
 
-	const { data, isLoading, isFetching } = useQuery({
+
+	const { data, isLoading, isFetching, refetch } = useQuery({
 		queryKey: ['GET /api/GeneralNotification'],
 		queryFn: getAllGeneralNotifications,
+		retry: false,
 		refetchOnMount: false,
-		retry: false
+		refetchOnWindowFocus: false
 	})
+
+	useEffect(() => {
+		refetch()
+	}, [])
 
 	const columns = [
 		{

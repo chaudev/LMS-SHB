@@ -66,6 +66,10 @@ export const userInformationApi = {
 		})
 	},
 
+	getTemplate() {
+		return instance.get(`${url}/student-template`)
+	},
+
 	// profile template
 	getAllProfileTemplate(Id: string | number) {
 		return instance.get<IApiResultData<IUserProfileTemplateItem[]>>(url + '/profile/' + Id)

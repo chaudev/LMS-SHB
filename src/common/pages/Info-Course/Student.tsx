@@ -1,51 +1,52 @@
+import { Alert, Form, Input, Modal, Popconfirm, Popover } from 'antd'
+import moment from 'moment'
+import Link from 'next/link'
 import React, { FC, useEffect, useMemo, useState } from 'react'
+import { Filter } from 'react-feather'
+import { BsThreeDots } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { areaApi } from '~/api/area'
-import { registerApi, userInformationApi } from '~/api/user/user'
-import { Alert, Form, Input, Modal, Popconfirm, Popover } from 'antd'
-import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { ShowNostis, ShowNoti } from '~/common/utils'
-import { RootState } from '~/store'
-import { setArea } from '~/store/areaReducer'
-import PrimaryTable from '~/common/components/Primary/Table'
-import PrimaryButton from '~/common/components/Primary/Button'
-import { BsThreeDots } from 'react-icons/bs'
-import ImportStudent from '~/common/components/User/ImportStudent'
-import CreateUser from '~/common/components/User/user-form'
-import appConfigs from '~/appConfig'
-import { is, parseSelectArray } from '~/common/utils/common'
 import { branchApi } from '~/api/branch'
-import { setBranch } from '~/store/branchReducer'
-import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
-import { sourceApi } from '~/api/source'
-import { learningNeedApi } from '~/api/learning-needs'
-import { purposeApi } from '~/api/purpose'
-import { setSource } from '~/store/sourceReducer'
-import { setLearningNeed } from '~/store/learningNeedReducer'
-import { setPurpose } from '~/store/purposeReducer'
-import { userInfoColumn } from '~/common/libs/columns/user-info'
-import { ButtonEye } from '~/common/components/TableButton'
-import { PrimaryTooltip } from '~/common/components'
-import IconButton from '~/common/components/Primary/IconButton'
-import Link from 'next/link'
-import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
-import { processApi } from '~/api/process'
-import { visaStatusApi } from '~/api/visa-status'
 import { foreignLanguageApi } from '~/api/foreign-language'
-import { profileStatusApi } from '~/api/profile-status'
-import OverviewStatusStudent from './OverviewStatusStudent'
-import { permissionApi } from '~/api/permission'
-import PrimaryTag from '~/common/components/Primary/Tag'
-import moment from 'moment'
-import { useRole } from '~/common/hooks/useRole'
-import SelectField from '~/common/components/FormControl/SelectField'
-import DatePickerField from '~/common/components/FormControl/DatePickerField'
+import { learningNeedApi } from '~/api/learning-needs'
 import { officeApi } from '~/api/office'
 import { partnerApi } from '~/api/partner'
-import { Filter } from 'react-feather'
+import { permissionApi } from '~/api/permission'
+import { processApi } from '~/api/process'
+import { profileStatusApi } from '~/api/profile-status'
+import { purposeApi } from '~/api/purpose'
+import { sourceApi } from '~/api/source'
+import { registerApi, userInformationApi } from '~/api/user/user'
+import { visaStatusApi } from '~/api/visa-status'
+import appConfigs from '~/appConfig'
+import { PrimaryTooltip } from '~/common/components'
+import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import DatePickerField from '~/common/components/FormControl/DatePickerField'
+import SelectField from '~/common/components/FormControl/SelectField'
 import ModalFooter from '~/common/components/ModalFooter'
-import { useRouter } from 'next/router'
+import PrimaryButton from '~/common/components/Primary/Button'
+import IconButton from '~/common/components/Primary/IconButton'
+import PrimaryTable from '~/common/components/Primary/Table'
+import PrimaryTag from '~/common/components/Primary/Tag'
+import { ButtonEye } from '~/common/components/TableButton'
+import ImportStudent from '~/common/components/User/ImportStudent'
+import CreateUser from '~/common/components/User/user-form'
+import { useRole } from '~/common/hooks/useRole'
+import { userInfoColumn } from '~/common/libs/columns/user-info'
+import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
+import { ShowNostis, ShowNoti } from '~/common/utils'
+import { is, parseSelectArray } from '~/common/utils/common'
 import { ShowErrorToast } from '~/common/utils/main-function'
+import { RootState } from '~/store'
+import { setArea } from '~/store/areaReducer'
+import { setBranch } from '~/store/branchReducer'
+import { setLearningNeed } from '~/store/learningNeedReducer'
+import { setPurpose } from '~/store/purposeReducer'
+import { setSource } from '~/store/sourceReducer'
+import OverviewStatusStudent from './OverviewStatusStudent'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
@@ -53,6 +54,7 @@ const Student: FC<IPersonnel> = (props) => {
 	const userInformation = useSelector((state: RootState) => state.user.information)
 	const { isParents } = useRole()
 	const dispatch = useDispatch()
+	const router = useRouter()
 
 	const initParamters = {
 		sort: 0,
@@ -947,6 +949,13 @@ const Student: FC<IPersonnel> = (props) => {
 		}
 	]
 
+	const mutationGetTemplate = useMutation({
+		mutationKey: ["GET /api/UserInformation/student-template"],
+		mutationFn: async () => userInformationApi.getTemplate(),
+		onSuccess: (res) => router.push(res.data.data),
+		onError: (error) => ShowNoti("error", error.message)
+	})
+
 	return (
 		<div className="info-course-student">
 			<PrimaryTable
@@ -1018,7 +1027,9 @@ const Student: FC<IPersonnel> = (props) => {
 								type="button"
 								icon="download"
 								background="blue"
-								onClick={() => window.open(`${appConfigs.linkDownloadExcel}?key=${new Date().getTime()}`)}
+								loading={mutationGetTemplate.isPending}
+								onClick={() => mutationGetTemplate.mutateAsync()}
+								// onClick={() => window.open(`${appConfigs.linkDownloadExcel}?key=${new Date().getTime()}`)}
 							>
 								File mẫu
 							</PrimaryButton>

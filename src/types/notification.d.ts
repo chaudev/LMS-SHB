@@ -1,4 +1,5 @@
 type INotification = {
+	Achievements?: string
 	Content: string
 	Enable: boolean
 	Id: number

@@ -495,20 +495,6 @@ const CustomerAdvisory = () => {
 	const content = (
 		<div className="flex flex-col gap-3">
 			<CustomerExportImport rolePermission={rolePermission} getAllCustomer={() => getAllCustomer()} />
-
-			{/* {rolePermission && (
-				<PrimaryButton
-					className="w-full btn-download"
-					type="button"
-					icon="download"
-					background="blue"
-					// onClick={() => window.open(`${appConfigs.linkDownloadExcelCustomer}?key=${new Date().getTime()}`)}
-				>
-					File mẫu
-				</PrimaryButton>
-			)}
-			{rolePermission && <ImportCustomer className="w-full btn-import" onFetchData={() => getAllCustomer()} />} */}
-
 			<PrimaryButton
 				className="!w-full "
 				background="orange"
@@ -572,19 +558,6 @@ const CustomerAdvisory = () => {
 						<div className="wrap-btn-customer">
 							<div className="flex">
 								<CustomerExportImport rolePermission={rolePermission} getAllCustomer={getAllCustomer} />
-								{/* {rolePermission && (
-									<PrimaryButton
-										className="mr-2 btn-download"
-										type="button"
-										icon="download"
-										background="blue"
-										// onClick={() => window.open(`${appConfigs.linkDownloadExcelCustomer}?key=${new Date().getTime()}`)}
-									>
-										File mẫu
-									</PrimaryButton>
-								)}
-								{rolePermission && <ImportCustomer className="mr-1 btn-import" onFetchData={() => getAllCustomer()} />} */}
-
 								<PrimaryButton
 									background="orange"
 									type="button"

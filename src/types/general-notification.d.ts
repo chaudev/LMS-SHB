@@ -1,12 +1,21 @@
-type IGeneralNotification = {
+type TGeneralNotification = IBaseApi<{
+	Title: string
+	Content: string
+	UserIds: string // '1440'
+	IsSendMail: boolean
+	Achievements: string[]
+}>
+
+type TCreateGeneralNotification = {
 	Title: string
 	Content: string
 	UserIds: string
 	IsSendMail: boolean
-	Id: number
-	Enable: boolean
-	CreatedOn: string
-	CreatedBy: string
-	ModifiedOn: string
-	ModifiedBy: string
+	Achievements: string // string[]
+}
+
+type TGeneralNotificationReceiver = {
+	UserInformationId: number
+	FullName: string 
+	UserCode: string
 }

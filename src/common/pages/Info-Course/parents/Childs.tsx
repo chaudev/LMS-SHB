@@ -119,7 +119,7 @@ export default function Childs(props) {
 	const getAllBranch = async () => {
 		if (isAdmin() || isSaler() || isManager()) {
 			try {
-				const res = await branchApi.getAll({ pageSize: 99999 ,  })
+				const res = await branchApi.getAll({ pageSize: 99999 })
 				if (res.status == 200) {
 					dispatch(setBranch(res.data.data))
 				} else {
@@ -200,7 +200,8 @@ export default function Childs(props) {
 		},
 		{
 			title: 'Email',
-			dataIndex: 'Email'
+			dataIndex: 'Email',
+			width: 120,
 		},
 		{
 			title: 'Ngày sinh',
@@ -224,7 +225,8 @@ export default function Childs(props) {
 		},
 		{
 			title: '',
-			dataIndex: 'Gender',
+			dataIndex: 'action',
+			width: 100,
 			render: (value, record) => (
 				<>
 					<PrimaryTooltip id={`dele-${record?.UserInformationId}`} place="left" content="Xoá">
@@ -238,21 +240,18 @@ export default function Childs(props) {
 	]
 
 	return (
-		<PrimaryTable
-			className="w-[1176px]"
-			current={currentPage}
-			total={totalPage && totalPage}
-			onChangePage={(pageNumber: number) => getPagination(pageNumber)}
-			loading={isLoading}
-			data={dataSource}
-			columns={columns}
-			Extra={
-				<>
-					{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && (
-						<AddChildForm parent={props?.rowData} onRefresh={getDataSource} />
-					)}
-				</>
-			}
-		/>
+		<div>
+			{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && (
+				<AddChildForm parent={props?.rowData} onRefresh={getDataSource} />
+			)}
+			<PrimaryTable
+				current={currentPage}
+				total={totalPage && totalPage}
+				onChangePage={(pageNumber: number) => getPagination(pageNumber)}
+				loading={isLoading}
+				data={dataSource}
+				columns={columns}
+			/>
+		</div>
 	)
 }

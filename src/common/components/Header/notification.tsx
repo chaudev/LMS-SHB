@@ -1,4 +1,4 @@
-import { Card, Empty, List, Popover } from 'antd'
+import { Card, Empty, List, Popover, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
@@ -8,7 +8,29 @@ import { ShowNoti } from '~/common/utils'
 import { RootState } from '~/store'
 import { getAll } from '~/store/notificateReducer'
 import ReactHtmlParser from 'react-html-parser'
-import { FaBell } from 'react-icons/fa'
+import { FaBell, FaImages } from 'react-icons/fa'
+import { BsFillFileEarmarkPdfFill } from 'react-icons/bs'
+import { downloadByFileSaver } from '~/common/utils/donwloadFile'
+
+const RenderFile = ({ fileLink }: { fileLink: string }) => {
+	const extension = fileLink.split('.').pop().toLowerCase()
+	const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'tiff', 'svg']
+
+	return (
+		<Tooltip placement="top" title={fileLink} key={fileLink}>
+			<div
+				onClick={() => downloadByFileSaver({ FileName: fileLink, FileUrl: fileLink })}
+				className="w-[24px] cursor-pointer h-[24px] flex items-center justify-center"
+			>
+				{imageExtensions.includes(extension) ? (
+					<FaImages size={18} color="#1E88E5" />
+				) : (
+					<BsFillFileEarmarkPdfFill size={18} color="#1E88E5" />
+				)}
+			</div>
+		</Tooltip>
+	)
+}
 
 const Notification = () => {
 	const notification = useSelector((state: RootState) => state.notificate.dataNotificate)
@@ -164,6 +186,14 @@ const Notification = () => {
 										<div>
 											<p>{ReactHtmlParser(item.Content)}</p>
 										</div>
+										<div className="mt-2 pt-2">
+											<span className="font-semibold mb-2 py-2">File đính kèm</span>
+											<div className="flex gap-4">
+												{item?.Achievements &&
+													JSON.parse(item?.Achievements) &&
+													JSON.parse(item?.Achievements)?.map((x) => <RenderFile fileLink={x} key={x} />)}
+											</div>
+										</div>
 									</div>
 								</List.Item>
 							)}
@@ -176,6 +206,14 @@ const Notification = () => {
 							</div>
 							<div>
 								<p>{ReactHtmlParser(contentToShow[0]?.Content)}</p>
+							</div>
+							<div className="mt-2 pt-2">
+								<span className="font-semibold mb-2 py-2">File đính kèm</span>
+								<div className="flex gap-4">
+									{contentToShow[0]?.Achievements &&
+										JSON.parse(contentToShow[0]?.Achievements) &&
+										JSON.parse(contentToShow[0]?.Achievements)?.map((item) => <RenderFile fileLink={item} key={item} />)}
+								</div>
 							</div>
 						</div>
 					)}

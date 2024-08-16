@@ -159,7 +159,6 @@ export const RollUpPage = () => {
 	const [isUpdate, setIsUpdate] = useState<any>(null)
 	const [dataUpdate, setDataUpdate] = useState<DataUpdate[]>([])
 
-	const [loadingUpdate, setLoadingUpdate] = useState(-1)
 
 	const getSchedule = async (params) => {
 		try {
@@ -468,7 +467,7 @@ export const RollUpPage = () => {
 							</Select>
 						</div>
 						<div>
-							{[1, 2, 4, 7].includes(Number(user?.RoleId)) && !!rowSelected.length && (
+							{[1, 2, 4, 7].includes(Number(user?.RoleId)) && !!rowSelected.length && !!scheduleId && (
 								<PrimaryButton
 									// color={dataUpdate.length > 0 ? 'green' : 'disabled'}
 									icon="check"
