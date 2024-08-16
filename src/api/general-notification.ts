@@ -3,14 +3,16 @@ import { instance } from '~/api/instance'
 const url = '/api/GeneralNotification'
 export const generalNotificationApi = {
 	getAll(Params: any) {
-		return instance.get<IApiResultData<IGeneralNotification[]>>(url, {
+		return instance.get<IApiResultData<TGeneralNotification[]>>(url, {
 			params: Params
 		})
 	},
-	getReceiverById(id) {
-		return instance.get<IApiResultData<IGeneralNotification[]>>(`${url}/receiver/${id}`)
+
+	getReceiverById(id: number) {
+		return instance.get<IApiResultData<TGeneralNotificationReceiver[]>>(`${url}/receiver/${id}`)
 	},
-	add(data) {
+
+	create(data: TCreateGeneralNotification) {
 		return instance.post(url, data)
 	}
 }

@@ -209,7 +209,7 @@ export default function Parents(props) {
 
 	const expandedRowRender = (record) => {
 		return (
-			<div className="!w-[1200px]">
+			<div className="w-[960px]">
 				<Childs rowData={record} />
 			</div>
 		)

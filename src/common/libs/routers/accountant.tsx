@@ -1,9 +1,6 @@
-import { AiFillSetting } from 'react-icons/ai'
 import { BsFillGridFill } from 'react-icons/bs'
-import { FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { FaMoneyBillAlt, FaUserTie } from 'react-icons/fa'
 import { HiMiniNewspaper } from 'react-icons/hi2'
-import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
-import { RiFileList2Fill } from 'react-icons/ri'
 import { TiHome } from 'react-icons/ti'
 
 export const AccountantMenu = [
@@ -17,11 +14,11 @@ export const AccountantMenu = [
 		TabName: 'Lớp học',
 		Icon: <BsFillGridFill size={22} />
 	},
-	{
-		Key: 'student',
-		TabName: 'Học viên',
-		Icon: <FaUserGraduate size={20} />
-	},
+	// {
+	// 	Key: 'student',
+	// 	TabName: 'Học viên',
+	// 	Icon: <FaUserGraduate size={20} />
+	// },
 	{
 		Key: 'staff',
 		TabName: 'Nhân viên',

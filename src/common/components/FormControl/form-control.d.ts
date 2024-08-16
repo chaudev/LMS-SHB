@@ -89,6 +89,7 @@ type IEditorField = {
 	customFieldProps?: any
 	id?: any
 	height?: number
+	allowPasteImage?: boolean
 }
 
 type IUploadFileField = {

@@ -23,30 +23,31 @@ import FilterBaseVer2 from '../../Elements/FilterBaseVer2'
 import { profileStatusApi } from '~/api/profile-status'
 import { officeApi } from '~/api/office'
 import { foreignLanguageApi } from '~/api/foreign-language'
+import { is } from '~/common/utils/common'
 
-const InputNote = ({ value, onChange, index }) => {
-	const [note, setNote] = useState('')
+// const InputNote = ({ value, onChange, index }) => {
+// 	const [note, setNote] = useState('')
 
-	const user = useSelector((state: RootState) => state.user.information)
+// 	const user = useSelector((state: RootState) => state.user.information)
 
-	useEffect(() => {
-		setNote(value)
-	}, [value])
+// 	useEffect(() => {
+// 		setNote(value)
+// 	}, [value])
 
-	function onChangeNote(params, index) {
-		setNote(params.target?.value)
-		onChange(params, index)
-	}
+// 	function onChangeNote(params, index) {
+// 		setNote(params.target?.value)
+// 		onChange(params, index)
+// 	}
 
-	return (
-		<Input
-			disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
-			onChange={(val) => onChangeNote(val, index)}
-			value={note}
-			className="rounded-lg mb-0"
-		/>
-	)
-}
+// 	return (
+// 		<Input
+// 			disabled={user?.RoleId == 2 || user?.RoleId == 1 || user?.RoleId == 4 || user?.RoleId == 7 ? false : true}
+// 			onChange={(val) => onChangeNote(val, index)}
+// 			value={note}
+// 			className="rounded-lg mb-0"
+// 		/>
+// 	)
+// }
 // const initFilter = { pageSize: PAGE_SIZE, pageIndex: 1, year: initYear, month: initMonth }
 
 export const StudentReport = () => {
@@ -166,29 +167,29 @@ export const StudentReport = () => {
 		}
 	}
 
-	const handleUpdatePoint = async (data) => {
-		try {
-			setIsLoading(true)
-			const res = await transcriptApi.updatePoint(data)
-			if (res.status === 200) {
-				ShowNoti('success', res.data.message)
-				setIsLoading(false)
-			}
-		} catch (error) {
-			ShowNoti('error', error.message)
-			setIsLoading(true)
-		} finally {
-			setIsLoading(false)
-		}
-	}
+	// const handleUpdatePoint = async (data) => {
+	// 	try {
+	// 		setIsLoading(true)
+	// 		const res = await transcriptApi.updatePoint(data)
+	// 		if (res.status === 200) {
+	// 			ShowNoti('success', res.data.message)
+	// 			setIsLoading(false)
+	// 		}
+	// 	} catch (error) {
+	// 		ShowNoti('error', error.message)
+	// 		setIsLoading(true)
+	// 	} finally {
+	// 		setIsLoading(false)
+	// 	}
+	// }
 
-	const handleSave = () => {
-		const dataSubmit = {
-			Id: transcriptId,
-			Items: dataTable
-		}
-		handleUpdatePoint(dataSubmit)
-	}
+	// const handleSave = () => {
+	// 	const dataSubmit = {
+	// 		Id: transcriptId,
+	// 		Items: dataTable
+	// 	}
+	// 	handleUpdatePoint(dataSubmit)
+	// }
 
 	useEffect(() => {
 		if (transcriptId) {
@@ -247,13 +248,15 @@ export const StudentReport = () => {
 			dataIndex: 'PassOrFail',
 			render: (text, item) => (
 				<div className="flex items-center">
-					<PrimaryTooltip className="w-full px-[8px]" place="left" content="Xoá" id={`remove-sc-${item?.Id}`}>
-						<Popconfirm placement="left" title="Xoá báo cáo này?" onConfirm={() => handleDelete(item?.Id)}>
-							<div className="w-[24px] cursor-pointer h-[24px] flex items-center justify-center text-[#C94A4F] hover:text-[#b43f43] focus:text-[#9f3136]">
-								<IoClose size={22} />
-							</div>
-						</Popconfirm>
-					</PrimaryTooltip>
+					{!(is(user).student || is(user).parent) && (
+						<PrimaryTooltip className="w-full px-[8px]" place="left" content="Xoá" id={`remove-sc-${item?.Id}`}>
+							<Popconfirm placement="left" title="Xoá báo cáo này?" onConfirm={() => handleDelete(item?.Id)}>
+								<div className="w-[24px] cursor-pointer h-[24px] flex items-center justify-center text-[#C94A4F] hover:text-[#b43f43] focus:text-[#9f3136]">
+									<IoClose size={22} />
+								</div>
+							</Popconfirm>
+						</PrimaryTooltip>
+					)}
 
 					<PrimaryTooltip place="left" id={`tooltip-${item?.Id}`} content="Xuất file">
 						<div onClick={() => handleExportFile(item)} className="w-[24px] cursor-pointer h-[24px] flex items-center justify-center">
