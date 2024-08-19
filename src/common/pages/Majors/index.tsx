@@ -126,7 +126,6 @@ export const MajorsPage = () => {
 								}
 							})
 						}}
-						tooltipPlacement="left"
 						tooltip="Hình thức thanh toán"
 					/>
 				</div>

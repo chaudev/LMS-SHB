@@ -684,7 +684,7 @@ const Student: FC<IPersonnel> = (props) => {
 							</Link>
 						</PrimaryTooltip>
 
-						{role !== 3 && (isAdmin() || is(userInformation).manager) && (
+						{role !== 3 && (isAdmin() || is(userInformation).manager || is(userInformation).saler) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}
@@ -699,7 +699,7 @@ const Student: FC<IPersonnel> = (props) => {
 							/>
 						)}
 
-						{role == 3 && (isAdmin() || is(userInformation).manager) && (
+						{role == 3 && (isAdmin() || is(userInformation).manager || is(userInformation).saler) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}
@@ -717,10 +717,10 @@ const Student: FC<IPersonnel> = (props) => {
 								isStudent={true}
 							/>
 						)}
-						{(isAdmin() || is(userInformation).manager) && (
+						{(isAdmin() || is(userInformation).manager || is(userInformation).saler) && (
 							<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
 						)}
-						{((role == 3 && isAdmin()) || is(userInformation).manager) && item.LearningStatus !== 1 && (
+						{((role == 3 && isAdmin()) || is(userInformation).manager || is(userInformation).saler) && item.LearningStatus !== 1 && (
 							<Popconfirm
 								title={
 									item.LearningStatus === 4
@@ -734,6 +734,7 @@ const Student: FC<IPersonnel> = (props) => {
 								okText={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
 								cancelText="Hủy"
 								okButtonProps={{ loading: loading }}
+								placement='bottomRight'
 							>
 								<IconButton tooltip={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'} icon="reserved" type="button" color="purple" />
 							</Popconfirm>
@@ -950,10 +951,10 @@ const Student: FC<IPersonnel> = (props) => {
 	]
 
 	const mutationGetTemplate = useMutation({
-		mutationKey: ["GET /api/UserInformation/student-template"],
+		mutationKey: ['GET /api/UserInformation/student-template'],
 		mutationFn: async () => userInformationApi.getTemplate(),
 		onSuccess: (res) => router.push(res.data.data),
-		onError: (error) => ShowNoti("error", error.message)
+		onError: (error) => ShowNoti('error', error.message)
 	})
 
 	return (
@@ -977,8 +978,8 @@ const Student: FC<IPersonnel> = (props) => {
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, PageIndex: event })}
 				TitleCard={
 					<>
-						{role === 3 && !isParents && !is(userInformation).teacher && !is(userInformation).accountant && <OverviewStatusStudent />}
-						{role == 3 ? (
+						{is(userInformation).student && !isParents && !is(userInformation).teacher && !is(userInformation).accountant && <OverviewStatusStudent />}
+						{is(userInformation).student ? (
 							<button onClick={() => setIsFilter(!isFilter)} className="btn btn-secondary light btn-filter">
 								<Filter />
 							</button>
@@ -1008,7 +1009,7 @@ const Student: FC<IPersonnel> = (props) => {
 				}
 				Extra={
 					<>
-						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager) && (
+						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager || is(userInformation).saler) && (
 							<PrimaryButton
 								loading={loadingAllow}
 								className="mr-2 btn-block-registration"
@@ -1021,7 +1022,7 @@ const Student: FC<IPersonnel> = (props) => {
 							</PrimaryButton>
 						)}
 
-						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager) && (
+						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager || is(userInformation).saler) && (
 							<PrimaryButton
 								className="mr-2 btn-download"
 								type="button"
@@ -1035,11 +1036,11 @@ const Student: FC<IPersonnel> = (props) => {
 							</PrimaryButton>
 						)}
 
-						{role == 3 && (isAdmin() || is(userInformation).manager) && (
+						{role == 3 && (isAdmin() || is(userInformation).manager || is(userInformation).saler) && (
 							<ImportStudent className="mr-1 btn-import" onFetchData={() => getUsers(apiParameters)} />
 						)}
 
-						{role == 3 && (isAdmin() || is(userInformation).manager) && <ExportStudents filterOption={dataFilterStudent} />}
+						{role == 3 && (isAdmin() || is(userInformation).manager || is(userInformation).saler) && <ExportStudents filterOption={dataFilterStudent} />}
 
 						<Popover
 							placement="bottomLeft"
@@ -1108,7 +1109,7 @@ const Student: FC<IPersonnel> = (props) => {
 							)}
 						</Popover>
 
-						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager) && (
+						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager || is(userInformation).saler) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}
@@ -1125,7 +1126,7 @@ const Student: FC<IPersonnel> = (props) => {
 							/>
 						)}
 
-						{role !== 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager) && (
+						{role !== 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager ) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}

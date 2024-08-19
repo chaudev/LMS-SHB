@@ -8,10 +8,10 @@ import { ShowErrorToast } from '~/common/utils/main-function'
 import ContractModal from './ContractModal'
 import { getDate } from '~/common/utils/super-functions'
 
-type TContractTable = {} & TMyTable
+type TContractTable = { isCanEdit: boolean } & TMyTable
 
 const ContractTable: React.FC<TContractTable> = (props) => {
-	const { refreshData } = props
+	const { refreshData, isCanEdit } = props
 	const columns = [
 		{
 			title: 'Mã hợp đồng',
@@ -41,17 +41,21 @@ const ContractTable: React.FC<TContractTable> = (props) => {
 				return <p>{getDate(value).stringDate}</p>
 			}
 		},
-		{
-			title: 'Chức năng',
-			align: 'center',
-			width: 120,
-			render: (text, data, index) => (
-				<div className="flex">
-					<ContractModal defaultData={data} refreshData={refreshData} />
-					<DeleteTableRow text={`hợp đồng ${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
-				</div>
-			)
-		}
+		...(isCanEdit
+			? [
+					{
+						title: 'Chức năng',
+						align: 'center',
+						width: 120,
+						render: (text, data, index) => (
+							<div className="flex">
+								<ContractModal defaultData={data} refreshData={refreshData} />
+								<DeleteTableRow text={`hợp đồng ${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+							</div>
+						)
+					}
+			  ]
+			: [])
 	]
 
 	const mutationDelete = useMutation({

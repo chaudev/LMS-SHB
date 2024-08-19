@@ -1,28 +1,25 @@
 import { Card, Form, Modal, Select, Spin } from 'antd'
-import React, { useEffect, useMemo, useState } from 'react'
+import moment from 'moment'
+import { useRouter } from 'next/router'
+import { useEffect, useMemo, useState } from 'react'
 import { giftApi } from '~/api/gift'
 import { majorsApi } from '~/api/majors/majors'
 import { majorsRegistrationApi } from '~/api/majors/registration'
 import { paymentTypeApi } from '~/api/option/payment-type'
+import { paymentMethodsApi } from '~/api/payment-method'
+import Avatar from '~/common/components/Avatar'
+import { ISelectOptionList } from '~/common/components/FormControl/form-control'
 import InputNumberField from '~/common/components/FormControl/InputNumberField'
-import InputTextField from '~/common/components/FormControl/InputTextField'
 import SelectField from '~/common/components/FormControl/SelectField'
 import TextBoxField from '~/common/components/FormControl/TextBoxField'
 import PrimaryButton from '~/common/components/Primary/Button'
-import { ShowNostis, log } from '~/common/utils'
-import { getDate, removeCommas } from '~/common/utils/super-functions'
-import ModalViewPaymenTypeDetail from '../Component/ModalViewPaymenTypeDetail'
-import CardInfomation from '../Component/CardInfomation'
-import { ISelectOptionList } from '~/common/components/FormControl/form-control'
-import { optionPaymentType } from '~/common/constant/PaymentType'
-import { useRouter } from 'next/router'
-import Avatar from '~/common/components/Avatar'
-import { paymentMethodsApi } from '~/api/payment-method'
-import { PAYMENT_TYPES } from '~/common/utils/constants'
+import { ShowNostis } from '~/common/utils'
 import { isNull, isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
-import PaymentTypesDetails from '../Component/PaymentTypesDetails'
+import { removeCommas } from '~/common/utils/super-functions'
+import CardInfomation from '../Component/CardInfomation'
 import CreateContract from '../Component/CreateContract'
-import moment from 'moment'
+import ModalViewPaymenTypeDetail from '../Component/ModalViewPaymenTypeDetail'
+import PaymentTypesDetails from '../Component/PaymentTypesDetails'
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -45,8 +42,8 @@ const MajorsRegistrationPage = () => {
 	const StudentId = Form.useWatch('StudentId', form)
 	const MajorsId = Form.useWatch('MajorsId', form)
 	const PaymentTypeId = Form.useWatch('PaymentTypeId', form)
-	const TotalPrice = Form.useWatch('TotalPrice', form)
-	const Percent = Form.useWatch('Percent', form)
+	// const TotalPrice = Form.useWatch('TotalPrice', form)
+	// const Percent = Form.useWatch('Percent', form)
 	const Type = Form.useWatch('Type', form)
 	const initValue = {
 		students: [],
@@ -361,10 +358,10 @@ const MajorsRegistrationPage = () => {
 								<Card title="Thông tin học viên" className="col-span-1">
 									{listData.students.length > 0 && (
 										<Form.Item name={'StudentId'} label="Chọn học viên" rules={[{ required: true, message: 'Vui lòng chọn học viên' }]}>
-											<Select showSearch showArrow optionFilterProp={'label'}>
+											<Select showSearch showArrow optionFilterProp={'label'} placeholder="Chọn học viên">
 												{listData.students.map((item: IMajorsRegistrationAvailble, index) => {
 													return (
-														<Select.Option value={item?.StudentId} label={item?.StudentName} key={item?.StudentId}>
+														<Select.Option  value={item?.StudentId} label={item?.StudentName} key={item?.StudentId}>
 															<div className="selected-option">{item?.StudentName}</div>
 															<div className="select-option-propdown">
 																<Avatar uri={item?.Avatar} className="w-[32px] h-[32px] rounded-full" />
@@ -392,6 +389,7 @@ const MajorsRegistrationPage = () => {
 										label="Chọn ngành học"
 										optionList={listOption.majors}
 										rules={[{ required: true, message: 'Vui lòng chọn ngành học' }]}
+										placeholder='Chọn ngành học'
 									/>
 
 									<InputNumberField
@@ -399,9 +397,10 @@ const MajorsRegistrationPage = () => {
 										label="Giá ngành học"
 										// disabled
 										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
+										placeholder='Giá tiền ngành học'
 									/>
 									{/* <TextBoxField name="Description" label={'Mô tả ngành học'} readOnly bordered={false} /> */}
-									{majorDescription !== '' && (
+									{majorDescription && (
 										<div className="">
 											<p className="font-medium mb-2">Mô tả ngành học</p>
 											<p className="whitespace-pre-wrap">{majorDescription}</p>
@@ -425,6 +424,7 @@ const MajorsRegistrationPage = () => {
 											/>
 										</div>
 									}
+									placeholder='Chọn phương thức thanh toán'
 									isRequired
 									optionList={listOption.payment}
 									rules={[{ required: true, message: 'Vui lòng chọn hình thức thanh toán' }]}
@@ -470,6 +470,7 @@ const MajorsRegistrationPage = () => {
 									label="Thanh toán"
 									// hidden={Type === 1 ? false : true}
 									hidden={isNull(paymentTypeDetail)}
+									placeholder='Số tiền thanh toán'
 									// rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
 								/>
 								<SelectField
@@ -478,11 +479,12 @@ const MajorsRegistrationPage = () => {
 									hidden={isNull(paymentTypeDetail)}
 									name={'PaymentMethodId'}
 									label="Phương thức thanh toán"
+									placeholder='Chọn phương thức thanh toán'
 									rules={[{ required: Type === 1 ? true : false, message: 'Vui lòng chọn phương thức thanh toán' }]}
 									optionList={listOption.paymentMethod}
 								/>
-								<SelectField mode="multiple" className="col-span-2" name={'GiftId'} label="Quà tặng" optionList={listOption.gift} max={2} />
-								<TextBoxField name="Note" label={'Ghi chú'} />
+								<SelectField mode="multiple" className="col-span-2" name={'GiftId'} label="Quà tặng" placeholder="Chọn quà tặng "optionList={listOption.gift} max={2} />
+								<TextBoxField name="Note" label={'Ghi chú'} placeholder='Ghi chú'/>
 
 								<div className="d-flex justify-center mt-3">
 									<PrimaryButton type="submit" icon="add" loading={loading === 'CREATE'} background="green">
