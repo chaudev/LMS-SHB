@@ -159,7 +159,6 @@ export const RollUpPage = () => {
 	const [isUpdate, setIsUpdate] = useState<any>(null)
 	const [dataUpdate, setDataUpdate] = useState<DataUpdate[]>([])
 
-
 	const getSchedule = async (params) => {
 		try {
 			const res = await scheduleApi.getAll(params)
@@ -292,8 +291,12 @@ export const RollUpPage = () => {
 	// }
 
 	const handleUpdateRollUp = async (data) => {
+		const dataSend = {
+			Items: [...data]
+		}
+
 		try {
-			const res = await rollUpApi.adds(data)
+			const res = await rollUpApi.adds(dataSend)
 			if (res.status === 200) {
 				ShowNoti('success', res.data.message)
 				setDataUpdate([])
@@ -423,7 +426,7 @@ export const RollUpPage = () => {
 	const [showModal, setShowModal] = useState<boolean>(false)
 
 	const rowSelection: TableRowSelection<any> = {
-		selectedRowKeys: rowSelected?.map(item => item.StudentId.toString()),
+		selectedRowKeys: rowSelected?.map((item) => item.StudentId.toString()),
 		onChange(_, selectedRows) {
 			setRowSelected(selectedRows)
 		}
@@ -454,6 +457,7 @@ export const RollUpPage = () => {
 									setScheduleId(data)
 									setApiParameters({ ...apiParameters, scheduleId: data })
 								}}
+								defaultValue={dataSchedule && dataSchedule[1] && dataSchedule[1].value}
 							>
 								{dataSchedule &&
 									dataSchedule?.length > 0 &&
