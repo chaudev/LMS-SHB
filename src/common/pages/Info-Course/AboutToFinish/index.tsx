@@ -24,7 +24,7 @@ const AboutToFinish = () => {
 	const selectedType = Form.useWatch('type', form)
 
 	const isAllow = () => {
-		if (is(userInfo).admin) {
+		if (is(userInfo).admin || is(userInfo).saler) {
 			return true
 		}
 		return false

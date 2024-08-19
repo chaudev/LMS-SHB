@@ -140,6 +140,34 @@ export const SalerChildMenu = [
 				Text: 'Hẹn kiểm tra đầu vào',
 				Icon: ''
 			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/about-to-finish',
+				Route: '/info-course/about-to-finish',
+				Text: 'Học viên sắp học xong',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student/warning',
+				Route: '/info-course/student/warning',
+				Text: 'Cảnh báo học viên',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/parents',
+				Route: '/info-course/parents',
+				Text: 'Phụ huynh',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/contract',
+				Route: '/info-course/contract',
+				Text: 'Hợp đồng',
+				Icon: ''
+			}
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/student',
