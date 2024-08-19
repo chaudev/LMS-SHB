@@ -276,6 +276,7 @@ const GeneralNotificationForm = (props) => {
 									onChange={handleChange}
 									beforeUpload={handleBeforeUpload}
 									disabled={isLoading}
+									customRequest={({onSuccess}) => onSuccess("ok", null)} // chặn request tới antd
 								>
 									{fileList.length >= 6 ? null : uploadButton}
 								</Upload>
