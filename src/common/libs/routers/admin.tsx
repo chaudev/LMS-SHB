@@ -12,14 +12,14 @@ export const AdminMenu = [
 		Icon: <TiHome style={{ width: 24, height: 24 }} />
 	},
 	{
-		Key: 'class',
-		TabName: 'Lớp học',
-		Icon: <BsFillGridFill size={22} />
-	},
-	{
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />
+	},
+	{
+		Key: 'class',
+		TabName: 'Lớp học',
+		Icon: <BsFillGridFill size={22} />
 	},
 	{
 		Key: 'feedback',
