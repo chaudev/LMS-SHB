@@ -85,7 +85,7 @@ const Student: FC<IPersonnel> = (props) => {
 	const [users, setUser] = useState([])
 	const [totalRow, setTotalRow] = useState(1)
 	const [loading, setLoading] = useState(false)
-	const [loadingAllow, setLoadingAllow] = useState(false)
+	// const [loadingAllow, setLoadingAllow] = useState(false)
 
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 	const [isFilter, setIsFilter] = useState<boolean>(false)
@@ -745,21 +745,21 @@ const Student: FC<IPersonnel> = (props) => {
 		}
 	]
 
-	const changeAllow = async (param) => {
-		setLoadingAllow(true)
-		try {
-			const response = await registerApi.changeRegister(param)
-			if (response.status === 200) {
-				if (!!reFresh) {
-					reFresh()
-				}
-			}
-		} catch (error) {
-			console.error(error)
-		} finally {
-			setLoadingAllow(false)
-		}
-	}
+	// const changeAllow = async (param) => {
+	// 	setLoadingAllow(true)
+	// 	try {
+	// 		const response = await registerApi.changeRegister(param)
+	// 		if (response.status === 200) {
+	// 			if (!!reFresh) {
+	// 				reFresh()
+	// 			}
+	// 		}
+	// 	} catch (error) {
+	// 		console.error(error)
+	// 	} finally {
+	// 		setLoadingAllow(false)
+	// 	}
+	// }
 
 	function isAdmin() {
 		return is(userInformation)?.admin
