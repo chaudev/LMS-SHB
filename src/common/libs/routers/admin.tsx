@@ -570,6 +570,13 @@ export const AdminChildMenu = [
 						Route: '/options/major-group',
 						Text: 'Nhóm chương trình',
 						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/other-major',
+						Route: '/options/other-major',
+						Text: 'Ngành học khác',
+						Icon: ''
 					}
 					// {
 					// 	ItemType: 'single',

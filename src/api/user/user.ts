@@ -36,12 +36,14 @@ export const userInformationApi = {
 		return instance.get<IApiResultData<IUserInformation[]>>('/api/Staff', { params: params })
 	},
 
+	keyGetAll: 'GET /api/UserInformation',
 	getAll(params: IUserInputGetall) {
 		return instance.get<IApiResultData<IUserResponse[]>>(url, {
 			params
 		})
 	},
 
+	keyById: 'GET /api/UserInformation/id',
 	getByID(ID) {
 		return instance.get<IApiResultData<IUserResponse>>(`${url}/${ID}`)
 	},

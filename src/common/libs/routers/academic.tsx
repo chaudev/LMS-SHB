@@ -364,6 +364,13 @@ export const AcademicChildMenu = [
 						Route: '/options/study-time',
 						Text: 'Ca học',
 						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/other-major',
+						Route: '/options/other-major',
+						Text: 'Ngành học khác',
+						Icon: ''
 					}
 				]
 			},

@@ -23,11 +23,17 @@ import { branchApi } from '~/api/branch'
 import { setBranch } from '~/store/branchReducer'
 import TextBoxField from '../FormControl/TextBoxField'
 import RestApi from '~/api/RestApi'
-import { formNoneRequired } from '~/common/libs/others/form'
+import { formNoneRequired, formRequired } from '~/common/libs/others/form'
 import Router from 'next/router'
 import { officeApi } from '~/api/office'
 
 import { partnerApi } from '~/api/partner'
+import MyRadioGroup from '~/atomic/molecules/MyRadioGroup'
+import MyRadio from '~/atomic/atoms/MyRadio'
+import MySelectFetchParent from '~/atomic/molecules/MySelectFetchParent'
+import MyFormItem from '~/atomic/atoms/MyFormItem'
+import { useQuery } from '@tanstack/react-query'
+import MySelectOtherMajor from '~/atomic/molecules/MySelectOtherMajor'
 
 const CreateUser: FC<ICreateNew> = (props) => {
 	// tư vấn viên  được lọc theo Trung tâm.
@@ -37,6 +43,8 @@ const CreateUser: FC<ICreateNew> = (props) => {
 
 	const [form] = Form.useForm()
 	const BranchIds = Form.useWatch('BranchIds', form)
+	const IsHasParentAccount = Form.useWatch('IsHasParentAccount', form)
+	const ParentId = Form.useWatch('ParentId', form)
 	const [districts, setDistricts] = useState([])
 	const [wards, setWards] = useState([])
 	const [loading, setLoading] = useState(false)
@@ -77,6 +85,38 @@ const CreateUser: FC<ICreateNew> = (props) => {
 		async validator({ field }, value) {
 			schema.validateSyncAt(field, { [field]: value })
 		}
+	}
+
+	const {
+		data: parentData,
+		isLoading: isLoadingParentData,
+		refetch: refetchParentData
+	} = useQuery({
+		queryKey: [userInformationApi.keyById, ParentId],
+		queryFn: async () => {
+			const res = await userInformationApi.getByID(ParentId)
+			const _parentData = res.data.data
+			form.setFieldsValue({
+				ParentUserName: _parentData?.UserName,
+				ParentFullName: _parentData?.FullName,
+				ParentMobile: _parentData?.Mobile,
+				ParentEmail: _parentData?.Email,
+				ParentDOB: moment(_parentData?.DOB)
+			})
+			return res.data.data
+		},
+		enabled: !!ParentId
+	})
+
+	const clearParentFormData = () => {
+		form.setFieldsValue({
+			ParentUserName: undefined,
+			ParentPassword: undefined,
+			ParentFullName: undefined,
+			ParentMobile: undefined,
+			ParentEmail: undefined,
+			ParentDOB: undefined
+		})
 	}
 
 	const [programs, setPrograms] = useState([])
@@ -179,6 +219,11 @@ const CreateUser: FC<ICreateNew> = (props) => {
 		}
 		if (!!isModalVisible && partner.length == 0) {
 			getPartner()
+		}
+		if (isModalVisible && isEdit && defaultData?.parentInfo?.UserInformationId) {
+			form.setFieldValue('IsHasParentAccount', 2)
+		} else {
+			form.setFieldValue('IsHasParentAccount', 1)
 		}
 	}, [isModalVisible])
 
@@ -317,9 +362,10 @@ const CreateUser: FC<ICreateNew> = (props) => {
 					: values.BranchIds.join(',')
 				: '',
 			ProgramIds: !values?.ProgramIds ? null : convertToString(values?.ProgramIds),
-			SaleId: isSaler() ? Number(theInformation.UserInformationId) : values?.SaleId
+			SaleId: isSaler() ? Number(theInformation.UserInformationId) : values?.SaleId,
+			ParentDOB: !!values.ParentDOB ? new Date(values.ParentDOB) : undefined
 		}
-		console.log('DATA_SUBMIT: ', !isEdit ? DATA_SUBMIT : { ...DATA_SUBMIT, UserInformationId: defaultData.UserInformationId })
+		console.log('===DATA_SUBMIT: ', !isEdit ? DATA_SUBMIT : { ...DATA_SUBMIT, UserInformationId: defaultData.UserInformationId })
 
 		setLoading(true)
 		if (DATA_SUBMIT.Mobile.match(/^[0-9]+$/) !== null) {
@@ -331,7 +377,6 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			setLoading(false)
 		}
 	}
-
 	function openEdit() {
 		form.setFieldsValue({ ...defaultData })
 		form.setFieldsValue({ Password: '' })
@@ -346,6 +391,11 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			form.setFieldsValue({ PurposeId: !!defaultData.PurposeId ? defaultData.PurposeId : null })
 			!!defaultData?.ContractSigningDate && form.setFieldsValue({ ContractSigningDate: moment(defaultData.ContractSigningDate) })
 			!!defaultData?.EnrollmentDay && form.setFieldsValue({ EnrollmentDay: moment(defaultData.EnrollmentDay) })
+			if (defaultData?.parentInfo?.UserInformationId) {
+				form.setFieldsValue({
+					ParentId: defaultData?.parentInfo?.UserInformationId
+				})
+			}
 		}
 		!!defaultData?.DOB && form.setFieldsValue({ DOB: moment(defaultData.DOB) })
 		if (defaultData.BranchIds) {
@@ -467,6 +517,11 @@ const CreateUser: FC<ICreateNew> = (props) => {
 							isRequired
 							rules={[yupSync]}
 						/>
+						{user?.RoleId == 1 && isEdit ? (
+							<InputPassField className="col-span-2" label="Mật khẩu" name="Password" />
+						) : (
+							<InputTextField className="col-span-2" label="Mật khẩu" name="Password" isRequired rules={[yupSync]} />
+						)}
 						<InputTextField className={'col-span-2'} label="Mã học viên" name="UserCode" placeholder="Mã học viên" />
 
 						{!isEdit && !isStudent && !isChangeInfo && (
@@ -556,6 +611,16 @@ const CreateUser: FC<ICreateNew> = (props) => {
 						/>
 						{isStudent && (
 							<>
+								<InputTextField className="col-span-2" label="CMND/CCCD" placeholder="CMND/CCCD" name="CitizenIdentity" />
+								<DatePickerField
+									className="col-span-2"
+									label="Ngày cấp CMND/CCCD"
+									placeholder="Ngày cấp CMND/CCCD"
+									name="ReleaseDate"
+									mode="single"
+									format="DD/MM/YYYY"
+								/>
+								<InputTextField className="col-span-2" label="Nơi cấp" placeholder="Nơi cấp" name="PlaceIssue" />
 								<InputTextField className="col-span-2" label="Nơi sinh" placeholder="Nơi sinh" name="BirthPlace" />
 								<InputTextField className="col-span-2" label="Quê quán" placeholder="Quê quán" name="NativeLand" />
 							</>
@@ -573,14 +638,12 @@ const CreateUser: FC<ICreateNew> = (props) => {
 							/>
 						)}
 
-						{user?.RoleId == 1 && isEdit ? (
-							<InputPassField className="col-span-2" label="Mật khẩu" name="Password" />
-						) : (
-							<InputTextField className="col-span-2" label="Mật khẩu" name="Password" isRequired rules={[yupSync]} />
-						)}
 						{isStudent && (
 							<>
 								<InputTextField className="col-span-2" label="Trường THPT" name="HighSchool" />
+								<MyFormItem className="col-span-2" label="Ngành học khác" name="OtherMajorId">
+									<MySelectOtherMajor />
+								</MyFormItem>
 							</>
 						)}
 						<TextBoxField name="Extension" label="Giới thiệu thêm" className="col-span-4" />
@@ -625,6 +688,74 @@ const CreateUser: FC<ICreateNew> = (props) => {
 								optionList={convertBranchSelect}
 							/>
 						)}
+						{isStudent && (
+							<>
+								<Divider className="col-span-4" orientation="center">
+									Phụ huynh
+								</Divider>
+								<Form.Item className="col-span-4" name="IsHasParentAccount" valuePropName="checked">
+									<MyRadioGroup
+										onChange={(e) => {
+											form.setFieldValue('IsHasParentAccount', e.target.value)
+											if (e.target?.value === 3) {
+												clearParentFormData()
+											}
+										}}
+										value={IsHasParentAccount}
+										defaultValue={1}
+										spaceProps={{ direction: 'horizontal' }}
+									>
+										<MyRadio value={1}>Không có thông tin</MyRadio>
+										<MyRadio value={2}>Đã có tài khoản</MyRadio>
+										<MyRadio value={3}>Tạo mới</MyRadio>
+									</MyRadioGroup>
+								</Form.Item>
+								{IsHasParentAccount === 2 && (
+									<>
+										<div className="col-span-2">
+											<MyFormItem name="ParentId" label="Chọn phụ huynh" rules={formRequired} required>
+												<MySelectFetchParent className="!h-[36px]" disabled={isLoadingParentData} />
+											</MyFormItem>
+										</div>
+										{!!ParentId && (
+											<>
+												<InputTextField className="col-span-2" label="Tên đăng nhập" name="ParentUserName" disabled />
+												<InputTextField className="col-span-2" label="Họ và tên" name="ParentFullName" disabled={isLoadingParentData} />
+												<InputTextField className="col-span-2" label="Số điện thoại" name="ParentMobile" disabled={isLoadingParentData} />
+												<InputTextField className="col-span-2" label="Email" name="ParentEmail" disabled={isLoadingParentData} />
+												<DatePickerField
+													className="col-span-2"
+													label="Ngày sinh"
+													name="ParentDOB"
+													mode="single"
+													format="DD/MM/YYYY"
+													disabled={isLoadingParentData}
+												/>
+											</>
+										)}
+									</>
+								)}
+								{IsHasParentAccount === 3 && (
+									<>
+										<InputTextField className="col-span-2" label="Tên đăng nhập" name="ParentUserName" rules={formRequired} isRequired />
+										<InputPassField className="col-span-2" label="Mật khẩu" name="ParentPassword" rules={formRequired} isRequired />
+										<InputTextField className="col-span-2" label="Họ và tên" name="ParentFullName" rules={formRequired} isRequired />
+										<InputTextField className="col-span-2" label="Số điện thoại" name="ParentMobile" rules={formRequired} isRequired />
+										<InputTextField className="col-span-2" label="Email" name="ParentEmail" rules={formRequired} isRequired />
+										<DatePickerField
+											className="col-span-2"
+											label="Ngày sinh"
+											name="ParentDOB"
+											mode="single"
+											format="DD/MM/YYYY"
+											rules={formRequired}
+											isRequired
+										/>
+									</>
+								)}
+							</>
+						)}
+
 						<Divider className="col-span-4" orientation="center">
 							Địa chỉ
 						</Divider>
