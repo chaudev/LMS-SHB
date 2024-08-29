@@ -54,6 +54,12 @@ export const userInformationApi = {
 	update(data: { Enable?: boolean } & any) {
 		return instance.put(url, data)
 	},
+	addStudent(data) {
+		return instance.post(`${url}/student`, data)
+	},
+	updateStudent(data: { Enable?: boolean } & any) {
+		return instance.put(`${url}/student`, data)
+	},
 	delete(data) {
 		return instance.delete(`${url}/${data}`)
 	},

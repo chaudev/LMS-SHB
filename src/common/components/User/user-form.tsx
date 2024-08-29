@@ -35,6 +35,12 @@ import MyFormItem from '~/atomic/atoms/MyFormItem'
 import { useQuery } from '@tanstack/react-query'
 import MySelectOtherMajor from '~/atomic/molecules/MySelectOtherMajor'
 
+enum EIsHasParentAccount {
+	NoInfo = 1,
+	Existed = 2,
+	CreateNew = 3
+}
+
 const CreateUser: FC<ICreateNew> = (props) => {
 	// tư vấn viên  được lọc theo Trung tâm.
 
@@ -221,9 +227,9 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			getPartner()
 		}
 		if (isModalVisible && isEdit && defaultData?.parentInfo?.UserInformationId) {
-			form.setFieldValue('IsHasParentAccount', 2)
+			form.setFieldValue('IsHasParentAccount', EIsHasParentAccount.Existed)
 		} else {
-			form.setFieldValue('IsHasParentAccount', 1)
+			form.setFieldValue('IsHasParentAccount', EIsHasParentAccount.NoInfo)
 		}
 	}, [isModalVisible])
 
@@ -259,7 +265,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 
 	const postEditUser = async (param) => {
 		try {
-			const response = await userInformationApi.update(param)
+			const response = isStudent ? await userInformationApi.updateStudent(param) : await userInformationApi.update(param)
 			if (response.status === 200) {
 				ShowNoti('success', response.data.message)
 
@@ -292,7 +298,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 
 	const postNewUser = async (param) => {
 		try {
-			const response = await userInformationApi.add(param)
+			const response = isStudent ? await userInformationApi.addStudent(param) : await userInformationApi.add(param)
 			if (response.status === 200) {
 				if (!!onRefresh) {
 					onRefresh()
@@ -697,20 +703,20 @@ const CreateUser: FC<ICreateNew> = (props) => {
 									<MyRadioGroup
 										onChange={(e) => {
 											form.setFieldValue('IsHasParentAccount', e.target.value)
-											if (e.target?.value === 3) {
+											if (e.target?.value === EIsHasParentAccount.CreateNew) {
 												clearParentFormData()
 											}
 										}}
 										value={IsHasParentAccount}
-										defaultValue={1}
+										defaultValue={EIsHasParentAccount.NoInfo}
 										spaceProps={{ direction: 'horizontal' }}
 									>
-										<MyRadio value={1}>Không có thông tin</MyRadio>
-										<MyRadio value={2}>Đã có tài khoản</MyRadio>
-										<MyRadio value={3}>Tạo mới</MyRadio>
+										<MyRadio value={EIsHasParentAccount.NoInfo}>Không có thông tin</MyRadio>
+										<MyRadio value={EIsHasParentAccount.Existed}>Đã có tài khoản</MyRadio>
+										<MyRadio value={EIsHasParentAccount.CreateNew}>Tạo mới</MyRadio>
 									</MyRadioGroup>
 								</Form.Item>
-								{IsHasParentAccount === 2 && (
+								{IsHasParentAccount === EIsHasParentAccount.Existed && (
 									<>
 										<div className="col-span-2">
 											<MyFormItem name="ParentId" label="Chọn phụ huynh" rules={formRequired} required>
@@ -735,7 +741,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 										)}
 									</>
 								)}
-								{IsHasParentAccount === 3 && (
+								{IsHasParentAccount === EIsHasParentAccount.CreateNew && (
 									<>
 										<InputTextField className="col-span-2" label="Tên đăng nhập" name="ParentUserName" rules={formRequired} isRequired />
 										<InputPassField className="col-span-2" label="Mật khẩu" name="ParentPassword" rules={formRequired} isRequired />
