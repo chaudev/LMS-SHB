@@ -26,7 +26,7 @@ const FilterBase = (props: Props) => {
 	const [visible, setVisible] = useState(false)
 	const [form] = Form.useForm()
 	const { Option } = Select
-	const dateFormat = 'YYYY/MM/DD'
+	const dateFormat = 'DD/MM/YYYY'
 
 	// ------------ RESET FILTER -------------
 	const resetFilter = () => {

@@ -15,7 +15,7 @@ const FilterBase = (props) => {
 	const [listFilter, setListFilter] = useState(dataFilter)
 	const [visible, setVisible] = useState(false)
 	const { Option } = Select
-	const dateFormat = 'YYYY/MM/DD'
+	const dateFormat = 'DD/MM/YYYY'
 
 	// ------------ RESET FILTER -------------
 	const resetFilter = () => {
