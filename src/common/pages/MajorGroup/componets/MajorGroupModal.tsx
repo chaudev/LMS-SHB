@@ -67,7 +67,7 @@ const MajorGroupModal: React.FC<IMajorGroupModal> = (props) => {
 			)}
 
 			<MyModal
-				title={defaultData ? 'Cập nhật nhóm ngành' : 'Thêm nhóm ngành'}
+				title={defaultData ? 'Cập nhật nhóm chương trình' : 'Thêm nhóm chương trình'}
 				open={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}
@@ -77,9 +77,9 @@ const MajorGroupModal: React.FC<IMajorGroupModal> = (props) => {
 						<div className="row">
 							<div className="col-12">
 								<InputTextField
-									placeholder="Nhập tên nhóm ngành"
+									placeholder="Nhập tên nhóm chương trình"
 									name="Name"
-									label="Tên nhóm ngành"
+									label="Tên nhóm chương trình"
 									isRequired
 									rules={[{ required: true, message: 'Bạn không được để trống' }]}
 								/>

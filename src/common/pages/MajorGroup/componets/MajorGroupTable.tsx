@@ -13,7 +13,7 @@ const MajorGroupTable: React.FC<TMajorGroupTable> = (props) => {
 	const { refreshData } = props
 	const columns = [
 		{
-			title: 'Tên nhóm ngành học',
+			title: 'Tên nhóm chương trình',
 			className: 'min-w-[120px] font-medium',
 			dataIndex: 'Name'
 		},

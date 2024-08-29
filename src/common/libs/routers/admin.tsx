@@ -568,7 +568,7 @@ export const AdminChildMenu = [
 						ItemType: 'single',
 						Key: '/options/major-group',
 						Route: '/options/major-group',
-						Text: 'Nhóm ngành học',
+						Text: 'Nhóm chương trình',
 						Icon: ''
 					}
 					// {
