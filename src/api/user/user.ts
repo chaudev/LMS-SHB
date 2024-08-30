@@ -92,6 +92,11 @@ export const userInformationApi = {
 
 	getOverviewStatus() {
 		return instance.get<IApiResultData<IStatisticOverviewStudent[]>>(url + '/overview-status')
+	},
+
+	keyGetStudentInClass: 'GET /api/UserInformation/student-in-class',
+	getStudentInClass(classes: string) {
+		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/student-in-class/${classes}`, {})
 	}
 }
 

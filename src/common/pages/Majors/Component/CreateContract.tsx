@@ -108,7 +108,7 @@ const CreateContract: React.FC<ICreateContract> = (props) => {
 									name="ContractSigningDate"
 									label="Ngày ký hợp đồng"
 									mode="single"
-									format="DD-MM-YYYY"
+									format="DD/MM/YYYY"
 									isRequired
 									rules={formRequired}
 								/>

@@ -97,7 +97,7 @@ const AboutToFinish = () => {
 								)}
 								{selectedType == 'Day' && (
 									<MyFormItem name="endDate" className="mb-0">
-										<MyDatePicker className="rounded h-[36px] w-[200px]" placeholder="Chọn ngày kết thúc" format="DD-MM-YYYY" />
+										<MyDatePicker className="rounded h-[36px] w-[200px]" placeholder="Chọn ngày kết thúc" format="DD/MM/YYYY" />
 									</MyFormItem>
 								)}
 								<PrimaryButton background="blue" type="submit" children={<span>Tìm kiếm</span>} icon="search" />

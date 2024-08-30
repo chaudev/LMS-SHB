@@ -38,7 +38,7 @@ export const NotificationInClassPage = () => {
 			title: 'Ngày tạo',
 			width: 200,
 			dataIndex: 'CreatedOn',
-			render: (text) => <>{moment(text).format('DD-MM-YYYY')}</>
+			render: (text) => <>{moment(text).format('DD/MM/YYYY')}</>
 		}
 	]
 

@@ -287,8 +287,8 @@ export const SalaryPage = () => {
 										<div>
 											<span className="font-bold">Xác nhận tính lương thủ công</span>
 											<div className="flex flex-col gap-1 mt-2">
-												<span>Từ ngày: {moment().subtract(1, 'months').startOf('month').format('DD-MM-YYYY')}</span>
-												<span>Đến ngày: {moment().subtract(1, 'months').endOf('month').format('DD-MM-YYYY')}</span>
+												<span>Từ ngày: {moment().subtract(1, 'months').startOf('month').format('DD/MM/YYYY')}</span>
+												<span>Đến ngày: {moment().subtract(1, 'months').endOf('month').format('DD/MM/YYYY')}</span>
 											</div>
 										</div>
 									}
