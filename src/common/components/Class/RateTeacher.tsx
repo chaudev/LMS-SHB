@@ -100,7 +100,7 @@ export const RateTeacher = () => {
 									label={
 										<>
 											<div>
-												[{moment(item?.StartTime).format('DD-MM')}] {moment(item?.StartTime).format('HH:mm')} -{' '}
+												[{moment(item?.StartTime).format('DD/MM')}] {moment(item?.StartTime).format('HH:mm')} -{' '}
 												{moment(item?.EndTime).format('HH:mm')}
 											</div>
 											{item?.StatusTutoringName ? (

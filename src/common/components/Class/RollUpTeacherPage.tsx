@@ -95,7 +95,7 @@ export const RollUpTeacherPage = () => {
 		{
 			title: 'Ngày',
 			dataIndex: 'StartTime',
-			render: (text) => <>{moment(text).format('DD-MM-YYYY')}</>
+			render: (text) => <>{moment(text).format('DD/MM/YYYY')}</>
 		},
 		{
 			title: 'Thời gian học',

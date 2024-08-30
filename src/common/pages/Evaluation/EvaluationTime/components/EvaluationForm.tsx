@@ -94,7 +94,7 @@ const EvaluationTimeForm: React.FC<IEvaluationTimeForm> = (props) => {
 							name="Date"
 							label="Chọn ngày đánh giá"
 							isRequired
-							format="DD-MM-YYYY"
+							format="DD/MM/YYYY"
 							rules={[{ required: true, message: 'Bạn không được để trống' }]}
 						/>
 						<MyFormItem

@@ -11,7 +11,7 @@ export const ListFeedback = (props) => {
 		{
 			title: 'Ngày gửi',
 			dataIndex: 'CreatedOn',
-			render: (text) => <>{moment(text).format('DD-MM-YYYY')}</>
+			render: (text) => <>{moment(text).format('DD/MM/YYYY')}</>
 		},
 		{
 			title: 'Loại phản hồi',
