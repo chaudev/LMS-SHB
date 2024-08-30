@@ -205,16 +205,16 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 									<div className="col-span-2">
 										<UploadImageField form={form} name="Thumbnail" label="Hình ảnh" />
 									</div>
-									<MyFormItem className="col-span-2" name="MajorGroupId" label="Nhóm ngành học" required rules={formRequired}>
+									<MyFormItem className="col-span-2" name="MajorGroupId" label="Nhóm chương trình" required rules={formRequired}>
 										<MySelectCustomAdd
 											disabled={isLoadingMajorGroup}
 											loading={isLoadingMajorGroup}
-											placeholder="Chọn nhóm ngành học"
+											placeholder="Chọn nhóm chương trình"
 											showSearch
 											optionFilterProp="label"
 											options={majorGroups?.map((item) => ({ label: item.Name, value: item?.Id }))}
 											inputProps={{
-												placeholder: 'Tên nhóm ngành',
+												placeholder: 'Tên nhóm chương trình',
 												onChange: (e) => setNewMajorGroupName(e.target.value),
 												value: newMajorGroupName
 											}}

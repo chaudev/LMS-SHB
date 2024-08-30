@@ -85,7 +85,7 @@ const Student: FC<IPersonnel> = (props) => {
 	const [users, setUser] = useState([])
 	const [totalRow, setTotalRow] = useState(1)
 	const [loading, setLoading] = useState(false)
-	const [loadingAllow, setLoadingAllow] = useState(false)
+	// const [loadingAllow, setLoadingAllow] = useState(false)
 
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 	const [isFilter, setIsFilter] = useState<boolean>(false)
@@ -745,21 +745,21 @@ const Student: FC<IPersonnel> = (props) => {
 		}
 	]
 
-	const changeAllow = async (param) => {
-		setLoadingAllow(true)
-		try {
-			const response = await registerApi.changeRegister(param)
-			if (response.status === 200) {
-				if (!!reFresh) {
-					reFresh()
-				}
-			}
-		} catch (error) {
-			console.error(error)
-		} finally {
-			setLoadingAllow(false)
-		}
-	}
+	// const changeAllow = async (param) => {
+	// 	setLoadingAllow(true)
+	// 	try {
+	// 		const response = await registerApi.changeRegister(param)
+	// 		if (response.status === 200) {
+	// 			if (!!reFresh) {
+	// 				reFresh()
+	// 			}
+	// 		}
+	// 	} catch (error) {
+	// 		console.error(error)
+	// 	} finally {
+	// 		setLoadingAllow(false)
+	// 	}
+	// }
 
 	function isAdmin() {
 		return is(userInformation)?.admin
@@ -1009,7 +1009,7 @@ const Student: FC<IPersonnel> = (props) => {
 				}
 				Extra={
 					<>
-						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager || is(userInformation).saler) && (
+						{/* {role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager || is(userInformation).saler) && (
 							<PrimaryButton
 								loading={loadingAllow}
 								className="mr-2 btn-block-registration"
@@ -1020,7 +1020,7 @@ const Student: FC<IPersonnel> = (props) => {
 							>
 								{allowRegister ? 'Cấm đăng ký' : 'Cho phép đăng ký'}
 							</PrimaryButton>
-						)}
+						)} */}
 
 						{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager || is(userInformation).saler) && (
 							<PrimaryButton
@@ -1048,7 +1048,7 @@ const Student: FC<IPersonnel> = (props) => {
 							onVisibleChange={(event) => setVisible(event)}
 							content={
 								<div className="w-[220px]">
-									{role == 3 && allowRegister !== undefined && (
+									{/* {role == 3 && allowRegister !== undefined && (
 										<PrimaryButton
 											loading={loadingAllow}
 											className="mb-3 !w-full"
@@ -1059,7 +1059,7 @@ const Student: FC<IPersonnel> = (props) => {
 										>
 											{allowRegister ? 'Cấm đăng ký' : 'Cho phép đăng ký'}
 										</PrimaryButton>
-									)}
+									)} */}
 
 									<CreateUser
 										process={process}

@@ -4,6 +4,16 @@ export const wait = (timeout: number) => {
 	return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
+export const debounceV2 = (delay) => {
+	let timer
+	return (func) => {
+		clearTimeout(timer)
+		timer = setTimeout(() => {
+			func()
+		}, delay)
+	}
+}
+
 export const fmSelectArr = (arr: Array<{ [key: string]: any }>, title: string, value: string, options = [], price?: string) => {
 	if (Array.isArray(arr) && arr.length > 0) {
 		return arr

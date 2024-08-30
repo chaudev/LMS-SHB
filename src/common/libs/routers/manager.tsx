@@ -13,14 +13,14 @@ export const ManagerMenu = [
 		Icon: <TiHome style={{ width: 24, height: 24 }} />
 	},
 	{
-		Key: 'class',
-		TabName: 'Lớp học',
-		Icon: <BsFillGridFill size={22} />
-	},
-	{
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />
+	},
+	{
+		Key: 'class',
+		TabName: 'Lớp học',
+		Icon: <BsFillGridFill size={22} />
 	},
 	{
 		Key: 'feedback',
@@ -432,6 +432,13 @@ export const ManagerChildMenu = [
 						Key: '/options/study-time',
 						Route: '/options/study-time',
 						Text: 'Ca học',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/other-major',
+						Route: '/options/other-major',
+						Text: 'Ngành học khác',
 						Icon: ''
 					}
 				]

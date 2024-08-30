@@ -1,19 +1,19 @@
 import { useMutation } from '@tanstack/react-query'
 import React from 'react'
-import { majorGroupApi } from '~/api/major-group'
 import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { ShowNostis } from '~/common/utils'
 import { ShowErrorToast } from '~/common/utils/main-function'
-import MajorGroupModal from './MajorGroupModal'
+import OtherMajorModal from './OtherMajorModal'
+import { otherMajorApi } from '~/api/other-major'
 
-type TMajorGroupTable = {} & TMyTable
+type TOtherMajorTable = {} & TMyTable
 
-const MajorGroupTable: React.FC<TMajorGroupTable> = (props) => {
+const OtherMajorTable: React.FC<TOtherMajorTable> = (props) => {
 	const { refreshData } = props
 	const columns = [
 		{
-			title: 'Tên nhóm chương trình',
+			title: 'Tên ngành',
 			className: 'min-w-[120px] font-medium',
 			dataIndex: 'Name'
 		},
@@ -23,7 +23,7 @@ const MajorGroupTable: React.FC<TMajorGroupTable> = (props) => {
 			width: 120,
 			render: (text, data, index) => (
 				<div className="flex">
-					<MajorGroupModal defaultData={data} refreshData={refreshData} />
+					<OtherMajorModal defaultData={data} refreshData={refreshData} />
 					<DeleteTableRow text={`${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
 				</div>
 			)
@@ -31,8 +31,8 @@ const MajorGroupTable: React.FC<TMajorGroupTable> = (props) => {
 	]
 
 	const mutationDelete = useMutation({
-		mutationFn: (id: any) => {
-			return majorGroupApi.delete(id)
+		mutationFn: (id: number) => {
+			return otherMajorApi.delete(id)
 		},
 		onSuccess(data, variables, context) {
 			!!refreshData && refreshData()
@@ -50,4 +50,4 @@ const MajorGroupTable: React.FC<TMajorGroupTable> = (props) => {
 	)
 }
 
-export default MajorGroupTable
+export default OtherMajorTable

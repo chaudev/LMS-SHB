@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { Form } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { majorGroupApi } from '~/api/major-group'
+import { otherMajorApi } from '~/api/other-major'
 import MyModal from '~/atomic/atoms/MyModal'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import PrimaryButton from '~/common/components/Primary/Button'
@@ -9,12 +9,12 @@ import IconButton from '~/common/components/Primary/IconButton'
 import { ShowNostis } from '~/common/utils'
 import { ShowErrorToast } from '~/common/utils/main-function'
 
-interface IMajorGroupModal {
+interface IOtherMajorModal {
 	defaultData?: any
 	refreshData: any
 }
 
-const MajorGroupModal: React.FC<IMajorGroupModal> = (props) => {
+const OtherMajorModal: React.FC<IOtherMajorModal> = (props) => {
 	const { defaultData, refreshData } = props
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [form] = Form.useForm()
@@ -29,15 +29,15 @@ const MajorGroupModal: React.FC<IMajorGroupModal> = (props) => {
 	const mutation = useMutation({
 		mutationFn: (data: any) => {
 			if (defaultData) {
-				return majorGroupApi.update({ ...data, Id: defaultData?.Id })
+				return otherMajorApi.update({ ...data, Id: defaultData?.Id })
 			} else {
-				return majorGroupApi.add(data)
+				return otherMajorApi.add(data)
 			}
 		},
 		onSuccess(data, variables, context) {
 			setIsModalVisible(false)
 			form.resetFields()
-			ShowNostis.success('Tạo thành công')
+			ShowNostis.success('Thành công')
 			!!refreshData && refreshData()
 		},
 		onError(data, variables, context) {
@@ -67,7 +67,7 @@ const MajorGroupModal: React.FC<IMajorGroupModal> = (props) => {
 			)}
 
 			<MyModal
-				title={defaultData ? 'Cập nhật nhóm chương trình' : 'Thêm nhóm chương trình'}
+				title={defaultData ? 'Cập nhật ngành học khác' : 'Thêm ngành học khác'}
 				open={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}
@@ -77,9 +77,9 @@ const MajorGroupModal: React.FC<IMajorGroupModal> = (props) => {
 						<div className="row">
 							<div className="col-12">
 								<InputTextField
-									placeholder="Nhập tên nhóm chương trình"
+									placeholder="Nhập tên ngành học khác"
 									name="Name"
-									label="Tên nhóm chương trình"
+									label="Tên ngành học khác"
 									isRequired
 									rules={[{ required: true, message: 'Bạn không được để trống' }]}
 								/>
@@ -105,4 +105,4 @@ const MajorGroupModal: React.FC<IMajorGroupModal> = (props) => {
 	)
 }
 
-export default MajorGroupModal
+export default OtherMajorModal

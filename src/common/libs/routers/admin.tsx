@@ -12,14 +12,14 @@ export const AdminMenu = [
 		Icon: <TiHome style={{ width: 24, height: 24 }} />
 	},
 	{
-		Key: 'class',
-		TabName: 'Lớp học',
-		Icon: <BsFillGridFill size={22} />
-	},
-	{
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />
+	},
+	{
+		Key: 'class',
+		TabName: 'Lớp học',
+		Icon: <BsFillGridFill size={22} />
 	},
 	{
 		Key: 'feedback',
@@ -568,7 +568,14 @@ export const AdminChildMenu = [
 						ItemType: 'single',
 						Key: '/options/major-group',
 						Route: '/options/major-group',
-						Text: 'Nhóm ngành học',
+						Text: 'Nhóm chương trình',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/other-major',
+						Route: '/options/other-major',
+						Text: 'Ngành học khác',
 						Icon: ''
 					}
 					// {

@@ -282,10 +282,10 @@ const ParentForm: FC<IParentForm> = ({ isEdit, onRefresh, defaultData, item }) =
 					{isEdit ? (
 						<InputPassField className="col-span-1" label="Mật khẩu" name="Password" />
 					) : (
-						<InputTextField className="col-span-1" label="Mật khẩu" name="Password" />
+						<InputTextField className="col-span-1" label="Mật khẩu" name="Password" isRequired rules={formRequired} />
 					)}
 
-					<DatePickerField rules={formRequired} className="col-span-1" label="Ngày sinh" name="DOB" mode="single" format="DD/MM/YYYY" />
+					<DatePickerField rules={formRequired} className="col-span-1" label="Ngày sinh" name="DOB" mode="single" format="DD/MM/YYYY" isRequired />
 
 					<Divider className="col-span-2" orientation="center">
 						Địa chỉ

@@ -36,12 +36,14 @@ export const userInformationApi = {
 		return instance.get<IApiResultData<IUserInformation[]>>('/api/Staff', { params: params })
 	},
 
+	keyGetAll: 'GET /api/UserInformation',
 	getAll(params: IUserInputGetall) {
 		return instance.get<IApiResultData<IUserResponse[]>>(url, {
 			params
 		})
 	},
 
+	keyById: 'GET /api/UserInformation/id',
 	getByID(ID) {
 		return instance.get<IApiResultData<IUserResponse>>(`${url}/${ID}`)
 	},
@@ -51,6 +53,12 @@ export const userInformationApi = {
 	},
 	update(data: { Enable?: boolean } & any) {
 		return instance.put(url, data)
+	},
+	addStudent(data) {
+		return instance.post(`${url}/student`, data)
+	},
+	updateStudent(data: { Enable?: boolean } & any) {
+		return instance.put(`${url}/student`, data)
 	},
 	delete(data) {
 		return instance.delete(`${url}/${data}`)
