@@ -709,7 +709,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 										}}
 										value={IsHasParentAccount}
 										defaultValue={EIsHasParentAccount.NoInfo}
-										spaceProps={{ direction: 'horizontal' }}
+										spaceProps={{ direction: 'horizontal', className: '!gap-[20px]' }}
 									>
 										<MyRadio value={EIsHasParentAccount.NoInfo}>Không có thông tin</MyRadio>
 										<MyRadio value={EIsHasParentAccount.Existed}>Đã có tài khoản</MyRadio>
