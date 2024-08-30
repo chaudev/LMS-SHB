@@ -617,6 +617,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 						/>
 						{isStudent && (
 							<>
+								<InputTextField className="col-span-2" label="Số điện thoại khác" placeholder="Số điện thoại khác" name="Mobile2" />
 								<InputTextField className="col-span-2" label="CMND/CCCD" placeholder="CMND/CCCD" name="CitizenIdentity" />
 								<DatePickerField
 									className="col-span-2"
@@ -728,7 +729,6 @@ const CreateUser: FC<ICreateNew> = (props) => {
 												<InputTextField className="col-span-2" label="Tên đăng nhập" name="ParentUserName" disabled />
 												<InputTextField className="col-span-2" label="Họ và tên" name="ParentFullName" disabled={isLoadingParentData} />
 												<InputTextField className="col-span-2" label="Số điện thoại" name="ParentMobile" disabled={isLoadingParentData} />
-												<InputTextField className="col-span-2" label="Email" name="ParentEmail" disabled={isLoadingParentData} />
 												<DatePickerField
 													className="col-span-2"
 													label="Ngày sinh"
@@ -737,6 +737,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 													format="DD/MM/YYYY"
 													disabled={isLoadingParentData}
 												/>
+												<InputTextField className="col-span-2" label="Email" name="ParentEmail" disabled={isLoadingParentData} />
 											</>
 										)}
 									</>
@@ -747,7 +748,6 @@ const CreateUser: FC<ICreateNew> = (props) => {
 										<InputPassField className="col-span-2" label="Mật khẩu" name="ParentPassword" rules={formRequired} isRequired />
 										<InputTextField className="col-span-2" label="Họ và tên" name="ParentFullName" rules={formRequired} isRequired />
 										<InputTextField className="col-span-2" label="Số điện thoại" name="ParentMobile" rules={formRequired} isRequired />
-										<InputTextField className="col-span-2" label="Email" name="ParentEmail" rules={formRequired} isRequired />
 										<DatePickerField
 											className="col-span-2"
 											label="Ngày sinh"
@@ -757,6 +757,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 											rules={formRequired}
 											isRequired
 										/>
+										<InputTextField className="col-span-2" label="Email" name="ParentEmail" />
 									</>
 								)}
 							</>
