@@ -89,5 +89,9 @@ export const classApi = {
 	},
 	hideFileCurriculumInClass(Id) {
 		return instance.put(`${url}/hide-file-curriculum-in-class/${Id}`)
-	}
+	},
+	keyGetDropdownByBranch: 'GET /api/Class/dropdown-by-branch',
+	getDropdownByBranch(branchIds: string) {
+		return instance.get<IApiResultData<IClass[]>>(`${url}/dropdown-by-branch/${branchIds}`, {})
+	},
 }

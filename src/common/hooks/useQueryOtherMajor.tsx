@@ -3,7 +3,7 @@ import { otherMajorApi } from '~/api/other-major'
 
 const useQueryOtherMajor = (visible?: boolean) => {
 	const data = useQuery({
-		queryKey: ['get-all-major-group'],
+		queryKey: [otherMajorApi.keyGetDropdown],
 		queryFn: () => otherMajorApi.getDropdown().then((data) => data.data.data),
 		enabled: visible
 	})

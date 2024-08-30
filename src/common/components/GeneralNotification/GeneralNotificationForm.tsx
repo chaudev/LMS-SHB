@@ -17,6 +17,28 @@ import type { RcFile, UploadProps } from 'antd/es/upload'
 import { PlusOutlined } from '@ant-design/icons'
 import { UploadFileApi } from '~/api/common/upload-image'
 import { useQueryClient } from '@tanstack/react-query'
+import MyFormItem from '~/atomic/atoms/MyFormItem'
+import MySelectClassByBranches from '~/atomic/molecules/MySelectClassByBranches'
+import MySelectStudentInClasses from '~/atomic/molecules/MySelectStudentInClasses'
+import MySegmented from '~/atomic/atoms/MySegmented'
+
+enum ESendType {
+	/** Chức vụ */
+	Position = 1,
+	/** Lớp học */
+	Class = 2
+}
+
+const sendTypeOptions = [
+	{
+		label: 'Chức vụ',
+		value: ESendType.Position
+	},
+	{
+		label: 'Lớp học',
+		value: ESendType.Class
+	}
+]
 
 const getBase64 = (file: RcFile): Promise<string> =>
 	new Promise((resolve, reject) => {
@@ -27,15 +49,19 @@ const getBase64 = (file: RcFile): Promise<string> =>
 	})
 
 const GeneralNotificationForm = (props) => {
-	const queryClient = useQueryClient();
+	const queryClient = useQueryClient()
 
 	const branch = useSelector((state: RootState) => state.branch.Branch)
 	const [form] = Form.useForm()
+	const watchBranchIds = Form.useWatch('branchIds', form) || []
+	const watchClassIds = Form.useWatch('classIds', form) || []
 
 	const [allRole, setAllRole] = useState([])
 	const [userSelect, setUserSelect] = useState([])
 	const [selectAllUser, setSelectAllUser] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
+	const [selectedSendType, setSelectedSendType] = useState(ESendType.Position)
+
 	const dispatch = useDispatch()
 	const convertBranchSelect = useMemo(() => {
 		return parseSelectArray(branch, 'Name', 'Id')
@@ -186,7 +212,7 @@ const GeneralNotificationForm = (props) => {
 			if (res.status === 200) {
 				setSelectAllUser(false)
 				form.resetFields()
-				queryClient.invalidateQueries({queryKey: ['GET /api/GeneralNotification']})
+				queryClient.invalidateQueries({ queryKey: ['GET /api/GeneralNotification'] })
 				setFileList([])
 				ShowNoti('success', res.data.message)
 			}
@@ -225,31 +251,57 @@ const GeneralNotificationForm = (props) => {
 								mode="multiple"
 								optionList={convertBranchSelect}
 								onChangeSelect={(value) => handleChangeSelect('branchIds', value)}
-								rules={[{ required: true, message: 'Không để trung tâm!' }]}
+								rules={[{ required: true, message: 'Không để trống trung tâm!' }]}
 								isRequired
 								disabled={isLoading}
 							/>
 
-							<SelectField
-								className="label-full"
-								mode="multiple"
-								name="roleIds"
-								label="Chức vụ"
-								optionList={allRole}
-								onChangeSelect={(value) => handleChangeSelect('roleIds', value)}
-								rules={[{ required: true, message: 'Không để trống chức vụ!' }]}
-								isRequired
-								disabled={form.getFieldValue('branchIds')?.length <= 0 || isLoading}
-							/>
+							<div className="mb-[24px]">
+								<label className="font-medium mb-[8px]">Gửi thông báo theo</label>
+								<div>
+									<MySegmented
+										value={selectedSendType}
+										options={sendTypeOptions}
+										onChange={(e: number) => {
+											form.setFieldsValue({
+												roleIds: undefined,
+												classIds: undefined,
+												UserIds: undefined
+											})
+											setSelectedSendType(e)
+										}}
+									/>
+								</div>
+							</div>
 
-							<SelectField
-								className="label-full"
-								mode="multiple"
-								name="UserIds"
-								label={
-									<div className="antd-custom-wrap ant-form-item-label flex items-center justify-between">
-										<span>Tài khoản</span>
-										<div>
+							{selectedSendType === ESendType.Position && (
+								<>
+									<SelectField
+										className="label-full min-h-[36px]"
+										mode="multiple"
+										name="roleIds"
+										label="Chức vụ"
+										optionList={allRole}
+										onChangeSelect={(value) => handleChangeSelect('roleIds', value)}
+										rules={[{ required: true, message: 'Không để trống chức vụ!' }]}
+										isRequired
+										disabled={form.getFieldValue('branchIds')?.length <= 0 || isLoading}
+									/>
+
+									<div className="relative">
+										<SelectField
+											className="label-full min-h-[36px]"
+											mode="multiple"
+											name="UserIds"
+											label="Tài khoản"
+											disabled={form.getFieldValue('roleIds')?.length <= 0 || form.getFieldValue('branchIds')?.length <= 0 || isLoading}
+											optionList={userSelect}
+											isLoading={isLoading}
+											rules={[{ required: true, message: 'Không để trống tài khoản!' }]}
+											isRequired
+										/>
+
+										<div className="absolute top-[-2px] right-0 flex items-center">
 											<span className="mr-2">Chọn tất cả</span>
 											<Switch
 												disabled={form.getFieldValue('roleIds')?.length <= 0 || form.getFieldValue('branchIds')?.length <= 0 || isLoading}
@@ -258,13 +310,27 @@ const GeneralNotificationForm = (props) => {
 											/>
 										</div>
 									</div>
-								}
-								disabled={form.getFieldValue('roleIds')?.length <= 0 || form.getFieldValue('branchIds')?.length <= 0 || isLoading}
-								optionList={userSelect}
-								isLoading={isLoading}
-								rules={[{ required: true, message: 'Không để trống tài khoản!' }]}
-								isRequired
-							/>
+								</>
+							)}
+
+							{selectedSendType === ESendType.Class && (
+								<>
+									<MyFormItem name="classIds" label="Lớp học" rules={[{ required: true, message: 'Không để trống lớp học!' }]} required>
+										<MySelectClassByBranches mode="multiple" branchIds={watchBranchIds?.toString()} isUseDebound placeholder="" />
+									</MyFormItem>
+
+									<MyFormItem name="UserIds" label="Tài khoản" rules={[{ required: true, message: 'Không để trống tài khoản!' }]} required>
+										<MySelectStudentInClasses
+											mode="multiple"
+											classIds={watchClassIds?.toString()}
+											isUseDebound
+											placeholder=""
+											hasChooseAllButton
+											onChangeOutside={(val) => form.setFieldValue('UserIds', val)}
+										/>
+									</MyFormItem>
+								</>
+							)}
 
 							<div>
 								<span className="ant-col ant-form-item-label">File đính kèm</span>
@@ -276,7 +342,7 @@ const GeneralNotificationForm = (props) => {
 									onChange={handleChange}
 									beforeUpload={handleBeforeUpload}
 									disabled={isLoading}
-									customRequest={({onSuccess}) => onSuccess("ok", null)} // chặn request tới antd
+									customRequest={({ onSuccess }) => onSuccess('ok', null)} // chặn request tới antd
 								>
 									{fileList.length >= 6 ? null : uploadButton}
 								</Upload>
