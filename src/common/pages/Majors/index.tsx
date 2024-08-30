@@ -97,6 +97,21 @@ export const MajorsPage = () => {
 
 					<IconButton
 						type="button"
+						icon={'contract'}
+						color="purple"
+						onClick={() => {
+							router.push({
+								pathname: '/majors/contracts',
+								query: {
+									id: item.Id
+								}
+							})
+						}}
+						tooltip="Xem danh sách hợp đồng"
+					/>
+
+					<IconButton
+						type="button"
 						icon={'eye'}
 						color="orange"
 						onClick={() => {
