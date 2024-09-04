@@ -36,6 +36,7 @@
 		"axios": "^0.27.2",
 		"bootstrap": "^5.2.0",
 		"canvas-confetti": "^1.5.1",
+		"clsx": "2.1.1",
 		"dayjs": "^1.11.10",
 		"env-cmd": "^10.1.0",
 		"feather-icons": "^4.29.0",

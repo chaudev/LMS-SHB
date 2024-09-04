@@ -1,4 +1,4 @@
-import { Card, Form, Modal, Select, Spin } from 'antd'
+import { Card, Empty, Form, Modal, Select, Spin } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
@@ -17,9 +17,16 @@ import { ShowNostis } from '~/common/utils'
 import { isNull, isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
 import { removeCommas } from '~/common/utils/super-functions'
 import CardInfomation from '../Component/CardInfomation'
-import CreateContract from '../Component/CreateContract'
 import ModalViewPaymenTypeDetail from '../Component/ModalViewPaymenTypeDetail'
 import PaymentTypesDetails from '../Component/PaymentTypesDetails'
+import AddRegistrationContractButton from '../Component/AddRegistrationContractButton'
+import ContractItem from '../Component/ContractItem'
+
+export type TContractItem = {
+	ContractNumber: string
+	ContractContent: string
+	ContractSigningDate: string
+}
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -62,7 +69,7 @@ const MajorsRegistrationPage = () => {
 
 	const [paymentTypeDetail, setPaymentTypeDetail] = useState<IPaymentTypeDetail[]>([])
 
-	const [contractData, setContractData] = useState({ ContractNumber: null, ContractContent: null, ContractSigningDate: null })
+	const [contracts, setContracts] = useState<TContractItem[]>([])
 
 	const [majorDescription, setMajorDescription] = useState('')
 
@@ -300,10 +307,26 @@ const MajorsRegistrationPage = () => {
 	// 	}
 	// }, [TotalPrice])
 
+	const onAddContract = (contract: TContractItem) => {
+		setContracts([...contracts, contract])
+	}
+
+	const onUpdateContract = (index: number, contract: TContractItem) => {
+		const _contracts = [...contracts]
+		_contracts[index] = contract
+		setContracts([..._contracts])
+	}
+
+	const onDeleteContract = (index: number, contract: TContractItem) => {
+		const _contracts = [...contracts]
+		_contracts.splice(index, 1)
+		setContracts([..._contracts])
+	}
+
 	const _onFinish = async (params) => {
 		try {
 			setLoading('CREATE')
-			if (!isNullOrEmptyOrUndefined(contractData?.ContractContent)) {
+			if (!isNullOrEmptyOrUndefined(contracts)) {
 				const payload = {
 					MajorsId: params.MajorsId,
 					StudentId: params.StudentId,
@@ -313,9 +336,7 @@ const MajorsRegistrationPage = () => {
 					PaymentTypeId: params.PaymentTypeId,
 					Note: params.Note,
 					PaymentMethodId: params.PaymentMethodId,
-					ContractContent: contractData?.ContractContent,
-					ContractNumber: contractData?.ContractNumber,
-					ContractSigningDate: moment(contractData?.ContractSigningDate).toISOString(),
+					Contracts: contracts.map((item) => ({ ...item, ContractSigningDate: moment(item?.ContractSigningDate).toISOString() })),
 					Details: Object.keys(params)
 						.filter((key) => key.startsWith('Price_'))
 						.map((key) => ({
@@ -329,6 +350,7 @@ const MajorsRegistrationPage = () => {
 					await getAllMajorsRegistrationAvailble()
 				}
 				form.resetFields()
+				setContracts([])
 			} else {
 				ShowNostis.warning('Chưa tạo hợp đồng cam kết')
 			}
@@ -361,7 +383,7 @@ const MajorsRegistrationPage = () => {
 											<Select showSearch showArrow optionFilterProp={'label'} placeholder="Chọn học viên">
 												{listData.students.map((item: IMajorsRegistrationAvailble, index) => {
 													return (
-														<Select.Option  value={item?.StudentId} label={item?.StudentName} key={item?.StudentId}>
+														<Select.Option value={item?.StudentId} label={item?.StudentName} key={item?.StudentId}>
 															<div className="selected-option">{item?.StudentName}</div>
 															<div className="select-option-propdown">
 																<Avatar uri={item?.Avatar} className="w-[32px] h-[32px] rounded-full" />
@@ -389,7 +411,7 @@ const MajorsRegistrationPage = () => {
 										label="Chọn ngành học"
 										optionList={listOption.majors}
 										rules={[{ required: true, message: 'Vui lòng chọn ngành học' }]}
-										placeholder='Chọn ngành học'
+										placeholder="Chọn ngành học"
 									/>
 
 									<InputNumberField
@@ -397,7 +419,7 @@ const MajorsRegistrationPage = () => {
 										label="Giá ngành học"
 										// disabled
 										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
-										placeholder='Giá tiền ngành học'
+										placeholder="Giá tiền ngành học"
 									/>
 									{/* <TextBoxField name="Description" label={'Mô tả ngành học'} readOnly bordered={false} /> */}
 									{majorDescription && (
@@ -424,21 +446,34 @@ const MajorsRegistrationPage = () => {
 											/>
 										</div>
 									}
-									placeholder='Chọn phương thức thanh toán'
+									placeholder="Chọn phương thức thanh toán"
 									isRequired
 									optionList={listOption.payment}
 									rules={[{ required: true, message: 'Vui lòng chọn hình thức thanh toán' }]}
 								/>
 								{!isNullOrEmptyOrUndefined(PaymentTypeId) && <PaymentTypesDetails datas={paymentTypeDetail} />}
 								{!isNullOrEmptyOrUndefined(StudentId) && !isNullOrEmptyOrUndefined(MajorsId) && (
-									<CreateContract
-										datas={{
-											studentId: StudentId,
-											majorId: MajorsId
-										}}
-										setContractData={setContractData}
-										contractData={contractData}
-									/>
+									<>
+										<AddRegistrationContractButton majorId={MajorsId} onAddContract={onAddContract} />
+
+										{!!contracts?.length ? (
+											<div className="flex flex-col gap-[8px] border p-[12px] rounded-md mt-[8px] mb-[16px]">
+												{contracts.map((item, index) => {
+													return (
+														<ContractItem
+															key={index}
+															contractData={item}
+															index={index}
+															onUpdate={onUpdateContract}
+															onDelete={onDeleteContract}
+														/>
+													)
+												})}
+											</div>
+										) : (
+											<Empty className="mt-[8px] mb-[16px]" />
+										)}
+									</>
 								)}
 								{/* <SelectField
 									className="col-span-2"
@@ -470,7 +505,7 @@ const MajorsRegistrationPage = () => {
 									label="Thanh toán"
 									// hidden={Type === 1 ? false : true}
 									hidden={isNull(paymentTypeDetail)}
-									placeholder='Số tiền thanh toán'
+									placeholder="Số tiền thanh toán"
 									// rules={[{ required: Type != 1 ? false : true, message: 'Vui lòng nhập số tiền phải đóng' }]}
 								/>
 								<SelectField
@@ -479,12 +514,20 @@ const MajorsRegistrationPage = () => {
 									hidden={isNull(paymentTypeDetail)}
 									name={'PaymentMethodId'}
 									label="Phương thức thanh toán"
-									placeholder='Chọn phương thức thanh toán'
+									placeholder="Chọn phương thức thanh toán"
 									rules={[{ required: Type === 1 ? true : false, message: 'Vui lòng chọn phương thức thanh toán' }]}
 									optionList={listOption.paymentMethod}
 								/>
-								<SelectField mode="multiple" className="col-span-2" name={'GiftId'} label="Quà tặng" placeholder="Chọn quà tặng "optionList={listOption.gift} max={2} />
-								<TextBoxField name="Note" label={'Ghi chú'} placeholder='Ghi chú'/>
+								<SelectField
+									mode="multiple"
+									className="col-span-2"
+									name={'GiftId'}
+									label="Quà tặng"
+									placeholder="Chọn quà tặng "
+									optionList={listOption.gift}
+									max={2}
+								/>
+								<TextBoxField name="Note" label={'Ghi chú'} placeholder="Ghi chú" />
 
 								<div className="d-flex justify-center mt-3">
 									<PrimaryButton type="submit" icon="add" loading={loading === 'CREATE'} background="green">

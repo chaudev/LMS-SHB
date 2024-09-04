@@ -1,9 +1,9 @@
 import { Modal, ModalProps } from 'antd'
 import React from 'react'
 
-type TMyModal = {} & ModalProps
+export type TMyModalProps = {} & ModalProps
 
-const MyModal: React.FC<TMyModal> = (props) => {
+const MyModal: React.FC<TMyModalProps> = (props) => {
 	return <Modal {...props} />
 }
 

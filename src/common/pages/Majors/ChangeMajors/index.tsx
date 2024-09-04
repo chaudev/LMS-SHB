@@ -1,11 +1,10 @@
-import { Card, Form, Modal, Select, Spin } from 'antd'
+import { Card, Empty, Form, Modal, Select, Spin } from 'antd'
 import React, { useEffect, useMemo, useState } from 'react'
 import { giftApi } from '~/api/gift'
 import { majorsApi } from '~/api/majors/majors'
 import { majorsRegistrationApi } from '~/api/majors/registration'
 import { paymentTypeApi } from '~/api/option/payment-type'
 import InputNumberField from '~/common/components/FormControl/InputNumberField'
-import InputTextField from '~/common/components/FormControl/InputTextField'
 import SelectField from '~/common/components/FormControl/SelectField'
 import TextBoxField from '~/common/components/FormControl/TextBoxField'
 import PrimaryButton from '~/common/components/Primary/Button'
@@ -14,16 +13,16 @@ import { removeCommas } from '~/common/utils/super-functions'
 import ModalViewPaymenTypeDetail from '../Component/ModalViewPaymenTypeDetail'
 import CardInfomation from '../Component/CardInfomation'
 import { ISelectOptionList } from '~/common/components/FormControl/form-control'
-import { optionPaymentType } from '~/common/constant/PaymentType'
 import CardOldMajors from '../Component/CardOldMajors'
 import { useRouter } from 'next/router'
 import Avatar from '~/common/components/Avatar'
 import { paymentMethodsApi } from '~/api/payment-method'
 import { isNull, isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
-import { PAYMENT_TYPES } from '~/common/utils/constants'
 import PaymentTypesDetails from '../Component/PaymentTypesDetails'
-import CreateContract from '../Component/CreateContract'
 import moment from 'moment'
+import { TContractItem } from '../Registration'
+import AddRegistrationContractButton from '../Component/AddRegistrationContractButton'
+import ContractItem from '../Component/ContractItem'
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -69,7 +68,7 @@ const ChangeMajorsPage = () => {
 
 	const [paymentTypeDetail, setPaymentTypeDetail] = useState<IPaymentTypeDetail[]>([])
 
-	const [contractData, setContractData] = useState({ ContractNumber: null, ContractContent: null, ContractSigningDate: null })
+	const [contracts, setContracts] = useState<TContractItem[]>([])
 
 	const [majorDescription, setMajorDescription] = useState('')
 
@@ -314,11 +313,26 @@ const ChangeMajorsPage = () => {
 	// 	}
 	// }, [TotalPrice])
 
+	const onAddContract = (contract: TContractItem) => {
+		setContracts([...contracts, contract])
+	}
+
+	const onUpdateContract = (index: number, contract: TContractItem) => {
+		const _contracts = [...contracts]
+		_contracts[index] = contract
+		setContracts([..._contracts])
+	}
+
+	const onDeleteContract = (index: number, contract: TContractItem) => {
+		const _contracts = [...contracts]
+		_contracts.splice(index, 1)
+		setContracts([..._contracts])
+	}
+
 	const _onFinish = async (params) => {
 		try {
 			setLoading('CREATE')
-			console.log(contractData, 'first')
-			if (!isNullOrEmptyOrUndefined(contractData?.ContractContent)) {
+			if (!isNullOrEmptyOrUndefined(contracts)) {
 				const payload = {
 					MajorsId: params.MajorsId,
 					StudentId: params.StudentId,
@@ -327,9 +341,7 @@ const ChangeMajorsPage = () => {
 					GiftId: params.GiftId,
 					PaymentTypeId: params.PaymentTypeId,
 					Note: params.Note,
-					ContractContent: contractData?.ContractContent,
-					ContractNumber: contractData?.ContractNumber,
-					ContractSigningDate: moment(contractData?.ContractSigningDate).toISOString(),
+					Contracts: contracts.map((item) => ({ ...item, ContractSigningDate: moment(item?.ContractSigningDate).toISOString() })),
 					Details: Object.keys(params)
 						.filter((key) => key.startsWith('Price_'))
 						.map((key) => ({
@@ -345,6 +357,7 @@ const ChangeMajorsPage = () => {
 					setOldMajors(null)
 					setTuitionInOld(0)
 				}
+				setContracts([])
 			} else {
 				ShowNostis.warning('Chưa tạo hợp đồng cam kết')
 			}
@@ -464,14 +477,27 @@ const ChangeMajorsPage = () => {
 								/>
 								{!isNullOrEmptyOrUndefined(PaymentTypeId) && <PaymentTypesDetails datas={paymentTypeDetail} />}
 								{!isNullOrEmptyOrUndefined(StudentId) && !isNullOrEmptyOrUndefined(MajorsId) && (
-									<CreateContract
-										datas={{
-											studentId: StudentId,
-											majorId: MajorsId
-										}}
-										setContractData={setContractData}
-										contractData={contractData}
-									/>
+									<>
+										<AddRegistrationContractButton majorId={MajorsId} onAddContract={onAddContract} />
+
+										{!!contracts?.length ? (
+											<div className="flex flex-col gap-[8px] border p-[12px] rounded-md mt-[8px] mb-[16px]">
+												{contracts.map((item, index) => {
+													return (
+														<ContractItem
+															key={index}
+															contractData={item}
+															index={index}
+															onUpdate={onUpdateContract}
+															onDelete={onDeleteContract}
+														/>
+													)
+												})}
+											</div>
+										) : (
+											<Empty className="mt-[8px] mb-[16px]" />
+										)}
+									</>
 								)}
 								{/* <SelectField
 									className="col-span-2"
