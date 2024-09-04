@@ -13,6 +13,7 @@ type TMajorContractsTable = {} & TMyTable
 const MajorContractsTable: React.FC<TMajorContractsTable> = (props) => {
 	const { refreshData } = props
 	const router = useRouter()
+	const { query } = router
 
 	const columns = [
 		{
@@ -28,13 +29,16 @@ const MajorContractsTable: React.FC<TMajorContractsTable> = (props) => {
 				<div className="flex">
 					<IconButton
 						type="button"
-						icon={'edit'}
+						icon={'eye'}
 						color="blue"
 						onClick={() => {
 							router.push({
 								pathname: '/majors/contracts/detail',
 								query: {
-									id: record.Id
+									id: record.Id,
+									majorId: query?.id,
+									group: query?.group,
+									name: 'Chi tiết hợp đồng'
 								}
 							})
 						}}

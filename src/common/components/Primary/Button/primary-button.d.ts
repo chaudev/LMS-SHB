@@ -24,6 +24,7 @@ type IPrimaryButton = {
 		| 'send'
 		| 'payment'
 		| 'cart'
+		| 'back'
 		| 'none'
 	type: 'button' | 'submit'
 	onClick?: Function

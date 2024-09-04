@@ -88,7 +88,7 @@ type IEditorField = {
 	placeholder?: string
 	customFieldProps?: any
 	id?: any
-	height?: number
+	height?: string | number
 	allowPasteImage?: boolean
 }
 

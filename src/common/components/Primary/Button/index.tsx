@@ -4,7 +4,7 @@ import { PlusCircle } from 'react-feather'
 import { AiFillPrinter, AiOutlineCheckCircle, AiOutlineEye, AiOutlineFileSearch } from 'react-icons/ai'
 import { BiHide, BiReset, BiSearchAlt2 } from 'react-icons/bi'
 import { FiEdit, FiSave, FiSend, FiTrash2, FiXCircle } from 'react-icons/fi'
-import { IoEnterOutline, IoPowerSharp } from 'react-icons/io5'
+import { IoArrowBack, IoEnterOutline, IoPowerSharp } from 'react-icons/io5'
 import { MdOutlinePayments } from 'react-icons/md'
 import { RiArrowDownSFill, RiArrowUpSFill, RiExchangeLine } from 'react-icons/ri'
 import { SiMicrosoftexcel } from 'react-icons/si'
@@ -147,6 +147,9 @@ const PrimaryButton: FC<IPrimaryButton> = (props) => {
 		}
 		if (icon == 'arrow-down') {
 			return <RiArrowDownSFill size={18} className={!!children ? 'mr-2' : ''} />
+		}
+		if (icon == 'back') {
+			return <IoArrowBack size={18} className={!!children ? 'mr-2' : ''} />
 		}
 	}
 

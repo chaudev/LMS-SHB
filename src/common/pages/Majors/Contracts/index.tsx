@@ -11,7 +11,7 @@ import PrimaryButton from '~/common/components/Primary/Button'
 
 const MajorContractsPage = () => {
 	const router = useRouter()
-	const { push, query } = router
+	const { query } = router
 	const userInfo = useSelector((state: RootState) => state.user.information)
 
 	const isAllow = useMemo(() => {
@@ -50,22 +50,37 @@ const MajorContractsPage = () => {
 				total={data?.totalRow || 0}
 				loading={isLoading}
 				onChangePage={(pageIndex) => router.push({ query: { ...query, pageIndex: pageIndex } })}
+				TitleCard={<div className="extra-table">Danh sách hợp đồng</div>}
 				Extra={
-					<PrimaryButton
-						background="green"
-						type="button"
-						icon="add"
-						onClick={() => {
-							router.push({
-								pathname: '/majors/contracts/create',
-								query: {
-									majorId: query?.id
-								}
-							})
-						}}
-					>
-						Thêm mới
-					</PrimaryButton>
+					<div className="flex gap-[12px]">
+						<PrimaryButton
+							background="transparent"
+							type="button"
+							icon="back"
+							onClick={() => {
+								router.push('/majors')
+							}}
+						>
+							Quay lại
+						</PrimaryButton>
+						<PrimaryButton
+							background="green"
+							type="button"
+							icon="add"
+							onClick={() => {
+								router.push({
+									pathname: '/majors/contracts/create',
+									query: {
+										majorId: query?.id,
+										group: query?.group,
+										name: 'Tạo hợp đồng'
+									}
+								})
+							}}
+						>
+							Thêm mới
+						</PrimaryButton>
+					</div>
 				}
 				data={data?.data || []}
 				refreshData={refetch}
