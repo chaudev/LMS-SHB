@@ -52,13 +52,13 @@ const MajorContractListModal = ({ majorId, open, onCancel, tableProps, onAddCont
 				<div className="flex">
 					<IconButton
 						type="button"
-						icon={'eye'}
+						icon={'add'}
 						color="blue"
 						onClick={() => {
 							setSelectedContract(record)
 							setIsOpenContractModal(true)
 						}}
-						tooltip="Xem hợp đồng"
+						tooltip="Chọn hợp đồng này"
 					/>
 				</div>
 			)

@@ -18,13 +18,13 @@ const ContractItem = ({ contractData, index, onUpdate, onDelete }: TContractItem
 	return (
 		<>
 			<div className={clsx('flex items-center justify-between gap-[16px]', { 'border-t border-[#e1e1e1] pt-[8px]': index !== 0 })}>
-				<div className="flex items-center gap-[16px]">
-					<span className="font-medium">{contractData?.ContractNumber}</span>
+				<div className="flex items-center gap-[8px]">
+					<span className="font-medium">{contractData?.ContractNumber} Hợp đồng cam kết đầu ra</span>
 					<span>-</span>
 					<span>Ngày ký: {moment(contractData?.ContractSigningDate).format('DD/MM/YYYY')}</span>
 				</div>
 				<div className="flex">
-					<IconButton type="button" color="blue" icon="edit" onClick={() => setIsOpenContractModal(true)} />
+					<IconButton type="button" color="blue" icon="edit" tooltip="Chỉnh sửa" onClick={() => setIsOpenContractModal(true)} />
 
 					<Popconfirm
 						title="Bạn có chắc muốn xóa hợp đồng này?"
@@ -33,12 +33,13 @@ const ContractItem = ({ contractData, index, onUpdate, onDelete }: TContractItem
 						placement="left"
 						onConfirm={() => onDelete(index, contractData)}
 					>
-						<IconButton type="button" color="red" icon="remove" />
+						<IconButton type="button" color="red" tooltip="Xóa" icon="remove" />
 					</Popconfirm>
 				</div>
 			</div>
 
 			<RegistrationContractModal
+				type="edit"
 				open={isOpenContractModal}
 				onCancel={() => setIsOpenContractModal(false)}
 				defaultContractData={contractData}
