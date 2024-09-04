@@ -4,7 +4,7 @@ import { Edit, LogIn, X, FileMinus, Edit3, Book, Trash2 } from 'react-feather'
 import { AiOutlineCheckCircle, AiOutlineEye, AiOutlineInfoCircle, AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { BiReset } from 'react-icons/bi'
 import { CgAddR, CgFileDocument } from 'react-icons/cg'
-import { FaChalkboardTeacher } from 'react-icons/fa'
+import { FaChalkboardTeacher, FaFileContract } from 'react-icons/fa'
 import { FiArrowDownCircle, FiArrowUpCircle, FiMenu, FiMoreVertical, FiPrinter, FiSave, FiSend } from 'react-icons/fi'
 import { HiOutlineFilter } from 'react-icons/hi'
 import { MdOutlineCancel, MdOutlineHistory, MdPendingActions, MdPieChartOutline } from 'react-icons/md'
@@ -181,6 +181,9 @@ const IconButton: FC<IIconButton> = (props) => {
 		}
 		if (icon == 'pieChart') {
 			return <MdPieChartOutline size={!!size ? size : 20} />
+		}
+		if (icon == 'contract') {
+			return <FaFileContract size={!!size ? size : 20} />
 		}
 	}
 

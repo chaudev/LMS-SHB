@@ -92,9 +92,6 @@ export const MajorsPage = () => {
 			width: 50,
 			render: (text, item) => (
 				<div className="flex items-center">
-					<ModalMajorsCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
-					<ModalMajorsCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
-
 					<IconButton
 						type="button"
 						icon={'eye'}
@@ -128,6 +125,26 @@ export const MajorsPage = () => {
 						}}
 						tooltip="Hình thức thanh toán"
 					/>
+
+					<IconButton
+						type="button"
+						icon={'contract'}
+						size={18}
+						color="green"
+						onClick={() => {
+							router.push({
+								pathname: '/majors/contracts',
+								query: {
+									id: item.Id,
+									group: item.Name
+								}
+							})
+						}}
+						tooltip="Xem danh sách hợp đồng"
+					/>
+
+					<ModalMajorsCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
+					<ModalMajorsCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
 				</div>
 			)
 		}
