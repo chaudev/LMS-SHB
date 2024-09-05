@@ -7,13 +7,15 @@ import { Popconfirm } from 'antd'
 import RegistrationContractModal from '../RegistrationContractModal'
 
 type TContractItemProps = {
+	studentId: number
+	paymentTypeId?: number
 	contractData: TContractItem
 	index: number
 	onUpdate: (index: number, data: TContractItem) => void
 	onDelete: (index: number, data: TContractItem) => void
 }
 
-const ContractItem = ({ contractData, index, onUpdate, onDelete }: TContractItemProps) => {
+const ContractItem = ({ studentId, paymentTypeId, contractData, index, onUpdate, onDelete }: TContractItemProps) => {
 	const [isOpenContractModal, setIsOpenContractModal] = useState(false)
 	return (
 		<>
@@ -43,6 +45,9 @@ const ContractItem = ({ contractData, index, onUpdate, onDelete }: TContractItem
 				open={isOpenContractModal}
 				onCancel={() => setIsOpenContractModal(false)}
 				defaultContractData={contractData}
+				studentId={studentId}
+				templateMajorIds={`${contractData?.TemplateMajorId}`}
+				paymentTypeId={paymentTypeId}
 				onSubmit={(data) => {
 					setIsOpenContractModal(false)
 					onUpdate(index, data)

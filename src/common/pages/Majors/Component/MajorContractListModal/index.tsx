@@ -11,12 +11,14 @@ const PAGE_SIZE = 20
 
 type TProps = TMyModalProps & {
 	majorId: number
+	studentId: number
+	paymentTypeId?: number
 	tableProps?: TMyTable
 	onAddContract: (contract: TContractItem) => void
 	onCancel: () => void
 }
 
-const MajorContractListModal = ({ majorId, open, onCancel, tableProps, onAddContract }: TProps) => {
+const MajorContractListModal = ({ majorId, studentId,paymentTypeId, open, onCancel, tableProps, onAddContract }: TProps) => {
 	const [selectedContract, setSelectedContract] = useState<TTemplateMajor>()
 	const [isOpenContractModal, setIsOpenContractModal] = useState(false)
 	const [pagination, setPagination] = useState({
@@ -80,6 +82,9 @@ const MajorContractListModal = ({ majorId, open, onCancel, tableProps, onAddCont
 				open={isOpenContractModal}
 				onCancel={() => setIsOpenContractModal(false)}
 				defaultContractData={{ ContractContent: selectedContract?.Content }}
+				studentId={studentId}
+				templateMajorIds={`${selectedContract?.Id}`}
+				paymentTypeId={paymentTypeId}
 				onSubmit={onAddContract}
 				onCallbackAfterSuccess={onCancel}
 			/>

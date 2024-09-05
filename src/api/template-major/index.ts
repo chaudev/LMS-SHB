@@ -19,6 +19,11 @@ export const templateMajorApi = {
 		return instance.get<IApiResultData<TTemplateMajor>>(`${url}/${id}`)
 	},
 
+	keyGetFillData: 'GET /api/TemplateMajor/fill-data',
+	getFillData(params: TGetTemplateMajorFillData) {
+		return instance.get<IApiResultData<TTemplateMajor[]>>(`${url}/fill-data`, { params })
+	},
+
 	add(data: TPostTemplateMajor) {
 		return instance.post(url, data, {})
 	},
