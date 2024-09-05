@@ -1,5 +1,5 @@
 import { Form } from 'antd'
-import { useEffect } from 'react'
+import { useEffect, useId } from 'react'
 import MyModal, { TMyModalProps } from '~/atomic/atoms/MyModal'
 import DatePickerField from '~/common/components/FormControl/DatePickerField'
 import EditorField from '~/common/components/FormControl/EditorField'
@@ -14,13 +14,15 @@ type TRegistrationContractForm = {
 }
 
 type TProps = TMyModalProps & {
+	type?: 'add' | 'edit'
 	defaultContractData: Partial<TRegistrationContractForm>
 	onSubmit: (values: TRegistrationContractForm) => void
 	onCancel: () => void
 	onCallbackAfterSuccess?: () => void
 }
 
-const RegistrationContractModal = ({ defaultContractData, onSubmit, open, onCancel, onCallbackAfterSuccess }: TProps) => {
+const RegistrationContractModal = ({ type = 'add', defaultContractData, onSubmit, open, onCancel, onCallbackAfterSuccess }: TProps) => {
+	const editorId = useId()
 	const [formContract] = Form.useForm<TRegistrationContractForm>()
 
 	useEffect(() => {
@@ -39,7 +41,14 @@ const RegistrationContractModal = ({ defaultContractData, onSubmit, open, onCanc
 	}
 
 	return (
-		<MyModal title={'Thêm hợp đồng'} centered open={open} onCancel={onCancel} footer={null} width={1000}>
+		<MyModal
+			title={type === 'add' ? 'Thêm hợp đồng' : 'Chỉnh sửa hợp đồng'}
+			centered
+			open={open}
+			onCancel={onCancel}
+			footer={null}
+			width={1000}
+		>
 			<div className="container-fluid">
 				<Form form={formContract} layout="vertical" onFinish={_onSubmit}>
 					<div className="grid grid-cols-12 gap-x-4">
@@ -59,6 +68,7 @@ const RegistrationContractModal = ({ defaultContractData, onSubmit, open, onCanc
 						</div>
 						<div className="col-span-12">
 							<EditorField
+								id={editorId}
 								label="Nội dung hợp đồng"
 								name="ContractContent"
 								height={'calc(100vh - 300px)'}

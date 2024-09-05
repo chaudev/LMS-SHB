@@ -8,7 +8,7 @@ import InputNumberField from '~/common/components/FormControl/InputNumberField'
 import SelectField from '~/common/components/FormControl/SelectField'
 import TextBoxField from '~/common/components/FormControl/TextBoxField'
 import PrimaryButton from '~/common/components/Primary/Button'
-import { ShowNostis } from '~/common/utils'
+import { ShowNostis, ShowNoti } from '~/common/utils'
 import { removeCommas } from '~/common/utils/super-functions'
 import ModalViewPaymenTypeDetail from '../Component/ModalViewPaymenTypeDetail'
 import CardInfomation from '../Component/CardInfomation'
@@ -315,12 +315,14 @@ const ChangeMajorsPage = () => {
 
 	const onAddContract = (contract: TContractItem) => {
 		setContracts([...contracts, contract])
+		ShowNoti('success', 'Thêm hợp đồng thành công')
 	}
 
 	const onUpdateContract = (index: number, contract: TContractItem) => {
 		const _contracts = [...contracts]
 		_contracts[index] = contract
 		setContracts([..._contracts])
+		ShowNoti('success', 'Chỉnh sửa hợp đồng thành công')
 	}
 
 	const onDeleteContract = (index: number, contract: TContractItem) => {
