@@ -480,7 +480,12 @@ const ChangeMajorsPage = () => {
 								{!isNullOrEmptyOrUndefined(PaymentTypeId) && <PaymentTypesDetails datas={paymentTypeDetail} />}
 								{!isNullOrEmptyOrUndefined(StudentId) && !isNullOrEmptyOrUndefined(MajorsId) && (
 									<>
-										<AddRegistrationContractButton majorId={MajorsId} onAddContract={onAddContract} />
+										<AddRegistrationContractButton
+											majorId={MajorsId}
+											studentId={StudentId}
+											paymentTypeId={PaymentTypeId}
+											onAddContract={onAddContract}
+										/>
 
 										{!!contracts?.length ? (
 											<div className="flex flex-col gap-[8px] border p-[12px] rounded-md mt-[8px] mb-[16px]">
@@ -488,6 +493,8 @@ const ChangeMajorsPage = () => {
 													return (
 														<ContractItem
 															key={index}
+															studentId={StudentId}
+															paymentTypeId={PaymentTypeId}
 															contractData={item}
 															index={index}
 															onUpdate={onUpdateContract}

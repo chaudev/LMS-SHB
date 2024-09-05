@@ -5,11 +5,13 @@ import { TContractItem } from '../../Registration'
 
 interface ICreateContract {
 	majorId: number
+	studentId: number
+	paymentTypeId?: number
 	onAddContract: (contract: TContractItem) => void
 }
 
 const AddRegistrationContractButton: React.FC<ICreateContract> = (props) => {
-	const { majorId, onAddContract } = props
+	const { majorId, studentId, paymentTypeId, onAddContract } = props
 	const [isModalVisible, setIsModalVisible] = useState(false)
 
 	const onClose = () => {
@@ -28,7 +30,14 @@ const AddRegistrationContractButton: React.FC<ICreateContract> = (props) => {
 					<LiaFileContractSolid size={18} /> Thêm hợp đồng
 				</button>
 			</div>
-			<MajorContractListModal onAddContract={onAddContract} majorId={majorId} open={isModalVisible} onCancel={onClose} />
+			<MajorContractListModal
+				onAddContract={onAddContract}
+				majorId={majorId}
+				studentId={studentId}
+				paymentTypeId={paymentTypeId}
+				open={isModalVisible}
+				onCancel={onClose}
+			/>
 		</div>
 	)
 }

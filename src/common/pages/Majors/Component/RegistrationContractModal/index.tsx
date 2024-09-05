@@ -1,5 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
 import { Form } from 'antd'
 import { useEffect, useId } from 'react'
+import { templateMajorApi } from '~/api/template-major'
 import MyModal, { TMyModalProps } from '~/atomic/atoms/MyModal'
 import DatePickerField from '~/common/components/FormControl/DatePickerField'
 import EditorField from '~/common/components/FormControl/EditorField'
@@ -8,6 +10,7 @@ import PrimaryButton from '~/common/components/Primary/Button'
 import { formRequired } from '~/common/libs/others/form'
 
 type TRegistrationContractForm = {
+	TemplateMajorId: number
 	ContractNumber: string
 	ContractSigningDate: string
 	ContractContent: string
@@ -19,22 +22,52 @@ type TProps = TMyModalProps & {
 	onSubmit: (values: TRegistrationContractForm) => void
 	onCancel: () => void
 	onCallbackAfterSuccess?: () => void
+	studentId: number
+	templateMajorIds?: string
+	paymentTypeId?: number
 }
 
-const RegistrationContractModal = ({ type = 'add', defaultContractData, onSubmit, open, onCancel, onCallbackAfterSuccess }: TProps) => {
+const RegistrationContractModal = ({
+	type = 'add',
+	defaultContractData,
+	onSubmit,
+	open,
+	onCancel,
+	onCallbackAfterSuccess,
+	studentId,
+	templateMajorIds,
+	paymentTypeId
+}: TProps) => {
 	const editorId = useId()
 	const [formContract] = Form.useForm<TRegistrationContractForm>()
 
+	const { data: dataQuery } = useQuery({
+		queryKey: [templateMajorApi.keyGetFillData, [studentId, templateMajorIds, paymentTypeId]],
+		queryFn: () => {
+			return templateMajorApi
+				.getFillData({
+					studentId: studentId,
+					templateMajorIds: templateMajorIds,
+					paymentTypeId: paymentTypeId
+				})
+				.then((data) => data.data)
+		},
+		enabled: open && type === 'add' && !!studentId && !!templateMajorIds
+	})
+
 	useEffect(() => {
-		if (defaultContractData) {
+		if (open) {
 			formContract.setFieldsValue({
-				...defaultContractData
+				ContractNumber: defaultContractData?.ContractNumber,
+				ContractSigningDate: defaultContractData?.ContractSigningDate,
+				ContractContent:
+					type === 'edit' ? defaultContractData?.ContractContent : dataQuery?.data?.[0]?.Content || defaultContractData?.ContractContent
 			})
 		}
-	}, [defaultContractData])
+	}, [open, defaultContractData, dataQuery])
 
 	const _onSubmit = (data: TRegistrationContractForm) => {
-		onSubmit(data)
+		onSubmit({ ...data, TemplateMajorId: defaultContractData?.TemplateMajorId })
 		onCancel()
 		formContract.resetFields()
 		// onCallbackAfterSuccess?.()

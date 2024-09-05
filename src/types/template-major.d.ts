@@ -33,3 +33,11 @@ type TTemplateMajorGuide = {
 	Code: string
 	Name: string
 }
+
+type TGetTemplateMajorFillData = {
+	studentId: number
+	templateMajorIds: string
+	contractNumber?: string
+	contractSigningDate?: string
+	paymentTypeId?: number
+}
