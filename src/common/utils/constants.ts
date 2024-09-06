@@ -64,3 +64,34 @@ export const USER_EVALUATION_FORM_STATUS = {
 	waiting: 'Waiting',
 	done: 'Done'
 }
+
+export const dayOfWeek = [
+	{
+		title: 'Thứ 2',
+		value: 1
+	},
+	{
+		title: 'Thứ 3',
+		value: 2
+	},
+	{
+		title: 'Thứ 4',
+		value: 3
+	},
+	{
+		title: 'Thứ 5',
+		value: 4
+	},
+	{
+		title: 'Thứ 6',
+		value: 5
+	},
+	{
+		title: 'Thứ 7',
+		value: 6
+	},
+	{
+		title: 'Chủ nhật',
+		value: 0
+	}
+]

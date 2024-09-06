@@ -28,6 +28,7 @@ export const userInformationApi = {
 		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/user-available/${role}`)
 	},
 
+	keyGetAllUserAvailable: 'GET /api/UserInformation/user-available',
 	getAllUserAvailable(params: { roleId: string; branchId: string }) {
 		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/user-available/`, { params: params })
 	},

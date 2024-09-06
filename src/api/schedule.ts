@@ -10,13 +10,17 @@ export const scheduleApi = {
 	getStudyTime() {
 		return instance.get<IApiResultData<any>>(`${url}/study-time-available`)
 	},
+	keyGetByRoom: 'GET /api/Schedule/by-room',
+	getByRoom(params: TGetScheduleByRoom) {
+		return instance.get<IApiResultData<TScheduleByRoomResponse>>(`${url}/by-room`, { params })
+	},
 	add(data) {
 		return instance.post(url, data)
 	},
 	adds(data) {
 		return instance.post(`${url}/items`, { items: data })
 	},
-	
+
 	checkTime(data) {
 		return instance.post(`${url}/validate`, data)
 	},
@@ -36,6 +40,6 @@ export const scheduleApi = {
 	}
 }
 
-export const checkTime = (data) =>{
+export const checkTime = (data) => {
 	return instance.post(`${url}/validate`, data)
 }
