@@ -64,11 +64,18 @@ type TScheduleByRoomStudyTimeRoom = {
 	Schedules: TScheduleByRoomStudyTimeRoomSchedule[]
 }
 type TScheduleByRoomStudyTimeRoomSchedule = {
+	ScheduleId: number
+	BranchId: number
+	CurriculumId: number
 	ClassId: number
+	StartTime: string
+	EndTime: string
 	ClassName: string
+	TeachingFee: number
 	ScheduleCurrent: number
 	ScheduleTotal: number
 	TotalStudent: number
 	TeacherId: number
 	TeacherName: string
+	Note: string
 }

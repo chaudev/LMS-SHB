@@ -11,12 +11,14 @@ export const classApi = {
 	getAllTeacherWhenCreate(params) {
 		return instance.get<IApiResultData<ICurriculum[]>>(`${url}/teacher-when-create`, { params: params })
 	},
+	keyCheckTeacherAvailable: 'GET /api/Class/teacher-available',
 	checkTeacherAvailable(params) {
 		return instance.get<IApiResultData<any[]>>(`${url}/teacher-available`, { params: params })
 	},
 	checkTeacherTutoringAvailable(params) {
 		return instance.get<IApiResultData<any[]>>(`${url}/teacher-tutoring-available`, { params: params })
 	},
+	keyCheckRoomAvailable: 'GET /api/Class/room-available',
 	checkRoomAvailable(params) {
 		return instance.get<IApiResultData<any[]>>(`${url}/room-available`, { params: params })
 	},

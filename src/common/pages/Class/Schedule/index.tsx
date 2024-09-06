@@ -3,8 +3,10 @@ import ClassScheduleHeader from './ClassScheduleHeader'
 import moment, { Moment } from 'moment'
 import { useState } from 'react'
 import ClassScheduleTable from './ClassScheduleTable'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { scheduleApi } from '~/api/schedule'
+import PrimaryButton from '~/common/components/Primary/Button'
+import { ShowNoti } from '~/common/utils'
 
 export type TClassScheduleParams = {
 	from: string
@@ -68,6 +70,26 @@ const ClassSchedulePage = () => {
 		})
 	}
 
+	const mutationExportExcel = useMutation({
+		mutationFn: () => {
+			const _params = {
+				...params,
+				timeFrom: params?.timeFrom ? moment(params?.timeFrom).format('HH:mm') : undefined,
+				timeTo: params?.timeTo ? moment(params?.timeTo).format('HH:mm') : undefined
+			}
+			return scheduleApi.exportExcel(_params)
+		},
+		onSuccess(res, variables, context) {
+			ShowNoti('success', 'Xuất excel thành công')
+			if (res?.data?.data) {
+				window.open(res?.data?.data)
+			}
+		},
+		onError(error) {
+			ShowNoti('error', error?.message)
+		}
+	})
+
 	return (
 		<Card>
 			{/* Header */}
@@ -76,10 +98,21 @@ const ClassSchedulePage = () => {
 
 			{/* Table */}
 			<div className="mt-[24px]">
-				<div className="text-center text-[20px] font-medium mb-[16px]">
-					{moment(params.from).format('DD/MM/YYYY')} - {moment(params.to).format('DD/MM/YYYY')}
+				<div className="flex justify-between">
+					<div className="flex-1 text-center text-[20px] font-medium mb-[16px]">
+						{moment(params.from).format('DD/MM/YYYY')} - {moment(params.to).format('DD/MM/YYYY')}
+					</div>
+					<PrimaryButton
+						type="button"
+						background="primary"
+						icon="download"
+						loading={mutationExportExcel.isPending}
+						onClick={() => mutationExportExcel.mutate()}
+					>
+						Xuất excel
+					</PrimaryButton>
 				</div>
-				{!dataQuery?.ScheduleByRoom?.length ? <Empty /> : <ClassScheduleTable data={dataQuery} isLoading={isLoading} />}
+				{!dataQuery?.ScheduleByRoom?.length ? <Empty /> : <ClassScheduleTable data={dataQuery} isLoading={isLoading} refetch={refetch} />}
 			</div>
 		</Card>
 	)

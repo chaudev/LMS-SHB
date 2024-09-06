@@ -1,14 +1,32 @@
 import moment from 'moment'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import MyTable from '~/atomic/atoms/MyTable'
+import IconButton from '~/common/components/Primary/IconButton'
+import EditClassScheduleModal, { TClassSchedultData } from '../EditClassScheduleModal'
+import { useMutation } from '@tanstack/react-query'
+import { scheduleApi } from '~/api/schedule'
+import { ShowNoti } from '~/common/utils'
+import { Popconfirm } from 'antd'
 
 type TProps = {
 	data: TScheduleByRoomResponse
 	isLoading?: boolean
+	refetch?: () => void
 }
 
-const ClassScheduleTable = ({ data, isLoading = false }: TProps) => {
+const ClassScheduleTable = ({ data, isLoading = false, refetch }: TProps) => {
+	const mutationDelete = useMutation({
+		mutationFn: (Id: any) => scheduleApi.delete(Id),
+		onSuccess(data, variables, context) {
+			ShowNoti('success', 'Xóa thành công')
+			refetch?.()
+		},
+		onError(error) {
+			ShowNoti('error', error?.message)
+		}
+	})
+
 	const tableData = useMemo(() => {
 		const _tableData = []
 		if (data?.ScheduleByRoom) {
@@ -88,18 +106,38 @@ const ClassScheduleTable = ({ data, isLoading = false }: TProps) => {
 						if (!roomData) return ''
 						return (
 							<div className="flex flex-col gap-[8px]">
-								{roomData?.Schedules?.map((item, index) => {
+								{roomData?.Schedules?.map((scheduleItem: TScheduleByRoomStudyTimeRoomSchedule, index: number) => {
 									return (
-										<div key={index} className="min-w-[160px] max-w-[200px] border rounded-md p-[12px]">
-											<div className="font-medium mb-[4px]">{item?.ClassName}</div>
-											<div className="text-[12px]">
-												Buổi: <span className="font-medium">{`${item?.ScheduleCurrent} / ${item?.ScheduleTotal}`}</span>
+										<div key={index} className="min-w-[180px] max-w-[280px] border rounded-md p-[12px]">
+											<div className="flex justify-between gap-[12px]">
+												<div className="font-medium mb-[4px]">{scheduleItem?.ClassName}</div>
+												<div className="flex mt-[-6px]">
+													<EditScheduleButton
+														branchId={scheduleItem?.BranchId}
+														curriculumId={scheduleItem?.CurriculumId}
+														scheduleId={scheduleItem?.ScheduleId}
+														classScheduleData={{ ...scheduleItem, RoomId: item.RoomId }}
+														refetch={refetch}
+													/>
+													<Popconfirm
+														title="Bạn có chắc muốn xóa lịch này?"
+														okText="Có"
+														cancelText="Hủy"
+														onConfirm={() => mutationDelete.mutate(scheduleItem.ScheduleId)}
+														disabled={mutationDelete.isPending}
+													>
+														<IconButton type="button" icon="remove" color={'red'} className="" tooltip="Xóa lịch" />
+													</Popconfirm>
+												</div>
 											</div>
 											<div className="text-[12px]">
-												Số học viên: <span className="font-medium">{item?.TotalStudent}</span>
+												Buổi: <span className="font-medium">{`${scheduleItem?.ScheduleCurrent} / ${scheduleItem?.ScheduleTotal}`}</span>
 											</div>
 											<div className="text-[12px]">
-												GV: <span className="font-medium">{item?.TeacherName}</span>
+												Số học viên: <span className="font-medium">{scheduleItem?.TotalStudent}</span>
+											</div>
+											<div className="text-[12px]">
+												GV: <span className="font-medium">{scheduleItem?.TeacherName}</span>
 											</div>
 										</div>
 									)
@@ -121,3 +159,30 @@ const ClassScheduleTable = ({ data, isLoading = false }: TProps) => {
 }
 
 export default ClassScheduleTable
+
+type TEditScheduleButtonProps = {
+	classScheduleData?: TClassSchedultData
+	scheduleId: number
+	branchId: number
+	curriculumId: number
+	refetch?: () => void
+}
+const EditScheduleButton = ({ classScheduleData, scheduleId, branchId, curriculumId, refetch }: TEditScheduleButtonProps) => {
+	const [isOpen, setIsOpen] = useState(false)
+
+	return (
+		<>
+			<IconButton type="button" color="blue" icon="edit" onClick={() => setIsOpen(true)} />
+
+			<EditClassScheduleModal
+				open={isOpen}
+				onCancel={() => setIsOpen(false)}
+				classScheduleData={classScheduleData}
+				scheduleId={scheduleId}
+				branchId={branchId}
+				curriculumId={curriculumId}
+				refetch={refetch}
+			/>
+		</>
+	)
+}
