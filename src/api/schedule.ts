@@ -14,6 +14,10 @@ export const scheduleApi = {
 	getByRoom(params: TGetScheduleByRoom) {
 		return instance.get<IApiResultData<TScheduleByRoomResponse>>(`${url}/by-room`, { params })
 	},
+	keyExportExcel: 'GET /api/Schedule/excel',
+	exportExcel(params: TGetScheduleByRoom) {
+		return instance.get<IApiResultData<string>>(`${url}/excel`, { params })
+	},
 	add(data) {
 		return instance.post(url, data)
 	},
