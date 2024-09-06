@@ -81,6 +81,7 @@ export function parseSelectArrayUser(arr: Array<{ [key: string]: any }>, title: 
 				value: item[value]
 			}))
 	}
+	return []
 }
 
 export const parseStringToNumber = (str: number | string) => parseInt(str.toString().replace(/\D/g, '')) || 0
