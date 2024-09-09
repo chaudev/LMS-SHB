@@ -5,12 +5,13 @@ import styles from './styles.module.scss'
 
 type TMySelectClassByBranches = {
 	branchIds: string
+	classStatus?: string
 	isUseDebound?: boolean
 } & TMySelectProps
 
 const MySelectClassByBranches: React.FC<TMySelectClassByBranches> = (props) => {
-	const { branchIds, isUseDebound, className, placeholder = 'Chọn lớp học', ...restProps } = props
-	const { data, isLoading } = useQueryClassByBranch(branchIds, isUseDebound)
+	const { branchIds, classStatus, isUseDebound, className, placeholder = 'Chọn lớp học', ...restProps } = props
+	const { data, isLoading } = useQueryClassByBranch(branchIds, classStatus, isUseDebound)
 
 	return (
 		<MySelect

@@ -2,6 +2,7 @@ import { instance } from '~/api/instance'
 
 const url = '/api/Schedule'
 export const scheduleApi = {
+	getGetAll: 'GET /api/Schedule',
 	getAll(scheduleParams: any) {
 		return instance.get<IApiResultData<ISchedule[]>>(url, {
 			params: scheduleParams
