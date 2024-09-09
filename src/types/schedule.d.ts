@@ -78,4 +78,5 @@ type TScheduleByRoomStudyTimeRoomSchedule = {
 	TeacherId: number
 	TeacherName: string
 	Note: string
+	IsAttendance: boolean
 }

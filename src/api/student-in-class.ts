@@ -3,6 +3,7 @@ import { instance } from '~/api/instance'
 const url = 'api/StudentInClass'
 
 export const studentInClassApi = {
+	keyGetAll: 'GET api/StudentInClass',
 	getAll(todoApi: object) {
 		return instance.get<IApiResultData<IStudentInClass[]>>(url, {
 			params: todoApi

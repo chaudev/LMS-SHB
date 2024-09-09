@@ -1,3 +1,6 @@
+import { EClassStatus } from '~/enums/class'
+import { ELearningStatus, ERollUpStatus } from '~/enums/roll-up'
+
 export const CLASS_TYPES = {
 	offline: '1',
 	online: '2',
@@ -94,4 +97,30 @@ export const dayOfWeek = [
 		title: 'Chủ nhật',
 		value: 0
 	}
+]
+
+export const rollUpStatusOptions = [
+	{ value: ERollUpStatus.Present, label: 'Có mặt' },
+	{ value: ERollUpStatus.AbsentWithPermission, label: 'Vắng có phép' },
+	{ value: ERollUpStatus.AbsentWithoutPermission, label: 'Vắng không phép' },
+	{ value: ERollUpStatus.Late, label: 'Đi muộn' },
+	{ value: ERollUpStatus.LeaveEarly, label: 'Về sớm' },
+	{ value: ERollUpStatus.Holiday, label: 'Nghĩ lễ' }
+]
+
+export const learningStatusOptions = [
+	{ value: ELearningStatus.Excellent, label: 'Giỏi' },
+	{ value: ELearningStatus.Good, label: 'Khá' },
+	{ value: ELearningStatus.Average, label: 'Trung bình' },
+	{ value: ELearningStatus.Poor, label: 'Kém' },
+	{ value: ELearningStatus.SpecialMonitoring, label: 'Theo dõi đặc biệt' },
+	{ value: ELearningStatus.Trying, label: 'Có cố gắng' },
+	{ value: ELearningStatus.NotTrying, label: 'Không cố gắng' },
+	{ value: ELearningStatus.NoComment, label: 'Không nhận xét' }
+]
+
+export const classStatusOptions = [
+	{ value: EClassStatus.Upcoming, label: 'Sắp diễn ra' },
+	{ value: EClassStatus.InProgress, label: 'Đang diễn ra' },
+	{ value: EClassStatus.Finished, label: 'Kết thúc' }
 ]

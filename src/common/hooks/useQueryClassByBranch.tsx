@@ -5,22 +5,23 @@ import { useEffect, useState } from 'react'
 
 const debounce = debounceV2(800)
 
-const useQueryClassByBranch = (branchIds: string, isUseDebound?: boolean) => {
+const useQueryClassByBranch = (branchIds: string, status?: string, isUseDebound?: boolean) => {
 	const [params, setParams] = useState({
-		branchIds: ''
+		branchIds: '',
+		status: undefined
 	})
 
 	useEffect(() => {
 		if (isUseDebound) {
-			debounce(() => setParams({ branchIds }))
+			debounce(() => setParams({ branchIds, status }))
 		} else {
-			setParams({ branchIds })
+			setParams({ branchIds, status })
 		}
-	}, [branchIds, isUseDebound])
+	}, [branchIds, status, isUseDebound])
 
 	const data = useQuery({
-		queryKey: [classApi.keyGetDropdownByBranch, [params.branchIds]],
-		queryFn: () => classApi.getDropdownByBranch(params.branchIds).then((data) => data.data.data),
+		queryKey: [classApi.keyGetDropdownByBranch, [params.branchIds, params?.status]],
+		queryFn: () => classApi.getDropdownByBranch({ branchIds: params.branchIds, status: params?.status }).then((data) => data.data.data),
 		enabled: !!params.branchIds
 	})
 

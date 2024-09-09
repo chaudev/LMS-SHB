@@ -422,6 +422,13 @@ export const AdminChildMenu = [
 				Text: 'Học viên chuyển lớp',
 				Icon: ''
 			},
+			{
+				ItemType: 'single',
+				Key: '/class/roll-up',
+				Route: '/class/roll-up',
+				Text: 'Điểm danh',
+				Icon: ''
+			},
 			// {
 			// 	TypeItem: 'single',
 			// 	Key: '/class/register',

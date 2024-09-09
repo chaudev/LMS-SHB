@@ -18,6 +18,9 @@ export const rollUpApi = {
 		console.log("data: ", data.data);
 		return instance.put(`${url}/items`, { ...data })
 	},
+	insertOrUpdateMultiple(data) {
+		return instance.post(`${url}/insert-or-update-multiple`, { ...data })
+	},
 
 	// xóa data
 	delete(ID) {
