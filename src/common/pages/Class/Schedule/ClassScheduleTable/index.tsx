@@ -7,7 +7,7 @@ import EditClassScheduleModal, { TClassSchedultData } from '../EditClassSchedule
 import { useMutation } from '@tanstack/react-query'
 import { scheduleApi } from '~/api/schedule'
 import { ShowNoti } from '~/common/utils'
-import { Popconfirm } from 'antd'
+import { Popconfirm, Tag } from 'antd'
 
 type TProps = {
 	data: TScheduleByRoomResponse
@@ -108,10 +108,10 @@ const ClassScheduleTable = ({ data, isLoading = false, refetch }: TProps) => {
 							<div className="flex flex-col gap-[8px]">
 								{roomData?.Schedules?.map((scheduleItem: TScheduleByRoomStudyTimeRoomSchedule, index: number) => {
 									return (
-										<div key={index} className="min-w-[180px] max-w-[280px] border rounded-md p-[12px]">
+										<div key={index} className="min-w-[180px] max-w-[280px] border rounded-md p-[12px] relative">
 											<div className="flex justify-between gap-[12px]">
 												<div className="font-medium mb-[4px]">{scheduleItem?.ClassName}</div>
-												<div className="flex mt-[-6px]">
+												<div className="flex gap-[4px] mt-[-6px] mr-[-8px]">
 													<EditScheduleButton
 														branchId={scheduleItem?.BranchId}
 														curriculumId={scheduleItem?.CurriculumId}
@@ -126,7 +126,7 @@ const ClassScheduleTable = ({ data, isLoading = false, refetch }: TProps) => {
 														onConfirm={() => mutationDelete.mutate(scheduleItem.ScheduleId)}
 														disabled={mutationDelete.isPending}
 													>
-														<IconButton type="button" icon="remove" color={'red'} className="" tooltip="Xóa lịch" />
+														<IconButton type="button" icon="remove" color={'red'} className="m-0" tooltip="Xóa lịch" />
 													</Popconfirm>
 												</div>
 											</div>
@@ -136,8 +136,13 @@ const ClassScheduleTable = ({ data, isLoading = false, refetch }: TProps) => {
 											<div className="text-[12px]">
 												Số học viên: <span className="font-medium">{scheduleItem?.TotalStudent}</span>
 											</div>
-											<div className="text-[12px]">
-												GV: <span className="font-medium">{scheduleItem?.TeacherName}</span>
+											<div className="flex justify-between gap-[12px]">
+												<div className="text-[12px]">
+													GV: <span className="font-medium">{scheduleItem?.TeacherName}</span>
+												</div>
+												<div className="mt-[-6px] mr-[-8px]">
+													<StatusTag data={scheduleItem} />
+												</div>
 											</div>
 										</div>
 									)
@@ -172,7 +177,7 @@ const EditScheduleButton = ({ classScheduleData, scheduleId, branchId, curriculu
 
 	return (
 		<>
-			<IconButton type="button" color="blue" icon="edit" onClick={() => setIsOpen(true)} />
+			<IconButton className="m-0" type="button" color="blue" icon="edit" onClick={() => setIsOpen(true)} />
 
 			<EditClassScheduleModal
 				open={isOpen}
@@ -184,5 +189,31 @@ const EditScheduleButton = ({ classScheduleData, scheduleId, branchId, curriculu
 				refetch={refetch}
 			/>
 		</>
+	)
+}
+
+type TStatusTagProps = {
+	data: TScheduleByRoomStudyTimeRoomSchedule
+}
+
+const StatusTag = ({ data }: TStatusTagProps) => {
+	if (data?.IsAttendance) {
+		return (
+			<Tag color="blue" className="rounded">
+				Đã học
+			</Tag>
+		)
+	}
+	if (moment().isAfter(moment(data?.StartTime))) {
+		return (
+			<Tag color="red" className="rounded">
+				Không học
+			</Tag>
+		)
+	}
+	return (
+		<Tag color="green" className="rounded">
+			Chưa học
+		</Tag>
 	)
 }

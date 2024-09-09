@@ -108,6 +108,7 @@ const ClassSchedulePage = () => {
 						icon="download"
 						loading={mutationExportExcel.isPending}
 						onClick={() => mutationExportExcel.mutate()}
+						disable={!dataQuery?.ScheduleByRoom?.length}
 					>
 						Xuất excel
 					</PrimaryButton>
