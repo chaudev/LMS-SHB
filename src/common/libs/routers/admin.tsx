@@ -429,6 +429,13 @@ export const AdminChildMenu = [
 				Text: 'Điểm danh',
 				Icon: ''
 			},
+			{
+				ItemType: 'single',
+				Key: '/class/enter-score',
+				Route: '/class/enter-score',
+				Text: 'Nhập điểm',
+				Icon: ''
+			},
 			// {
 			// 	TypeItem: 'single',
 			// 	Key: '/class/register',

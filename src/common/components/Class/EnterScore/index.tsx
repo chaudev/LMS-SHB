@@ -1,32 +1,36 @@
 import React, { useEffect, useState } from 'react'
-import PrimaryTable from '../../Primary/Table'
 import { Card, Popconfirm } from 'antd'
-import ModalCreateClassTranscript from './components/ModalCreateClassTranscript'
 import MySelectClassTranscript from '~/atomic/molecules/MySelectClassTranscript'
 import { isNull, ShowErrorToast } from '~/common/utils/main-function'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import DeleteTableRow from '../../Elements/DeleteTableRow'
 import { classTranscriptApi } from '~/api/class-transcript'
 import { ShowNostis } from '~/common/utils'
-import IconButton from '../../Primary/IconButton'
 import PrimaryButton from '../../Primary/Button'
-import ModalTranscriptDetail from './components/TranscriptDetail/ModalTranscriptDetail'
-import TranscriptStudentTable from './components/TranscriptStudentTable'
-import { useRouter } from 'next/router'
 import { saveGradesInClassApi } from '~/api/save-grades-in-class'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
 import { is } from '~/common/utils/common'
+import ModalCreateClassTranscript from '../TranscriptV2/components/ModalCreateClassTranscript'
+import TranscriptStudentTable from '../TranscriptV2/components/TranscriptStudentTable'
+import ModalTranscriptDetail from '../TranscriptV2/components/TranscriptDetail/ModalTranscriptDetail'
+import MySelectBranch from '~/atomic/molecules/MySelectBranch'
+import MySelectClassByBranches from '~/atomic/molecules/MySelectClassByBranches'
 
-const TranscriptPageV2 = () => {
+type TParams = { branchId?: number; classId?: number }
+
+const EnterScorePage = () => {
 	const [selectedClassTranscript, setSelectedClassTranscript] = useState(null)
 	const queryClient = useQueryClient()
-	const router = useRouter()
 	const [openDelete, setOpenDelete] = useState(false)
 	const [isEditStudentGrades, setIsEditStudentGrades] = useState(false)
 	const [saveStudentGrades, setSaveStudentGrades] = useState<TPostSaveGradesInClass[]>([])
 	const [isCreate, setIsCreate] = useState(false)
 	const userInfo = useSelector((state: RootState) => state.user.information)
+
+	const [params, setParams] = useState<TParams>({
+		branchId: undefined,
+		classId: undefined
+	})
 
 	// ** handle cancel delete
 	const handleCancel = () => {
@@ -87,15 +91,20 @@ const TranscriptPageV2 = () => {
 				})
 				return acc
 			}, [])
-			console.log(formated, 'log---')
 			setSaveStudentGrades(formated)
 		}
 	}, [savedGradesInClass])
 
+	const onChangeParams = (newParams: TParams) => {
+		setParams({
+			...params,
+			...newParams
+		})
+	}
+
 	// ** handle save student grades
 	const handleSaveStudentGrades = () => {
 		try {
-			console.log(saveStudentGrades, 'saveStudentGrades')
 			mutationSaveGrades.mutateAsync(saveStudentGrades)
 		} catch (error) {
 			ShowErrorToast(error)
@@ -116,26 +125,38 @@ const TranscriptPageV2 = () => {
 	})
 
 	return (
-		<Card
-			className="shadow-sm"
-			title={
+		<Card className="shadow-sm">
+			<div className="flex flex-col gap-2">
 				<div className="flex items-center gap-2">
-					{is(userInfo).admin && (
-						<ModalCreateClassTranscript
-							refreshData={() => {
-								refreshData()
-								setIsCreate(true)
-							}}
-							classId={Number(router.query?.class)}
-						/>
-					)}
+					<MySelectBranch
+						className="h-[36px] min-w-[250px]"
+						value={params?.branchId}
+						placeholder="Chọn trung tâm"
+						onChange={(val) => {
+							onChangeParams({ classId: null, branchId: val })
+							setSelectedClassTranscript(null)
+						}}
+						allowClear={false}
+					/>
+
+					<MySelectClassByBranches
+						className="h-[36px] min-w-[200px] max-w-[250px]"
+						branchIds={`${params?.branchId}`}
+						value={params?.classId}
+						placeholder="Chọn lớp học"
+						onChange={(val) => {
+							onChangeParams({ ...params, classId: val })
+							setSelectedClassTranscript(null)
+						}}
+						allowClear={false}
+					/>
 
 					<MySelectClassTranscript
-						classId={router.query.class}
+						classId={params?.classId}
 						optionFilterProp="label"
 						showSearch
 						allowClear={false}
-						className="min-w-[150px] custom-select-transcript"
+						className="min-w-[200px] custom-select-transcript"
 						placeholder="Chọn bảng điểm"
 						value={selectedClassTranscript?.Id}
 						onChange={(e, item: any) => setSelectedClassTranscript(item?.obj)}
@@ -143,9 +164,18 @@ const TranscriptPageV2 = () => {
 						isCreate={isCreate}
 						setIsCreate={setIsCreate}
 					/>
+					{is(userInfo).admin && (
+						<ModalCreateClassTranscript
+							refreshData={() => {
+								refreshData()
+								setIsCreate(true)
+							}}
+							classId={params?.classId}
+						/>
+					)}
 
 					{!isNull(selectedClassTranscript) && is(userInfo).admin && (
-						<ModalCreateClassTranscript classId={Number(router.query?.class)} defaultData={selectedClassTranscript} refreshData={() => refreshData()} />
+						<ModalCreateClassTranscript classId={params?.classId} defaultData={selectedClassTranscript} refreshData={() => refreshData()} />
 					)}
 					{!isNull(selectedClassTranscript) && is(userInfo).admin && (
 						<Popconfirm
@@ -160,12 +190,42 @@ const TranscriptPageV2 = () => {
 						</Popconfirm>
 					)}
 				</div>
-			}
-			extra={
-				<div className="flex flex-wrap items-center gap-2">
-					{!isNull(selectedClassTranscript) && is(userInfo).admin && <ModalTranscriptDetail defaultData={selectedClassTranscript} />}
-					{!isNull(selectedClassTranscript) && is(userInfo).admin && (
-						<>
+			</div>
+
+			<hr className="border-[#878787] mt-[12px] mb-4" />
+
+			{isNull(selectedClassTranscript) && (
+				<div className="min-h-[200px] flex items-center flex-col justify-center">
+					{is(userInfo).admin && (
+						<div>
+							<p className="text-left font-medium">
+								<span className="!text-primary">Bước 1.</span> Chọn trung tâm
+							</p>
+							<p className="text-left font-medium">
+								<span className="!text-primary">Bước 2.</span> Chọn lớp học
+							</p>
+							<p className="text-left font-medium">
+								<span className="!text-primary">Bước 3.</span> Chọn bảng điểm mong muốn hoặc thêm mới
+							</p>
+							<p className="text-left font-medium">
+								<span className="!text-primary">Bước 4.</span> Xem xét, điều chỉnh điểm số của học viên trong bảng điểm
+							</p>
+						</div>
+					)}
+					{!is(userInfo).admin && (
+						<div>
+							<img src="/images/choice.svg" draggable={false} className="w-[200px] mb-2" />
+							<p className="text-left font-medium">Chọn bảng điểm để xem thông tin</p>
+						</div>
+					)}
+				</div>
+			)}
+
+			{!isNull(selectedClassTranscript) && (
+				<>
+					{is(userInfo).admin && (
+						<div className="flex items-center justify-end gap-2 mb-[10px]">
+							<ModalTranscriptDetail defaultData={selectedClassTranscript} />
 							{!isEditStudentGrades && (
 								<PrimaryButton background="blue" type="button" icon="none" onClick={() => setIsEditStudentGrades(true)}>
 									Nhập điểm
@@ -193,43 +253,21 @@ const TranscriptPageV2 = () => {
 									Lưu tất cả
 								</PrimaryButton>
 							)}
-						</>
-					)}
-				</div>
-			}
-		>
-			{isNull(selectedClassTranscript) && (
-				<div className="min-h-[200px] flex items-center flex-col justify-center">
-					{is(userInfo).admin && (
-						<div>
-							<p className="text-left font-medium">
-								<span className="!text-primary">Bước 1.</span> Chọn bảng điểm mong muốn hoặc thêm mới
-							</p>
-							<p className="text-left font-medium">
-								<span className="!text-primary">Bước 2.</span> Xem xét, điều chỉnh điểm số của học viên trong bảng điểm
-							</p>
 						</div>
 					)}
-					{!is(userInfo).admin && (
-						<div>
-							<img src="/images/choice.svg" draggable={false} className="w-[200px] mb-2" />
-							<p className="text-left font-medium">Chọn bảng điểm để xem thông tin</p>
-						</div>
-					)}
-				</div>
-			)}
-			{!isNull(selectedClassTranscript) && (
-				<TranscriptStudentTable
-					isEditStudentGrades={isEditStudentGrades}
-					saveStudentGrades={saveStudentGrades}
-					setSaveStudentGrades={setSaveStudentGrades}
-					classTranscriptData={selectedClassTranscript}
-					saveGradeInClass={savedGradesInClass}
-					classId={Number(router.query?.class)}
-				/>
+
+					<TranscriptStudentTable
+						isEditStudentGrades={isEditStudentGrades}
+						saveStudentGrades={saveStudentGrades}
+						setSaveStudentGrades={setSaveStudentGrades}
+						classTranscriptData={selectedClassTranscript}
+						saveGradeInClass={savedGradesInClass}
+						classId={params?.classId}
+					/>
+				</>
 			)}
 		</Card>
 	)
 }
 
-export default TranscriptPageV2
+export default EnterScorePage
