@@ -316,7 +316,13 @@ const GeneralNotificationForm = (props) => {
 							{selectedSendType === ESendType.Class && (
 								<>
 									<MyFormItem name="classIds" label="Lớp học" rules={[{ required: true, message: 'Không để trống lớp học!' }]} required>
-										<MySelectClassByBranches mode="multiple" branchIds={watchBranchIds?.toString()} isUseDebound placeholder="" />
+										<MySelectClassByBranches
+											mode="multiple"
+											branchIds={watchBranchIds?.toString()}
+											isUseDebound
+											isHaveBranchCode
+											placeholder=""
+										/>
 									</MyFormItem>
 
 									<MyFormItem name="UserIds" label="Tài khoản" rules={[{ required: true, message: 'Không để trống tài khoản!' }]} required>

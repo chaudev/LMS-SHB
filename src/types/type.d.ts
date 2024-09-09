@@ -63,6 +63,7 @@ type IClass = IBaseApi<{
 	Name: string
 	Thumbnail: string
 	BranchId: number
+	BranchCode: string
 	BranchName: string
 	GradeId: number
 	GradeName: string
