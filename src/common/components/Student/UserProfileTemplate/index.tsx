@@ -152,10 +152,10 @@ const UserProfileTemplate = () => {
 													form.setFieldsValue(item)
 													setProfileItem(item)
 												}}
-												color={item.Value == 'true' ? 'green' : 'orange'}
+												color={item.Value == 'true' ? 'green' : item.Value == 'false' ? 'orange' : 'magenta'}
 											>
 												<div className="d-flex items-center px-2">
-													{item.Value == 'true' ? 'Đã có' : 'Chưa có'} <FiChevronDown size={22} />
+													{item.Value == 'true' ? 'Đã có' : item.Value == 'false' ? 'Chưa có' : 'Không cần'} <FiChevronDown size={22} />
 												</div>
 											</Tag>
 										) : (
@@ -217,6 +217,10 @@ const UserProfileTemplate = () => {
 							{
 								value: 'false',
 								title: 'Chưa có'
+							},
+							{
+								value: '',
+								title: 'Không cần'
 							}
 						]}
 						placeholder="Chọn trạng thái"
