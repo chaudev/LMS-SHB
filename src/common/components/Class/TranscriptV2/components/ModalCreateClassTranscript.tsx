@@ -17,14 +17,14 @@ import { ShowErrorToast } from '~/common/utils/main-function'
 interface IModalCreateClassTranscript {
 	defaultData?: any
 	refreshData: any
+	classId: number
 }
 
 const ModalCreateClassTranscript: React.FC<IModalCreateClassTranscript> = (props) => {
-	const { defaultData, refreshData } = props
+	const { defaultData, refreshData, classId } = props
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [form] = Form.useForm()
 	const { sampleTranscript, isLoading } = useQuerySampleTranscript()
-	const router = useRouter()
 
 	useEffect(() => {
 		if (defaultData) {
@@ -38,7 +38,7 @@ const ModalCreateClassTranscript: React.FC<IModalCreateClassTranscript> = (props
 			if (defaultData) {
 				return classTranscriptApi.update({ ...data, Id: defaultData?.Id })
 			} else {
-				return classTranscriptApi.add({ ...data, ClassId: router.query.class })
+				return classTranscriptApi.add({ ...data, ClassId: classId })
 			}
 		},
 		onSuccess(data, variables, context) {

@@ -19,22 +19,22 @@ interface ITranscriptStudentTable {
 	isEditStudentGrades?: boolean
 	saveStudentGrades: any
 	setSaveStudentGrades: Function
-
 	saveGradeInClass?: TSaveGradesInClass[]
+	classId: number
 }
 
 const TranscriptStudentTable: React.FC<ITranscriptStudentTable> = (props) => {
-	const { classTranscriptData, isEditStudentGrades, setSaveStudentGrades, saveStudentGrades, saveGradeInClass } = props
+	const { classTranscriptData, isEditStudentGrades, setSaveStudentGrades, saveStudentGrades, saveGradeInClass, classId } = props
 	const [pageFilter, setPageFilter] = useState(DEFAULT_FILTER)
 	const router = useRouter()
 
 	// ** get student in class
 	const { data: studentsInClass, isLoading: isLoadingStudentsInClass } = useQuery({
-		queryKey: ['get/student-in-class', pageFilter, router.query.class],
+		queryKey: ['get/student-in-class', pageFilter, classId],
 		queryFn: () => {
-			return studentInClassApi.getAll({ ...pageFilter, classId: router.query.class }).then((data) => data.data)
+			return studentInClassApi.getAll({ ...pageFilter, classId: classId }).then((data) => data.data)
 		},
-		enabled: !!router.query.class && router.isReady
+		enabled: !!classId && router.isReady
 	})
 
 	// ** get class transcript columns

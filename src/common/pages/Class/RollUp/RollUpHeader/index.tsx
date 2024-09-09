@@ -13,7 +13,7 @@ type TProps = {
 const RollUpHeader = ({ params, onChangeParams }: TProps) => {
 	return (
 		<div className="grid grid-cols-4 gap-[10px]">
-			<MySelectBranch value={params?.branchId} placeholder="Chọn chi nhánh" onChange={(val) => onChangeParams({ branchId: val })} />
+			<MySelectBranch value={params?.branchId} placeholder="Chọn trung tâm" onChange={(val) => onChangeParams({ branchId: val })} />
 			<MySelectClassStatus
 				placeholder="Chọn trạng thái lớp học"
 				value={params?.classStatus}
