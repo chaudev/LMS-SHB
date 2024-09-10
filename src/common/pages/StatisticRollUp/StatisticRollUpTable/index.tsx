@@ -11,6 +11,12 @@ const StatisticRollUpTable = ({ reportData, ...restProps }: TProps) => {
 	const columns = useMemo(() => {
 		const initColumns = [
 			{
+				title: 'STT',
+				dataIndex: '',
+				width: 50,
+				render: (value, item, index) => <div className="text-center">{index + 1}</div>
+			},
+			{
 				title: 'Mã học viên',
 				dataIndex: 'StudentCode',
 				render: (value) => <div className="min-w-[120px]">{value}</div>
@@ -48,16 +54,16 @@ const StatisticRollUpTable = ({ reportData, ...restProps }: TProps) => {
 					dataIndex: item.Index,
 					render: (value: TRollUpReportDataDate) => {
 						return (
-							<>
+							<div className="flex flex-col gap-[6px]">
 								{value?.StudyTimes?.map((item) => {
 									return (
-										<div className="flex gap-2 items-center">
+										<div className="flex gap-2 items-center" key={item.StudyTime}>
 											<div>{item.StudyTime}:</div>
 											<StatisticRollUpStatusTag status={item.Status} />
 										</div>
 									)
 								})}
-							</>
+							</div>
 						)
 					}
 				}
