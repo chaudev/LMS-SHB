@@ -37,23 +37,26 @@ const StatisticRollUpPage = () => {
 	}
 
 	return (
-		<Card>
-			<StatisticRollUpHeader params={params} onChangeParams={onChangeParams} />
+		<>
+			<p className="font-medium text-[18px] mb-[16px]">Thống kê điểm danh</p>
+			<Card>
+				<StatisticRollUpHeader params={params} onChangeParams={onChangeParams} />
 
-			<hr />
+				<hr />
 
-			<div className={styles.tableHeaderWrapper}>
-				<StatisticRollUpNote />
+				<div className={styles.tableHeaderWrapper}>
+					<StatisticRollUpNote />
 
-				{/* <div className={styles.buttonExportWrapper}>
+					{/* <div className={styles.buttonExportWrapper}>
 					<PrimaryButton type="button" background="green" icon="excel">
 						Xuất excel
 					</PrimaryButton>
 				</div> */}
-			</div>
+				</div>
 
-			<StatisticRollUpTable reportData={reportData} loading={isLoadingReportData} />
-		</Card>
+				<StatisticRollUpTable reportData={reportData} loading={isLoadingReportData} />
+			</Card>
+		</>
 	)
 }
 

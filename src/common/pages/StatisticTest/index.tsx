@@ -33,13 +33,17 @@ const StatisticTestPage = () => {
 	}
 
 	return (
-		<Card>
-			<StatisticTestHeader params={params} onChangeParams={onChangeParams} isLoading={isLoadingReportData} />
+		<>
+			<p className="font-medium text-[18px] mb-[16px]">Thống kê kiểm tra</p>
 
-			<hr />
+			<Card>
+				<StatisticTestHeader params={params} onChangeParams={onChangeParams} isLoading={isLoadingReportData} />
 
-			<StatisticTestTable reportData={reportData} loading={isLoadingReportData} />
-		</Card>
+				<hr />
+
+				<StatisticTestTable reportData={reportData} loading={isLoadingReportData} />
+			</Card>
+		</>
 	)
 }
 

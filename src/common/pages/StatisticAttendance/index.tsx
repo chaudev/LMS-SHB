@@ -31,13 +31,17 @@ const StatisticAttendancePage = () => {
 	}
 
 	return (
-		<Card>
-			<StatisticAttendanceHeader params={params} onChangeParams={onChangeParams} isLoading={isLoadingReportData} />
+		<>
+			<p className="font-medium text-[18px] mb-[16px]">Thống kê chuyên cần của học viên</p>
 
-			<hr />
+			<Card>
+				<StatisticAttendanceHeader params={params} onChangeParams={onChangeParams} isLoading={isLoadingReportData} />
 
-			<StatisticAttendanceTable reportData={reportData || []} loading={isLoadingReportData} />
-		</Card>
+				<hr />
+
+				<StatisticAttendanceTable reportData={reportData || []} loading={isLoadingReportData} />
+			</Card>
+		</>
 	)
 }
 
