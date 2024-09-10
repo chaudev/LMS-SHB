@@ -1,0 +1,15 @@
+.tableHeaderWrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 10px;
+	.buttonExportWrapper {
+		display: flex;
+		justify-content: flex-end;
+		@media screen and (max-width: 1260px) {
+			width: 100%;
+		}
+	}
+}
