@@ -109,6 +109,13 @@ export const AdminChildMenu = [
 				Route: '/statistic-salary',
 				Icon: '',
 				Text: 'Thống kê lương'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-roll-up',
+				Route: '/statistic-roll-up',
+				Icon: '',
+				Text: 'Thống kê điểm danh'
 			}
 		]
 	},

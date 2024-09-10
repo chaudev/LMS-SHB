@@ -32,5 +32,12 @@ export const rollUpApi = {
 		return instance.get<IApiResultData<IRollUpStudent[]>>(`${url}/roll-up-student`, {
 			params
 		})
-	}
+	},
+	
+	keyGetReport: 'GET /api/RollUp/report',
+	getReport(params: TGetRollUpReport) {
+		return instance.get<IApiResultData<TRollUpReport>>(`${url}/report`, {
+			params
+		})
+	},
 }
