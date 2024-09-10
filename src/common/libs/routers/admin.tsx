@@ -123,6 +123,13 @@ export const AdminChildMenu = [
 				Route: '/statistic-test',
 				Icon: '',
 				Text: 'Thống kê kiểm tra'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-attendance',
+				Route: '/statistic-attendance',
+				Icon: '',
+				Text: 'Thống kê chuyên cần'
 			}
 		]
 	},
