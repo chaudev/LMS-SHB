@@ -46,11 +46,11 @@ const StatisticRollUpPage = () => {
 			<div className={styles.tableHeaderWrapper}>
 				<StatisticRollUpNote />
 
-				<div className={styles.buttonExportWrapper}>
+				{/* <div className={styles.buttonExportWrapper}>
 					<PrimaryButton type="button" background="green" icon="excel">
 						Xuất excel
 					</PrimaryButton>
-				</div>
+				</div> */}
 			</div>
 
 			<StatisticRollUpTable reportData={reportData} loading={isLoadingReportData} />
