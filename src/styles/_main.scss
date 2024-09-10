@@ -861,3 +861,23 @@ button {
 // 	-webkit-text-fill-color: #000;
 // 	-webkit-box-shadow: 0 0 0px 40rem #f0f0f0 inset !important;
 // }
+
+.scrollbar-custom {
+	&::-webkit-scrollbar {
+		width: 6px;
+		height: 10px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #c5c5c5;
+		border-radius: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background: #929292;
+	}
+}

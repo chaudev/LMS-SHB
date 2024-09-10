@@ -18,6 +18,16 @@ export const classTranscriptApi = {
 	},
 	delete(id) {
 		return instance.delete(`${url}/${id}`)
+	},
+	keyGetReport: 'GET /api/ClassTranscript/report',
+	getReport(params: TGetClassTranscriptReport) {
+		return instance.get<IApiResultData<TClassTranscriptReport>>(`${url}/report`, {
+			params
+		})
+	},
+	keyGetDropdown: 'GET /api/ClassTranscript/dropdown',
+	getDropdown(classId: number) {
+		return instance.get<IApiResultData<{ Id: number; Name: string }[]>>(`${url}/dropdown/${classId}`, {})
 	}
 }
 

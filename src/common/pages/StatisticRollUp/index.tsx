@@ -4,7 +4,6 @@ import { rollUpApi } from '~/api/rollup'
 import { useQuery } from '@tanstack/react-query'
 import { Card } from 'antd'
 import StatisticRollUpTable from './StatisticRollUpTable'
-import PrimaryButton from '~/common/components/Primary/Button'
 import StatisticRollUpNote from './StatisticRollUpNote'
 import styles from './styles.module.scss'
 
