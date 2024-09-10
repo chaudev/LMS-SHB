@@ -116,6 +116,13 @@ export const AdminChildMenu = [
 				Route: '/statistic-roll-up',
 				Icon: '',
 				Text: 'Thống kê điểm danh'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-test',
+				Route: '/statistic-test',
+				Icon: '',
+				Text: 'Thống kê kiểm tra'
 			}
 		]
 	},
