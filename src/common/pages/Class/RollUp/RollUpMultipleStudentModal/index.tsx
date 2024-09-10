@@ -17,7 +17,7 @@ type TProps = TMyModalProps & {
 	scheduleIds: string
 	studentData: IStudentInClass[]
 	onCancel: () => void
-	onCallbackAfterSuccess?: () => void
+	onCallbackAfterSuccess?: (status: number, learningStatus: number) => void
 }
 
 const RollUpMultipleStudentModal = (props: TProps) => {
@@ -25,6 +25,7 @@ const RollUpMultipleStudentModal = (props: TProps) => {
 
 	const [form] = Form.useForm<TForm>()
 	const status = Form.useWatch('Status', form)
+	const learningStatus = Form.useWatch('LearningStatus', form)
 
 	const updateStatusMutation = useMutation({
 		mutationFn: async (data: { Items: any[] }) => await rollUpApi.insertOrUpdateMultiple(data),
@@ -32,7 +33,7 @@ const RollUpMultipleStudentModal = (props: TProps) => {
 			ShowNoti('success', 'Điểm danh thành công !')
 			form.resetFields()
 			onCancel()
-			onCallbackAfterSuccess?.()
+			onCallbackAfterSuccess?.(status, learningStatus)
 		},
 		onError: (error) => ShowNoti('error', error.message)
 	})

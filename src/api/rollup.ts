@@ -4,6 +4,7 @@ const url = '/api/RollUp'
 
 export const rollUpApi = {
 	// Lấy tất cả data
+	keyGetAll: 'GET /api/RollUp',
 	getAll(params) {
 		return instance.get<IApiResultData<IRollUp[]>>(url, {
 			params

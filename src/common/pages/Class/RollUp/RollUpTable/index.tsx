@@ -1,6 +1,6 @@
 import { Form } from 'antd'
 import { TableRowSelection } from 'antd/lib/table/interface'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MyFormItem from '~/atomic/atoms/MyFormItem'
 import MyInput from '~/atomic/atoms/MyInput'
 import MyTable, { TMyTableProps } from '~/atomic/atoms/MyTable'
@@ -17,7 +17,7 @@ import { RootState } from '~/store'
 
 type TProps = TMyTableProps<any> & {
 	scheduleIds: string
-	studentData: IStudentInClass[]
+	studentData: (IStudentInClass & { Status?: number; LearningStatus?: number; Note?: string })[]
 }
 
 const RollUpTable = ({ scheduleIds, studentData, ...restProps }: TProps) => {
@@ -28,7 +28,31 @@ const RollUpTable = ({ scheduleIds, studentData, ...restProps }: TProps) => {
 
 	const [form] = Form.useForm()
 
-	// ===== Submit update =====
+	// ===== Side effects =====
+	useEffect(() => {
+		if (studentData) {
+			const formData = {}
+			studentData?.map((item) => {
+				formData[`Status_${item.StudentId}`] = item?.Status
+				formData[`LearningStatus_${item.StudentId}`] = item?.LearningStatus
+				formData[`Note_${item.StudentId}`] = item?.Note
+			})
+			form.setFieldsValue(formData)
+		}
+	}, [studentData])
+
+	// ===== METHOD =====
+	// ----- Set form value after update multiple students -----
+	const onUpdateFormAfterUpdateMultiple = (status: number, learningStatus: number) => {
+		const formData = {}
+		selectedStudents?.map((item) => {
+			formData[`Status_${item.StudentId}`] = status
+			formData[`LearningStatus_${item.StudentId}`] = learningStatus
+		})
+		form.setFieldsValue(formData)
+	}
+
+	// ----- Submit update -----
 	const allPropertiesAreNullOrUnderfine = (obj: Record<string, any>): boolean => {
 		for (const key in obj) {
 			if (obj[key] !== null && obj[key] !== undefined) {
@@ -92,7 +116,7 @@ const RollUpTable = ({ scheduleIds, studentData, ...restProps }: TProps) => {
 			render: (text, record, index) => (
 				<div className="antd-custom-wrap">
 					<MyFormItem name={`Status_${record.StudentId}`} className="mb-0">
-						<MySelectRollUpStatus disabled={!is(userInfo).admin && !is(userInfo).manager && !is(userInfo).academic} />
+						<MySelectRollUpStatus className="h-[36px]" disabled={!is(userInfo).admin && !is(userInfo).manager && !is(userInfo).academic} />
 					</MyFormItem>
 				</div>
 			)
@@ -104,7 +128,10 @@ const RollUpTable = ({ scheduleIds, studentData, ...restProps }: TProps) => {
 			render: (text, record, index) => (
 				<div className="antd-custom-wrap">
 					<MyFormItem name={`LearningStatus_${record.StudentId}`} className="mb-0">
-						<MySelectLearningStatus disabled={!is(userInfo).admin && !is(userInfo).manager && !is(userInfo).academic} />
+						<MySelectLearningStatus
+							className="h-[36px]"
+							disabled={!is(userInfo).admin && !is(userInfo).manager && !is(userInfo).academic}
+						/>
 					</MyFormItem>
 				</div>
 			)
@@ -172,7 +199,10 @@ const RollUpTable = ({ scheduleIds, studentData, ...restProps }: TProps) => {
 				scheduleIds={scheduleIds}
 				studentData={selectedStudents}
 				onCancel={() => setOpenRollUpMultipleModal(false)}
-				onCallbackAfterSuccess={() => setSelectedStudents([])}
+				onCallbackAfterSuccess={(status, learningStatus) => {
+					onUpdateFormAfterUpdateMultiple(status, learningStatus)
+					setSelectedStudents([])
+				}}
 			/>
 		</>
 	)
