@@ -27,6 +27,8 @@ import * as yup from 'yup'
 import { formRequired } from '~/common/libs/others/form'
 import { setRoom } from '~/store/classReducer'
 import { removeCommas } from '~/common/utils/super-functions'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
 
 const dayOfWeek = [
 	{
@@ -63,6 +65,8 @@ const { Option } = Select
 
 const CreateClassForm = (props) => {
 	const { isOnline, onSubmit, refPopoverWrapperBtn } = props
+	const router = useRouter()
+
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [program, setProgram] = useState([])
@@ -72,7 +76,7 @@ const CreateClassForm = (props) => {
 	const [academic, setAcademic] = useState([])
 	// Program lúc chưa parse
 	const [programs, setPrograms] = useState([])
-	const [listTimeFrames, setListTimeFrames] = useState([{ Id: 1, DayOfWeek: null, StudyTimeId: null }])
+	const [listTimeFrames, setListTimeFrames] = useState([])
 	const [listDisabledTimeFrames, setListDisabledTimeFrames] = useState([])
 	const state = useSelector((state: RootState) => state)
 	const room = useSelector((state: RootState) => state.class.room)
@@ -247,29 +251,25 @@ const CreateClassForm = (props) => {
 
 	const handleAddListTimeFrame = () => {
 		setListTimeFrames((prev) => {
-			return [...listTimeFrames, { Id: prev[prev.length - 1].Id + 1, DayOfWeek: null, StudyTimeId: null }]
+			return [...listTimeFrames, { Id: !prev.length ? 1 : prev[prev.length - 1].Id + 1, DayOfWeek: null, StudyTimeId: null }]
 		})
 		setListDisabledTimeFrames((prev) => [
 			...listDisabledTimeFrames,
-			{ Id: prev[prev.length - 1]?.Id + 1, DayOfWeek: null, StudyTimeId: null }
+			{ Id: !prev.length ? 1 : prev[prev.length - 1]?.Id + 1, DayOfWeek: null, StudyTimeId: null }
 		])
 	}
 
 	const handleRemoveListTimeFrame = (Id) => {
-		if (listTimeFrames.length !== 1) {
-			form.setFieldValue(`DayOfWeek-${Id}`, undefined)
-			form.setFieldValue(`StudyTimeId-${Id}`, undefined)
-			const filterListTimeFrames = listTimeFrames.filter((timeFrame) => {
-				return timeFrame.Id !== Id
-			})
-			setListTimeFrames(filterListTimeFrames)
-			const filterListDisabledTimeFrames = listDisabledTimeFrames.filter((disabledTimeFrame) => {
-				return disabledTimeFrame.Id !== Id
-			})
-			setListDisabledTimeFrames(filterListDisabledTimeFrames)
-		} else {
-			ShowNoti('error', 'Vui lòng chọn ít nhất 1 khung thời gian')
-		}
+		form.setFieldValue(`DayOfWeek-${Id}`, undefined)
+		form.setFieldValue(`StudyTimeId-${Id}`, undefined)
+		const filterListTimeFrames = listTimeFrames.filter((timeFrame) => {
+			return timeFrame.Id !== Id
+		})
+		setListTimeFrames(filterListTimeFrames)
+		const filterListDisabledTimeFrames = listDisabledTimeFrames.filter((disabledTimeFrame) => {
+			return disabledTimeFrame.Id !== Id
+		})
+		setListDisabledTimeFrames(filterListDisabledTimeFrames)
 	}
 
 	const handleChangeTimeFrame = (data, name, value) => {
@@ -336,6 +336,19 @@ const CreateClassForm = (props) => {
 		})
 		return !!checkExist
 	}
+
+	const createClassMutation = useMutation({
+		mutationFn: (data: any) => {
+			return classApi.addClass(data)
+		},
+		onSuccess(res, variables, context) {
+			ShowNoti('success', res?.data?.message)
+			setIsModalOpen(false)
+			router.push('/class/list-class')
+		},
+		onError: (error) => ShowNoti('error', error?.message)
+	})
+
 	const handleSubmit = async (data) => {
 		console.log('TeachingFee:', listTimeFrames)
 		const convertListTimeFrame = listTimeFrames.map((timeFrame) => {
@@ -371,6 +384,11 @@ const CreateClassForm = (props) => {
 			TeachingFee: removeCommas(data.TeachingFee),
 			MaxQuantity: data.MaxQuantity || 20,
 			Type: isOnline ? 2 : 1
+		}
+
+		if (!convertListTimeFrame?.length) {
+			createClassMutation.mutate({ ...DATA_LESSON_WHEN_CREATE, Price: data?.Price ? data?.Price : 0, schedules: [] })
+			return
 		}
 
 		try {
@@ -412,7 +430,6 @@ const CreateClassForm = (props) => {
 		// if (form.getFieldValue("TeacherId")) {
 		// 	form.setFieldValue('TeacherId', '')
 		// }
-
 	}, [form.getFieldValue('BranchId'), form.getFieldValue('ProgramId')])
 
 	// useEffect(() => {
@@ -453,8 +470,15 @@ const CreateClassForm = (props) => {
 				}}
 				footer={
 					<>
-						<PrimaryButton background="primary" type="button" icon="save" onClick={form.submit} disable={isLoading} loading={isLoading}>
-							Thêm vào lịch
+						<PrimaryButton
+							background="primary"
+							type="button"
+							icon="save"
+							onClick={form.submit}
+							disable={isLoading || createClassMutation.isPending}
+							loading={isLoading || createClassMutation.isPending}
+						>
+							{!listTimeFrames?.length ? 'Tạo lớp' : 'Thêm vào lịch'}
 						</PrimaryButton>
 					</>
 				}
