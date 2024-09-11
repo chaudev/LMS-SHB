@@ -1,13 +1,13 @@
 import moment from 'moment'
 import { useMemo } from 'react'
 import MyTable, { TMyTableProps } from '~/atomic/atoms/MyTable'
-import StatisticRollUpStatusTag from '../StatisticRollUpStatusTag'
+import StatisticRollUpByStudentStatusTag from '../StatisticRollUpByStudentStatusTag'
 
 type TProps = TMyTableProps<any> & {
 	reportData: TRollUpReport
 }
 
-const StatisticRollUpTable = ({ reportData, ...restProps }: TProps) => {
+const StatisticRollUpByStudentTable = ({ reportData, ...restProps }: TProps) => {
 	const columns = useMemo(() => {
 		const initColumns = [
 			{
@@ -59,7 +59,7 @@ const StatisticRollUpTable = ({ reportData, ...restProps }: TProps) => {
 									return (
 										<div className="flex gap-2 items-center" key={item.StudyTime}>
 											<div>{item.StudyTime}:</div>
-											<StatisticRollUpStatusTag status={item.Status} />
+											<StatisticRollUpByStudentStatusTag status={item.Status} />
 										</div>
 									)
 								})}
@@ -86,4 +86,4 @@ const StatisticRollUpTable = ({ reportData, ...restProps }: TProps) => {
 	return <MyTable dataSource={dataTable} columns={columns} pagination={false} bordered rowKey={'StudentCode'} {...restProps} />
 }
 
-export default StatisticRollUpTable
+export default StatisticRollUpByStudentTable

@@ -98,8 +98,8 @@ export const classApi = {
 	getDropdownByBranch(params: { branchIds: string; status: string }) {
 		return instance.get<IApiResultData<IClass[]>>(`${url}/dropdown-by-branch`, { params })
 	},
-	keyGeTClassStudentAttendanceRate: 'GET /api/Class/student-attendance-rate',
-	geTClassStudentAttendanceRate(params: TGetClassStudentAttendanceRateParams) {
+	keyGetClassStudentAttendanceRate: 'GET /api/Class/student-attendance-rate',
+	getClassStudentAttendanceRate(params: TGetClassStudentAttendanceRateParams) {
 		return instance.get<IApiResultData<TClassStudentAttendanceRate[]>>(`${url}/student-attendance-rate`, { params })
 	}
 }

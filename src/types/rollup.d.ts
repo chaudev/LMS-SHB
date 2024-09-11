@@ -61,3 +61,27 @@ type TRollUpReportDataDateStudyTime = {
 	Status: number
 	StatusName: string
 }
+
+type TGetRollUpAssessmentAttendanceParams = {
+	branchIds?: string
+	date?: string
+	search?: string
+    pageSize: number
+    pageIndex: number
+}
+
+type TRollUpAssessmentAttendance = {
+    ClassId: number
+    ClassName: string
+    BranchId: number
+    BranchName: string
+    ScheduleName: string
+    ScheduleDate: string
+    TeacherName: string
+    Attendace: number
+    AbsentAllow: number
+    AbsentNotAllow: number
+    Late: number
+    LeaveEarly: number
+    Holiday: number
+}

@@ -1,18 +1,18 @@
 import MySelectBranch from '~/atomic/molecules/MySelectBranch'
 import MySelectClassByBranches from '~/atomic/molecules/MySelectClassByBranches'
-import { TStatisticRollUpParams } from '..'
+import { TStatisticRollUpByStudentParams } from '..'
 import { DatePicker } from 'antd'
 import styles from './styles.module.scss'
 
 const { RangePicker } = DatePicker
 
 type TProps = {
-	params: TStatisticRollUpParams
-	onChangeParams: (newParams: TStatisticRollUpParams) => void
+	params: TStatisticRollUpByStudentParams
+	onChangeParams: (newParams: TStatisticRollUpByStudentParams) => void
 	isLoading?: boolean
 }
 
-const StatisticRollUpHeader = ({ params, onChangeParams, isLoading }: TProps) => {
+const StatisticRollUpByStudentHeader = ({ params, onChangeParams, isLoading }: TProps) => {
 	return (
 		<div className={styles.wrapper}>
 			<div>
@@ -41,7 +41,7 @@ const StatisticRollUpHeader = ({ params, onChangeParams, isLoading }: TProps) =>
 				<label className="font-medium mb-[6px]">Từ ngày - Đến ngày</label>
 				<RangePicker
 					format={'DD/MM/YYYY'}
-					className="style-input"
+					className={styles.rangePicker}
 					allowClear={true}
 					onChange={(value, dateStrings) => {
 						onChangeParams({ from: dateStrings[0], to: dateStrings[1] })
@@ -52,4 +52,4 @@ const StatisticRollUpHeader = ({ params, onChangeParams, isLoading }: TProps) =>
 	)
 }
 
-export default StatisticRollUpHeader
+export default StatisticRollUpByStudentHeader
