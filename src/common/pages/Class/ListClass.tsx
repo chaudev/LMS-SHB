@@ -101,6 +101,12 @@ const ListClass = () => {
 	const dispatch = useDispatch()
 	const [tabStatus, setTabStatus] = useState(null)
 	const [currentStyle, setCurrentStyle] = useState(0)
+	const [quantityByStatus, setQuantityByStatus] = useState({
+		total: 0,
+		comming: 0,
+		present: 0,
+		end: 0
+	})
 
 	function isAdmin() {
 		return userInformation?.RoleId == 1
@@ -115,13 +121,31 @@ const ListClass = () => {
 					if (todoApi.studentId && todoApi.studentId !== '') {
 						setListClass(res.data.data)
 						setTotalRow(res.data.totalRow)
+						setQuantityByStatus({
+							total: res.data?.total || 0,
+							comming: res.data?.comming || 0,
+							present: res.data?.present || 0,
+							end: res.data?.end || 0
+						})
 					} else {
 						setListClass([])
 						setTotalRow(0)
+						setQuantityByStatus({
+							total: 0,
+							comming: 0,
+							present: 0,
+							end: 0
+						})
 					}
 				} else {
 					setListClass(res.data.data)
 					setTotalRow(res.data.totalRow)
+					setQuantityByStatus({
+						total: res.data?.total || 0,
+						comming: res.data?.comming || 0,
+						present: res.data?.present || 0,
+						end: res.data?.end || 0
+					})
 				}
 			}
 			if (res.status === 204) {
@@ -271,16 +295,16 @@ const ListClass = () => {
 									</div>
 									<div className="list-action-button !hidden tablet:!flex">
 										<div onClick={() => hanskeChangeTab(null)} className={`item   ${tabStatus == null ? 'active' : ''}`}>
-											Tất cả
+											Tất cả {`(${quantityByStatus.total})`}
 										</div>
 										<div onClick={() => hanskeChangeTab(1)} className={`item   ${tabStatus == 1 ? 'active' : ''}`}>
-											Sắp diễn ra
+											Sắp diễn ra {`(${quantityByStatus.comming})`}
 										</div>
 										<div onClick={() => hanskeChangeTab(2)} className={`item   ${tabStatus == 2 ? 'active' : ''}`}>
-											Đang diễn ra
+											Đang diễn ra {`(${quantityByStatus.present})`}
 										</div>
 										<div onClick={() => hanskeChangeTab(3)} className={`item   ${tabStatus == 3 ? 'active' : ''}`}>
-											Kết thúc
+											Kết thúc {`(${quantityByStatus.end})`}
 										</div>
 									</div>
 									<Input.Search

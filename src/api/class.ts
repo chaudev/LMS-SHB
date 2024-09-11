@@ -3,7 +3,9 @@ import { instance } from '~/api/instance'
 const url = '/api/Class'
 export const classApi = {
 	getAll(params) {
-		return instance.get<IApiResultData<IClass[]>>(url, { params: params })
+		return instance.get<IApiResultData<IClass[]> & { total: number; comming: number; present: number; end: number }>(url, {
+			params: params
+		})
 	},
 	getByID(id) {
 		return instance.get<IApiResultData<IClass>>(`${url}/${id}`)
