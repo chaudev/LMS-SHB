@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
 import { Form } from 'antd'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useId, useRef, useState } from 'react'
+import ReactToPrint from 'react-to-print'
 import { contractApi } from '~/api/contract'
 import MyModal from '~/atomic/atoms/MyModal'
 import DatePickerField from '~/common/components/FormControl/DatePickerField'
@@ -19,9 +20,14 @@ interface IContractModal {
 
 const ContractModal: React.FC<IContractModal> = (props) => {
 	const { defaultData, refreshData } = props
+	const editorId = useId()
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [form] = Form.useForm()
 	const [contractContent, setContractContent] = useState('')
+
+	const printRef = useRef()
+
+	const Content = Form.useWatch('Content', form)
 
 	useEffect(() => {
 		if (defaultData && isModalVisible) {
@@ -114,6 +120,7 @@ const ContractModal: React.FC<IContractModal> = (props) => {
 							</div>
 							<div className="col-12">
 								<EditorField
+									id={editorId}
 									label="Nội dung hợp đồng"
 									name="Content"
 									onChangeEditor={changeContractContent}
@@ -123,7 +130,11 @@ const ContractModal: React.FC<IContractModal> = (props) => {
 							</div>
 						</div>
 						<div className="row ">
-							<div className="col-12 flex-all-center">
+							<div className="col-12 flex-all-center gap-4">
+								<ReactToPrint
+									trigger={() => <PrimaryButton background={'green'} type={'button'} icon="print" children="In" />}
+									content={() => printRef.current}
+								/>
 								<PrimaryButton
 									icon={defaultData ? 'save' : 'add'}
 									type="submit"
@@ -136,6 +147,11 @@ const ContractModal: React.FC<IContractModal> = (props) => {
 							</div>
 						</div>
 					</Form>
+				</div>
+				<div className="d-none">
+					<div ref={printRef} style={{ padding: 40 }}>
+						<div dangerouslySetInnerHTML={{ __html: Content }} />
+					</div>
 				</div>
 			</MyModal>
 		</>

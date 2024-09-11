@@ -24,5 +24,13 @@ export const contractApi = {
 	},
 	delete(id) {
 		return instance.delete(url + `/${id}`)
+	},
+
+	upload(data) {
+		let fData = new FormData()
+		fData.append('file', data)
+		return instance.post(`${url}upload`, fData, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		})
 	}
 }
