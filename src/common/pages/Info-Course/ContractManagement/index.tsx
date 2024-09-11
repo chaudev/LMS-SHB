@@ -12,7 +12,7 @@ const ContractManagement = () => {
 	const [pageFilter, setPageFilter] = useState({ pageIndex: 1, pageSize: PAGE_SIZE, search: '', majorId: undefined, studentId: undefined })
 	const router = useRouter()
 
-	const { data, isLoading, refetch } = useQuery({
+	const { data, isLoading, isFetching, refetch } = useQuery({
 		queryKey: ['get/all-contract', pageFilter],
 		queryFn: () => {
 			return contractApi.getAll({ ...pageFilter }).then((res) => res.data)
@@ -37,7 +37,7 @@ const ContractManagement = () => {
 			{isAllow() && (
 				<ContractTable
 					total={data?.totalRow || 0}
-					loading={isLoading}
+					loading={isLoading || isFetching}
 					onChangePage={(pageIndex) => setPageFilter({ ...pageFilter, pageIndex: pageIndex })}
 					// Extra={<ContractModal refreshData={refetch} />}
 					data={data?.data || []}

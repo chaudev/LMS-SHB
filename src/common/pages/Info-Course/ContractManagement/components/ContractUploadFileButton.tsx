@@ -94,7 +94,7 @@ const ContractUploadFileModal = (props: TContractUploadFileModalProps) => {
 				</Form.Item>
 
 				<div className="flex justify-end mt-[20px]">
-					<PrimaryButton type="submit" background="primary" icon="save">
+					<PrimaryButton type="submit" background="primary" icon="save" loading={updateMutation.isPending}>
 						Lưu
 					</PrimaryButton>
 				</div>
