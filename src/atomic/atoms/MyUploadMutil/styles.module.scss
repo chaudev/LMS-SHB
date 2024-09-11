@@ -1,0 +1,25 @@
+.upload-multi {
+  :global {
+
+    .ant-upload-list.ant-upload-list-picture {
+      max-height: 300px;
+      overflow: hidden auto;
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ant-upload-list-item {
+      border-radius: 8px;
+      margin-top: 0;
+      height: fit-content;
+    }
+
+    .ant-upload-list-item-thumbnail {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}

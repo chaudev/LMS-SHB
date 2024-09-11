@@ -10,6 +10,8 @@ type IContract = IBaseApi<{
 	Content: string
 	PDFUrl: string
 	QRCode: string
+	FileString?: string
+	Files?: { FileName: string; Link: string }[]
 	Id: number
 	CreatedOn: string
 	CreatedBy: string
