@@ -2,6 +2,7 @@ import { instance } from '~/api/instance'
 
 const url = '/api/Majors'
 export const majorsApi = {
+	keyGetAll: 'GET /api/Majors',
 	getAll(todoApi: object) {
 		return instance.get<IApiResultData<IMajors[]>>(url, {
 			params: todoApi

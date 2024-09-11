@@ -3,8 +3,8 @@ import { instance } from '~/api/instance'
 const url = '/api/ProfileTemplate'
 export const profileTemplateApi = {
 	// Lấy tất cả data
-	getAll() {
-		return instance.get<IApiResultData<IProfileTemplate[]>>(url, {})
+	getAll(params: { majorId?: number }) {
+		return instance.get<IApiResultData<IProfileTemplate[]>>(url, { params })
 	},
 
 	changeIndexProfileTemplate(params) {

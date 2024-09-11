@@ -3,4 +3,6 @@ type IProfileTemplate = IBaseApi<{
 	Type: number
 	Index: number
 	Id: number
+	MajorIds: string
+	Majors: { Id: number; Name: string }[]
 }>
