@@ -166,7 +166,7 @@ export const RollUpPage = () => {
 				let temp = [{ title: 'Bỏ chọn', value: null }]
 				res?.data?.data?.forEach((item, index) => {
 					temp.push({
-						title: `[Buổi ${index + 1}][${moment(item?.StartTime).format('MM/DD')}] ${moment(item?.StartTime).format('HH:mm')} - ${moment(
+						title: `[Buổi ${index + 1}][${moment(item?.StartTime).format('DD/MM')}] ${moment(item?.StartTime).format('HH:mm')} - ${moment(
 							item?.EndTime
 						).format('HH:mm')}`,
 						value: item?.Id

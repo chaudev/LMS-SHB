@@ -19,7 +19,7 @@ const MySelectScheduleOfClass: React.FC<TMySelectScheduleOfClass> = (props) => {
 			placeholder={placeholder}
 			loading={isLoading}
 			options={data?.map((item, index) => ({
-				label: `[Buổi ${index + 1}][${moment(item?.StartTime).format('MM/DD')}] ${moment(item?.StartTime).format('HH:mm')} - ${moment(
+				label: `[Buổi ${index + 1}][${moment(item?.StartTime).format('DD/MM')}] ${moment(item?.StartTime).format('HH:mm')} - ${moment(
 					item?.EndTime
 				).format('HH:mm')}`,
 				value: item?.Id

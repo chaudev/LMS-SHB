@@ -29,7 +29,9 @@ const StatisticRollUpByTimeShift = () => {
 	const { data: reportData, isLoading: isLoadingReportData } = useQuery({
 		queryKey: [rollUpApi.keyGetAssessmentAttendance, dependencies],
 		queryFn: () => {
-			return rollUpApi.getAssessmentAttendance({ ...params }).then((res) => res.data)
+			return rollUpApi
+				.getAssessmentAttendance({ ...params, date: params?.date ? moment(params?.date, 'DD/MM/YYYY').format('YYYY/MM/DD') : undefined })
+				.then((res) => res.data)
 		},
 		enabled: !!params?.date
 	})
