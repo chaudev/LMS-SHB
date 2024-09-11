@@ -3,7 +3,9 @@ import { instance } from '~/api/instance'
 const url = '/api/Class'
 export const classApi = {
 	getAll(params) {
-		return instance.get<IApiResultData<IClass[]>>(url, { params: params })
+		return instance.get<IApiResultData<IClass[]> & { total: number; comming: number; present: number; end: number }>(url, {
+			params: params
+		})
 	},
 	getByID(id) {
 		return instance.get<IApiResultData<IClass>>(`${url}/${id}`)
@@ -96,8 +98,8 @@ export const classApi = {
 	getDropdownByBranch(params: { branchIds: string; status: string }) {
 		return instance.get<IApiResultData<IClass[]>>(`${url}/dropdown-by-branch`, { params })
 	},
-	keyGeTClassStudentAttendanceRate: 'GET /api/Class/student-attendance-rate',
-	geTClassStudentAttendanceRate(params: TGetClassStudentAttendanceRateParams) {
+	keyGetClassStudentAttendanceRate: 'GET /api/Class/student-attendance-rate',
+	getClassStudentAttendanceRate(params: TGetClassStudentAttendanceRateParams) {
 		return instance.get<IApiResultData<TClassStudentAttendanceRate[]>>(`${url}/student-attendance-rate`, { params })
 	}
 }

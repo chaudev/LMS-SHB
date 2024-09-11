@@ -334,35 +334,33 @@ const ChangeMajorsPage = () => {
 	const _onFinish = async (params) => {
 		try {
 			setLoading('CREATE')
-			if (!isNullOrEmptyOrUndefined(contracts)) {
-				const payload = {
-					MajorsId: params.MajorsId,
-					StudentId: params.StudentId,
-					TotalPrice: removeCommas(params.TotalPrice),
-					Paid: params.Paid ? removeCommas(params.Paid) : 0,
-					GiftId: params.GiftId,
-					PaymentTypeId: params.PaymentTypeId,
-					Note: params.Note,
-					Contracts: contracts.map((item) => ({ ...item, ContractSigningDate: moment(item?.ContractSigningDate).toISOString() })),
-					Details: Object.keys(params)
-						.filter((key) => key.startsWith('Price_'))
-						.map((key) => ({
-							Price: params[key],
-							PaymentTypeDetailId: Number(key.split('_')[1])
-						}))
-				}
-
-				const response = await majorsRegistrationApi.changeMajors(payload)
-				if (response.status === 200) {
-					ShowNostis.success(response.data.message)
-					form.resetFields()
-					setOldMajors(null)
-					setTuitionInOld(0)
-				}
-				setContracts([])
-			} else {
-				ShowNostis.warning('Chưa tạo hợp đồng cam kết')
+			const payload = {
+				MajorsId: params.MajorsId,
+				StudentId: params.StudentId,
+				TotalPrice: removeCommas(params.TotalPrice),
+				Paid: params.Paid ? removeCommas(params.Paid) : 0,
+				GiftId: params.GiftId,
+				PaymentTypeId: params.PaymentTypeId,
+				Note: params.Note,
+				Contracts: !contracts?.length
+					? undefined
+					: contracts.map((item) => ({ ...item, ContractSigningDate: moment(item?.ContractSigningDate).toISOString() })),
+				Details: Object.keys(params)
+					.filter((key) => key.startsWith('Price_'))
+					.map((key) => ({
+						Price: params[key],
+						PaymentTypeDetailId: Number(key.split('_')[1])
+					}))
 			}
+
+			const response = await majorsRegistrationApi.changeMajors(payload)
+			if (response.status === 200) {
+				ShowNostis.success(response.data.message)
+				form.resetFields()
+				setOldMajors(null)
+				setTuitionInOld(0)
+			}
+			setContracts([])
 		} catch (error) {
 			ShowErrorToast(error)
 		} finally {

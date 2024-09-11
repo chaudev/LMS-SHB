@@ -18,9 +18,9 @@ const StatisticAttendancePage = () => {
 
 	// ===== FETCH DATA =====
 	const { data: reportData, isLoading: isLoadingReportData } = useQuery({
-		queryKey: [classApi.keyGeTClassStudentAttendanceRate, [params?.branchIds, params?.classIds]],
+		queryKey: [classApi.keyGetClassStudentAttendanceRate, [params?.branchIds, params?.classIds]],
 		queryFn: () => {
-			return classApi.geTClassStudentAttendanceRate({ ...params }).then((res) => res.data?.data)
+			return classApi.getClassStudentAttendanceRate({ ...params }).then((res) => res.data?.data)
 		},
 		enabled: !!params?.branchIds && !!params?.classIds
 	})

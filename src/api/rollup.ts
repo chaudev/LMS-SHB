@@ -40,4 +40,11 @@ export const rollUpApi = {
 			params
 		})
 	},
+	
+	keyGetAssessmentAttendance: 'GET /api/RollUp/assessment-attendance',
+	getAssessmentAttendance(params: TGetRollUpAssessmentAttendanceParams) {
+		return instance.get<IApiResultData<TRollUpAssessmentAttendance[]>>(`${url}/assessment-attendance`, {
+			params
+		})
+	},
 }

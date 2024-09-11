@@ -5,7 +5,7 @@ import { ERollUpStatus } from '~/enums/roll-up'
 type TStatusTagProps = {
 	status: ERollUpStatus
 }
-const StatisticRollUpStatusTag = ({ status }: TStatusTagProps) => {
+const StatisticRollUpByStudentStatusTag = ({ status }: TStatusTagProps) => {
 	switch (status) {
 		case ERollUpStatus.Present:
 			return (
@@ -48,4 +48,4 @@ const StatisticRollUpStatusTag = ({ status }: TStatusTagProps) => {
 	}
 }
 
-export default StatisticRollUpStatusTag
+export default StatisticRollUpByStudentStatusTag
