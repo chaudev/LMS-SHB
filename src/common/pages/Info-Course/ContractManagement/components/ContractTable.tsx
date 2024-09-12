@@ -14,7 +14,7 @@ import { Popconfirm } from 'antd'
 type TContractTable = { isCanEdit: boolean } & TMyTable
 
 const ContractTable: React.FC<TContractTable> = (props) => {
-	const { refreshData, isCanEdit, data } = props
+	const { refreshData, isCanEdit, data, loading } = props
 	const columns = [
 		{
 			title: 'Mã hợp đồng',
@@ -120,7 +120,7 @@ const ContractTable: React.FC<TContractTable> = (props) => {
 											}}
 											disabled={mutationDeleteFile.isPending}
 										>
-											<IconButton type="button" icon="remove" color="red" className="m-0" tooltip="Xóa file" />
+											<IconButton type="button" icon="remove" color="red" className="m-0" tooltip="Xóa file" loading={loading} />
 										</Popconfirm>
 									</div>
 								</div>
