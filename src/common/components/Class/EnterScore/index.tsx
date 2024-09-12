@@ -164,7 +164,7 @@ const EnterScorePage = () => {
 						isCreate={isCreate}
 						setIsCreate={setIsCreate}
 					/>
-					{is(userInfo).admin && (
+					{(is(userInfo).admin || is(userInfo).manager || is(userInfo).academic || is(userInfo).teacher) && (
 						<ModalCreateClassTranscript
 							refreshData={() => {
 								refreshData()
@@ -174,21 +174,27 @@ const EnterScorePage = () => {
 						/>
 					)}
 
-					{!isNull(selectedClassTranscript) && is(userInfo).admin && (
-						<ModalCreateClassTranscript classId={params?.classId} defaultData={selectedClassTranscript} refreshData={() => refreshData()} />
-					)}
-					{!isNull(selectedClassTranscript) && is(userInfo).admin && (
-						<Popconfirm
-							title={`Xóa ${selectedClassTranscript.Name}?`}
-							open={openDelete}
-							onConfirm={() => mutationDelete.mutateAsync(selectedClassTranscript.Id)}
-							okButtonProps={{ loading: mutationDelete.isPending }}
-							onCancel={handleCancel}
-							placement="bottom"
-						>
-							<PrimaryButton background="red" type="button" icon="remove" onClick={() => setOpenDelete(true)} />
-						</Popconfirm>
-					)}
+					{!isNull(selectedClassTranscript) &&
+						(is(userInfo).admin || is(userInfo).manager || is(userInfo).academic || is(userInfo).teacher) && (
+							<ModalCreateClassTranscript
+								classId={params?.classId}
+								defaultData={selectedClassTranscript}
+								refreshData={() => refreshData()}
+							/>
+						)}
+					{!isNull(selectedClassTranscript) &&
+						(is(userInfo).admin || is(userInfo).manager || is(userInfo).academic || is(userInfo).teacher) && (
+							<Popconfirm
+								title={`Xóa ${selectedClassTranscript.Name}?`}
+								open={openDelete}
+								onConfirm={() => mutationDelete.mutateAsync(selectedClassTranscript.Id)}
+								okButtonProps={{ loading: mutationDelete.isPending }}
+								onCancel={handleCancel}
+								placement="bottom"
+							>
+								<PrimaryButton background="red" type="button" icon="remove" onClick={() => setOpenDelete(true)} />
+							</Popconfirm>
+						)}
 				</div>
 			</div>
 
@@ -196,7 +202,7 @@ const EnterScorePage = () => {
 
 			{isNull(selectedClassTranscript) && (
 				<div className="min-h-[200px] flex items-center flex-col justify-center">
-					{is(userInfo).admin && (
+					{(is(userInfo).admin || is(userInfo).manager || is(userInfo).academic || is(userInfo).teacher) && (
 						<div>
 							<p className="text-left font-medium">
 								<span className="!text-primary">Bước 1.</span> Chọn trung tâm
@@ -212,7 +218,7 @@ const EnterScorePage = () => {
 							</p>
 						</div>
 					)}
-					{!is(userInfo).admin && (
+					{!is(userInfo).admin && !is(userInfo).manager && !is(userInfo).academic && !is(userInfo).teacher && (
 						<div>
 							<img src="/images/choice.svg" draggable={false} className="w-[200px] mb-2" />
 							<p className="text-left font-medium">Chọn bảng điểm để xem thông tin</p>
@@ -223,7 +229,7 @@ const EnterScorePage = () => {
 
 			{!isNull(selectedClassTranscript) && (
 				<>
-					{is(userInfo).admin && (
+					{(is(userInfo).admin || is(userInfo).manager || is(userInfo).academic || is(userInfo).teacher) && (
 						<div className="flex items-center justify-end gap-2 mb-[10px]">
 							<ModalTranscriptDetail defaultData={selectedClassTranscript} />
 							{!isEditStudentGrades && (
