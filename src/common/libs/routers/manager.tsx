@@ -90,6 +90,27 @@ export const ManagerChildMenu = [
 				Route: '/statistic-teaching',
 				Icon: '',
 				Text: 'Thống kê giảng dạy'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-roll-up',
+				Route: '/statistic-roll-up',
+				Icon: '',
+				Text: 'Thống kê điểm danh'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-test',
+				Route: '/statistic-test',
+				Icon: '',
+				Text: 'Thống kê kiểm tra'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-attendance',
+				Route: '/statistic-attendance',
+				Icon: '',
+				Text: 'Thống kê chuyên cần'
 			}
 		]
 	},
