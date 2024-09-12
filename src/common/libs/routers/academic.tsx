@@ -78,6 +78,27 @@ export const AcademicChildMenu = [
 				Route: '/dashboard',
 				Icon: '',
 				Text: 'Thống kê'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-roll-up',
+				Route: '/statistic-roll-up',
+				Icon: '',
+				Text: 'Thống kê điểm danh'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-test',
+				Route: '/statistic-test',
+				Icon: '',
+				Text: 'Thống kê kiểm tra'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-attendance',
+				Route: '/statistic-attendance',
+				Icon: '',
+				Text: 'Thống kê chuyên cần'
 			}
 		]
 	},
