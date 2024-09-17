@@ -13,6 +13,8 @@ import { SalerChildMenu, SalerMenu } from '~/common/libs/routers/saler'
 import { AccountantChildMenu, AccountantMenu } from '~/common/libs/routers/accountant'
 import { AcademicChildMenu, AcademicMenu } from '~/common/libs/routers/academic'
 import { ParentStudentChildMenu, ParentStudentMenu } from '~/common/libs/routers/parent'
+import { getMenuByRole } from '~/common/utils/common'
+import { menu } from '~/common/libs/routers/menu'
 
 const { SubMenu } = Menu
 
@@ -249,42 +251,16 @@ const PrimaryMenu: FC<IMainMenu> = ({ isOpen, openMenuMobile, funcMenuMobile, re
 
 	useEffect(() => {
 		if (!!userInformation?.RoleId) {
-			switch (parseInt(userInformation?.RoleId + '')) {
-				case 1:
-					setParentMenu(AdminMenu)
-					setChildMenu(AdminChildMenu)
-					break
-				case 2:
-					setParentMenu(TeacherMenu)
-					setChildMenu(TeacherChildMenu)
-					break
-				case 3:
-					setParentMenu(StudentMenu)
-					setChildMenu(StudentChildMenu)
-					break
-				case 4:
-					setParentMenu(ManagerMenu)
-					setChildMenu(ManagerChildMenu)
-					break
-				case 5:
-					setParentMenu(SalerMenu)
-					setChildMenu(SalerChildMenu)
-					break
-				case 6:
-					setParentMenu(AccountantMenu)
-					setChildMenu(AccountantChildMenu)
-					break
-				case 7:
-					setParentMenu(AcademicMenu)
-					setChildMenu(AcademicChildMenu)
-					break
-				case 8:
-					setParentMenu(ParentStudentMenu)
-					setChildMenu(ParentStudentChildMenu)
-					break
-				default:
-					break
-			}
+			const filteredMenuList = getMenuByRole(menu, Number(userInformation?.RoleId))
+			const _mainMenu = []
+			const _childrenMenu = []
+			filteredMenuList?.map((item) => {
+				const { Key, TabName, Icon, ...restMenuItem } = item
+				_mainMenu.push({ Key, TabName, Icon })
+				_childrenMenu.push(restMenuItem)
+			})
+			setParentMenu(_mainMenu)
+			setChildMenu(_childrenMenu)
 		}
 	}, [userInformation])
 

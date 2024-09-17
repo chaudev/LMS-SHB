@@ -117,6 +117,7 @@ export const parseToMoney = (value: any) => {
 }
 
 import { logOut, parseJwt } from './token-handle'
+import { TMenu } from '../libs/routers/menu'
 
 export { logOut, parseJwt }
 
@@ -150,4 +151,28 @@ export function is(params) {
 		parent: params?.RoleId == 8,
 		teachingAssistant: params?.RoleId == 9
 	}
+}
+
+export const getMenuByRole = (menuList: TMenu[], roleNumber: number): TMenu[] => {
+	return menuList
+		.filter((menu) => menu.Allow.includes(roleNumber)) // Kiểm tra Allow ở cấp độ menu bên ngoài
+		.map((menu) => {
+			// Chỉ xét các menu mà cha đã thoả điều kiện
+			const filteredMenuItems = menu.MenuItem.filter((item) => item.Allow.includes(roleNumber)) // Kiểm tra Allow ở cấp độ item
+				.map((item) => {
+					// Chỉ xét submenu khi cha đã thoả điều kiện
+					const filteredSubMenu = item.SubMenuList?.filter((subItem) => subItem.Allow.includes(roleNumber))
+
+					return {
+						...item,
+						SubMenuList: filteredSubMenu // Lưu lại danh sách submenu đã lọc
+					}
+				})
+
+			return {
+				...menu,
+				MenuItem: filteredMenuItems
+			}
+		})
+		.filter((menu) => menu.MenuItem.length > 0) // Loại bỏ các menu không có item nào phù hợp
 }
