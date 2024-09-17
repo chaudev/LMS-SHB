@@ -106,7 +106,7 @@ export const MajorsPage = () => {
 								}
 							})
 						}}
-						tooltip="Xem danh sách học viên trong ngành học"
+						tooltip="Xem danh sách học viên trong chương trình học"
 					/>
 
 					<IconButton

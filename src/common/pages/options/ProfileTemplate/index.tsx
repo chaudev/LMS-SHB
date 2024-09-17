@@ -214,7 +214,7 @@ const ProfileTemplatePage = () => {
 														</div>
 													</div>
 													<div className="flex gap-[12px] mt-[8px]">
-														<span className="font-medium text-[12px] whitespace-nowrap">Ngành học:</span>
+														<span className="font-medium text-[12px] whitespace-nowrap">Chương trình học:</span>
 														{!item?.Majors?.length ? (
 															'-'
 														) : (

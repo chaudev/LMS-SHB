@@ -67,7 +67,7 @@ const OtherMajorModal: React.FC<IOtherMajorModal> = (props) => {
 			)}
 
 			<MyModal
-				title={defaultData ? 'Cập nhật ngành học khác' : 'Thêm ngành học khác'}
+				title={defaultData ? 'Cập nhật chương trình học khác' : 'Thêm chương trình học khác'}
 				open={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={null}
@@ -77,9 +77,9 @@ const OtherMajorModal: React.FC<IOtherMajorModal> = (props) => {
 						<div className="row">
 							<div className="col-12">
 								<InputTextField
-									placeholder="Nhập tên ngành học khác"
+									placeholder="Nhập tên chương trình học khác"
 									name="Name"
-									label="Tên ngành học khác"
+									label="Tên chương trình học khác"
 									isRequired
 									rules={[{ required: true, message: 'Bạn không được để trống' }]}
 								/>

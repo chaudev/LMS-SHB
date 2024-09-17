@@ -33,7 +33,7 @@ export const AdminMenu = [
 	},
 	{
 		Key: 'majors',
-		TabName: 'Ngành học',
+		TabName: 'Chương trình học',
 		Icon: <FaLayerGroup size={20} />
 	},
 	{
@@ -495,8 +495,8 @@ export const AdminChildMenu = [
 		]
 	},
 	{
-		MenuName: 'Ngành học',
-		MenuTitle: 'Ngành học',
+		MenuName: 'Chương trình học',
+		MenuTitle: 'Chương trình học',
 		Parent: 'majors',
 		MenuKey: '/majors',
 		MenuItem: [
@@ -504,21 +504,21 @@ export const AdminChildMenu = [
 				ItemType: 'single',
 				Key: '/majors',
 				Route: '/majors',
-				Text: 'Danh sách ngành học',
+				Text: 'Danh sách chương trình học',
 				Icon: ''
 			},
 			{
 				ItemType: 'single',
 				Key: '/majors/registration',
 				Route: '/majors/registration',
-				Text: 'Đăng ký ngành học',
+				Text: 'Đăng ký chương trình học',
 				Icon: ''
 			},
 			{
 				ItemType: 'single',
 				Key: '/majors/change-majors',
 				Route: '/majors/change-majors',
-				Text: 'Thay đổi ngành học',
+				Text: 'Thay đổi chương trình học',
 				Icon: ''
 			}
 		]
