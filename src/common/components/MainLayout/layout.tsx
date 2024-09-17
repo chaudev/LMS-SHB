@@ -15,6 +15,8 @@ import { SalerChildMenu, SalerMenu } from '~/common/libs/routers/saler'
 import { AccountantChildMenu, AccountantMenu } from '~/common/libs/routers/accountant'
 import { AcademicChildMenu, AcademicMenu } from '~/common/libs/routers/academic'
 import { ParentStudentChildMenu, ParentStudentMenu } from '~/common/libs/routers/parent'
+import { menu } from '~/common/libs/routers/menu'
+import { getMenuByRole } from '~/common/utils/common'
 
 function Layout({ children, home }: { children: React.ReactNode; home?: boolean }) {
 	const [mainMenu, setMainMenu] = useState([])
@@ -64,42 +66,16 @@ function Layout({ children, home }: { children: React.ReactNode; home?: boolean 
 
 	useEffect(() => {
 		if (!!userInformation?.RoleId) {
-			switch (parseInt(userInformation?.RoleId + '')) {
-				case 1:
-					setMainMenu(AdminMenu)
-					setChildrenMenu(AdminChildMenu)
-					break
-				case 2:
-					setMainMenu(TeacherMenu)
-					setChildrenMenu(TeacherChildMenu)
-					break
-				case 3:
-					setMainMenu(StudentMenu)
-					setChildrenMenu(StudentChildMenu)
-					break
-				case 4:
-					setMainMenu(ManagerMenu)
-					setChildrenMenu(ManagerChildMenu)
-					break
-				case 5:
-					setMainMenu(SalerMenu)
-					setChildrenMenu(SalerChildMenu)
-					break
-				case 6:
-					setMainMenu(AccountantMenu)
-					setChildrenMenu(AccountantChildMenu)
-					break
-				case 7:
-					setMainMenu(AcademicMenu)
-					setChildrenMenu(AcademicChildMenu)
-					break
-				case 8:
-					setMainMenu(ParentStudentMenu)
-					setChildrenMenu(ParentStudentChildMenu)
-					break
-				default:
-					break
-			}
+			const filteredMenuList = getMenuByRole(menu, Number(userInformation?.RoleId))
+			const _mainMenu = []
+			const _childrenMenu = []
+			filteredMenuList?.map((item) => {
+				const { Key, TabName, Icon, ...restMenuItem } = item
+				_mainMenu.push({ Key, TabName, Icon })
+				_childrenMenu.push(restMenuItem)
+			})
+			setMainMenu(_mainMenu)
+			setChildrenMenu(_childrenMenu)
 		}
 	}, [userInformation])
 
