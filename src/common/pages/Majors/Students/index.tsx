@@ -181,7 +181,7 @@ const MajorsStudentPage = () => {
 						}}
 					>
 						<a>
-							<IconButton tooltip="Thay đổi ngành học" type="button" icon="exchange" color="primary" />
+							<IconButton tooltip="Thay đổi chương trình học" type="button" icon="exchange" color="primary" />
 						</a>
 					</Link>
 					<IconButton onClick={() => showModal(item)} tooltip="Cập nhật thông tin" type="button" icon="edit" color="primary" />
@@ -244,7 +244,7 @@ const MajorsStudentPage = () => {
 	return (
 		<>
 			<Modal
-				title="Cập nhật ngành học"
+				title="Cập nhật chương trình học"
 				open={isModalOpen}
 				closable={false}
 				footer={

@@ -25,7 +25,7 @@ export const STATISTIC_USER_STATUS_TYPES_OBJECTS = {
 }
 
 /**
- * 1. majorRegistration: Đăng ký ngành học
+ * 1. majorRegistration: Đăng ký chương trình học
  * 2. profileCollectionStatus: Tình trạng thu hồ sơ
  * 3. languageStatus: Tình trạng tiếng
  * 4. visaStatus: Tình trạng visa

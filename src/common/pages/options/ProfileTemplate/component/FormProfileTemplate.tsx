@@ -27,7 +27,7 @@ const FormProfileTemplate = ({ form, handleCreateUpdate, isModalOpen = { type: '
 					</Select>
 				</Form.Item>
 			)}
-			<Form.Item label="Chọn ngành học" name="MajorIds" className={styles.majorSelection}>
+			<Form.Item label="Chọn chương trình học" name="MajorIds" className={styles.majorSelection}>
 				<MySelectMajor mode="multiple" className="min-h-[36px]" />
 			</Form.Item>
 

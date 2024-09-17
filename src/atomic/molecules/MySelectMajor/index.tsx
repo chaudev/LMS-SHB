@@ -10,7 +10,7 @@ const MySelectMajor: React.FC<TMySelectMajor> = (props) => {
 	return (
 		<MySelect
 			className={props.className || 'h-[36px] w-full'}
-			placeholder={props.placeholder || 'Chọn ngành học'}
+			placeholder={props.placeholder || 'Chọn chương trình học'}
 			loading={isLoading}
 			options={data?.data?.map((item) => ({ label: item?.Name, value: item?.Id }))}
 			{...props}

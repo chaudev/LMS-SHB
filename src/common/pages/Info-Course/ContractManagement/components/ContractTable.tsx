@@ -32,7 +32,7 @@ const ContractTable: React.FC<TContractTable> = (props) => {
 			dataIndex: 'Name'
 		},
 		{
-			title: 'Ngành học',
+			title: 'Chương trình học',
 			className: 'min-w-[100px]',
 			dataIndex: 'MajorName'
 		},

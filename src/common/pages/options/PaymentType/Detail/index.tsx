@@ -158,7 +158,7 @@ const PaymentDetailPage = () => {
 													optionList={[
 														{
 															value: PAYMENT_TYPES.majorRegistration,
-															title: 'Đăng ký ngành học',
+															title: 'Đăng ký chương trình học',
 															disabled: field.name !== 0 ? true : false
 														},
 														{

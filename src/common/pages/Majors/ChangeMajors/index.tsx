@@ -247,11 +247,11 @@ const ChangeMajorsPage = () => {
 					title: 'Cảnh báo',
 					content: (
 						<>
-							Học viên <span className="font-[500]  text-[orange]">{templ.StudentName}</span> chưa có ngành học. Vui lòng sử dụng tính năng
-							đăng ký ngành học!
+							Học viên <span className="font-[500]  text-[orange]">{templ.StudentName}</span> chưa có chương trình học. Vui lòng sử dụng tính năng
+							đăng ký chương trình học!
 						</>
 					),
-					okText: 'Đăng ký ngành học',
+					okText: 'Đăng ký chương trình học',
 					cancelText: 'Hủy',
 					onOk: () => {
 						router.push({
@@ -417,22 +417,22 @@ const ChangeMajorsPage = () => {
 										{getInformation()} <CardOldMajors oldMajors={oldMajors} tuitionInOld={tuitionInOld} />
 									</div>
 								</Card>
-								<Card title="Thay đổi ngành học" className="col-span-1">
+								<Card title="Thay đổi chương trình học" className="col-span-1">
 									<SelectField
 										className="col-span-2"
 										name={'MajorsId'}
-										label="Chọn ngành học"
+										label="Chọn chương trình học"
 										optionList={listOption.majors}
 										rules={[
 											{
 												required: true,
-												message: 'Vui lòng chọn ngành học'
+												message: 'Vui lòng chọn chương trình học'
 											},
 											{
 												validator: async (_, id) => {
 													if (oldMajors) {
 														if (id == oldMajors.MajorsId) {
-															return Promise.reject(new Error('Ngành học mới phải khác ngành học hiện tại'))
+															return Promise.reject(new Error('Chương trình học mới phải khác chương trình học hiện tại'))
 														}
 													} else {
 														return Promise.reject(new Error('Vui lòng chọn học viên'))
@@ -443,14 +443,14 @@ const ChangeMajorsPage = () => {
 									/>
 									<InputNumberField
 										name="TotalPrice"
-										label="Giá ngành học"
+										label="Giá chương trình học"
 										// disabled
-										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
+										rules={[{ required: true, message: 'Vui lòng nhập giá chương trình học' }]}
 									/>
-									{/* <TextBoxField name="Description" label={'Mô tả ngành học'} disabled /> */}
+									{/* <TextBoxField name="Description" label={'Mô tả chương trình học'} disabled /> */}
 									{majorDescription !== '' && (
 										<div className="">
-											<p className="font-medium mb-2">Mô tả ngành học</p>
+											<p className="font-medium mb-2">Mô tả chương trình học</p>
 											<p className="whitespace-pre-wrap">{majorDescription}</p>
 										</div>
 									)}

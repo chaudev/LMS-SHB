@@ -228,9 +228,9 @@ export const ModalMajorsCRUD: React.FC<I> = ({ mode, dataRow, onRefresh, setOpen
 										<InputTextField
 											isRequired
 											rules={[{ required: true, message: 'Bạn không được để trống!' }]}
-											label="Ngành học"
+											label="Chương trình học"
 											name="Name"
-											placeholder="Nhập ngành học"
+											placeholder="Nhập chương trình học"
 										/>
 									</div>
 									<div className="col-span-2">

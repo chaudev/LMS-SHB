@@ -254,7 +254,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 															optionList={[
 																{
 																	value: 1,
-																	title: 'Đăng ký ngành học',
+																	title: 'Đăng ký chương trình học',
 																	disabled: true
 																},
 																{

@@ -245,11 +245,11 @@ const MajorsRegistrationPage = () => {
 					title: 'Cảnh báo',
 					content: (
 						<>
-							Học viên <span className="font-[500]  text-tw-orange">{templ.StudentName}</span> đã có ngành học. Vui lòng sử dụng tính năng
-							chuyển ngành học!
+							Học viên <span className="font-[500]  text-tw-orange">{templ.StudentName}</span> đã có chương trình học. Vui lòng sử dụng tính năng
+							chuyển chương trình học!
 						</>
 					),
-					okText: 'Chuyển ngành',
+					okText: 'Chuyển chương trình',
 					cancelText: 'Hủy',
 					onOk: () => {
 						router.push({
@@ -405,27 +405,27 @@ const MajorsRegistrationPage = () => {
 									<div className="d-flex flex-col gap-3">{getInformation()}</div>
 								</Card>
 
-								<Card title="Ngành học" className="col-span-1">
+								<Card title="Chương trình học" className="col-span-1">
 									<SelectField
 										className="col-span-2"
 										name={'MajorsId'}
-										label="Chọn ngành học"
+										label="Chọn chương trình học"
 										optionList={listOption.majors}
-										rules={[{ required: true, message: 'Vui lòng chọn ngành học' }]}
-										placeholder="Chọn ngành học"
+										rules={[{ required: true, message: 'Vui lòng chọn chương trình học' }]}
+										placeholder="Chọn chương trình học"
 									/>
 
 									<InputNumberField
 										name="TotalPrice"
-										label="Giá ngành học"
+										label="Giá chương trình học"
 										// disabled
-										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
-										placeholder="Giá tiền ngành học"
+										rules={[{ required: true, message: 'Vui lòng nhập giá chương trình học' }]}
+										placeholder="Giá tiền chương trình học"
 									/>
-									{/* <TextBoxField name="Description" label={'Mô tả ngành học'} readOnly bordered={false} /> */}
+									{/* <TextBoxField name="Description" label={'Mô tả chương trình học'} readOnly bordered={false} /> */}
 									{majorDescription && (
 										<div className="">
-											<p className="font-medium mb-2">Mô tả ngành học</p>
+											<p className="font-medium mb-2">Mô tả chương trình học</p>
 											<p className="whitespace-pre-wrap">{majorDescription}</p>
 										</div>
 									)}

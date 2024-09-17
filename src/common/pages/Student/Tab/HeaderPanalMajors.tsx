@@ -90,7 +90,7 @@ const HeaderPanalMajors = ({ Id, majorsName, status, statusName, paymentTypeName
 	return (
 		<>
 			<Modal
-				title="Cập nhật ngành học"
+				title="Cập nhật chương trình học"
 				open={isModalOpen}
 				closable={false}
 				footer={
@@ -132,7 +132,7 @@ const HeaderPanalMajors = ({ Id, majorsName, status, statusName, paymentTypeName
 						alignItems: 'center'
 					}}
 				>
-					<span className="font-[500] text-[gray] inline-block w-2/6">Ngành học</span>
+					<span className="font-[500] text-[gray] inline-block w-2/6">Chương trình học</span>
 					<span className="text-[green] text-base">{majorsName} </span>
 					{userInformation && userInformation.RoleId != '3' && userInformation.RoleId != '2' ? (
 						// <PrimaryButton onClick={showModal} icon="edit" background="blue" type="button">

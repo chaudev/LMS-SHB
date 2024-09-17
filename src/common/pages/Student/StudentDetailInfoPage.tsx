@@ -82,7 +82,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					// },
 					{
 						key: '9',
-						label: `Ngành học`,
+						label: `Chương trình học`,
 						children: <TabMajors />
 					}
 			  ]
@@ -136,7 +136,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					// },
 					{
 						key: '9',
-						label: `Ngành học`,
+						label: `Chương trình học`,
 						children: <TabMajors />
 					}
 			  ]
