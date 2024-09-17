@@ -108,7 +108,6 @@ const CreateUser: FC<ICreateNew> = (props) => {
 				ParentFullName: _parentData?.FullName,
 				ParentMobile: _parentData?.Mobile,
 				ParentEmail: _parentData?.Email,
-				ParentRelationship: _parentData?.Relationship,
 				ParentDOB: moment(_parentData?.DOB)
 			})
 			return res.data.data
