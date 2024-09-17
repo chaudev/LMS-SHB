@@ -1,4 +1,5 @@
 import { EClassStatus } from '~/enums/class'
+import { EParentRelationship } from '~/enums/common'
 import { ELearningStatus, ERollUpStatus } from '~/enums/roll-up'
 
 export const CLASS_TYPES = {
@@ -123,4 +124,10 @@ export const classStatusOptions = [
 	{ value: EClassStatus.Upcoming, label: 'Sắp diễn ra' },
 	{ value: EClassStatus.InProgress, label: 'Đang diễn ra' },
 	{ value: EClassStatus.Finished, label: 'Kết thúc' }
+]
+
+export const parentRelationshipOptions = [
+	{ value: EParentRelationship.Father, label: 'Cha' },
+	{ value: EParentRelationship.Mother, label: 'Mẹ' },
+	{ value: EParentRelationship.Relatives, label: 'Người thân' }
 ]

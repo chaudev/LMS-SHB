@@ -34,6 +34,7 @@ import MySelectFetchParent from '~/atomic/molecules/MySelectFetchParent'
 import MyFormItem from '~/atomic/atoms/MyFormItem'
 import { useQuery } from '@tanstack/react-query'
 import MySelectOtherMajor from '~/atomic/molecules/MySelectOtherMajor'
+import MySelectParentRelationship from '~/atomic/molecules/MySelectParentRelationship'
 
 enum EIsHasParentAccount {
 	NoInfo = 1,
@@ -107,6 +108,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 				ParentFullName: _parentData?.FullName,
 				ParentMobile: _parentData?.Mobile,
 				ParentEmail: _parentData?.Email,
+				ParentRelationship: _parentData?.Relationship,
 				ParentDOB: moment(_parentData?.DOB)
 			})
 			return res.data.data
@@ -121,6 +123,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			ParentFullName: undefined,
 			ParentMobile: undefined,
 			ParentEmail: undefined,
+			ParentRelationship: undefined,
 			ParentDOB: undefined
 		})
 	}
@@ -732,11 +735,15 @@ const CreateUser: FC<ICreateNew> = (props) => {
 												<DatePickerField
 													className="col-span-2"
 													label="Ngày sinh"
+													placeholder=""
 													name="ParentDOB"
 													mode="single"
 													format="DD/MM/YYYY"
 													disabled={isLoadingParentData}
 												/>
+												<MyFormItem className="col-span-2" label="Mối quan hệ" name="ParentRelationship" rules={formRequired} required>
+													<MySelectParentRelationship />
+												</MyFormItem>
 												<InputTextField className="col-span-2" label="Email" name="ParentEmail" disabled={isLoadingParentData} />
 											</>
 										)}
@@ -751,12 +758,16 @@ const CreateUser: FC<ICreateNew> = (props) => {
 										<DatePickerField
 											className="col-span-2"
 											label="Ngày sinh"
+											placeholder=""
 											name="ParentDOB"
 											mode="single"
 											format="DD/MM/YYYY"
 											rules={formRequired}
 											isRequired
 										/>
+										<MyFormItem className="col-span-2" label="Mối quan hệ" name="ParentRelationship" rules={formRequired} required>
+											<MySelectParentRelationship className='h-[36px]' />
+										</MyFormItem>
 										<InputTextField className="col-span-2" label="Email" name="ParentEmail" />
 									</>
 								)}
