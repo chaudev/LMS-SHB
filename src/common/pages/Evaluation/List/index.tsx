@@ -4,12 +4,13 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { evaluationApi } from '~/api/evaluation'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { is } from '~/common/utils/common'
+import { checkIncludesRole, is } from '~/common/utils/common'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import { RootState } from '~/store'
 import EvaluationListTable from './components/EvaluationListTable'
 import EvaluationForm from './components/EvaluationForm'
 import MyInputSearch from '~/atomic/atoms/MyInputSearch'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const EvaluationList = () => {
 	const router = useRouter()
@@ -17,7 +18,7 @@ const EvaluationList = () => {
 	const { push, query } = router
 	const userInfo = useSelector((state: RootState) => state.user.information)
 	const isAllow = () => {
-		if (is(userInfo).admin || is(userInfo).manager) {
+		if (checkIncludesRole(listPermissionsByRoles.evaluation.sampleForm.viewList, Number(userInfo?.RoleId))) {
 			return true
 		}
 		return false
@@ -53,7 +54,11 @@ const EvaluationList = () => {
 					total={data?.totalRow || 0}
 					loading={isLoading}
 					onChangePage={(pageIndex) => router.push({ query: { ...query, pageIndex: pageIndex } })}
-					Extra={<EvaluationForm refreshData={refetch} />}
+					Extra={
+						checkIncludesRole(listPermissionsByRoles.evaluation.sampleForm.create, Number(userInfo?.RoleId)) ? (
+							<EvaluationForm refreshData={refetch} />
+						) : undefined
+					}
 					TitleCard={
 						<div className="w-[300px]">
 							<MyInputSearch onSearch={(e) => router.push({ query: { ...query, pageIndex: 1, search: e } })} />

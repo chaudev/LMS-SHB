@@ -10,9 +10,12 @@ import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
 import { useDispatch } from 'react-redux'
 import { setSource } from '~/store/sourceReducer'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const CustomerSupplier = () => {
 	const state = useSelector((state: RootState) => state)
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(false)
 	const [totalPage, setTotalPage] = useState(null)
@@ -68,7 +71,6 @@ const CustomerSupplier = () => {
 			title: 'Thay đổi bởi',
 			dataIndex: 'ModifiedBy',
 			render: (text) => <p className="">{text}</p>
-
 		},
 		{
 			title: 'Thay đổi lúc',
@@ -80,8 +82,12 @@ const CustomerSupplier = () => {
 			width: 120,
 			render: (record) => (
 				<>
-					<CustomerSupplierForm rowData={record} getDataTable={getDataTable} />
-					<DeleteTableRow text={record.Name} handleDelete={() => handleDelete(record.Id)} />
+					{checkIncludesRole(listPermissionsByRoles.config.customerSource.update, Number(userInformation?.RoleId)) && (
+						<CustomerSupplierForm rowData={record} getDataTable={getDataTable} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.customerSource.delete, Number(userInformation?.RoleId)) && (
+						<DeleteTableRow text={record.Name} handleDelete={() => handleDelete(record.Id)} />
+					)}
 				</>
 			)
 		}
@@ -99,7 +105,11 @@ const CustomerSupplier = () => {
 			// getPagination={getPagination}
 			// addClass="basic-header"
 			// TitlePage="Nguồn khách hàng"
-			Extra={<CustomerSupplierForm getDataTable={getDataTable} />}
+			Extra={
+				checkIncludesRole(listPermissionsByRoles.config.customerSource.create, Number(userInformation?.RoleId)) ? (
+					<CustomerSupplierForm getDataTable={getDataTable} />
+				) : undefined
+			}
 			data={state.source.Source}
 			columns={columns}
 			onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}

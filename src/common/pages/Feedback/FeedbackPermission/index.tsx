@@ -4,18 +4,19 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { feedbackPermissionApi } from '~/api/feedback-permission'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { is } from '~/common/utils/common'
+import { checkIncludesRole, is } from '~/common/utils/common'
 import { RootState } from '~/store'
 import FeedbackPermissionTable from './components/FeedbackPermissionTable'
 import FeedbackPermissionModal from './components/FeedbackPermissionModal'
 import { ShowErrorToast } from '~/common/utils/main-function'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const FeedbackPermission = () => {
 	const router = useRouter()
 	const { push, query } = router
 	const userInfo = useSelector((state: RootState) => state.user.information)
 	const isAllow = () => {
-		if (is(userInfo).admin || is(userInfo).manager) {
+		if (checkIncludesRole(listPermissionsByRoles.feedback.permission.viewList, Number(userInfo?.RoleId))) {
 			return true
 		}
 		return false
@@ -52,7 +53,11 @@ const FeedbackPermission = () => {
 					total={data?.totalRow || 0}
 					loading={isLoading}
 					onChangePage={(pageIndex) => router.push({ query: { ...query, pageIndex: pageIndex } })}
-					Extra={<FeedbackPermissionModal refreshData={refetch} />}
+					Extra={
+						checkIncludesRole(listPermissionsByRoles.feedback.permission.create, Number(userInfo?.RoleId)) ? (
+							<FeedbackPermissionModal refreshData={refetch} />
+						) : undefined
+					}
 					data={data?.data || []}
 					refreshData={refetch}
 				/>

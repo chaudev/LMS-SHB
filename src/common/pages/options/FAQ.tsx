@@ -9,6 +9,8 @@ import { RootState } from '~/store'
 import { useSelector } from 'react-redux'
 import Head from 'next/head'
 import appConfigs from '~/appConfig'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const FAQ = () => {
 	const [dataSource, setDataSource] = useState([])
@@ -18,23 +20,7 @@ const FAQ = () => {
 	const [todoApi, setTodoApi] = useState(todoApiDataSource)
 	const [isLoading, setIsLoading] = useState(false)
 
-	const theInformation = useSelector((state: RootState) => state.user.information)
-
-	function isAdmin() {
-		return theInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return theInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return theInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return theInformation?.RoleId == 3
-	}
+	const userInformation = useSelector((state: RootState) => state.user.information)
 
 	const columns = [
 		{
@@ -48,8 +34,12 @@ const FAQ = () => {
 			width: 130,
 			render: (text, data) => (
 				<div className="d-flex">
-					{(isAdmin() || isManager()) && <QuestionForm rowData={data} getDataSource={getDataSource} />}
-					{(isAdmin() || isManager()) && <DeleteTableRow handleDelete={() => handleDelete(data.Id)} text={data.Question} />}
+					{checkIncludesRole(listPermissionsByRoles.config.frequentlyAskedQuestions.update, Number(userInformation?.RoleId)) && (
+						<QuestionForm rowData={data} getDataSource={getDataSource} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.frequentlyAskedQuestions.delete, Number(userInformation?.RoleId)) && (
+						<DeleteTableRow handleDelete={() => handleDelete(data.Id)} text={data.Question} />
+					)}
 				</div>
 			)
 		}
@@ -119,7 +109,11 @@ const FAQ = () => {
 				columns={columns}
 				dataSource={dataSource}
 				TitlePage="Danh sách câu hỏi thường gặp"
-				TitleCard={(isManager() || isAdmin()) && <QuestionForm getDataSource={getDataSource} />}
+				TitleCard={
+					checkIncludesRole(listPermissionsByRoles.config.frequentlyAskedQuestions.create, Number(userInformation?.RoleId)) ? (
+						<QuestionForm getDataSource={getDataSource} />
+					) : undefined
+				}
 				expandable={expandedRowRender}
 			/>
 		</>

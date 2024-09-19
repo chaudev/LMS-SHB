@@ -16,8 +16,9 @@ import { ButtonRefund } from '~/common/components/TableButton'
 import { ShowNostis, ShowNoti } from '~/common/utils'
 import { _format } from '~/common/utils/format'
 import { RootState } from '~/store'
-import { parseToMoney } from '~/common/utils/common'
+import { checkIncludesRole, parseToMoney } from '~/common/utils/common'
 import FilterBase from '~/common/components/Elements/FilterBase'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const PAGE_SIZE = 10
 
@@ -153,8 +154,12 @@ const PaymentApprovePage = () => {
 
 				return (
 					<div className="flex items-center">
-						<DeleteTableRow handleDelete={() => handleDelete(data.Id)} />
-						{data.Status == 1 && <PaymentApprovePage.ApproveMoney id={data.Id} onRefresh={getPaymentApprove} />}
+						{checkIncludesRole(listPermissionsByRoles.finance.paymentApproval.approve, Number(user?.RoleId)) && data.Status == 1 && (
+							<PaymentApprovePage.ApproveMoney id={data.Id} onRefresh={getPaymentApprove} />
+						)}
+						{checkIncludesRole(listPermissionsByRoles.finance.paymentApproval.delete, Number(user?.RoleId)) && (
+							<DeleteTableRow handleDelete={() => handleDelete(data.Id)} />
+						)}
 					</div>
 				)
 			},

@@ -118,6 +118,7 @@ export const parseToMoney = (value: any) => {
 
 import { logOut, parseJwt } from './token-handle'
 import { TMenu } from '../libs/routers/menu'
+import { ERole } from '~/enums/common'
 
 export { logOut, parseJwt }
 
@@ -130,27 +131,53 @@ export { logOut, parseJwt }
  *
  * Cách xài: is(userInfo).admin
  * 1. Admin
- * 2. Teacher
- * 3. Student
- * 4. Manager
- * 5. Saler
- * 6. Accountant
- * 7. Academic
- * 8. Parent
- * 9. TeachingAssistant
+ * 2. Giáo viên
+ * 3. Học sinh
+ * 4. Quản lý
+ * 5. Tư vấn viên
+ * 6. Kế toán
+ * 7. Học vụ
+ * 8. Phụ huynh
+ * 9. Trợ lý đào tạo
+ * 10. Sale-admin
+ * 11. Marketing
+ * 12. Kế toán trưởng
+ * 13. Nhân viên hành chính - nhân sự
+ * 14. Trưởng phòng hành chính - nhân sự
+ * 15. Hồ sơ (giống học vụ)
+ * 16. Nội trú (giống học vụ)
+ * 17. Nhân viên nghiệp vụ và đối ngoại
+ * 18. Phó tổng giám đốc (giống Admin)
+ * 19. Giám đốc điều hành (giống Admin)
+ * 20. CEO (giống Admin)
  */
 export function is(params) {
 	return {
-		admin: params?.RoleId == 1,
-		teacher: params?.RoleId == 2,
-		student: params?.RoleId == 3,
-		manager: params?.RoleId == 4,
-		saler: params?.RoleId == 5,
-		accountant: params?.RoleId == 6,
-		academic: params?.RoleId == 7,
-		parent: params?.RoleId == 8,
-		teachingAssistant: params?.RoleId == 9
+		admin: params?.RoleId == ERole.admin,
+		teacher: params?.RoleId == ERole.teacher,
+		student: params?.RoleId == ERole.student,
+		manager: params?.RoleId == ERole.manager,
+		saler: params?.RoleId == ERole.saler,
+		accountant: params?.RoleId == ERole.accountant,
+		academic: params?.RoleId == ERole.academic,
+		parent: params?.RoleId == ERole.parent,
+		teachingAssistant: params?.RoleId == ERole.trainingAssistant,
+		saleAdmin: params?.RoleId == ERole.saleAdmin,
+		marketing: params?.RoleId == ERole.marketing,
+		chiefAccountant: params?.RoleId == ERole.chiefAccountant,
+		administrativeHRStaff: params?.RoleId == ERole.administrativeHRStaff,
+		administrativeHRManager: params?.RoleId == ERole.administrativeHRManager,
+		profile: params?.RoleId == ERole.profile,
+		residency: params?.RoleId == ERole.residency,
+		foreignAffairsOfficer: params?.RoleId == ERole.foreignAffairsOfficer,
+		deputyGeneralDirector: params?.RoleId == ERole.deputyGeneralDirector,
+		executiveDirector: params?.RoleId == ERole.executiveDirector,
+		CEO: params?.RoleId == ERole.CEO
 	}
+}
+
+export const checkIncludesRole = (roleArr: ERole[], roleId: number) => {
+	return roleArr.includes(roleId)
 }
 
 export const getMenuByRole = (menuList: TMenu[], roleNumber: number): TMenu[] => {

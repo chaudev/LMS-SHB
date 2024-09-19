@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
 import { setPaymentMethod } from '~/store/paymentMethodReducer'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { checkIncludesRole } from '~/common/utils/common'
 
 let initTodoApi = {
 	pageSize: PAGE_SIZE,
@@ -18,6 +20,7 @@ let initTodoApi = {
 const PaymentMethodPage = () => {
 	const [todoApi, setTodoApi] = useState(initTodoApi)
 	const paymentMethod = useSelector((state: RootState) => state.paymentMethod.PaymentMethod)
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const dispatch = useDispatch()
 
 	const columns = [
@@ -65,6 +68,7 @@ const PaymentMethodPage = () => {
 			render: (data) => {
 				return (
 					<>
+						{checkIncludesRole(listPermissionsByRoles.config.paymentMethod.update, Number(userInformation?.RoleId))}
 						<PaymentMethodForm dataRow={data} setTodoApi={setTodoApi} initTodoApi={initTodoApi} />
 					</>
 				)

@@ -1,16 +1,17 @@
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { evaluationTimeApi } from '~/api/evaluation-time'
-import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { is } from '~/common/utils/common'
-import { ShowErrorToast } from '~/common/utils/main-function'
-import { RootState } from '~/store'
-import EvaluationTimeTable from './components/EvaluationTimeTable'
-import EvaluationTimeForm from './components/EvaluationForm'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 import useQueryAllBranch from '~/common/hooks/useQueryAllBranch'
+import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { ShowErrorToast } from '~/common/utils/main-function'
+import { RootState } from '~/store'
+import EvaluationTimeForm from './components/EvaluationForm'
+import EvaluationTimeTable from './components/EvaluationTimeTable'
 
 const EvaluationTime = () => {
 	const router = useRouter()
@@ -19,7 +20,7 @@ const EvaluationTime = () => {
 	const userInfo = useSelector((state: RootState) => state.user.information)
 	const { data: branch } = useQueryAllBranch()
 	const isAllow = () => {
-		if (is(userInfo).admin || is(userInfo).manager) {
+		if (checkIncludesRole(listPermissionsByRoles.evaluation.listEvaluationRounds.viewList, Number(userInfo?.RoleId))) {
 			return true
 		}
 		return false
@@ -57,7 +58,11 @@ const EvaluationTime = () => {
 					pageSize={PAGE_SIZE}
 					loading={isLoading}
 					getPagination={(pageIndex) => router.push({ query: { ...query, pageIndex: pageIndex } })}
-					Extra={<EvaluationTimeForm refreshData={refetch} />}
+					Extra={
+						checkIncludesRole(listPermissionsByRoles.evaluation.listEvaluationRounds.create, Number(userInfo?.RoleId)) ? (
+							<EvaluationTimeForm refreshData={refetch} />
+						) : undefined
+					}
 					data={data?.data || []}
 					refreshData={refetch}
 					TitleCard={

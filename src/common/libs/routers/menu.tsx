@@ -3,7 +3,31 @@ import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
 import { FaLayerGroup, FaMoneyBillAlt, FaUserCheck, FaUserGraduate, FaUserTie } from 'react-icons/fa'
 import { HiMiniNewspaper } from 'react-icons/hi2'
 import { TiHome } from 'react-icons/ti'
-import { USER_ROLES } from '~/common/utils/constants'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { ERole } from '~/enums/common'
+
+const allRoles = [
+	ERole.admin,
+	ERole.teacher,
+	ERole.student,
+	ERole.manager,
+	ERole.saler,
+	ERole.accountant,
+	ERole.academic,
+	ERole.parent,
+	ERole.trainingAssistant,
+	ERole.saleAdmin,
+	ERole.marketing,
+	ERole.chiefAccountant,
+	ERole.administrativeHRStaff,
+	ERole.administrativeHRManager,
+	ERole.profile,
+	ERole.residency,
+	ERole.foreignAffairsOfficer,
+	ERole.deputyGeneralDirector,
+	ERole.executiveDirector,
+	ERole.CEO
+]
 
 /**
  * Đây chưa phải là best practice cho menu, em chỉ gom 8 cái menu thành 1 cái menu để cho thuận tiện thêm role
@@ -15,7 +39,7 @@ type TMenuItem = {
 	Route?: string // Required Nếu ItemType === 'single'
 	Text?: string // Required Nếu ItemType === 'single'
 	Icon?: string | JSX.Element
-	Allow: number[]
+	Allow: ERole[]
 	TitleSub?: string // Required Nếu ItemType === 'sub-menu'
 	SubMenuList?: {
 		ItemType: 'single'
@@ -23,7 +47,7 @@ type TMenuItem = {
 		Route: string
 		Text: string
 		Icon: string | JSX.Element
-		Allow: number[]
+		Allow: ERole[]
 	}[]
 }
 
@@ -44,16 +68,7 @@ export const menu: TMenu[] = [
 		Key: 'home',
 		TabName: 'Trang chủ',
 		Icon: <TiHome style={{ width: 24, height: 24 }} />,
-		Allow: [
-			USER_ROLES.admin,
-			USER_ROLES.manager,
-			USER_ROLES.teacher,
-			USER_ROLES.student,
-			USER_ROLES.saler,
-			USER_ROLES.accountant,
-			USER_ROLES.academic,
-			USER_ROLES.parent
-		],
+		Allow: allRoles,
 
 		Parent: 'home',
 		MenuTitle: 'Quản lý hệ thống',
@@ -65,16 +80,7 @@ export const menu: TMenu[] = [
 				Route: '/news',
 				Icon: '',
 				Text: 'Tin tức',
-				Allow: [
-					USER_ROLES.admin,
-					USER_ROLES.manager,
-					USER_ROLES.teacher,
-					USER_ROLES.student,
-					USER_ROLES.saler,
-					USER_ROLES.accountant,
-					USER_ROLES.academic,
-					USER_ROLES.parent
-				]
+				Allow: allRoles
 			},
 			{
 				ItemType: 'single',
@@ -82,16 +88,7 @@ export const menu: TMenu[] = [
 				Route: '/dashboard',
 				Icon: '',
 				Text: 'Thống kê',
-				Allow: [
-					USER_ROLES.admin,
-					USER_ROLES.manager,
-					USER_ROLES.teacher,
-					USER_ROLES.student,
-					USER_ROLES.saler,
-					USER_ROLES.accountant,
-					USER_ROLES.academic,
-					USER_ROLES.parent
-				]
+				Allow: allRoles
 			},
 			{
 				ItemType: 'single',
@@ -99,7 +96,7 @@ export const menu: TMenu[] = [
 				Route: '/statistic-teaching',
 				Icon: '',
 				Text: 'Thống kê giảng dạy',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager]
+				Allow: listPermissionsByRoles.statistics.teaching
 			},
 			{
 				ItemType: 'single',
@@ -107,7 +104,7 @@ export const menu: TMenu[] = [
 				Route: '/statistic-profile',
 				Icon: '',
 				Text: 'Tình trạng hồ sơ',
-				Allow: [USER_ROLES.admin]
+				Allow: listPermissionsByRoles.applicationStatus.view
 			},
 			{
 				ItemType: 'single',
@@ -115,7 +112,7 @@ export const menu: TMenu[] = [
 				Route: '/statistic-salary',
 				Icon: '',
 				Text: 'Thống kê lương',
-				Allow: [USER_ROLES.admin]
+				Allow: listPermissionsByRoles.statistics.salary
 			},
 			{
 				ItemType: 'single',
@@ -123,7 +120,7 @@ export const menu: TMenu[] = [
 				Route: '/statistic-roll-up',
 				Icon: '',
 				Text: 'Thống kê điểm danh',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.statistics.rollUp
 			},
 			{
 				ItemType: 'single',
@@ -131,7 +128,7 @@ export const menu: TMenu[] = [
 				Route: '/statistic-test',
 				Icon: '',
 				Text: 'Thống kê kiểm tra',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.statistics.test
 			},
 			{
 				ItemType: 'single',
@@ -139,7 +136,7 @@ export const menu: TMenu[] = [
 				Route: '/statistic-attendance',
 				Icon: '',
 				Text: 'Thống kê chuyên cần',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.statistics.attendance
 			}
 		]
 	},
@@ -147,15 +144,7 @@ export const menu: TMenu[] = [
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />,
-		Allow: [
-			USER_ROLES.admin,
-			USER_ROLES.manager,
-			USER_ROLES.teacher,
-			USER_ROLES.student,
-			USER_ROLES.saler,
-			USER_ROLES.academic,
-			USER_ROLES.parent
-		],
+		Allow: allRoles,
 
 		MenuTitle: 'Tuyển sinh',
 		MenuKey: '/info-course',
@@ -167,7 +156,7 @@ export const menu: TMenu[] = [
 				Route: '/info-course/customer',
 				Text: 'Tư vấn',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.saler, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.admissions.advise.view
 			},
 			{
 				ItemType: 'single',
@@ -175,15 +164,7 @@ export const menu: TMenu[] = [
 				Route: '/info-course/service-appointment-test',
 				Text: 'Hẹn kiểm tra đầu vào',
 				Icon: '',
-				Allow: [
-					USER_ROLES.admin,
-					USER_ROLES.manager,
-					USER_ROLES.teacher,
-					USER_ROLES.student,
-					USER_ROLES.saler,
-					USER_ROLES.academic,
-					USER_ROLES.parent
-				]
+				Allow: listPermissionsByRoles.admissions.appointmentEntranceExam.view
 			},
 			// {
 			// 	ItemType: 'single',
@@ -219,7 +200,7 @@ export const menu: TMenu[] = [
 				Route: '/info-course/about-to-finish',
 				Text: 'Học viên sắp học xong',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.saler]
+				Allow: listPermissionsByRoles.admissions.studentAlmostDoneStudy.viewList
 			},
 			// {
 			// 	ItemType: 'single',
@@ -234,7 +215,7 @@ export const menu: TMenu[] = [
 				Route: '/info-course/student/warning',
 				Text: 'Cảnh báo học viên',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.teacher, USER_ROLES.saler, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.admissions.studentWarning.viewList
 			},
 			,
 			{
@@ -243,7 +224,7 @@ export const menu: TMenu[] = [
 				Route: '/info-course/student/warning',
 				Text: 'Thông tin cảnh báo',
 				Icon: '',
-				Allow: [USER_ROLES.student, USER_ROLES.parent]
+				Allow: [ERole.student, ERole.parent]
 			},
 			// {
 			// 	ItemType: 'single',
@@ -265,7 +246,7 @@ export const menu: TMenu[] = [
 				Route: '/info-course/parents',
 				Text: 'Phụ huynh',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.saler]
+				Allow: listPermissionsByRoles.admissions.parent.viewList
 			},
 			{
 				ItemType: 'single',
@@ -273,7 +254,7 @@ export const menu: TMenu[] = [
 				Route: '/info-course/contract',
 				Text: 'Hợp đồng',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.saler]
+				Allow: listPermissionsByRoles.admissions.contract.viewList
 			}
 		]
 	},
@@ -281,16 +262,7 @@ export const menu: TMenu[] = [
 		Key: 'class',
 		TabName: 'Lớp học',
 		Icon: <BsFillGridFill size={22} />,
-		Allow: [
-			USER_ROLES.admin,
-			USER_ROLES.manager,
-			USER_ROLES.teacher,
-			USER_ROLES.student,
-			USER_ROLES.saler,
-			USER_ROLES.accountant,
-			USER_ROLES.academic,
-			USER_ROLES.parent
-		],
+		Allow: allRoles,
 
 		MenuName: 'Lớp học',
 		MenuTitle: 'Lớp học',
@@ -303,7 +275,7 @@ export const menu: TMenu[] = [
 				Route: '/class/create',
 				Text: 'Tạo lớp học',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.class.create
 			},
 			{
 				ItemType: 'single',
@@ -311,16 +283,7 @@ export const menu: TMenu[] = [
 				Route: '/class/list-class',
 				Text: 'Danh sách lớp học',
 				Icon: '',
-				Allow: [
-					USER_ROLES.admin,
-					USER_ROLES.manager,
-					USER_ROLES.teacher,
-					USER_ROLES.student,
-					USER_ROLES.saler,
-					USER_ROLES.accountant,
-					USER_ROLES.academic,
-					USER_ROLES.parent
-				]
+				Allow: allRoles
 			},
 			{
 				ItemType: 'single',
@@ -328,15 +291,7 @@ export const menu: TMenu[] = [
 				Icon: '',
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.teacher, USER_ROLES.saler, USER_ROLES.accountant, USER_ROLES.academic]
-			},
-			{
-				ItemType: 'single',
-				Key: '/class/schedule',
-				Icon: '',
-				Route: '/class/schedule',
-				Text: 'Lịch học',
-				Allow: [USER_ROLES.student]
+				Allow: listPermissionsByRoles.class.checkSchedule
 			},
 			{
 				ItemType: 'single',
@@ -344,15 +299,7 @@ export const menu: TMenu[] = [
 				Route: '/info-course/student',
 				Text: 'Danh sách học viên',
 				Icon: '',
-				Allow: [
-					USER_ROLES.admin,
-					USER_ROLES.manager,
-					USER_ROLES.teacher,
-					USER_ROLES.saler,
-					USER_ROLES.accountant,
-					USER_ROLES.academic,
-					USER_ROLES.parent
-				]
+				Allow: listPermissionsByRoles.student.viewList
 			},
 			{
 				ItemType: 'single',
@@ -360,7 +307,7 @@ export const menu: TMenu[] = [
 				Route: '/info-course/student-in-class',
 				Text: 'Học viên trong lớp',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.saler, USER_ROLES.accountant, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.studentInClass.viewList
 			},
 			{
 				ItemType: 'single',
@@ -368,7 +315,7 @@ export const menu: TMenu[] = [
 				Route: '/info-course/changed',
 				Text: 'Học viên chuyển lớp',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.saler, USER_ROLES.accountant, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.studentTransferredClass.viewList
 			},
 			{
 				ItemType: 'single',
@@ -376,7 +323,7 @@ export const menu: TMenu[] = [
 				Route: '/class/roll-up',
 				Text: 'Điểm danh',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.class.rollUp
 			},
 			{
 				ItemType: 'single',
@@ -384,7 +331,7 @@ export const menu: TMenu[] = [
 				Route: '/class/enter-score',
 				Text: 'Nhập điểm',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.class.enterScore
 			}
 			// {
 			// 	ItemType: 'single',
@@ -412,7 +359,7 @@ export const menu: TMenu[] = [
 		Key: 'feedback',
 		TabName: 'Phản hồi',
 		Icon: <BsChatLeftTextFill size={20} />,
-		Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.teacher, USER_ROLES.student, USER_ROLES.parent],
+		Allow: listPermissionsByRoles.feedback.menuRoles,
 
 		MenuName: 'Quản lý phản hồi',
 		MenuTitle: 'Quản lý phản hồi',
@@ -425,7 +372,7 @@ export const menu: TMenu[] = [
 				Route: '/options/general-notification',
 				Text: 'Tạo thông báo',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager]
+				Allow: listPermissionsByRoles.feedback.notification.viewList
 			},
 			{
 				ItemType: 'single',
@@ -433,7 +380,7 @@ export const menu: TMenu[] = [
 				Route: '/feedback/list',
 				Text: 'Danh sách phản hồi',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.teacher, USER_ROLES.student, USER_ROLES.parent]
+				Allow: listPermissionsByRoles.feedback.viewList
 			},
 			{
 				ItemType: 'single',
@@ -441,7 +388,7 @@ export const menu: TMenu[] = [
 				Route: '/feedback/group',
 				Text: 'Quản lý nhóm phản hồi',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager]
+				Allow: listPermissionsByRoles.feedback.group.viewList
 			},
 			{
 				ItemType: 'single',
@@ -449,7 +396,7 @@ export const menu: TMenu[] = [
 				Route: '/feedback/permission',
 				Text: 'Phân quyền phản hồi',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager]
+				Allow: listPermissionsByRoles.feedback.permission.viewList
 			}
 		]
 	},
@@ -457,7 +404,7 @@ export const menu: TMenu[] = [
 		Key: 'evaluation',
 		TabName: 'Đánh giá',
 		Icon: <HiMiniNewspaper size={22} />,
-		Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.teacher, USER_ROLES.saler, USER_ROLES.accountant, USER_ROLES.academic],
+		Allow: listPermissionsByRoles.evaluation.menuRoles,
 
 		MenuName: 'Quản lý đánh giá',
 		MenuTitle: 'Quản lý đánh giá',
@@ -470,7 +417,7 @@ export const menu: TMenu[] = [
 				Route: '/evaluation/list',
 				Text: 'Phiếu đánh giá mẫu',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager]
+				Allow: listPermissionsByRoles.evaluation.sampleForm.viewList
 			},
 			{
 				ItemType: 'single',
@@ -478,7 +425,7 @@ export const menu: TMenu[] = [
 				Route: '/evaluation/evaluation-time',
 				Text: 'Danh sách đợt đánh giá',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager]
+				Allow: listPermissionsByRoles.evaluation.listEvaluationRounds.viewList
 			},
 			{
 				ItemType: 'single',
@@ -486,7 +433,7 @@ export const menu: TMenu[] = [
 				Route: '/evaluation/me',
 				Text: 'Danh sách phiếu đánh giá',
 				Icon: '',
-				Allow: [USER_ROLES.teacher, USER_ROLES.saler, USER_ROLES.accountant, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.evaluation.listEvaluationOfMe.viewList
 			}
 		]
 	},
@@ -494,7 +441,7 @@ export const menu: TMenu[] = [
 		Key: 'majors',
 		TabName: 'Chương trình học',
 		Icon: <FaLayerGroup size={20} />,
-		Allow: [USER_ROLES.admin],
+		Allow: listPermissionsByRoles.curriculum.menuRoles,
 
 		MenuName: 'Chương trình học',
 		MenuTitle: 'Chương trình học',
@@ -507,7 +454,7 @@ export const menu: TMenu[] = [
 				Route: '/majors',
 				Text: 'Danh sách chương trình học',
 				Icon: '',
-				Allow: [USER_ROLES.admin]
+				Allow: listPermissionsByRoles.curriculum.list.view
 			},
 			{
 				ItemType: 'single',
@@ -515,7 +462,7 @@ export const menu: TMenu[] = [
 				Route: '/majors/registration',
 				Text: 'Đăng ký chương trình học',
 				Icon: '',
-				Allow: [USER_ROLES.admin]
+				Allow: listPermissionsByRoles.curriculum.register
 			},
 			{
 				ItemType: 'single',
@@ -523,7 +470,7 @@ export const menu: TMenu[] = [
 				Route: '/majors/change-majors',
 				Text: 'Thay đổi chương trình học',
 				Icon: '',
-				Allow: [USER_ROLES.admin]
+				Allow: listPermissionsByRoles.curriculum.change
 			}
 		]
 	},
@@ -531,7 +478,7 @@ export const menu: TMenu[] = [
 		Key: 'staff',
 		TabName: 'Nhân viên',
 		Icon: <FaUserTie size={20} />,
-		Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.saler, USER_ROLES.accountant, USER_ROLES.academic],
+		Allow: listPermissionsByRoles.account.menuRoles,
 
 		MenuName: 'Quản lý tài khoản',
 		MenuTitle: 'Quản lý tài khoản',
@@ -544,7 +491,7 @@ export const menu: TMenu[] = [
 				Route: '/users/personnel',
 				Text: 'Danh sách nhân viên',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager]
+				Allow: listPermissionsByRoles.account.staff.viewList
 			},
 			{
 				ItemType: 'single',
@@ -552,7 +499,7 @@ export const menu: TMenu[] = [
 				Route: '/users/teacher/teacher-off',
 				Text: 'Duyệt lịch nghỉ',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.account.teacherOff.viewList
 			},
 			{
 				ItemType: 'single',
@@ -560,7 +507,7 @@ export const menu: TMenu[] = [
 				Route: '/users/salary-config',
 				Text: 'Cấu hình lương',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.accountant]
+				Allow: listPermissionsByRoles.account.salaryConfig.viewList
 			},
 			{
 				ItemType: 'single',
@@ -568,7 +515,7 @@ export const menu: TMenu[] = [
 				Route: '/users/salary',
 				Text: 'Bảng lương',
 				Icon: '',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.saler, USER_ROLES.accountant, USER_ROLES.academic]
+				Allow: [ERole.admin, ERole.manager, ERole.saler, ERole.accountant, ERole.academic]
 			}
 			// {
 			// 	ItemType: 'single',
@@ -591,7 +538,7 @@ export const menu: TMenu[] = [
 		Key: 'finance',
 		TabName: 'Tài chính',
 		Icon: <FaMoneyBillAlt size={20} />,
-		Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.teacher, USER_ROLES.accountant, USER_ROLES.academic],
+		Allow: listPermissionsByRoles.finance.menuRoles,
 
 		Parent: 'finance',
 		MenuTitle: 'Tài chính',
@@ -603,7 +550,7 @@ export const menu: TMenu[] = [
 				Route: '/finance/payment',
 				Icon: '',
 				Text: 'Quản lý thanh toán',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.accountant, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.finance.paymentManagement.viewList
 			},
 			{
 				ItemType: 'single',
@@ -611,7 +558,7 @@ export const menu: TMenu[] = [
 				Route: '/finance/income-expense-management',
 				Icon: '',
 				Text: 'Quản lý thu chi',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.accountant]
+				Allow: listPermissionsByRoles.finance.incomeAndExpenditureManagement.viewList
 			},
 			{
 				ItemType: 'single',
@@ -619,14 +566,14 @@ export const menu: TMenu[] = [
 				Route: '/finance/payment-approve',
 				Icon: '',
 				Text: 'Duyệt thanh toán',
-				Allow: [USER_ROLES.admin, USER_ROLES.accountant, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.finance.paymentApproval.viewList
 			},
 			{
 				ItemType: 'single',
 				Key: '/finance/refund',
 				Route: '/finance/refund',
 				Text: 'Hoàn tiền',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.accountant, USER_ROLES.academic]
+				Allow: listPermissionsByRoles.finance.refund.viewList
 			},
 			{
 				ItemType: 'single',
@@ -634,7 +581,7 @@ export const menu: TMenu[] = [
 				Route: '/users/salary',
 				Text: 'Bảng lương',
 				Icon: '',
-				Allow: [USER_ROLES.teacher]
+				Allow: listPermissionsByRoles.finance.payroll.viewList
 			}
 			// {
 			// 	ItemType: 'single',
@@ -648,7 +595,7 @@ export const menu: TMenu[] = [
 		Key: 'assignment',
 		TabName: 'Phân công',
 		Icon: <FaUserCheck size={22} />,
-		Allow: [USER_ROLES.teacher],
+		Allow: listPermissionsByRoles.account.teacherRegisterOff.viewList,
 
 		MenuName: 'Tài khoản',
 		MenuTitle: 'Tài khoản',
@@ -661,7 +608,7 @@ export const menu: TMenu[] = [
 				Route: '/users/teacher/teacher-off',
 				Text: 'Đăng ký lịch nghỉ',
 				Icon: '',
-				Allow: [USER_ROLES.teacher]
+				Allow: listPermissionsByRoles.account.teacherRegisterOff.viewList
 			}
 		]
 	},
@@ -669,7 +616,7 @@ export const menu: TMenu[] = [
 		Key: 'config',
 		TabName: 'Cấu hình',
 		Icon: <AiFillSetting size={22} />,
-		Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic],
+		Allow: allRoles,
 
 		MenuName: 'Cấu hình',
 		MenuTitle: 'Cấu hình',
@@ -681,7 +628,7 @@ export const menu: TMenu[] = [
 				Key: 'sub-list-staff-child-303',
 				Icon: '',
 				TitleSub: 'Cấu hình học',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic],
+				Allow: allRoles,
 				SubMenuList: [
 					{
 						ItemType: 'single',
@@ -689,7 +636,7 @@ export const menu: TMenu[] = [
 						Route: '/options/center',
 						Text: 'Trung tâm',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager]
+						Allow: listPermissionsByRoles.config.branch.viewList
 					},
 					{
 						ItemType: 'single',
@@ -697,7 +644,7 @@ export const menu: TMenu[] = [
 						Route: '/options/study-route-template',
 						Text: 'Mẫu lộ trình học',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.sampleLearningRoadmap.viewList
 					},
 					{
 						ItemType: 'single',
@@ -705,7 +652,7 @@ export const menu: TMenu[] = [
 						Route: '/options/specialize',
 						Text: 'Trình độ tiếng',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.languageLevel.viewList
 					},
 					{
 						ItemType: 'single',
@@ -713,7 +660,7 @@ export const menu: TMenu[] = [
 						Route: '/options/program',
 						Text: 'Khung đào tạo',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.trainingFramework.viewList
 					},
 					{
 						ItemType: 'single',
@@ -721,7 +668,7 @@ export const menu: TMenu[] = [
 						Route: '/options/study-time',
 						Text: 'Ca học',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.timeShift.viewList
 					},
 					{
 						ItemType: 'single',
@@ -729,7 +676,7 @@ export const menu: TMenu[] = [
 						Route: '/options/grade-templates',
 						Text: 'Bảng điểm mẫu',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.sampleTranscript.viewList
 					},
 					{
 						ItemType: 'single',
@@ -737,7 +684,7 @@ export const menu: TMenu[] = [
 						Route: '/options/major-group',
 						Text: 'Nhóm chương trình',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.programGroup.viewList
 					},
 					{
 						ItemType: 'single',
@@ -745,7 +692,7 @@ export const menu: TMenu[] = [
 						Route: '/options/other-major',
 						Text: 'Ngành học khác',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.otherMajor.viewList
 					}
 					// {
 					// 	ItemType: 'single',
@@ -761,7 +708,7 @@ export const menu: TMenu[] = [
 				Key: 'sub-list-staff-child-304',
 				Icon: '',
 				TitleSub: 'Khác',
-				Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic],
+				Allow: allRoles,
 				SubMenuList: [
 					// {
 					// 	ItemType: 'single',
@@ -777,7 +724,7 @@ export const menu: TMenu[] = [
 						Route: '/options/learning-needs',
 						Text: 'Nhu cầu học',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.learningNeeds.viewList
 					},
 					{
 						ItemType: 'single',
@@ -785,7 +732,7 @@ export const menu: TMenu[] = [
 						Route: '/options/customer-supplier',
 						Text: 'Nguồn khách hàng',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.customerSource.viewList
 					},
 					{
 						ItemType: 'single',
@@ -793,7 +740,7 @@ export const menu: TMenu[] = [
 						Route: '/options/day-off',
 						Text: 'Ngày nghỉ',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.dayOff.viewList
 					},
 
 					{
@@ -802,7 +749,7 @@ export const menu: TMenu[] = [
 						Route: '/options/jobs',
 						Text: 'Công việc',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.job.viewList
 					},
 					{
 						ItemType: 'single',
@@ -810,7 +757,7 @@ export const menu: TMenu[] = [
 						Route: '/options/consultation-status',
 						Text: 'Trạng thái khách hàng',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.customerStatus.viewList
 					},
 					{
 						ItemType: 'single',
@@ -818,7 +765,7 @@ export const menu: TMenu[] = [
 						Route: '/options/purpose',
 						Text: 'Mục đích học',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.learningPurpose.viewList
 					},
 					// {
 					// 	ItemType: 'single',
@@ -833,7 +780,7 @@ export const menu: TMenu[] = [
 						Route: '/options/idiom',
 						Text: 'Thành ngữ lịch',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.academic]
+						Allow: listPermissionsByRoles.config.calendarIdioms.viewList
 					},
 					{
 						ItemType: 'single',
@@ -841,7 +788,7 @@ export const menu: TMenu[] = [
 						Route: '/options/config-template',
 						Text: 'Mẫu',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager]
+						Allow: listPermissionsByRoles.config.contractTemplate.viewList
 					},
 					{
 						ItemType: 'single',
@@ -849,7 +796,7 @@ export const menu: TMenu[] = [
 						Route: '/options/faq',
 						Text: 'Câu hỏi thường gặp',
 						Icon: '',
-						Allow: [USER_ROLES.admin, USER_ROLES.manager]
+						Allow: listPermissionsByRoles.config.frequentlyAskedQuestions.viewList
 					},
 					{
 						ItemType: 'single',
@@ -857,7 +804,7 @@ export const menu: TMenu[] = [
 						Route: '/options/payment',
 						Text: 'Phương thức thanh toán',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.paymentMethod.viewList
 					},
 					// {
 					// 	ItemType: 'single',
@@ -879,7 +826,7 @@ export const menu: TMenu[] = [
 						Route: '/options/payment-pemission',
 						Text: 'Cấp quyền thanh toán',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.paymentAuthorization.viewList
 					},
 					{
 						ItemType: 'single',
@@ -887,7 +834,7 @@ export const menu: TMenu[] = [
 						Route: '/options/gift',
 						Text: 'Quà tặng',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.gift.viewList
 					}
 					// {
 					// 	ItemType: 'single',
@@ -918,7 +865,7 @@ export const menu: TMenu[] = [
 				Key: 'sub-list-staff-child-305',
 				Icon: '',
 				TitleSub: 'Hồ sơ',
-				Allow: [USER_ROLES.admin],
+				Allow: allRoles,
 				SubMenuList: [
 					{
 						ItemType: 'single',
@@ -926,7 +873,7 @@ export const menu: TMenu[] = [
 						Route: '/options/profile-template',
 						Text: 'Mẫu hồ sơ',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.applicationForm.viewList
 					},
 					{
 						ItemType: 'single',
@@ -934,7 +881,7 @@ export const menu: TMenu[] = [
 						Route: '/options/office',
 						Text: 'Văn phòng đại diện',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.representativeOffice.viewList
 					},
 					{
 						ItemType: 'single',
@@ -942,7 +889,7 @@ export const menu: TMenu[] = [
 						Route: '/options/partner',
 						Text: 'Đối tác',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.partner.viewList
 					}
 				]
 			},
@@ -951,7 +898,7 @@ export const menu: TMenu[] = [
 				Key: 'sub-list-staff-child-306',
 				Icon: '',
 				TitleSub: 'Cấu hình tình trạng',
-				Allow: [USER_ROLES.admin],
+				Allow: allRoles,
 				SubMenuList: [
 					{
 						ItemType: 'single',
@@ -959,7 +906,7 @@ export const menu: TMenu[] = [
 						Route: '/options/foreign-language',
 						Text: 'Tình trạng tiếng',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.languageStatus.viewList
 					},
 					{
 						ItemType: 'single',
@@ -967,7 +914,7 @@ export const menu: TMenu[] = [
 						Route: '/options/visa-status',
 						Text: 'Tình trạng Visa',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.visaStatus.viewList
 					},
 					{
 						ItemType: 'single',
@@ -975,7 +922,7 @@ export const menu: TMenu[] = [
 						Route: '/options/profile-status',
 						Text: 'Tình trạng thu hồ sơ',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.applicationStatus.viewList
 					},
 					{
 						ItemType: 'single',
@@ -983,7 +930,7 @@ export const menu: TMenu[] = [
 						Route: '/options/process',
 						Text: 'Tiến trình xử lý hồ sơ',
 						Icon: '',
-						Allow: [USER_ROLES.admin]
+						Allow: listPermissionsByRoles.config.applicationProcessingProgress.viewList
 					}
 				]
 			}

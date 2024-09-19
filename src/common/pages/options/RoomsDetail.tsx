@@ -8,10 +8,11 @@ import { branchApi } from '~/api/branch'
 import { ShowNoti } from '~/common/utils'
 import moment from 'moment'
 import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
-import { parseSelectArray } from '~/common/utils/common'
+import { checkIncludesRole, parseSelectArray } from '~/common/utils/common'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const RoomsDetail = () => {
 	const listTodoApi = {
@@ -27,10 +28,6 @@ const RoomsDetail = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [totalPage, setTotalPage] = useState(null)
 	const theInformation = useSelector((state: RootState) => state.user.information)
-
-	function isAdmin() {
-		return theInformation?.RoleId == 1
-	}
 
 	// DELETE ITEM
 	const onDelete = async (roomID: number) => {
@@ -114,7 +111,7 @@ const RoomsDetail = () => {
 		}
 	}, [router.query.slug])
 
-	const columns = isAdmin()
+	const columns = checkIncludesRole(listPermissionsByRoles.config.branch.updateRoom, Number(theInformation?.RoleId))
 		? [
 				{
 					title: 'Mã phòng',
@@ -172,7 +169,11 @@ const RoomsDetail = () => {
 			<PrimaryTable
 				loading={isLoading}
 				total={totalPage && totalPage}
-				Extra={isAdmin() ? <RoomForm dataCenter={dataCenter} getDataRoom={getDataRoom} /> : ''}
+				Extra={
+					checkIncludesRole(listPermissionsByRoles.config.branch.create, Number(theInformation?.RoleId)) ? (
+						<RoomForm dataCenter={dataCenter} getDataRoom={getDataRoom} />
+					) : undefined
+				}
 				data={roomData}
 				onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
 				columns={columns}

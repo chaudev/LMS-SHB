@@ -1,21 +1,19 @@
-import { Tooltip } from 'antd'
 import Link from 'next/link'
-import React, { Fragment, useEffect, useState } from 'react'
-import { Eye } from 'react-feather'
+import { Fragment, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { areaApi } from '~/api/area'
 import { branchApi } from '~/api/branch'
 import CenterForm from '~/common/components/Center/CenterForm'
-import PrimaryTable from '~/common/components/Primary/Table'
+import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
 import FilterColumn from '~/common/components/FilterTable/Filter/FilterColumn'
-import { parseSelectArray } from '~/common/utils/common'
+import IconButton from '~/common/components/Primary/IconButton'
+import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
+import { checkIncludesRole, parseSelectArray } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 import { RootState } from '~/store'
-import { useSelector } from 'react-redux'
-import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
-import { areaApi } from '~/api/area'
-import { useDispatch } from 'react-redux'
 import { setBranch } from '~/store/branchReducer'
-import IconButton from '~/common/components/Primary/IconButton'
 
 const Center = () => {
 	const { information: userInformation } = useSelector((state: RootState) => state.user)
@@ -94,7 +92,7 @@ const Center = () => {
 
 	// USE EFFECT - FETCH DATA
 	useEffect(() => {
-		if (isAdmin() || isManager()) {
+		if (checkIncludesRole(listPermissionsByRoles.config.branch.viewList, Number(userInformation?.RoleId))) {
 			getDataCenter()
 		}
 	}, [todoApi, userInformation])
@@ -108,7 +106,7 @@ const Center = () => {
 			title: 'Tên trung tâm',
 			dataIndex: 'Name',
 			width: 200,
-			fixed:'left',
+			fixed: 'left',
 			...FilterColumn('Name', onSearch, handleReset, 'text'),
 			render: (value) => <span className="font-weight-primary">{value}</span>
 		},
@@ -118,7 +116,7 @@ const Center = () => {
 			dataIndex: 'Code',
 			...FilterColumn('Code', onSearch, handleReset, 'text')
 		},
-		
+
 		{
 			title: 'Địa chỉ',
 			width: 150,
@@ -150,50 +148,34 @@ const Center = () => {
 						<IconButton type="button" icon="eye" color="orange" tooltip={'Xem phòng'} />
 					</Link>
 
-					{isAdmin() ? <CenterForm dataArea={dataArea} rowData={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} /> : ''}
+					{checkIncludesRole(listPermissionsByRoles.config.branch.update, Number(userInformation?.RoleId)) && (
+						<CenterForm dataArea={dataArea} rowData={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
+					)}
 
-					{isAdmin() ? <DeleteTableRow text={data.Name} handleDelete={() => handleDeleteBranch(data.Id)} /> : ''}
+					{checkIncludesRole(listPermissionsByRoles.config.branch.delete, Number(userInformation?.RoleId)) && (
+						<DeleteTableRow text={data.Name} handleDelete={() => handleDeleteBranch(data.Id)} />
+					)}
 				</>
 			)
 		}
 	]
 
-	const theInformation = useSelector((state: RootState) => state.user.information)
-
-	function isAdmin() {
-		return theInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return theInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return theInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return theInformation?.RoleId == 3
-	}
-
 	return (
-		<>
-			{(isAdmin() || isManager()) && (
-				<Fragment>
-					<PrimaryTable
-						loading={isLoading}
-						total={totalPage && totalPage}
-						Extra={isAdmin() ? <CenterForm dataArea={dataArea} setTodoApi={setTodoApi} listTodoApi={listTodoApi} /> : ''}
-						data={state.branch.Branch}
-						columns={columns}
-						onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
-						TitleCard={
-							<div className="extra-table">{/* <SortBox handleSort={(value) => handleSort(value)} dataOption={dataOption} /> */}</div>
-						}
-					/>
-				</Fragment>
-			)}
-		</>
+		<Fragment>
+			<PrimaryTable
+				loading={isLoading}
+				total={totalPage && totalPage}
+				Extra={
+					checkIncludesRole(listPermissionsByRoles.config.branch.create, Number(userInformation?.RoleId)) ? (
+						<CenterForm dataArea={dataArea} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
+					) : undefined
+				}
+				data={state.branch.Branch}
+				columns={columns}
+				onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
+				TitleCard={<div className="extra-table">{/* <SortBox handleSort={(value) => handleSort(value)} dataOption={dataOption} /> */}</div>}
+			/>
+		</Fragment>
 	)
 }
 export default Center

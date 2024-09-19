@@ -16,6 +16,10 @@ import PrimaryTable from '../../Primary/Table'
 import PrimaryTag from '../../Primary/Tag'
 import IncomeExpenseManagementModalCRUD from './ModalCRUD'
 import DeleteTableRow from '../../Elements/DeleteTableRow'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 export interface IIncomeExpenseManagementPageProps {}
 
@@ -45,6 +49,7 @@ const initialFilter = [
 ]
 
 export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagementPageProps) {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [dataSource, setDataSource] = useState<IPaymentSession[]>()
 	const [dataStatistical, setDataStatistical] = useState({ income: 0, expense: 0, revenue: 0 })
 	const [totalPage, setTotalPage] = useState(0)
@@ -180,7 +185,7 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 							className=""
 							tooltip="In phiếu"
 						/>
-						{(item.BillId == 0 || item.BillId == null) && (
+						{checkIncludesRole(listPermissionsByRoles.finance.incomeAndExpenditureManagement.update, Number(userInformation?.RoleId)) && (item.BillId == 0 || item.BillId == null) && (
 							<IncomeExpenseManagementModalCRUD
 								handleLoadOnScrollForOptionList={handleLoadOnScrollForOptionList}
 								handleSearchForOptionList={handleSearchForOptionList}
@@ -191,10 +196,13 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 								onSubmit={onSubmit}
 							/>
 						)}
-						<DeleteTableRow 
-						overrideText={`Bạn chắc chắn muốn xóa phiên thanh toán này?`} 
-						warning ={`Lưu ý: không thể khôi phục sau khi xóa`}
-						handleDelete={() => handleDelete(item.Id)} />
+						{checkIncludesRole(listPermissionsByRoles.finance.incomeAndExpenditureManagement.delete, Number(userInformation?.RoleId)) && (
+							<DeleteTableRow
+								overrideText={`Bạn chắc chắn muốn xóa phiên thanh toán này?`}
+								warning={`Lưu ý: không thể khôi phục sau khi xóa`}
+								handleDelete={() => handleDelete(item.Id)}
+							/>
+						)}
 					</div>
 				)
 			}
@@ -373,14 +381,16 @@ export default function IncomeExpenseManagementPage(props: IIncomeExpenseManagem
 			onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
 			loading={isLoading}
 			Extra={
-				<IncomeExpenseManagementModalCRUD
-					mode="add"
-					handleSearchForOptionList={handleSearchForOptionList}
-					handleLoadOnScrollForOptionList={handleLoadOnScrollForOptionList}
-					onSubmit={onSubmit}
-					optionStudent={optionStudent}
-					dataOption={optionList}
-				/>
+				checkIncludesRole(listPermissionsByRoles.finance.incomeAndExpenditureManagement.create, Number(userInformation?.RoleId)) ? (
+					<IncomeExpenseManagementModalCRUD
+						mode="add"
+						handleSearchForOptionList={handleSearchForOptionList}
+						handleLoadOnScrollForOptionList={handleLoadOnScrollForOptionList}
+						onSubmit={onSubmit}
+						optionStudent={optionStudent}
+						dataOption={optionList}
+					/>
+				) : undefined
 			}
 			TitleCard={
 				<div className="flex items-center  w-full">

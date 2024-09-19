@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import Router from 'next/router'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { studyTimeApi } from '~/api/study-time'
+import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
 import PrimaryTable from '~/common/components/Primary/Table'
 import StudyTimeForm from '~/common/components/StudyTime/StudyTimeForm'
-import { studyTimeApi } from '~/api/study-time'
-import Router from 'next/router'
-import { RootState } from '~/store'
-import { useSelector } from 'react-redux'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
-import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
-import { useDispatch } from 'react-redux'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { RootState } from '~/store'
 import { setStudyTime } from '~/store/studyTimeReducer'
 
 let pageIndex = 1
@@ -68,28 +69,6 @@ const StudyTime = () => {
 		getDataSource()
 	}, [todoApi])
 
-	const theInformation = useSelector((state: RootState) => state.user.information)
-
-	function isAdmin() {
-		return theInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return theInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return theInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return theInformation?.RoleId == 3
-	}
-
-	function isAcademic() {
-		return theInformation?.RoleId == 7
-	}
-
 	const columns = [
 		{
 			title: 'Ca học',
@@ -123,27 +102,35 @@ const StudyTime = () => {
 			width: 120,
 			render: (text, data, index) => (
 				<>
-					<StudyTimeForm rowData={data} getDataSource={getDataSource} />
-					<DeleteTableRow text={`ca học ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
+					{checkIncludesRole(listPermissionsByRoles.config.timeShift.update, Number(userInformation?.RoleId)) && (
+						<StudyTimeForm rowData={data} getDataSource={getDataSource} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.timeShift.delete, Number(userInformation?.RoleId)) && (
+						<DeleteTableRow text={`ca học ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
+					)}
 				</>
 			)
 		}
 	]
 
 	useEffect(() => {
-		if (!!userInformation && !isAdmin() && !isManager() && !isAcademic()) {
+		if (!!userInformation && !checkIncludesRole(listPermissionsByRoles.config.timeShift.viewList, Number(userInformation?.RoleId))) {
 			Router.push('/')
 		}
 	}, [userInformation])
 
 	return (
 		<>
-			{(isAdmin() || isManager() || isAcademic()) && (
+			{checkIncludesRole(listPermissionsByRoles.config.timeShift.viewList, Number(userInformation?.RoleId)) && (
 				<PrimaryTable
 					total={totalPage && totalPage}
 					loading={isLoading}
 					onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
-					Extra={<StudyTimeForm getDataSource={getDataSource} />}
+					Extra={
+						checkIncludesRole(listPermissionsByRoles.config.timeShift.create, Number(userInformation?.RoleId)) ? (
+							<StudyTimeForm getDataSource={getDataSource} />
+						) : undefined
+					}
 					data={state.studyTime.StudyTime}
 					columns={columns}
 				/>

@@ -2,6 +2,7 @@ import { nanoid } from '@reduxjs/toolkit'
 import { Form, Input, Modal, Popconfirm } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { studyRouteTemplateApi } from '~/api/option/study-route-template'
 import InputTextField from '~/common/components/FormControl/InputTextField'
 import PrimaryButton from '~/common/components/Primary/Button'
@@ -9,6 +10,9 @@ import IconButton from '~/common/components/Primary/IconButton'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNostis } from '~/common/utils'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { RootState } from '~/store'
 
 const StudyRouteTemplatePage = () => {
 	const [form] = Form.useForm()
@@ -19,6 +23,7 @@ const StudyRouteTemplatePage = () => {
 		search: null
 	}
 
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [apiParameters, setApiParameters] = useState(initParamters)
 	const [totalRow, setTotalRow] = useState(1)
 	const [loading, setLoading] = useState<string>('')
@@ -70,43 +75,52 @@ const StudyRouteTemplatePage = () => {
 			render: (data, item) => {
 				return (
 					<div className="d-fex gap-3">
-						<Popconfirm
-							title={
-								<p>
-									Xóa Lộ trình <span className="font-[500] text-[red]">{item.Name}</span>
-								</p>
-							}
-							okText="Xóa"
-							cancelText="Hủy"
-							onConfirm={() => deleteStudyRouteTemplate(item)}
-						>
+						{checkIncludesRole(listPermissionsByRoles.config.sampleLearningRoadmap.viewListDetail, Number(userInformation?.RoleId)) && (
 							<IconButton
-								loading={loading === `DELETE_${item.Id}`}
-								tooltip="Xóa lộ trình"
+								onClick={() => {
+									router.push({
+										pathname: '/options/study-route-template/detail',
+										query: { slug: item.Id, key: nanoid(), name: item.Name }
+									})
+								}}
+								tooltip="Xem chi tiết lộ trình"
 								type="button"
-								icon="remove"
-								color="red"
+								icon="eye"
+								color="orange"
 							></IconButton>
-						</Popconfirm>
-						<IconButton
-							onClick={() => {
-								router.push({ pathname: '/options/study-route-template/detail', query: { slug: item.Id, key: nanoid(), name: item.Name } })
-							}}
-							tooltip="Xem chi tiết lộ trình"
-							type="button"
-							icon="eye"
-							color="orange"
-						></IconButton>
-						<IconButton
-							onClick={() => {
-								setRouteTemplateItem(item)
-								setIsShow('UPDATE')
-							}}
-							tooltip="Cập nhật lộ trình"
-							type="button"
-							icon="edit"
-							color="yellow"
-						></IconButton>
+						)}
+						{checkIncludesRole(listPermissionsByRoles.config.sampleLearningRoadmap.update, Number(userInformation?.RoleId)) && (
+							<IconButton
+								onClick={() => {
+									setRouteTemplateItem(item)
+									setIsShow('UPDATE')
+								}}
+								tooltip="Cập nhật lộ trình"
+								type="button"
+								icon="edit"
+								color="yellow"
+							></IconButton>
+						)}
+						{checkIncludesRole(listPermissionsByRoles.config.sampleLearningRoadmap.delete, Number(userInformation?.RoleId)) && (
+							<Popconfirm
+								title={
+									<p>
+										Xóa Lộ trình <span className="font-[500] text-[red]">{item.Name}</span>
+									</p>
+								}
+								okText="Xóa"
+								cancelText="Hủy"
+								onConfirm={() => deleteStudyRouteTemplate(item)}
+							>
+								<IconButton
+									loading={loading === `DELETE_${item.Id}`}
+									tooltip="Xóa lộ trình"
+									type="button"
+									icon="remove"
+									color="red"
+								></IconButton>
+							</Popconfirm>
+						)}
 					</div>
 				)
 			}
@@ -189,9 +203,11 @@ const StudyRouteTemplatePage = () => {
 					/>
 				}
 				Extra={
-					<PrimaryButton onClick={() => setIsShow('CREATE')} icon="add" background="green" type="button">
-						Thêm mới
-					</PrimaryButton>
+					checkIncludesRole(listPermissionsByRoles.config.sampleLearningRoadmap.create, Number(userInformation?.RoleId)) ? (
+						<PrimaryButton onClick={() => setIsShow('CREATE')} icon="add" background="green" type="button">
+							Thêm mới
+						</PrimaryButton>
+					) : undefined
 				}
 			></PrimaryTable>
 			<Modal

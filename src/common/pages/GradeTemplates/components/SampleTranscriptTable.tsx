@@ -7,11 +7,16 @@ import { sampleTranscriptApi } from '~/api/grade-templates'
 import { ShowNostis } from '~/common/utils'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import SampleTranscriptDetail from './SampleTranscriptDetail'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 type TSampleTranscriptTable = {} & TMyTable
 
 const SampleTranscriptTable: React.FC<TSampleTranscriptTable> = (props) => {
 	const { refreshData } = props
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const columns = [
 		{
 			title: 'Tên bảng điểm',
@@ -25,8 +30,12 @@ const SampleTranscriptTable: React.FC<TSampleTranscriptTable> = (props) => {
 			render: (text, data, index) => (
 				<div className="flex">
 					<SampleTranscriptDetail defaultData={data} />
-					<SampleTranscriptModal defaultData={data} refreshData={refreshData} />
-					<DeleteTableRow text={`bảng điểm ${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					{checkIncludesRole(listPermissionsByRoles.config.sampleTranscript.update, Number(userInformation?.RoleId)) && (
+						<SampleTranscriptModal defaultData={data} refreshData={refreshData} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.sampleTranscript.delete, Number(userInformation?.RoleId)) && (
+						<DeleteTableRow text={`bảng điểm ${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					)}
 				</div>
 			)
 		}

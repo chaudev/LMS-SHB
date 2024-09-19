@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { contractApi } from '~/api/contract'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { is } from '~/common/utils/common'
+import { checkIncludesRole, is } from '~/common/utils/common'
 import { RootState } from '~/store'
 import ContractTable from './components/ContractTable'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const ContractManagement = () => {
 	const [pageFilter, setPageFilter] = useState({ pageIndex: 1, pageSize: PAGE_SIZE, search: '', majorId: undefined, studentId: undefined })
@@ -20,7 +21,7 @@ const ContractManagement = () => {
 	})
 	const userInfo = useSelector((state: RootState) => state.user.information)
 	const isAllow = () => {
-		if (is(userInfo).admin || is(userInfo).saler) {
+		if (checkIncludesRole(listPermissionsByRoles.admissions.contract.viewList, Number(userInfo?.RoleId))) {
 			return true
 		}
 		return false
@@ -34,7 +35,7 @@ const ContractManagement = () => {
 
 	return (
 		<div>
-			{isAllow() && (
+			{checkIncludesRole(listPermissionsByRoles.admissions.contract.viewList, Number(userInfo?.RoleId)) && (
 				<ContractTable
 					total={data?.totalRow || 0}
 					loading={isLoading || isFetching}

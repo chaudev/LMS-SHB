@@ -5,7 +5,7 @@ import PayForm from '~/common/components/Finance/Payment/pay'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNostis } from '~/common/utils'
-import { parseToMoney } from '~/common/utils/common'
+import { checkIncludesRole, parseToMoney } from '~/common/utils/common'
 import BillDetails from '../../../common/components/Finance/BillDetails'
 import moment from 'moment'
 import Head from 'next/head'
@@ -18,11 +18,14 @@ import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 import { branchApi } from '~/api/branch'
 import PrimaryTag from '~/common/components/Primary/Tag'
 import { PrimaryTooltip } from '~/common/components'
-import { ButtonEye } from '~/common/components/TableButton'
 import Link from 'next/link'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 const initParamters = { pageSize: PAGE_SIZE, pageIndex: 1, search: '', fromDate: null, toDate: null, studentIds: null, branchIds: null }
 const PaymentManagementPage = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [loading, setLoading] = React.useState(true)
 	const [totalPage, setTotalPage] = React.useState(1)
 	const [data, setData] = React.useState([])
@@ -333,8 +336,11 @@ const PaymentManagementPage = () => {
 							</a>
 						</Link>
 					</PrimaryTooltip> */}
-					<PayForm isEdit defaultData={item} onRefresh={getData} />
-					{item?.Debt < 0 && <RefundForm onRefresh={getData} item={item} />}
+					{checkIncludesRole(listPermissionsByRoles.finance.paymentManagement.makePayment, Number(userInformation?.RoleId)) && (
+						<PayForm isEdit defaultData={item} onRefresh={getData} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.finance.paymentManagement.refund, Number(userInformation?.RoleId)) &&
+						item?.Debt < 0 && <RefundForm onRefresh={getData} item={item} />}
 				</div>
 			)
 		}
@@ -370,7 +376,9 @@ const PaymentManagementPage = () => {
 							/>
 						</div>
 
-						<PaymentForm onRefresh={getData} />
+						{checkIncludesRole(listPermissionsByRoles.finance.paymentManagement.create, Number(userInformation?.RoleId)) && (
+							<PaymentForm onRefresh={getData} />
+						)}
 					</div>
 				}
 				expandable={expandedRowRender}

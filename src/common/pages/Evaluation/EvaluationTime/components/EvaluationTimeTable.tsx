@@ -1,21 +1,26 @@
-import React from 'react'
-import PrimaryTable from '~/common/components/Primary/Table'
-import { getDate } from '~/common/utils/super-functions'
-import EvaluationTimeForm from './EvaluationForm'
-import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
 import { useMutation } from '@tanstack/react-query'
-import { evaluationTimeApi } from '~/api/evaluation-time'
-import { ShowNostis } from '~/common/utils'
-import { ShowErrorToast } from '~/common/utils/main-function'
-import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
-import UserEvaluationFormTable from './UserEvaluationFormTable'
 import Link from 'next/link'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { evaluationTimeApi } from '~/api/evaluation-time'
+import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
 import IconButton from '~/common/components/Primary/IconButton'
+import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
+import { ShowNostis } from '~/common/utils'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { ShowErrorToast } from '~/common/utils/main-function'
+import { getDate } from '~/common/utils/super-functions'
+import { RootState } from '~/store'
+import EvaluationTimeForm from './EvaluationForm'
+import UserEvaluationFormTable from './UserEvaluationFormTable'
 
 type TEvaluationTimeTable = { totalPage: number; getPagination: Function; currentPage: number } & Omit<TMyTable, 'total' | 'onChangePage'>
 
 const EvaluationTimeTable: React.FC<TEvaluationTimeTable> = (props) => {
 	const { refreshData } = props
+	const userInfo = useSelector((state: RootState) => state.user.information)
+
 	const columns = [
 		{
 			title: 'Tên đợt đánh giá',
@@ -65,13 +70,19 @@ const EvaluationTimeTable: React.FC<TEvaluationTimeTable> = (props) => {
 			fixed: 'right',
 			render: (text, data: TSampleEvaluationFormItem, index) => (
 				<div className="flex items-center">
-					<Link href={`/evaluation/evaluation-time/statistical?id=${data?.Id}`}>
-						<a>
-							<IconButton type="button" color="blue" icon="pieChart" tooltip="Thống kê" />
-						</a>
-					</Link>
-					<EvaluationTimeForm defaultData={data} refreshData={refreshData} />
-					<DeleteTableRow text={`đợt đánh giá ${data?.Name || ''}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					{checkIncludesRole(listPermissionsByRoles.evaluation.listEvaluationRounds.viewStatistic, Number(userInfo?.RoleId)) && (
+						<Link href={`/evaluation/evaluation-time/statistical?id=${data?.Id}`}>
+							<a>
+								<IconButton type="button" color="blue" icon="pieChart" tooltip="Thống kê" />
+							</a>
+						</Link>
+					)}
+					{checkIncludesRole(listPermissionsByRoles.evaluation.listEvaluationRounds.update, Number(userInfo?.RoleId)) && (
+						<EvaluationTimeForm defaultData={data} refreshData={refreshData} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.evaluation.listEvaluationRounds.delete, Number(userInfo?.RoleId)) && (
+						<DeleteTableRow text={`đợt đánh giá ${data?.Name || ''}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					)}
 				</div>
 			)
 		}

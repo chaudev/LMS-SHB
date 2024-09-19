@@ -3,8 +3,13 @@ import { partnerApi } from '~/api/partner'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ModalPartnerCRUD } from './ModalPartnerCRUD'
 import PrimaryTable from '~/common/components/Primary/Table'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 export const PartnerPage = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const init = { pageIndex: 1, pageSize: PAGE_SIZE }
 	const [data, setData] = useState([])
 	const [loading, setLoading] = useState(false)
@@ -69,11 +74,15 @@ export const PartnerPage = () => {
 			title: 'Thao tác',
 			dataIndex: 'Action',
 			width: 50,
-			fexed:'right',
+			fexed: 'right',
 			render: (text, item) => (
 				<div className="flex items-center">
-					<ModalPartnerCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
-					<ModalPartnerCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					{checkIncludesRole(listPermissionsByRoles.config.partner.update, Number(userInformation?.RoleId)) && (
+						<ModalPartnerCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.partner.delete, Number(userInformation?.RoleId)) && (
+						<ModalPartnerCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					)}
 				</div>
 			)
 		}
@@ -87,7 +96,11 @@ export const PartnerPage = () => {
 				TitleCard={<h1 className="text-2xl font-medium">Danh sách đối tác</h1>}
 				data={data}
 				columns={columns}
-				Extra={<ModalPartnerCRUD mode="add" onRefresh={() => getData(todoApi)} />}
+				Extra={
+					checkIncludesRole(listPermissionsByRoles.config.partner.create, Number(userInformation?.RoleId)) ? (
+						<ModalPartnerCRUD mode="add" onRefresh={() => getData(todoApi)} />
+					) : undefined
+				}
 			/>
 		</>
 	)

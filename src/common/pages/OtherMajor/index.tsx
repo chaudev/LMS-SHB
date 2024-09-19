@@ -1,25 +1,26 @@
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
-import React, { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { is } from '~/common/utils/common'
-import { RootState } from '~/store'
-import OtherMajorTable from './componets/OtherMajorTable'
-import OtherMajorModal from './componets/OtherMajorModal'
 import { otherMajorApi } from '~/api/other-major'
+import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { RootState } from '~/store'
+import OtherMajorModal from './componets/OtherMajorModal'
+import OtherMajorTable from './componets/OtherMajorTable'
 
 const OtherMajor = () => {
 	const router = useRouter()
 	const { push, query } = router
-	const userInfo = useSelector((state: RootState) => state.user.information)
+	const userInformation = useSelector((state: RootState) => state.user.information)
 
 	const isAllow = useMemo(() => {
-		if (is(userInfo).admin) {
+		if (checkIncludesRole(listPermissionsByRoles.config.otherMajor.viewList, Number(userInformation?.RoleId))) {
 			return true
 		}
 		return false
-	}, [userInfo])
+	}, [userInformation])
 
 	useEffect(() => {
 		if (!isAllow) {
@@ -48,7 +49,11 @@ const OtherMajor = () => {
 					total={data?.totalRow || 0}
 					loading={isLoading}
 					onChangePage={(pageIndex) => router.push({ query: { ...query, pageIndex: pageIndex } })}
-					Extra={<OtherMajorModal refreshData={refetch} />}
+					Extra={
+						checkIncludesRole(listPermissionsByRoles.config.otherMajor.create, Number(userInformation?.RoleId)) ? (
+							<OtherMajorModal refreshData={refetch} />
+						) : undefined
+					}
 					data={data?.data || []}
 					refreshData={refetch}
 				/>

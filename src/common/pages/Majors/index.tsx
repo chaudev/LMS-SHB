@@ -4,14 +4,18 @@ import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ModalMajorsCRUD } from './Component/ModalMajorsCRUD'
 import { _check } from '~/common/utils'
-import { parseToMoney } from '~/common/utils/common'
+import { checkIncludesRole, parseToMoney } from '~/common/utils/common'
 import IconButton from '~/common/components/Primary/IconButton'
 import { useRouter } from 'next/router'
 import { nanoid } from '@reduxjs/toolkit'
 import { Input, Tag, Tooltip } from 'antd'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 export const MajorsPage = () => {
 	const router = useRouter()
+	const userInfo = useSelector((state: RootState) => state.user.information)
 	const init = { pageIndex: 1, pageSize: PAGE_SIZE, search: null }
 	const [data, setData] = useState<IMajors[]>([])
 	const [loading, setLoading] = useState(false)
@@ -143,8 +147,12 @@ export const MajorsPage = () => {
 						tooltip="Xem danh sách hợp đồng"
 					/>
 
-					<ModalMajorsCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
-					<ModalMajorsCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					{checkIncludesRole(listPermissionsByRoles.curriculum.list.update, Number(userInfo?.RoleId)) && (
+						<ModalMajorsCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.curriculum.list.delete, Number(userInfo?.RoleId)) && (
+						<ModalMajorsCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					)}
 				</div>
 			)
 		}
@@ -169,7 +177,11 @@ export const MajorsPage = () => {
 				}
 				data={data}
 				columns={columns}
-				Extra={<ModalMajorsCRUD mode="add" onRefresh={() => getData(todoApi)} />}
+				Extra={
+					checkIncludesRole(listPermissionsByRoles.curriculum.list.create, Number(userInfo?.RoleId)) ? (
+						<ModalMajorsCRUD mode="add" onRefresh={() => getData(todoApi)} />
+					) : undefined
+				}
 			/>
 		</>
 	)

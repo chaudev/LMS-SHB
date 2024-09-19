@@ -9,8 +9,13 @@ import { fakeDataUser } from './component/data'
 import { ImMoveDown, ImMoveUp } from 'react-icons/im'
 import MySelectMajor from '~/atomic/molecules/MySelectMajor'
 import clsx from 'clsx'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 const ProfileTemplatePage = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [form] = Form.useForm()
 	form.getFieldsValue()
 	const [loading, setLoading] = useState<{ type: '' | 'GET_ALL' | 'UPDATE' | 'CREATE'; status: boolean }>({ type: '', status: false })
@@ -235,6 +240,8 @@ const ProfileTemplatePage = () => {
 													</div>
 												</div>
 												<div className="d-flex justify-center">
+													{checkIncludesRole(listPermissionsByRoles.config.applicationForm.changePosition, Number(userInformation?.RoleId)) && (
+														<>
 													{index !== 0 && (
 														<div
 															className="flex items-center icon   cursor-pointer px-2 btn-icon"
@@ -255,6 +262,9 @@ const ProfileTemplatePage = () => {
 															</Tooltip>
 														</div>
 													)}
+														</>
+													)}
+													{checkIncludesRole(listPermissionsByRoles.config.applicationForm.update, Number(userInformation?.RoleId)) && (
 													<IconButton
 														type="button"
 														icon="edit"
@@ -265,6 +275,8 @@ const ProfileTemplatePage = () => {
 														className=""
 														tooltip="Cập nhật thông tin"
 													/>
+													)}
+													{checkIncludesRole(listPermissionsByRoles.config.applicationForm.delete, Number(userInformation?.RoleId)) &&(
 													<Popconfirm
 														title="Bạn có chắc muốn xóa thông tin này?"
 														okText="Có"
@@ -280,6 +292,7 @@ const ProfileTemplatePage = () => {
 															tooltip="Xóa Thông tin này"
 														/>
 													</Popconfirm>
+													)}
 												</div>
 											</div>
 											<Divider></Divider>
@@ -288,9 +301,11 @@ const ProfileTemplatePage = () => {
 								})
 								)}
 							</div>
-							<PrimaryButton onClick={() => openModalCreate()} type="button" icon="add" background="primary">
-								Thêm thông tin
-							</PrimaryButton>
+							{checkIncludesRole(listPermissionsByRoles.config.applicationForm.create, Number(userInformation?.RoleId)) && (
+								<PrimaryButton onClick={() => openModalCreate()} type="button" icon="add" background="primary">
+									Thêm thông tin
+								</PrimaryButton>
+							)}
 						</div>
 					)}
 				</div>

@@ -4,8 +4,13 @@ import { officeApi } from '~/api/office'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ModalOfficeCRUD } from './ModalOfficeCRUD'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 export const OfficePage = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const init = { pageIndex: 1, pageSize: PAGE_SIZE, search: '' }
 	const [data, setData] = useState([])
 	const [loading, setLoading] = useState(false)
@@ -70,8 +75,12 @@ export const OfficePage = () => {
 			dataIndex: 'Action',
 			render: (text, item) => (
 				<div className="flex items-center">
-					<ModalOfficeCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
-					<ModalOfficeCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					{checkIncludesRole(listPermissionsByRoles.config.representativeOffice.update, Number(userInformation?.RoleId)) && (
+						<ModalOfficeCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.representativeOffice.delete, Number(userInformation?.RoleId)) && (
+						<ModalOfficeCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					)}
 				</div>
 			)
 		}
@@ -85,7 +94,11 @@ export const OfficePage = () => {
 				TitleCard={<h1 className="text-2xl font-medium">Danh sách văn phòng đại diện</h1>}
 				data={data}
 				columns={columns}
-				Extra={<ModalOfficeCRUD mode="add" onRefresh={() => getData(todoApi)} />}
+				Extra={
+					checkIncludesRole(listPermissionsByRoles.config.representativeOffice.create, Number(userInformation?.RoleId)) ? (
+						<ModalOfficeCRUD mode="add" onRefresh={() => getData(todoApi)} />
+					) : undefined
+				}
 			/>
 		</>
 	)

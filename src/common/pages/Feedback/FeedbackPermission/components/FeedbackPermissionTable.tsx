@@ -7,11 +7,17 @@ import { ShowNostis } from '~/common/utils'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import { getDate } from '~/common/utils/super-functions'
 import FeedbackPermissionModal from './FeedbackPermissionModal'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 type TFeedbackPermissionTable = {} & TMyTable
 
 const FeedbackPermissionTable: React.FC<TFeedbackPermissionTable> = (props) => {
 	const { refreshData } = props
+	const userInfo = useSelector((state: RootState) => state.user.information)
+
 	const columns = [
 		{
 			title: 'Chức vụ',
@@ -42,8 +48,12 @@ const FeedbackPermissionTable: React.FC<TFeedbackPermissionTable> = (props) => {
 			width: 120,
 			render: (text, data, index) => (
 				<div className="flex">
-					<FeedbackPermissionModal defaultData={data} refreshData={refreshData} />
-					<DeleteTableRow text={`phân quyền phản hồi của ${data?.RoleName}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					{checkIncludesRole(listPermissionsByRoles.feedback.permission.update, Number(userInfo?.RoleId)) && (
+						<FeedbackPermissionModal defaultData={data} refreshData={refreshData} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.feedback.permission.delete, Number(userInfo?.RoleId)) && (
+						<DeleteTableRow text={`phân quyền phản hồi của ${data?.RoleName}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					)}
 				</div>
 			)
 		}
