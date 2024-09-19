@@ -1,21 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { feedbackGroupApi } from '~/api/feedback-group/feedback-group'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { is } from '~/common/utils/common'
-import { RootState } from '~/store'
-import FeedbackGroupTable from './components/FeedbackGroupTable'
-import FeedbackGroupModal from './components/FeedbackGroupModal'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 import { ShowErrorToast } from '~/common/utils/main-function'
+import { RootState } from '~/store'
+import FeedbackGroupModal from './components/FeedbackGroupModal'
+import FeedbackGroupTable from './components/FeedbackGroupTable'
 
 const FeedbackGroup = () => {
 	const router = useRouter()
 	const { push, query } = router
 	const userInfo = useSelector((state: RootState) => state.user.information)
 	const isAllow = () => {
-		if (is(userInfo).admin || is(userInfo).manager) {
+		if (checkIncludesRole(listPermissionsByRoles.feedback.group.viewList, Number(userInfo?.RoleId))) {
 			return true
 		}
 		return false
@@ -52,7 +53,11 @@ const FeedbackGroup = () => {
 					total={data?.totalRow || 0}
 					loading={isLoading}
 					onChangePage={(pageIndex) => router.push({ query: { ...query, pageIndex: pageIndex } })}
-					Extra={<FeedbackGroupModal refreshData={refetch} />}
+					Extra={
+						checkIncludesRole(listPermissionsByRoles.feedback.group.create, Number(userInfo?.RoleId)) ? (
+							<FeedbackGroupModal refreshData={refetch} />
+						) : undefined
+					}
 					data={data?.data || []}
 					refreshData={refetch}
 				/>

@@ -10,11 +10,16 @@ import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import IconButton from '~/common/components/Primary/IconButton'
 import ContractUploadFileButton from './ContractUploadFileButton'
 import { Popconfirm } from 'antd'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 type TContractTable = { isCanEdit: boolean } & TMyTable
 
 const ContractTable: React.FC<TContractTable> = (props) => {
 	const { refreshData, isCanEdit, data, loading } = props
+	const userInfo = useSelector((state: RootState) => state.user.information)
 	const columns = [
 		{
 			title: 'Mã hợp đồng',
@@ -52,9 +57,13 @@ const ContractTable: React.FC<TContractTable> = (props) => {
 						width: 120,
 						render: (text, data, index) => (
 							<div className="flex">
-								<ContractModal defaultData={data} refreshData={refreshData} />
+								{checkIncludesRole(listPermissionsByRoles.admissions.contract.update, Number(userInfo?.RoleId)) && (
+									<ContractModal defaultData={data} refreshData={refreshData} />
+								)}
 								<ContractUploadFileButton contractData={data} refetch={refreshData} />
-								<DeleteTableRow text={`hợp đồng ${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+								{checkIncludesRole(listPermissionsByRoles.admissions.contract.delete, Number(userInfo?.RoleId)) && (
+									<DeleteTableRow text={`hợp đồng ${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+								)}
 							</div>
 						)
 					}

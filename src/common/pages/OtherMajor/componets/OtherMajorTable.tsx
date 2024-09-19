@@ -6,11 +6,16 @@ import { ShowNostis } from '~/common/utils'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import OtherMajorModal from './OtherMajorModal'
 import { otherMajorApi } from '~/api/other-major'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 type TOtherMajorTable = {} & TMyTable
 
 const OtherMajorTable: React.FC<TOtherMajorTable> = (props) => {
 	const { refreshData } = props
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const columns = [
 		{
 			title: 'Tên ngành',
@@ -23,8 +28,12 @@ const OtherMajorTable: React.FC<TOtherMajorTable> = (props) => {
 			width: 120,
 			render: (text, data, index) => (
 				<div className="flex">
-					<OtherMajorModal defaultData={data} refreshData={refreshData} />
-					<DeleteTableRow text={`${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					{checkIncludesRole(listPermissionsByRoles.config.otherMajor.update, Number(userInformation?.RoleId)) && (
+						<OtherMajorModal defaultData={data} refreshData={refreshData} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.otherMajor.delete, Number(userInformation?.RoleId)) && (
+						<DeleteTableRow text={`${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					)}
 				</div>
 			)
 		}

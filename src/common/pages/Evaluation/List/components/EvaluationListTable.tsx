@@ -10,11 +10,17 @@ import EvaluationForm from './EvaluationForm'
 import Link from 'next/link'
 import { ButtonEye } from '~/common/components/TableButton'
 import { PrimaryTooltip } from '~/common/components'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { checkIncludesRole } from '~/common/utils/common'
+import { RootState } from '~/store'
+import { useSelector } from 'react-redux'
 
 type TEvaluationListTable = {} & TMyTable
 
 const EvaluationListTable: React.FC<TEvaluationListTable> = (props) => {
 	const { refreshData } = props
+	const userInfo = useSelector((state: RootState) => state.user.information)
+
 	const columns = [
 		{
 			title: 'Tên phiếu',
@@ -54,8 +60,12 @@ const EvaluationListTable: React.FC<TEvaluationListTable> = (props) => {
 							</PrimaryTooltip>
 						</a>
 					</Link>
-					<EvaluationForm defaultData={data} refreshData={refreshData} />
-					<DeleteTableRow text={`phiếu đánh giá ${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					{checkIncludesRole(listPermissionsByRoles.evaluation.sampleForm.update, Number(userInfo?.RoleId)) && (
+						<EvaluationForm defaultData={data} refreshData={refreshData} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.evaluation.sampleForm.delete, Number(userInfo?.RoleId)) && (
+						<DeleteTableRow text={`phiếu đánh giá ${data.Name}`} handleDelete={() => mutationDelete.mutateAsync(data.Id)} />
+					)}
 				</div>
 			)
 		}

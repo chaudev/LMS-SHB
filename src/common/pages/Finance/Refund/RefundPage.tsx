@@ -15,7 +15,8 @@ import { RootState } from '~/store'
 import ModalRefundCRUD from './ModalRefundCRUD'
 import appConfigs from '~/appConfig'
 import Head from 'next/head'
-import { parseToMoney } from '~/common/utils/common'
+import { checkIncludesRole, parseToMoney } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 export interface IRefundPageProps {}
 
@@ -228,7 +229,7 @@ export default function RefundPage(props: IRefundPageProps) {
 	}
 
 	const columns =
-		isAdmin() || isAccountant()
+		checkIncludesRole(listPermissionsByRoles.finance.refund.delete, Number(userInformation?.RoleId))
 			? [
 					{
 						title: 'Tên học viên',
@@ -291,7 +292,7 @@ export default function RefundPage(props: IRefundPageProps) {
 						fixed: 'right',
 						render: (text, item) => (
 							<>
-								{item.Status == 2 || item.Status == 3 ? (
+								{checkIncludesRole(listPermissionsByRoles.finance.refund.approve, Number(userInformation?.RoleId)) && (item.Status == 2 || item.Status == 3) ? (
 									''
 								) : (
 									<ModalRefundCRUD
@@ -422,7 +423,7 @@ export default function RefundPage(props: IRefundPageProps) {
 				Extra={
 					<>
 						<div className="custom-footer-table">Tổng: {totalMoney ? _format.numberToPrice(totalMoney) : 0}₫</div>
-						{(isAdmin() || isManager() || isAccountant() || isSaler() || isTeacher()) && (
+						{checkIncludesRole(listPermissionsByRoles.finance.paymentApproval.approve, Number(userInformation?.RoleId)) && (
 							<ModalRefundCRUD
 								dataOption={optionList}
 								mode="add"

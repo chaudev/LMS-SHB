@@ -11,6 +11,8 @@ import { RootState } from '~/store'
 import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
 import { useDispatch } from 'react-redux'
 import { setSpecialize } from '~/store/specializeReducer'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 let pageIndex = 1
 
@@ -27,28 +29,6 @@ const Specialize = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [totalPage, setTotalPage] = useState(null)
 	const [todoApi, setTodoApi] = useState(listTodoApi)
-
-	const theInformation = useSelector((state: RootState) => state.user.information)
-
-	function isAdmin() {
-		return theInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return theInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return theInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return theInformation?.RoleId == 3
-	}
-
-	function isAcademic() {
-		return theInformation?.RoleId == 7
-	}
 
 	const handleDelete = async (id) => {
 		try {
@@ -92,7 +72,7 @@ const Specialize = () => {
 
 	// USE EFFECT - FETCH DATA
 	useEffect(() => {
-		if (isAdmin() || isManager() || isAcademic()) {
+		if (checkIncludesRole(listPermissionsByRoles.config.languageLevel.viewList, Number(userInformation?.RoleId))) {
 			getDataSource()
 		}
 	}, [todoApi, userInformation])
@@ -121,15 +101,19 @@ const Specialize = () => {
 		{
 			width: 250,
 			title: 'Người tạo',
-			dataIndex: 'CreatedBy',
+			dataIndex: 'CreatedBy'
 			// className: 'font-[600]'
 		},
 		{
 			title: 'Chức năng',
 			render: (text, data, index) => (
 				<>
-					<SpecializeForm rowData={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
-					<DeleteTableRow text={`Trình độ tiếng ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
+					{checkIncludesRole(listPermissionsByRoles.config.languageLevel.update, Number(userInformation?.RoleId)) && (
+						<SpecializeForm rowData={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.languageLevel.delete, Number(userInformation?.RoleId)) && (
+						<DeleteTableRow text={`Trình độ tiếng ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
+					)}
 				</>
 			)
 		}
@@ -137,12 +121,16 @@ const Specialize = () => {
 
 	return (
 		<>
-			{(isAdmin() || isManager() || isAcademic()) && (
+			{checkIncludesRole(listPermissionsByRoles.config.languageLevel.viewList, Number(userInformation?.RoleId)) && (
 				<PrimaryTable
 					total={totalPage && totalPage}
 					loading={isLoading}
 					onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
-					Extra={<SpecializeForm setTodoApi={setTodoApi} listTodoApi={listTodoApi} />}
+					Extra={
+						checkIncludesRole(listPermissionsByRoles.config.languageLevel.create, Number(userInformation?.RoleId)) ? (
+							<SpecializeForm setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
+						) : undefined
+					}
 					data={state.specialize.Specialize}
 					columns={columns}
 				/>

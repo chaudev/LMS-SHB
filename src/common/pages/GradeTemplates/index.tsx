@@ -3,22 +3,20 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { sampleTranscriptApi } from '~/api/grade-templates'
-import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { is } from '~/common/utils/common'
+import { checkIncludesRole, is } from '~/common/utils/common'
 import { RootState } from '~/store'
 import SampleTranscriptTable from './components/SampleTranscriptTable'
 import SampleTranscriptModal from './components/SampleTranscriptModal'
 import { ShowErrorToast } from '~/common/utils/main-function'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const GradeTemplatesPage = () => {
 	const router = useRouter()
-	const { pageIndex } = router.query
 	const { push, query } = router
-	const DEFAULT_FILTER = { pageSize: PAGE_SIZE, pageIndex: 1 }
-	const userInfo = useSelector((state: RootState) => state.user.information)
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const isAllow = () => {
-		if (is(userInfo).admin) {
+		if (checkIncludesRole(listPermissionsByRoles.config.sampleTranscript.viewList, Number(userInformation?.RoleId))) {
 			return true
 		}
 		return false
@@ -55,7 +53,11 @@ const GradeTemplatesPage = () => {
 					total={data?.totalRow || 0}
 					loading={isLoading}
 					onChangePage={(pageIndex) => router.push({ query: { ...query, pageIndex: pageIndex } })}
-					Extra={<SampleTranscriptModal refreshData={refetch} />}
+					Extra={
+						checkIncludesRole(listPermissionsByRoles.config.sampleTranscript.create, Number(userInformation?.RoleId)) ? (
+							<SampleTranscriptModal refreshData={refetch} />
+						) : undefined
+					}
 					data={data?.data || []}
 					refreshData={refetch}
 				/>

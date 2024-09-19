@@ -14,6 +14,8 @@ import { RootState } from '~/store'
 import ExpandTeacherOff from './ExpandTeacherOff'
 import { Input } from 'antd'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 let pageIndex = 1
 const TeacherOff = () => {
@@ -201,8 +203,12 @@ const TeacherOff = () => {
 				{
 					return (
 						<>
-							<TeacherOffUpdateForm dataRow={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
-							<DeleteTableRow handleDelete={() => handleDelete(data.Id)} />
+							{checkIncludesRole(listPermissionsByRoles.account.teacherOff.approve, Number(userInformation?.RoleId)) && (
+								<TeacherOffUpdateForm dataRow={data} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
+							)}
+							{checkIncludesRole(listPermissionsByRoles.account.teacherOff.delete, Number(userInformation?.RoleId)) && (
+								<DeleteTableRow handleDelete={() => handleDelete(data.Id)} />
+							)}
 						</>
 					)
 				}

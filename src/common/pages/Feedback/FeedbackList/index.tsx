@@ -1,19 +1,17 @@
-import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { feedbackApi } from '~/api/feedback-list'
-import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { is } from '~/common/utils/common'
-import { RootState } from '~/store'
-import FeedbackTable from './components/FeedbackTable'
-import FeedbackModal from './components/FeedbackModal'
-import { ShowErrorToast } from '~/common/utils/main-function'
-import useQueryGetByRole from '~/common/hooks/useQueryGetByRole'
+import MyStatusListFilter from '~/atomic/atoms/MyStatusListFilter'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 import useQueryFeedbackGroup from '~/common/hooks/useQueryFeedbackGroup'
-import MyStatusListFilter from '~/atomic/atoms/MyStatusListFilter'
+import useQueryGetByRole from '~/common/hooks/useQueryGetByRole'
+import { checkIncludesRole } from '~/common/utils/common'
 import { FEEDBACK_STATUS } from '~/common/utils/constants'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { RootState } from '~/store'
+import FeedbackModal from './components/FeedbackModal'
+import FeedbackTable from './components/FeedbackTable'
 
 const FeedbackList = () => {
 	const router = useRouter()
@@ -28,7 +26,7 @@ const FeedbackList = () => {
 	])
 
 	const isAllow = () => {
-		if (is(userInfo).admin || is(userInfo).manager || is(userInfo).student || is(userInfo).parent || is(userInfo).teacher) {
+		if (checkIncludesRole(listPermissionsByRoles.feedback.viewList, Number(userInfo?.RoleId))) {
 			return true
 		}
 		return false
@@ -103,7 +101,11 @@ const FeedbackList = () => {
 							/>
 						</div>
 					}
-					Extra={<FeedbackModal refreshData={refetch} />}
+					Extra={
+						checkIncludesRole(listPermissionsByRoles.feedback.create, Number(userInfo?.RoleId)) ? (
+							<FeedbackModal refreshData={refetch} />
+						) : undefined
+					}
 					data={data?.data || []}
 					refreshData={refetch}
 				/>

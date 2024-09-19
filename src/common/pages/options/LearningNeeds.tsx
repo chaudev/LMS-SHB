@@ -9,9 +9,12 @@ import { RootState } from '~/store'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { setLearningNeed } from '~/store/learningNeedReducer'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const LearningNeeds = () => {
 	const state = useSelector((state: RootState) => state)
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const dispatch = useDispatch()
 	const [totalPage, setTotalPage] = useState(null)
 	const [isLoading, setIsLoading] = useState(false)
@@ -69,7 +72,10 @@ const LearningNeeds = () => {
 			render: (text, record) => {
 				return (
 					<>
-						<LearningNeedsForm record={record} getDataSource={getDataSource} />
+						{checkIncludesRole(listPermissionsByRoles.config.learningNeeds.update, Number(userInformation?.RoleId)) && (
+							<LearningNeedsForm record={record} getDataSource={getDataSource} />
+						)}
+						{checkIncludesRole(listPermissionsByRoles.config.learningNeeds.delete, Number(userInformation?.RoleId))}
 						<DeleteTableRow text={record.Name} handleDelete={() => handleDelete(record.Id)} />
 					</>
 				)
@@ -91,7 +97,11 @@ const LearningNeeds = () => {
 			data={state.learningNeed.LearningNeed}
 			columns={columns}
 			// TitlePage="Danh sách nhu cầu học"
-			Extra={<LearningNeedsForm getDataSource={getDataSource} />}
+			Extra={
+				checkIncludesRole(listPermissionsByRoles.config.learningNeeds.create, Number(userInformation?.RoleId)) ? (
+					<LearningNeedsForm getDataSource={getDataSource} />
+				) : undefined
+			}
 			onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
 		/>
 	)

@@ -6,8 +6,13 @@ import moment from 'moment'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
 import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const JobsList = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [job, setJob] = useState<IJob[]>([])
 	const [isLoading, setIsLoading] = useState(false)
 	const [totalPage, setTotalPage] = useState(null)
@@ -42,12 +47,16 @@ const JobsList = () => {
 
 		{
 			title: '',
-			width:120,
+			width: 120,
 			render: (data) => {
 				return (
 					<>
-						<JobForm getDataJob={getDataJob} rowData={data} />
-						<DeleteTableRow text={data.Name} handleDelete={() => handleDelete(data.Id)} />
+						{checkIncludesRole(listPermissionsByRoles.config.job.update, Number(userInformation?.RoleId)) && (
+							<JobForm getDataJob={getDataJob} rowData={data} />
+						)}
+						{checkIncludesRole(listPermissionsByRoles.config.job.delete, Number(userInformation?.RoleId)) && (
+							<DeleteTableRow text={data.Name} handleDelete={() => handleDelete(data.Id)} />
+						)}
 					</>
 				)
 			}
@@ -80,7 +89,11 @@ const JobsList = () => {
 		<PrimaryTable
 			loading={isLoading}
 			total={totalPage && totalPage}
-			Extra={<JobForm getDataJob={getDataJob} />}
+			Extra={
+				checkIncludesRole(listPermissionsByRoles.config.job.create, Number(userInformation?.RoleId)) ? (
+					<JobForm getDataJob={getDataJob} />
+				) : undefined
+			}
 			data={job}
 			columns={columns}
 			onChangePage={(event: number) => setJobParams({ ...jobParams, pageIndex: event })}

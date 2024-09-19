@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { branchApi } from '~/api/branch'
 import SortBox from '~/common/components/Elements/SortBox'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
-import { parseSelectArray } from '~/common/utils/common'
+import { checkIncludesRole, parseSelectArray } from '~/common/utils/common'
 import { ShowNostis, ShowNoti } from '~/common/utils'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { useSelector } from 'react-redux'
@@ -17,6 +17,7 @@ import { PrimaryTooltip } from '~/common/components'
 import { ButtonRemove } from '~/common/components/TableButton'
 import { Input, Popconfirm } from 'antd'
 import Childs from './Childs'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const appointmenInitFilter = [
 	{
@@ -104,24 +105,12 @@ export default function Parents(props) {
 		return userInformation?.RoleId == 1
 	}
 
-	function isTeacher() {
-		return userInformation?.RoleId == 2
-	}
-
 	function isSaler() {
 		return userInformation?.RoleId == 5
 	}
 
 	function isManager() {
 		return userInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return userInformation?.RoleId == 3
-	}
-
-	function isAcademic() {
-		return userInformation?.RoleId == 7
 	}
 
 	useMemo(() => {
@@ -254,11 +243,11 @@ export default function Parents(props) {
 			render: (text, data, index) => {
 				return (
 					<div className="flex items-center">
-						{(isAdmin() || isManager() || isTeacher() || isSaler() || isAcademic()) && (
+						{checkIncludesRole(listPermissionsByRoles.admissions.parent.update, Number(userInformation?.RoleId)) && (
 							<ParentsForm defaultData={data} isEdit onRefresh={getDataSource} />
 						)}
 
-						{(isAdmin() || isManager() || isTeacher() || isSaler() || isAcademic()) && (
+						{checkIncludesRole(listPermissionsByRoles.admissions.parent.delete, Number(userInformation?.RoleId)) && (
 							<PrimaryTooltip id={`dele-${data?.UserInformationId}`} place="left" content="Xoá">
 								<Popconfirm title="Xoá dữ liệu?" onConfirm={() => deleteThis(data?.UserInformationId)}>
 									<ButtonRemove className="ml-[16px]" />
@@ -298,7 +287,7 @@ export default function Parents(props) {
 					}
 					Extra={
 						<>
-							{(isAdmin() || isSaler() || isManager() || isTeacher() || isAcademic()) && (
+							{checkIncludesRole(listPermissionsByRoles.admissions.parent.create, Number(userInformation?.RoleId)) && (
 								<ParentsForm defaultData={null} onRefresh={getDataSource} />
 							)}
 						</>

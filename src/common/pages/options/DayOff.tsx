@@ -8,8 +8,11 @@ import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const DayOff = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [dayOffList, setDayOffList] = useState<IDayOff[]>([])
 	const [isLoading, setIsLoading] = useState(false)
 	const [totalPage, setTotalPage] = useState(null)
@@ -53,35 +56,12 @@ const DayOff = () => {
 		}
 	}
 
-	const theInformation = useSelector((state: RootState) => state.user.information)
-
-	function isAdmin() {
-		return theInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return theInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return theInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return theInformation?.RoleId == 3
-	}
-
-	function isAcademic() {
-		return theInformation?.RoleId == 7
-	}
-
 	// COLUMN FOR TABLE
 	const columns = [
 		{
 			title: 'Ngày nghỉ',
 			dataIndex: 'Name',
 			render: (text) => <p className="font-weight-primary">{text}</p>
-
 		},
 		{
 			title: 'Từ ngày',
@@ -108,11 +88,11 @@ const DayOff = () => {
 			fixed: 'right',
 			render: (value, record, idx) => (
 				<div onClick={(e) => e.stopPropagation()}>
-					{(isAdmin() || isManager() || isAcademic()) && (
-						<>
-							<DayOffForm dataRow={record} getAllDayOffList={getAllDayOffList} />
-							<DeleteTableRow text={record.Name} handleDelete={() => onDeleteDayOff(record.Id)} />
-						</>
+					{checkIncludesRole(listPermissionsByRoles.config.dayOff.update, Number(userInformation?.RoleId)) && (
+						<DayOffForm dataRow={record} getAllDayOffList={getAllDayOffList} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.dayOff.delete, Number(userInformation?.RoleId)) && (
+						<DeleteTableRow text={record.Name} handleDelete={() => onDeleteDayOff(record.Id)} />
 					)}
 				</div>
 			)
@@ -124,7 +104,11 @@ const DayOff = () => {
 		<PrimaryTable
 			total={totalPage}
 			loading={isLoading}
-			Extra={(isAdmin() || isManager() || isAcademic()) && <DayOffForm getAllDayOffList={getAllDayOffList} />}
+			Extra={
+				checkIncludesRole(listPermissionsByRoles.config.dayOff.create, Number(userInformation?.RoleId)) && (
+					<DayOffForm getAllDayOffList={getAllDayOffList} />
+				)
+			}
 			data={dayOffList}
 			columns={columns}
 			onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}

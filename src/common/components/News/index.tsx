@@ -1,17 +1,19 @@
 import { List, Skeleton } from 'antd'
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { useSelector } from 'react-redux'
+import RestApi from '~/api/RestApi'
 import { useNewsContext } from '~/common/providers/News'
-import { decode } from '~/common/utils/common'
+import { checkIncludesRole, decode } from '~/common/utils/common'
+import { ERole } from '~/enums/common'
+import { RootState } from '~/store'
 import CreateNews from './Create'
 import NewsGroup from './Group'
 import GroupHeader from './Group/header'
 import NewsItem from './item'
 import { getNews } from './utils'
-import { useSelector } from 'react-redux'
-import { RootState } from '~/store'
-import RestApi from '~/api/RestApi'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const DEFAULT_FILTER = {
 	newsFeedGroupId: null,
@@ -109,30 +111,6 @@ function NewsFeed() {
 
 	const userInformation = useSelector((state: RootState) => state.user.information)
 
-	function isAdmin() {
-		return userInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return userInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return userInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return userInformation?.RoleId == 3
-	}
-
-	function isAccountant() {
-		return userInformation?.RoleId == 6
-	}
-
-	function isAcademic() {
-		return userInformation?.RoleId == 7
-	}
-
 	return (
 		<>
 			<div
@@ -146,7 +124,7 @@ function NewsFeed() {
 						</div>
 					)}
 
-					{(isAdmin() || isTeacher() || isManager() || isAcademic()) && (
+					{checkIncludesRole(listPermissionsByRoles.news.create, Number(userInformation?.RoleId)) && (
 						<div className="cc-news-container mb-3">
 							<CreateNews onRefresh={() => setFilter({ ...filter, pageIndex: 1 })} />
 						</div>

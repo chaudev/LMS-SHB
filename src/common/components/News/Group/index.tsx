@@ -1,10 +1,11 @@
 import { Empty, Skeleton } from 'antd'
 import Router from 'next/router'
 import React, { useState } from 'react'
-import { encode } from '~/common/utils/common'
+import { checkIncludesRole, encode } from '~/common/utils/common'
 import GroupForm from './form'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const GroupThumb = ({ uri }) => {
 	const [thumb, setThumb] = useState('')
@@ -25,31 +26,11 @@ function NewsGroup(props) {
 
 	const userInformation = useSelector((state: RootState) => state.user.information)
 
-	function isAdmin() {
-		return userInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return userInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return userInformation?.RoleId == 4
-	}
-
-	function isAcademic() {
-		return userInformation?.RoleId == 7
-	}
-
-	function isStdent() {
-		return userInformation?.RoleId == 3
-	}
-
 	return (
 		<div className="p-[16px] cc-news-group">
 			<h4 className="font-semibold mb-[8px] text-[16px]">Danh sách nhóm</h4>
 
-			{(isAdmin() || isTeacher() || isManager() || isAcademic()) && (
+			{checkIncludesRole(listPermissionsByRoles.news.createGroup, Number(userInformation?.RoleId)) && (
 				<>
 					<GroupForm
 						onRefresh={() => {

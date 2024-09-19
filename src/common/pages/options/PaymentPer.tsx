@@ -1,15 +1,19 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import RestApi from '~/api/RestApi'
 import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
 import PaymentPerForm from '~/common/components/PaymentPermisstion/form'
 import PrimaryTable from '~/common/components/Primary/Table'
-import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import { ShowNoti } from '~/common/utils'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { RootState } from '~/store'
 
 const initParameters = { fullName: '', userCode: '', pageIndex: 1, pageSize: 10 }
 
 const PaymentPage = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [loading, setLoading] = useState(false)
 	const [totalRow, setTotalRow] = useState(1)
 	const [apiParameters, setApiParameters] = useState(initParameters)
@@ -53,7 +57,9 @@ const PaymentPage = () => {
 			render: (data) => {
 				return (
 					<div className="flex items-center">
-						<DeleteTableRow handleDelete={() => handleDelete(data.Id)} />
+						{checkIncludesRole(listPermissionsByRoles.config.paymentAuthorization.delete, Number(userInformation?.RoleId)) && (
+							<DeleteTableRow handleDelete={() => handleDelete(data.Id)} />
+						)}
 					</div>
 				)
 			}
@@ -88,9 +94,11 @@ const PaymentPage = () => {
 			total={totalRow}
 			onChangePage={(event: number) => setApiParameters({ ...apiParameters, pageIndex: event })}
 			TitleCard={
-				<div className="flex justify-end w-full">
-					<PaymentPerForm onRefresh={getUserPaymentAllow} />
-				</div>
+				checkIncludesRole(listPermissionsByRoles.config.paymentAuthorization.create, Number(userInformation?.RoleId)) ? (
+					<div className="flex justify-end w-full">
+						<PaymentPerForm onRefresh={getUserPaymentAllow} />
+					</div>
+				) : undefined
 			}
 			data={dataTable}
 			columns={columns}

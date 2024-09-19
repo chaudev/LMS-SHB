@@ -10,9 +10,12 @@ import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
 import { useDispatch } from 'react-redux'
 import { setPurpose } from '~/store/purposeReducer'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const Purpose = () => {
 	const state = useSelector((state: RootState) => state)
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(false)
 	const [totalPage, setTotalPage] = useState(null)
@@ -79,11 +82,15 @@ const Purpose = () => {
 		},
 		{
 			title: '',
-			width:120,
+			width: 120,
 			render: (record) => (
 				<>
-					<PurposeForm rowData={record} getDataTable={getDataTable} />
-					<DeleteTableRow text={record.Name} handleDelete={() => handleDelete(record.Id)} />
+					{checkIncludesRole(listPermissionsByRoles.config.learningPurpose.update, Number(userInformation?.RoleId)) && (
+						<PurposeForm rowData={record} getDataTable={getDataTable} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.learningPurpose.delete, Number(userInformation?.RoleId)) && (
+						<DeleteTableRow text={record.Name} handleDelete={() => handleDelete(record.Id)} />
+					)}
 				</>
 			)
 		}
@@ -98,7 +105,11 @@ const Purpose = () => {
 			<PrimaryTable
 				loading={isLoading}
 				total={totalPage && totalPage}
-				Extra={<PurposeForm getDataTable={getDataTable} />}
+				Extra={
+					checkIncludesRole(listPermissionsByRoles.config.learningPurpose.create, Number(userInformation?.RoleId)) ? (
+						<PurposeForm getDataTable={getDataTable} />
+					) : undefined
+				}
 				data={state.purpose.Purpose}
 				columns={columns}
 				onChangePage={(event: number) => setTodoApi({ ...todoApi, pageIndex: event })}
