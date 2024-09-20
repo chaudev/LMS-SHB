@@ -22,4 +22,5 @@ type IPrimaryTable = {
 	rowSelection?: TableRowSelection<any>
 	 
 	rowKey? : string | function(record): string
+	pagination?: false | TablePaginationConfig;
 }

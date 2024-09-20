@@ -1395,6 +1395,59 @@ export const listPermissionsByRoles = {
 				ERole.CEO
 			]
 		},
+		// Bảng lương
+		payroll: {
+			viewList: [
+				ERole.admin,
+				ERole.teacher,
+				ERole.manager,
+				ERole.saler,
+				ERole.trainingAssistant,
+				ERole.accountant,
+				ERole.chiefAccountant,
+				ERole.administrativeHRStaff,
+				ERole.administrativeHRManager,
+				ERole.deputyGeneralDirector,
+				ERole.executiveDirector,
+				ERole.CEO
+			],
+			create: [
+				ERole.admin,
+				ERole.manager,
+				ERole.trainingAssistant,
+				ERole.accountant,
+				ERole.chiefAccountant,
+				ERole.administrativeHRStaff,
+				ERole.administrativeHRManager,
+				ERole.deputyGeneralDirector,
+				ERole.executiveDirector,
+				ERole.CEO
+			],
+			update: [
+				ERole.admin,
+				ERole.manager,
+				ERole.trainingAssistant,
+				ERole.accountant,
+				ERole.chiefAccountant,
+				ERole.administrativeHRStaff,
+				ERole.administrativeHRManager,
+				ERole.deputyGeneralDirector,
+				ERole.executiveDirector,
+				ERole.CEO
+			],
+			delete: [
+				ERole.admin,
+				ERole.manager,
+				ERole.trainingAssistant,
+				ERole.accountant,
+				ERole.chiefAccountant,
+				ERole.administrativeHRStaff,
+				ERole.administrativeHRManager,
+				ERole.deputyGeneralDirector,
+				ERole.executiveDirector,
+				ERole.CEO
+			]
+		},
 		// Đăng ký lịch nghỉ
 		teacherRegisterOff: {
 			viewList: [ERole.teacher]

@@ -98,6 +98,11 @@ export const userInformationApi = {
 	keyGetStudentInClass: 'GET /api/UserInformation/student-in-class',
 	getStudentInClass(classes: string) {
 		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/student-in-class/${classes}`, {})
+	},
+
+	keyGetStaffAvailable: 'GET /api/UserInformation/staff-available',
+	getStaffAvailable() {
+		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/staff-available`, {})
 	}
 }
 
