@@ -6,7 +6,7 @@ import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 
 const PrimaryTable: FC<IPrimaryTable> = (props) => {
 	const { columns, children, TitleCard, Extra, className, loading, bordered } = props
-	const { total, current, expand, data, onExpand, onChangePage, menuContext, pageSize, rowSelection, rowKey } = props
+	const { total, current, expand, data, onExpand, onChangePage, menuContext, pageSize, rowSelection, rowKey, pagination } = props
 
 	const [dataSource, setDataSource] = useState([])
 	const [rowKeys, setRowKeys] = useState([{ currentPage: 1, listKeys: [] }])
@@ -105,7 +105,7 @@ const PrimaryTable: FC<IPrimaryTable> = (props) => {
 								}
 								return `${record}`
 							}}
-							pagination={{
+							pagination={ pagination === false ? false : {
 								pageSize: pageSize ? pageSize : PAGE_SIZE,
 								pageSizeOptions: ['30'],
 								total: total && total,

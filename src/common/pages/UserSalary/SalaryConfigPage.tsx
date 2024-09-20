@@ -18,33 +18,6 @@ export const SalaryConfigPage = () => {
 	const [dataTable, setDataTable] = useState([])
 	const [loading, setLoading] = useState(false)
 
-	function isAdmin() {
-		return userInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return userInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return userInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return userInformation?.RoleId == 3
-	}
-
-	function isSaler() {
-		return userInformation?.RoleId == 5
-	}
-
-	function isAccountant() {
-		return userInformation?.RoleId == 6
-	}
-
-	function isAcademic() {
-		return userInformation?.RoleId == 7
-	}
 	const getSalaryConfig = async (params) => {
 		try {
 			setLoading(true)
@@ -118,8 +91,6 @@ export const SalaryConfigPage = () => {
 			title: '',
 			dataIndex: 'Action',
 			render: (text, item) => {
-				if (isSaler() || isAcademic() || isTeacher()) return ''
-
 				return (
 					<div className="flex items-center">
 						{checkIncludesRole(listPermissionsByRoles.account.salaryConfig.update, Number(userInformation?.RoleId)) && (

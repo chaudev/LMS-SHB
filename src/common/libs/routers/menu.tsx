@@ -511,8 +511,8 @@ export const menu: TMenu[] = [
 			},
 			{
 				ItemType: 'single',
-				Key: '/users/salary',
-				Route: '/users/salary',
+				Key: '/users/payroll',
+				Route: '/users/payroll',
 				Text: 'Bảng lương',
 				Icon: '',
 				Allow: [ERole.admin, ERole.manager, ERole.saler, ERole.accountant, ERole.academic]

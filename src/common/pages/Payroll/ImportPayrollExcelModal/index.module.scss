@@ -1,0 +1,10 @@
+.upload {
+	background-color: #fff;
+	display: flex;
+    gap: 20px;
+	:global {
+		.ant-upload {
+            width: fit-content;
+		}
+	}
+}
