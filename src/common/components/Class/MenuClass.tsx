@@ -1,7 +1,7 @@
 import { Tabs } from 'antd'
 import Head from 'next/head'
 import Router from 'next/router'
-import { AiOutlineCalendar, AiOutlineQrcode } from 'react-icons/ai'
+import { AiOutlineCalendar } from 'react-icons/ai'
 import { BsCalendar2Week } from 'react-icons/bs'
 import { CgTranscript } from 'react-icons/cg'
 import { FiUserCheck } from 'react-icons/fi'
@@ -19,383 +19,155 @@ import { LessonFeedbackPage } from './LessonFeedbackPage'
 import { ListStudentInClass } from './ListStudentInClass'
 import { NotificationInClassPage } from './NotificationInClassPage'
 import { RollUpPage } from './RollUpPage'
-import { RollUpStudent } from './RollUpStudent'
 import { RollUpTeacherPage } from './RollUpTeacherPage'
 import { ScheduleList } from './ScheduleList'
 import TranscriptPageV2 from './TranscriptV2'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { useMemo } from 'react'
 
-const itemsAdmin = [
-	'Lịch học',
-	'Học viên',
-	'Các buổi học',
-	'Tài liệu',
-	'Điểm danh',
-	'Bảng điểm',
-	'Báo cáo',
-	'Điểm danh giáo viên',
-	'Phản hồi buổi học',
-	'Thông báo'
+enum EClassDetailMenuType {
+	LichHoc = '1',
+	HocVien = '2',
+	CacBuoiHoc = '3',
+	TaiLieu = '4',
+	DiemDanh = '5',
+	BangDiem = '6',
+	BaoCao = '7',
+	DiemDanhGiaoVien = '8',
+	PhanHoiBuoiHoc = '9',
+	ThongBao = '10'
+}
+
+const classDetailMenu = [
+	{
+		key: EClassDetailMenuType.LichHoc,
+		name: 'Lịch học',
+		label: (
+			<div className="label-tab">
+				<AiOutlineCalendar className="mr-3" size={20} /> <span>Lịch học</span>
+			</div>
+		),
+		content: <CalendarClassEdit />,
+		allow: listPermissionsByRoles.detailClass.menu.schedule
+	},
+	{
+		key: EClassDetailMenuType.HocVien,
+		name: 'Học viên',
+		label: (
+			<div className="label-tab">
+				<RiContactsBook2Line className="mr-3" size={20} /> <span>Học viên</span>
+			</div>
+		),
+		content: <ListStudentInClass />,
+		allow: listPermissionsByRoles.detailClass.menu.student
+	},
+	{
+		key: EClassDetailMenuType.CacBuoiHoc,
+		name: 'Các buổi học',
+		label: (
+			<div className="label-tab">
+				<BsCalendar2Week className="mr-3" size={20} /> <span>Các buổi học</span>
+			</div>
+		),
+		content: <ScheduleList />,
+		allow: listPermissionsByRoles.detailClass.menu.lessions
+	},
+	{
+		key: EClassDetailMenuType.TaiLieu,
+		name: 'Tài liệu',
+		label: (
+			<div className="label-tab">
+				<VscFolderLibrary className="mr-3" size={20} /> <span>Tài liệu</span>
+			</div>
+		),
+		content: <DocumentsPageInClass />,
+		allow: listPermissionsByRoles.detailClass.menu.documents
+	},
+	{
+		key: EClassDetailMenuType.DiemDanh,
+		name: 'Điểm danh',
+		label: (
+			<div className="label-tab">
+				<RiQuillPenLine className="mr-3" size={20} /> <span>Điểm danh</span>
+			</div>
+		),
+		content: <RollUpPage />,
+		allow: listPermissionsByRoles.detailClass.menu.rollup
+	},
+	{
+		key: EClassDetailMenuType.BangDiem,
+		name: 'Bảng điểm',
+		label: (
+			<div className="label-tab">
+				<CgTranscript className="mr-3" size={20} /> <span>Bảng điểm</span>
+			</div>
+		),
+		content: <TranscriptPageV2 />,
+		allow: listPermissionsByRoles.detailClass.menu.transcript
+	},
+	{
+		key: EClassDetailMenuType.BaoCao,
+		name: 'Báo cáo',
+		label: (
+			<div className="label-tab">
+				<TbReportAnalytics className="mr-3" size={20} /> <span>Báo cáo</span>
+			</div>
+		),
+		content: <StudentReport />,
+		allow: listPermissionsByRoles.detailClass.menu.report
+	},
+	{
+		key: EClassDetailMenuType.DiemDanhGiaoVien,
+		name: 'Điểm danh giáo viên',
+		label: (
+			<div className="label-tab">
+				<FiUserCheck className="mr-3" size={20} /> <span>Điểm danh giáo viên</span>
+			</div>
+		),
+		content: <RollUpTeacherPage />,
+		allow: listPermissionsByRoles.detailClass.menu.rollupTeacher
+	},
+	{
+		key: EClassDetailMenuType.PhanHoiBuoiHoc,
+		name: 'Phản hồi buổi học',
+		label: (
+			<div className="label-tab">
+				<VscFeedback className="mr-3" size={20} /> <span>Phản hồi buổi học</span>
+			</div>
+		),
+		content: <LessonFeedbackPage />,
+		allow: listPermissionsByRoles.detailClass.menu.lessionFeedback
+	},
+	{
+		key: EClassDetailMenuType.ThongBao,
+		name: 'Thông báo',
+		label: (
+			<div className="label-tab">
+				<IoNotificationsOutline className="mr-3" size={20} /> <span>Thông báo</span>
+			</div>
+		),
+		content: <NotificationInClassPage />,
+		allow: listPermissionsByRoles.detailClass.menu.notification
+	}
 ]
-
-const itemsStudent = ['Lịch học', 'Các buổi học', 'Tài liệu', 'Báo cáo', 'Bảng điểm']
-
-const itemsTeacher = [
-	'Lịch học',
-	'Học viên',
-	'Các buổi học',
-	'Tài liệu',
-	'Điểm danh',
-	'Bảng điểm',
-	'Điểm danh giáo viên',
-	'Phản hồi buổi học',
-	'Thông báo'
-]
-const itemsParent = ['Lịch học', 'Các buổi học', 'Điểm danh', 'Bảng điểm']
 
 const MenuClass = () => {
 	const user = useSelector((state: RootState) => state.user.information)
 	const currentClassDetails = useSelector((state: RootState) => state.classState?.currentClassDetails)
 
-	const getAdminContent = (index) => {
-		switch (index) {
-			case 0:
-				return <CalendarClassEdit />
-			case 1:
-				return <ListStudentInClass />
-			case 2:
-				return <ScheduleList />
-			case 3:
-				return <DocumentsPageInClass />
-			case 4:
-				return <RollUpPage />
-			case 5:
-				return <TranscriptPageV2 />
-			case 6:
-				return <StudentReport />
-			case 7:
-				return <RollUpTeacherPage />
-			case 8:
-				return <LessonFeedbackPage />
-			case 9:
-				return <NotificationInClassPage />
-			default:
-				return <CalendarClassEdit />
-		}
-	}
-
-	const getAdminLabel = (item, index) => {
-		switch (index) {
-			case 0:
-				return (
-					<div className="label-tab">
-						<AiOutlineCalendar className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 1:
-				return (
-					<div className="label-tab">
-						<RiContactsBook2Line className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 2:
-				return (
-					<div className="label-tab">
-						<BsCalendar2Week className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 3:
-				return (
-					<div className="label-tab">
-						<VscFolderLibrary className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 4:
-				return (
-					<div className="label-tab">
-						<RiQuillPenLine className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 5:
-				return (
-					<div className="label-tab">
-						<CgTranscript className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 6:
-				return (
-					<div className="label-tab">
-						<TbReportAnalytics className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 7:
-				return (
-					<div className="label-tab">
-						<FiUserCheck className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 8:
-				return (
-					<div className="label-tab">
-						<VscFeedback className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 9:
-				return (
-					<div className="label-tab">
-						<IoNotificationsOutline className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			default:
-				return 'Lịch học'
-		}
-	}
-
-	const getStudentContent = (index) => {
-		switch (index) {
-			case 0:
-				return <CalendarClassEdit />
-			case 1:
-				return <ScheduleList />
-			case 2:
-				return <DocumentsPageInClass />
-			case 3:
-				return <StudentReport />
-			case 4:
-				return <TranscriptPageV2 />
-			case 5:
-				return <RollUpStudent />
-			default:
-				return <CalendarClassEdit />
-		}
-	}
-
-	const getStudentLabel = (item, index) => {
-		switch (index) {
-			case 0:
-				return (
-					<div className="label-tab">
-						<AiOutlineCalendar className="mr-3" /> <span>{item}</span>
-					</div>
-				)
-			case 1:
-				return (
-					<div className="label-tab">
-						<BsCalendar2Week className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 2:
-				return (
-					<div className="label-tab">
-						<VscFolderLibrary className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 3:
-				return (
-					<div className="label-tab">
-						<TbReportAnalytics className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 4:
-				return (
-					<div className="label-tab">
-						<FiUserCheck className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 5:
-				return (
-					<div className="label-tab">
-						<AiOutlineQrcode className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 6:
-				return (
-					<div className="label-tab">
-						<VscFeedback className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-
-			default:
-				return 'Lịch học'
-		}
-	}
-
-	const getTeacherContent = (index) => {
-		switch (index) {
-			case 0:
-				return <CalendarClassEdit />
-			case 1:
-				return <ListStudentInClass />
-			case 2:
-				return <ScheduleList />
-			case 3:
-				return <DocumentsPageInClass />
-			case 4:
-				return <RollUpPage />
-			case 5:
-				return <TranscriptPageV2 />
-			case 6:
-				return <RollUpTeacherPage />
-			case 7:
-				return <LessonFeedbackPage />
-			case 8:
-				return <NotificationInClassPage />
-			default:
-				return <CalendarClassEdit />
-		}
-	}
-
-	const getTeacherLabel = (item, index) => {
-		switch (index) {
-			case 0:
-				return (
-					<div className="label-tab">
-						<AiOutlineCalendar className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 1:
-				return (
-					<div className="label-tab">
-						<RiContactsBook2Line className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 2:
-				return (
-					<div className="label-tab">
-						<BsCalendar2Week className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 3:
-				return (
-					<div className="label-tab">
-						<VscFolderLibrary className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 4:
-				return (
-					<div className="label-tab">
-						<RiQuillPenLine className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 5:
-				return (
-					<div className="label-tab">
-						<CgTranscript className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 6:
-				return (
-					<div className="label-tab">
-						<FiUserCheck className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 7:
-				return (
-					<div className="label-tab">
-						<VscFeedback className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 8:
-				return (
-					<div className="label-tab">
-						<IoNotificationsOutline className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			default:
-				return 'Lịch học'
-		}
-	}
-
-	const getParentContent = (index) => {
-		switch (index) {
-			case 0:
-				return <CalendarClassEdit />
-
-			case 1:
-				return <ScheduleList />
-
-			case 2:
-				return <RollUpPage />
-
-			case 3:
-				return <TranscriptPageV2 />
-
-			default:
-				return <CalendarClassEdit />
-		}
-	}
-
-	const getParentLabel = (item, index) => {
-		switch (index) {
-			case 0:
-				return (
-					<div className="label-tab">
-						<AiOutlineCalendar className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 1:
-				return (
-					<div className="label-tab">
-						<BsCalendar2Week className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 2:
-				return (
-					<div className="label-tab">
-						<RiQuillPenLine className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-			case 3:
-				return (
-					<div className="label-tab">
-						<CgTranscript className="mr-3" size={20} /> <span>{item}</span>
-					</div>
-				)
-
-			default:
-				return 'Lịch học'
-		}
-	}
-
-	const is = {
-		admin: user?.RoleId == 1,
-		student: user?.RoleId == 3,
-		teacher: user?.RoleId == 2,
-		manager: user?.RoleId == 4,
-		saler: user?.RoleId == 5,
-		accountant: user?.RoleId == 6,
-		academic: user?.RoleId == 7,
-		parent: user?.RoleId == 8
-	}
-
-	function getTabItems() {
-		const temp = { items: [], label: null, children: null }
-
-		if (is.admin || is.manager || is.saler || is.accountant || is.academic) {
-			temp.items = itemsAdmin
-			temp.label = getAdminLabel
-			temp.children = getAdminContent
-		}
-
-		if (is.teacher) {
-			temp.items = itemsTeacher
-			temp.label = getTeacherLabel
-			temp.children = getTeacherContent
-		}
-
-		if (is.student) {
-			temp.items = itemsStudent
-			temp.label = getStudentLabel
-			temp.children = getStudentContent
-		}
-
-		if (is.parent) {
-			temp.items = itemsParent
-			temp.label = getParentLabel
-			temp.children = getParentContent
-		}
-
-		return temp
-	}
+	const tabItems = useMemo(() => {
+		const _tabItems = []
+		classDetailMenu.forEach((item) => {
+			if (item.allow.includes(Number(user?.RoleId))) {
+				_tabItems.push({
+					label: item.label,
+					key: item.key,
+					children: item.content
+				})
+			}
+		})
+		return _tabItems
+	}, [user?.RoleId])
 
 	return (
 		<>
@@ -403,17 +175,11 @@ const MenuClass = () => {
 				<title>{`${appConfigs.appName} - ${currentClassDetails?.Name}`}</title>
 			</Head>
 			<Tabs
-				defaultActiveKey="0"
+				defaultActiveKey={EClassDetailMenuType.LichHoc}
 				tabPosition="left"
-				activeKey={(Router.query?.menu || 0) + ''}
+				activeKey={(Router.query?.menu || EClassDetailMenuType.LichHoc) + ''}
 				onChange={(event: any) => Router.replace({ query: { ...Router?.query, menu: event } })}
-				items={getTabItems().items.map((item, index) => {
-					return {
-						label: getTabItems().label(item, index),
-						key: index.toString(),
-						children: getTabItems().children(index)
-					}
-				})}
+				items={tabItems}
 			/>
 		</>
 	)
