@@ -23,7 +23,10 @@ const ImportPayrollExcelModal = (props: TProps) => {
 		onSuccess: (res) => {
 			setPayrollData(res?.data?.data || [])
 		},
-		onError: (error) => ShowNoti('error', error.message)
+		onError: (error) => {
+			ShowNoti('error', error.message)
+			setPayrollData([])
+		}
 	})
 
 	const mutationSaveImport = useMutation({
@@ -31,7 +34,7 @@ const ImportPayrollExcelModal = (props: TProps) => {
 		onSuccess: (res) => {
 			ShowNoti('success', 'Thành công!')
 			refetch?.()
-            setPayrollData([])
+			setPayrollData([])
 			onCancel()
 		},
 		onError: (error) => ShowNoti('error', error.message)
@@ -63,6 +66,7 @@ const ImportPayrollExcelModal = (props: TProps) => {
 						setPayrollData([])
 					}
 				}}
+				customRequest={({ onSuccess }) => onSuccess('ok', null)}
 				accept=".xlsx, .xls, .csv"
 				className={styles.upload}
 			>
