@@ -99,11 +99,11 @@ const ClassScheduleTable = ({ data, isLoading = false, refetch }: TProps) => {
 		const roomColumns =
 			data?.Rooms?.map((item) => {
 				return {
-					title: item.RoomName,
+					title: <div className="whitespace-pre-wrap line-clamp-3">{item.RoomName}</div>,
 					dataIndex: item.RoomId,
 					render: (text, record) => {
 						const roomData = record[item.RoomId]
-						if (!roomData) return ''
+						if (!roomData) return <div className="min-w-[70px]"></div>
 						return (
 							<div className="flex flex-col gap-[8px]">
 								{roomData?.Schedules?.map((scheduleItem: TScheduleByRoomStudyTimeRoomSchedule, index: number) => {

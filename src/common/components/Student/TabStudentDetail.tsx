@@ -292,7 +292,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				}
 			}
 
-			let res = await userInformationApi.update(payload)
+			let res = await userInformationApi.updateStudent(payload)
 			if (res.status == 200) {
 				setStudentDetail(payload)
 				ShowNoti('success', res.data.message)
