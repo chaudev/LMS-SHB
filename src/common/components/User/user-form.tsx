@@ -122,7 +122,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			ParentFullName: undefined,
 			ParentMobile: undefined,
 			ParentEmail: undefined,
-			ParentRelationship: undefined,
+			ParentType: undefined,
 			ParentDOB: undefined
 		})
 	}
@@ -401,7 +401,8 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			!!defaultData?.EnrollmentDay && form.setFieldsValue({ EnrollmentDay: moment(defaultData.EnrollmentDay) })
 			if (defaultData?.parentInfo?.UserInformationId) {
 				form.setFieldsValue({
-					ParentId: defaultData?.parentInfo?.UserInformationId
+					ParentId: defaultData?.parentInfo?.UserInformationId,
+					ParentType: defaultData?.parentInfo?.ParentType,
 				})
 			}
 		}
@@ -740,7 +741,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 													format="DD/MM/YYYY"
 													disabled={isLoadingParentData}
 												/>
-												<MyFormItem className="col-span-2" label="Mối quan hệ" name="ParentRelationship" rules={formRequired} required>
+												<MyFormItem className="col-span-2" label="Mối quan hệ" name="ParentType" rules={formRequired} required>
 													<MySelectParentRelationship />
 												</MyFormItem>
 												<InputTextField className="col-span-2" label="Email" name="ParentEmail" disabled={isLoadingParentData} />
@@ -764,7 +765,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 											rules={formRequired}
 											isRequired
 										/>
-										<MyFormItem className="col-span-2" label="Mối quan hệ" name="ParentRelationship" rules={formRequired} required>
+										<MyFormItem className="col-span-2" label="Mối quan hệ" name="ParentType" rules={formRequired} required>
 											<MySelectParentRelationship className='h-[36px]' />
 										</MyFormItem>
 										<InputTextField className="col-span-2" label="Email" name="ParentEmail" />
