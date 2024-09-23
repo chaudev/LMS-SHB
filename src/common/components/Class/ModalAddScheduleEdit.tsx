@@ -376,9 +376,6 @@ const ModalAddScheduleEdit = (props) => {
 									})}
 								</Select>
 							</Form.Item>
-							<Form.Item name="TeachingFee" label="Lương/buổi">
-								<InputNumber style={{ width: '100%', borderRadius: 6 }} min={0} max={9999999999} defaultValue={0} />
-							</Form.Item>
 
 							{!!Type && parseInt(Type.toString()) == 1 ? (
 								<Form.Item name="RoomId" label="Phòng học">

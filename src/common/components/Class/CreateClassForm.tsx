@@ -611,9 +611,6 @@ const CreateClassForm = (props) => {
 							</Form.Item>
 						</div>
 						<div className="col-md-6 col-12">
-							<InputNumberField placeholder="Nhập lương/buổi" className="w-full" label="Lương/buổi" name="TeachingFee" />
-						</div>
-						<div className="col-md-6 col-12">
 							<DatePickerField isRequired rules={[yupSync]} mode="single" label="Ngày mở lớp" name="StartDay" />
 						</div>
 						{/* <div className="col-md-6 col-12">
