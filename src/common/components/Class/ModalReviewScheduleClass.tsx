@@ -78,10 +78,6 @@ const ModalReviewScheduleClass = (props) => {
 						<span>{dataChangeSchedule.Price}</span>
 					</div> */}
 					<div className="col-md-6 col-12 mb-3">
-						<p className="font-medium">Lương/buổi:</p>
-						<span>{_format.numberToPrice(dataChangeSchedule.TeachingFee)}₫</span>
-					</div>
-					<div className="col-md-6 col-12 mb-3">
 						<p className="font-medium">Số học viên tối đa:</p>
 						<span>{dataChangeSchedule.MaxQuantity} học viên</span>
 					</div>
