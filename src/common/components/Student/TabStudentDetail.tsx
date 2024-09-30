@@ -865,7 +865,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 						</div>
 						<div className="d-flex justify-between items-center mb-[24px]">
 							<MyFormItem label="Mối quan hệ" name="ParentType" className="w-full m-0">
-								<MySelectParentRelationship disabled={!isOpenEditParent} />
+								<MySelectParentRelationship disabled={!isOpenEditParent} className='h-[36px]' />
 							</MyFormItem>
 						</div>
 						<div className="d-flex justify-between items-center mb-[24px]">
