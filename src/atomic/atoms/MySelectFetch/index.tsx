@@ -81,7 +81,7 @@ const MySelectFetch: React.FC<TMySelectFetchProps> = (props) => {
 			fetchNextPage()
 		}
 	}
-	const currentOptions = missingOptionValues.length === 0 ? options : [...(dataDonHave || []), ...options]
+	const currentOptions = missingOptionValues.length === 0 ? options : [...options, ...(dataDonHave || [])]
 	return (
 		<MySelect
 			showSearch

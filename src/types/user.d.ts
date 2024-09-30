@@ -71,6 +71,17 @@ type IUserResponse = IBaseApi<{
 	ProfileStatusId: number
 	SaleId: number
 	PurposeId: number
+	parentInfo?: {
+		UserInformationId: number
+		FullName: string
+		UserName: string
+		UserCode: string
+		DOB: string
+		Avatar: any
+		Mobile: string
+		Email: string
+		ParentType: number
+	}
 	Enable: boolean
 	CreatedOn: string
 	CreatedBy: string
