@@ -23,10 +23,7 @@ const allRoles = [
 	ERole.administrativeHRManager,
 	ERole.profile,
 	ERole.residency,
-	ERole.foreignAffairsOfficer,
-	ERole.deputyGeneralDirector,
-	ERole.executiveDirector,
-	ERole.CEO
+	ERole.foreignAffairsOfficer
 ]
 
 /**

@@ -52,7 +52,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						key: '1',
 						label: `Chi tiết`,
 						children: (
-							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} refetch={getStudentDetail} />
 						)
 					},
 					{
@@ -91,7 +91,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						key: '1',
 						label: `Chi tiết`,
 						children: (
-							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} refetch={getStudentDetail} />
 						)
 					},
 					// {

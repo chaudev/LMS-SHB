@@ -169,10 +169,7 @@ export function is(params) {
 		administrativeHRManager: params?.RoleId == ERole.administrativeHRManager,
 		profile: params?.RoleId == ERole.profile,
 		residency: params?.RoleId == ERole.residency,
-		foreignAffairsOfficer: params?.RoleId == ERole.foreignAffairsOfficer,
-		deputyGeneralDirector: params?.RoleId == ERole.deputyGeneralDirector,
-		executiveDirector: params?.RoleId == ERole.executiveDirector,
-		CEO: params?.RoleId == ERole.CEO
+		foreignAffairsOfficer: params?.RoleId == ERole.foreignAffairsOfficer
 	}
 }
 

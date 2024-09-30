@@ -17,10 +17,7 @@ const allRoles = [
 	ERole.administrativeHRManager,
 	ERole.profile,
 	ERole.residency,
-	ERole.foreignAffairsOfficer,
-	ERole.deputyGeneralDirector,
-	ERole.executiveDirector,
-	ERole.CEO
+	ERole.foreignAffairsOfficer
 ]
 
 export const listPermissionsByRoles = {
@@ -38,10 +35,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		update: [
 			ERole.admin,
@@ -52,10 +46,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		delete: [
 			ERole.admin,
@@ -66,10 +57,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		viewComment: allRoles,
 		createComment: allRoles,
@@ -87,10 +75,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		replyComment: allRoles,
 		likeNews: allRoles,
@@ -103,10 +88,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		viewNewsInGroup: [
 			ERole.admin,
@@ -117,10 +99,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		updateGroup: [
 			ERole.admin,
@@ -131,10 +110,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		deleteGroup: [
 			ERole.admin,
@@ -145,10 +121,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		addMemberToGroup: [
 			ERole.admin,
@@ -159,10 +132,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		removeMemberFromGroup: [
 			ERole.admin,
@@ -173,10 +143,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		]
 	},
 	statistics: {
@@ -195,10 +162,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Xem data thống kê cá nhân
 		viewPersonalData: allRoles,
@@ -212,10 +176,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Thống kê lương
 		salary: [
@@ -225,10 +186,7 @@ export const listPermissionsByRoles = {
 			ERole.trainingAssistant,
 			ERole.chiefAccountant,
 			ERole.administrativeHRStaff,
-			ERole.administrativeHRManager,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.administrativeHRManager
 		],
 		// Thống kê điểm danh
 		rollUp: [
@@ -239,10 +197,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Thống kê kiểm tra
 		test: [
@@ -253,10 +208,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Thống kê chuyên cần
 		attendance: [
@@ -267,10 +219,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		]
 	},
 	// Tình trạng hồ sơ
@@ -284,10 +233,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		]
 	},
 	class: {
@@ -301,10 +247,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		update: [
 			ERole.admin,
@@ -315,10 +258,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		delete: [
 			ERole.admin,
@@ -329,10 +269,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		checkSchedule: [
 			ERole.admin,
@@ -345,10 +282,7 @@ export const listPermissionsByRoles = {
 			ERole.chiefAccountant,
 			ERole.administrativeHRManager,
 			ERole.profile,
-			ERole.residency,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.residency
 		],
 		rollUp: [ERole.admin, ERole.manager, ERole.academic],
 		enterScore: [ERole.admin, ERole.manager, ERole.academic]
@@ -369,10 +303,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Học viên
 			student: [
@@ -389,10 +320,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Các buổi học
 			lessions: [
@@ -407,10 +335,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Tài liệu
 			documents: [
@@ -425,10 +350,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Điểm danh
 			rollup: [
@@ -446,10 +368,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Bảng điểm
 			transcript: [
@@ -467,10 +386,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Báo cáo
 			report: [
@@ -488,10 +404,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Điểm danh
 			rollupTeacher: [
@@ -506,10 +419,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Phản hồi buổi học
 			lessionFeedback: [
@@ -524,10 +434,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Thông báo
 			notification: [
@@ -542,10 +449,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		}
 	},
@@ -559,10 +463,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		update: [
 			ERole.admin,
@@ -573,10 +474,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		delete: [
 			ERole.admin,
@@ -587,10 +485,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Danh sách học viên
 		viewList: [
@@ -606,10 +501,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Xem chi tiết học viên
 		viewDetail: [
@@ -625,10 +517,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Bảo lưu học viên
 		reserveStudents: [
@@ -642,10 +531,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Import
 		import: [
@@ -659,10 +545,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Export
 		export: [
@@ -676,10 +559,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		]
 	},
 	// Học viên trong lớp
@@ -695,10 +575,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Chuyển lớp
 		changeClass: [
@@ -708,10 +585,7 @@ export const listPermissionsByRoles = {
 			ERole.chiefAccountant,
 			ERole.administrativeHRManager,
 			ERole.profile,
-			ERole.residency,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.residency
 		]
 	},
 	// Học viên chuyển lớp
@@ -727,10 +601,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		]
 	},
 	// Tuyển sinh
@@ -746,10 +617,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			// Cập nhật trạng thái
 			updateStatus: [
@@ -760,10 +628,7 @@ export const listPermissionsByRoles = {
 				ERole.saleAdmin,
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
-				ERole.profile,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.profile
 			],
 			// Cập nhật lịch hẹn
 			updateAppointment: [
@@ -774,10 +639,7 @@ export const listPermissionsByRoles = {
 				ERole.saleAdmin,
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
-				ERole.profile,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.profile
 			],
 			// Hủy lịch hẹn
 			cancelAppointment: [
@@ -788,10 +650,7 @@ export const listPermissionsByRoles = {
 				ERole.saleAdmin,
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
-				ERole.profile,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.profile
 			],
 			// Nhập điểm thủ công
 			manualScoreEntry: [
@@ -802,10 +661,7 @@ export const listPermissionsByRoles = {
 				ERole.saleAdmin,
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
-				ERole.profile,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.profile
 			],
 			// Đăng ký học
 			registerStudy: [
@@ -815,10 +671,7 @@ export const listPermissionsByRoles = {
 				ERole.academic,
 				ERole.saleAdmin,
 				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			]
 		},
 		// Hẹn kiểm tra đầu vào
@@ -830,10 +683,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
 				ERole.administrativeHRManager,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			]
 		},
 		// Học viên sắp học xong
@@ -846,10 +696,7 @@ export const listPermissionsByRoles = {
 				ERole.trainingAssistant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			]
 		},
 		// Cảnh báo học viên
@@ -864,10 +711,7 @@ export const listPermissionsByRoles = {
 				ERole.trainingAssistant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
-				ERole.profile,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.profile
 			]
 		},
 		// Phụ huynh
@@ -881,47 +725,11 @@ export const listPermissionsByRoles = {
 				ERole.trainingAssistant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
-			create: [
-				ERole.admin,
-				ERole.manager,
-				ERole.saler,
-				ERole.academic,
-				ERole.parent,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			update: [
-				ERole.admin,
-				ERole.manager,
-				ERole.saler,
-				ERole.academic,
-				ERole.parent,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			delete: [
-				ERole.admin,
-				ERole.manager,
-				ERole.saler,
-				ERole.academic,
-				ERole.parent,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
+			create: [ERole.admin, ERole.manager, ERole.saler, ERole.academic, ERole.parent, ERole.chiefAccountant, ERole.administrativeHRManager],
+			update: [ERole.admin, ERole.manager, ERole.saler, ERole.academic, ERole.parent, ERole.chiefAccountant, ERole.administrativeHRManager],
+			delete: [ERole.admin, ERole.manager, ERole.saler, ERole.academic, ERole.parent, ERole.chiefAccountant, ERole.administrativeHRManager],
 			// Gắn học viên vào phụ huynh
 			linkToStudent: [
 				ERole.admin,
@@ -930,10 +738,7 @@ export const listPermissionsByRoles = {
 				ERole.academic,
 				ERole.parent,
 				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			]
 		},
 		// Hợp đồng
@@ -948,10 +753,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRStaff,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -960,10 +762,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -972,10 +771,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		}
 	},
@@ -994,10 +790,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		viewList: [
 			ERole.admin,
@@ -1011,10 +804,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRStaff,
 			ERole.administrativeHRManager,
 			ERole.profile,
-			ERole.residency,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.residency
 		],
 		create: [
 			ERole.admin,
@@ -1027,10 +817,7 @@ export const listPermissionsByRoles = {
 			ERole.chiefAccountant,
 			ERole.administrativeHRManager,
 			ERole.profile,
-			ERole.residency,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.residency
 		],
 		// Quản lý nhóm phản hồi
 		group: {
@@ -1044,10 +831,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -1058,10 +842,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			update: [
 				ERole.admin,
@@ -1072,10 +853,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			delete: [
 				ERole.admin,
@@ -1086,10 +864,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			]
 		},
 		// Phân quyền phản hồi
@@ -1103,10 +878,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -1116,10 +888,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -1129,10 +898,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -1142,10 +908,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Thông báo
@@ -1160,10 +923,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -1174,10 +934,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRStaff,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		}
 	},
@@ -1196,10 +953,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Phiếu đánh giá mẫu
 		sampleForm: {
@@ -1212,10 +966,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRStaff,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			create: [
 				ERole.admin,
@@ -1225,10 +976,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -1238,10 +986,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -1251,10 +996,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Danh sách đợt đánh giá
@@ -1272,10 +1014,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -1285,10 +1024,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -1298,10 +1034,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -1311,10 +1044,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			viewStatistic: [
 				ERole.admin,
@@ -1324,10 +1054,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Danh sách phiếu đánh giá
@@ -1362,10 +1089,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		list: {
 			view: [
@@ -1379,59 +1103,16 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
-			create: [
-				ERole.admin,
-				ERole.manager,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			update: [
-				ERole.admin,
-				ERole.manager,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			delete: [
-				ERole.admin,
-				ERole.manager,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			]
+			create: [ERole.admin, ERole.manager, ERole.chiefAccountant, ERole.administrativeHRManager],
+			update: [ERole.admin, ERole.manager, ERole.chiefAccountant, ERole.administrativeHRManager],
+			delete: [ERole.admin, ERole.manager, ERole.chiefAccountant, ERole.administrativeHRManager]
 		},
 		// Đăng ký chương trình học
-		register: [
-			ERole.admin,
-			ERole.manager,
-			ERole.chiefAccountant,
-			ERole.administrativeHRManager,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
-		],
+		register: [ERole.admin, ERole.manager, ERole.chiefAccountant, ERole.administrativeHRManager],
 		// Thay đổi chương trình học
-		change: [
-			ERole.admin,
-			ERole.manager,
-			ERole.chiefAccountant,
-			ERole.administrativeHRManager,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
-		]
+		change: [ERole.admin, ERole.manager, ERole.chiefAccountant, ERole.administrativeHRManager]
 	},
 	// Quản lý tài khoản
 	account: {
@@ -1446,10 +1127,7 @@ export const listPermissionsByRoles = {
 			ERole.administrativeHRManager,
 			ERole.profile,
 			ERole.residency,
-			ERole.foreignAffairsOfficer,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
+			ERole.foreignAffairsOfficer
 		],
 		// Nhân viên
 		staff: {
@@ -1464,10 +1142,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -1475,10 +1150,7 @@ export const listPermissionsByRoles = {
 				ERole.trainingAssistant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
 			update: [
 				ERole.admin,
@@ -1486,10 +1158,7 @@ export const listPermissionsByRoles = {
 				ERole.trainingAssistant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
 			delete: [
 				ERole.admin,
@@ -1497,10 +1166,7 @@ export const listPermissionsByRoles = {
 				ERole.trainingAssistant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			]
 		},
 		// Duyệt lịch nghỉ
@@ -1511,10 +1177,7 @@ export const listPermissionsByRoles = {
 				ERole.trainingAssistant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
 			approve: [
 				ERole.admin,
@@ -1522,10 +1185,7 @@ export const listPermissionsByRoles = {
 				ERole.trainingAssistant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
 			delete: [
 				ERole.admin,
@@ -1533,10 +1193,7 @@ export const listPermissionsByRoles = {
 				ERole.trainingAssistant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			]
 		},
 		// Cấu hình lương
@@ -1548,10 +1205,7 @@ export const listPermissionsByRoles = {
 				ERole.accountant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
 			create: [
 				ERole.admin,
@@ -1560,10 +1214,7 @@ export const listPermissionsByRoles = {
 				ERole.accountant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
 			update: [
 				ERole.admin,
@@ -1572,10 +1223,7 @@ export const listPermissionsByRoles = {
 				ERole.accountant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
 			delete: [
 				ERole.admin,
@@ -1584,10 +1232,7 @@ export const listPermissionsByRoles = {
 				ERole.accountant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			]
 		},
 		// Bảng lương
@@ -1601,10 +1246,7 @@ export const listPermissionsByRoles = {
 				ERole.accountant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
 			create: [
 				ERole.admin,
@@ -1613,10 +1255,7 @@ export const listPermissionsByRoles = {
 				ERole.accountant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
 			update: [
 				ERole.admin,
@@ -1625,10 +1264,7 @@ export const listPermissionsByRoles = {
 				ERole.accountant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
 			delete: [
 				ERole.admin,
@@ -1637,10 +1273,7 @@ export const listPermissionsByRoles = {
 				ERole.accountant,
 				ERole.chiefAccountant,
 				ERole.administrativeHRStaff,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			]
 		},
 		// Đăng ký lịch nghỉ
@@ -1650,134 +1283,26 @@ export const listPermissionsByRoles = {
 	},
 	// Tài chính
 	finance: {
-		menuRoles: [
-			ERole.admin,
-			ERole.manager,
-			ERole.accountant,
-			ERole.chiefAccountant,
-			ERole.administrativeHRManager,
-			ERole.deputyGeneralDirector,
-			ERole.executiveDirector,
-			ERole.CEO
-		],
+		menuRoles: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager],
 		paymentManagement: {
-			viewList: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			create: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			makePayment: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
+			viewList: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager],
+			create: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager],
+			makePayment: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager],
 			// Hoàn tiền
-			refund: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			]
+			refund: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager]
 		},
 		// Quản lý thu chi
 		incomeAndExpenditureManagement: {
-			viewList: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			create: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			update: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			delete: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			]
+			viewList: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager],
+			create: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager],
+			update: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager],
+			delete: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager]
 		},
 		// Duyệt thanh toán
 		paymentApproval: {
-			viewList: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			approve: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			delete: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			]
+			viewList: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager],
+			approve: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager],
+			delete: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager]
 		},
 		// Hoàn tiền
 		refund: {
@@ -1787,40 +1312,11 @@ export const listPermissionsByRoles = {
 				ERole.accountant,
 				ERole.trainingAssistant,
 				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.administrativeHRManager
 			],
-			create: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			approve: [
-				ERole.admin,
-				ERole.manager,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			delete: [
-				ERole.admin,
-				ERole.manager,
-				ERole.accountant,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			]
+			create: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager],
+			approve: [ERole.admin, ERole.manager, ERole.chiefAccountant, ERole.administrativeHRManager],
+			delete: [ERole.admin, ERole.manager, ERole.accountant, ERole.chiefAccountant, ERole.administrativeHRManager]
 		},
 		// Bảng lương
 		payroll: {
@@ -1844,10 +1340,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -1856,10 +1349,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -1868,10 +1358,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -1880,10 +1367,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			viewListRoom: [
 				ERole.admin,
@@ -1898,10 +1382,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			createRoom: [
 				ERole.admin,
@@ -1910,10 +1391,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			updateRoom: [
 				ERole.admin,
@@ -1922,10 +1400,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			deleteRoom: [
 				ERole.admin,
@@ -1934,10 +1409,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Mẫu lộ trình học
@@ -1954,10 +1426,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			create: [
 				ERole.admin,
@@ -1966,10 +1435,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -1978,10 +1444,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -1990,10 +1453,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			viewListDetail: [
 				ERole.admin,
@@ -2007,10 +1467,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			createDetail: [
 				ERole.admin,
@@ -2019,10 +1476,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			updateDetail: [
 				ERole.admin,
@@ -2031,10 +1485,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			deleteDetail: [
 				ERole.admin,
@@ -2043,10 +1494,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Điều chỉnh vị trí
 			updateDetailIndex: [
@@ -2056,10 +1504,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Trình độ tiếng
@@ -2077,10 +1522,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRStaff,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			create: [
 				ERole.admin,
@@ -2090,10 +1532,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRStaff,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2103,10 +1542,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRStaff,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2116,10 +1552,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRStaff,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Khung đào tạo
@@ -2137,10 +1570,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRStaff,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			create: [
 				ERole.admin,
@@ -2150,10 +1580,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2163,10 +1590,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2176,10 +1600,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			addTeacher: [
 				ERole.admin,
@@ -2189,10 +1610,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			viewDetail: [
 				ERole.admin,
@@ -2202,10 +1620,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Thêm giáo trình
 			createCurriculum: [
@@ -2216,10 +1631,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Sửa giáo trình
 			updateCurriculum: [
@@ -2230,10 +1642,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Xóa giáo trình
 			deleteCurriculum: [
@@ -2244,10 +1653,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Sửa giáo trình
 			viewDetailCurriculum: [
@@ -2258,10 +1664,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Thêm chủ đề cho giáo trình
 			createTopicForCurriculum: [
@@ -2272,10 +1675,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Xóa chủ đề của giáo trình
 			deleteTopicForCurriculum: [
@@ -2286,10 +1686,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Upload file cho chủ đề của giáo trình
 			uploadFileForTopicOfCurriculum: [
@@ -2300,10 +1697,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// download file của chủ đề trong giáo trình
 			downloadFileOfTopicOfCurriculum: [
@@ -2314,10 +1708,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Ca học
@@ -2336,10 +1727,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2349,10 +1737,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2362,10 +1747,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2375,10 +1757,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Bảng điểm mẫu
@@ -2396,10 +1775,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2409,10 +1785,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2422,10 +1795,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2435,10 +1805,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Nhóm chương trình
@@ -2455,10 +1822,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2467,10 +1831,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2479,10 +1840,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2491,10 +1849,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Ngành học khác
@@ -2511,10 +1866,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2523,10 +1875,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2535,10 +1884,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2547,10 +1893,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Nhu cầu học
@@ -2567,10 +1910,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2579,10 +1919,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2591,10 +1928,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2603,10 +1937,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Nguồn khách hàng
@@ -2623,10 +1954,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2635,10 +1963,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2647,10 +1972,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2659,10 +1981,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Ngày nghỉ
@@ -2679,10 +1998,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2691,10 +2007,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2703,10 +2016,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2715,10 +2025,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Công việc
@@ -2735,10 +2042,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2747,10 +2051,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2759,10 +2060,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2771,10 +2069,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Trạng thái khách hàng
@@ -2791,10 +2086,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2803,10 +2095,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2815,10 +2104,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2827,10 +2113,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Mục đích học
@@ -2847,10 +2130,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2859,10 +2139,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2871,10 +2148,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2883,10 +2157,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Thành ngữ lịch
@@ -2904,10 +2175,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2917,10 +2185,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2930,10 +2195,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -2943,10 +2205,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Mẫu hợp đồng
@@ -2964,10 +2223,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -2977,10 +2233,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -2990,10 +2243,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -3003,10 +2253,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Câu hỏi thường gặp
@@ -3024,10 +2271,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -3037,10 +2281,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -3050,10 +2291,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -3063,10 +2301,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Phương thức thanh toán
@@ -3083,10 +2318,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			update: [
 				ERole.admin,
@@ -3095,10 +2327,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Cấp quyền thanh toán
@@ -3115,20 +2344,9 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
-			create: [
-				ERole.admin,
-				ERole.manager,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
+			create: [ERole.admin, ERole.manager, ERole.chiefAccountant, ERole.administrativeHRManager],
 			update: [
 				ERole.admin,
 				ERole.manager,
@@ -3136,10 +2354,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -3148,10 +2363,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Quà tặng
@@ -3168,10 +2380,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -3180,10 +2389,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -3192,10 +2398,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -3204,10 +2407,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Mẫu hồ sơ
@@ -3224,10 +2424,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -3236,10 +2433,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			update: [
 				ERole.admin,
@@ -3248,10 +2442,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			delete: [
 				ERole.admin,
@@ -3260,10 +2451,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			],
 			// Thay đổi vị trí
 			changePosition: [
@@ -3273,10 +2461,7 @@ export const listPermissionsByRoles = {
 				ERole.chiefAccountant,
 				ERole.administrativeHRManager,
 				ERole.profile,
-				ERole.residency,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.residency
 			]
 		},
 		// Văn phòng đại diện
@@ -3296,38 +2481,11 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
-			create: [
-				ERole.admin,
-				ERole.manager,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			update: [
-				ERole.admin,
-				ERole.manager,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			],
-			delete: [
-				ERole.admin,
-				ERole.manager,
-				ERole.chiefAccountant,
-				ERole.administrativeHRManager,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
-			]
+			create: [ERole.admin, ERole.manager, ERole.chiefAccountant, ERole.administrativeHRManager],
+			update: [ERole.admin, ERole.manager, ERole.chiefAccountant, ERole.administrativeHRManager],
+			delete: [ERole.admin, ERole.manager, ERole.chiefAccountant, ERole.administrativeHRManager]
 		},
 		// Đối tác
 		partner: {
@@ -3346,10 +2504,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -3359,10 +2514,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			update: [
 				ERole.admin,
@@ -3372,10 +2524,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			delete: [
 				ERole.admin,
@@ -3385,10 +2534,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			]
 		},
 		// Tình trạng tiếng
@@ -3408,10 +2554,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -3421,10 +2564,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			update: [
 				ERole.admin,
@@ -3434,10 +2574,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			delete: [
 				ERole.admin,
@@ -3447,10 +2584,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			]
 		},
 		// Tình trạng visa
@@ -3470,10 +2604,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -3483,10 +2614,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			update: [
 				ERole.admin,
@@ -3496,10 +2624,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			delete: [
 				ERole.admin,
@@ -3509,10 +2634,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			]
 		},
 		// Tình trạng thu hồ sơ
@@ -3532,10 +2654,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -3545,10 +2664,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			update: [
 				ERole.admin,
@@ -3558,10 +2674,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			delete: [
 				ERole.admin,
@@ -3571,10 +2684,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			]
 		},
 		// Tiến trình xử lý hồ sơ
@@ -3594,10 +2704,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			create: [
 				ERole.admin,
@@ -3607,10 +2714,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			update: [
 				ERole.admin,
@@ -3620,10 +2724,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			],
 			delete: [
 				ERole.admin,
@@ -3633,10 +2734,7 @@ export const listPermissionsByRoles = {
 				ERole.administrativeHRManager,
 				ERole.profile,
 				ERole.residency,
-				ERole.foreignAffairsOfficer,
-				ERole.deputyGeneralDirector,
-				ERole.executiveDirector,
-				ERole.CEO
+				ERole.foreignAffairsOfficer
 			]
 		}
 	}
