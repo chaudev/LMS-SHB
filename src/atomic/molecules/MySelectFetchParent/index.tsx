@@ -46,7 +46,7 @@ const MySelectFetchParent: React.FC<TMySelectFetchParentProps> = (props) => {
 	const fetchActivelyFn = async (currentValue) => {
 		const res = await userInformationApi.getAll({
 			roleIds: USER_ROLES.parent,
-			parentIds: currentValue ? currentValue?.toString() : undefined
+			userIds: currentValue ? currentValue?.toString() : undefined
 		})
 		return (
 			res?.data?.data?.map((item) => {
