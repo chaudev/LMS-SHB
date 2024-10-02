@@ -42,7 +42,7 @@ const PaymentApprovePage = () => {
 	const getPaymentApprove = async () => {
 		try {
 			setIsLoading(true)
-			const response = await RestApi.get<any>('/PaymentApprove', todoApi)
+			const response = await RestApi.get<any>('PaymentApprove', todoApi)
 			if (response.status == 200) {
 				const { data, totalRow, totalMoney }: any = response.data
 				setDataPaymentApprove(data)
@@ -64,7 +64,7 @@ const PaymentApprovePage = () => {
 
 	const handleDelete = async (id: string) => {
 		try {
-			const res = await RestApi.delete('/PaymentApprove', id)
+			const res = await RestApi.delete('PaymentApprove', id)
 			getPaymentApprove()
 			ShowNoti('success', res.data.message)
 			return res

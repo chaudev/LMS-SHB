@@ -1,9 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { forEach } from 'lodash'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { classTranscriptDetailApi } from '~/api/class-transcript'
-import { saveGradesInClassApi } from '~/api/save-grades-in-class'
 import { studentInClassApi } from '~/api/student-in-class'
 import MyInput from '~/atomic/atoms/MyInput'
 import MyInputNumber from '~/atomic/atoms/MyInputNumber'
@@ -125,9 +123,9 @@ const TranscriptStudentTable: React.FC<ITranscriptStudentTable> = (props) => {
 		const updateOrAddDetail = (details, itemId, value) => {
 			const existGrade = details.find((g) => g.ClassTranscriptDetailId === itemId)
 			if (existGrade) {
-				return details.map((d) => (d.ClassTranscriptDetailId === itemId ? { ...d, Value: value } : d))
+				return details.map((d) => (d.ClassTranscriptDetailId === itemId ? { ...d, Value: value.toString() } : d))
 			}
-			return [...details, { ClassTranscriptDetailId: itemId, Value: value }]
+			return [...details, { ClassTranscriptDetailId: itemId, Value: value.toString() }]
 		}
 
 		// nếu đã có nhập cột điểm trước đó
@@ -144,7 +142,7 @@ const TranscriptStudentTable: React.FC<ITranscriptStudentTable> = (props) => {
 				const studentGrades = {
 					ClassTranscriptId: item.ClassTranscriptId,
 					StudentId: student.StudentId,
-					Details: [{ ClassTranscriptDetailId: item.Id, Value: value }]
+					Details: [{ ClassTranscriptDetailId: item.Id, Value: value.toString() }]
 				}
 				res.push(studentGrades)
 				setSaveStudentGrades(res)
@@ -154,7 +152,7 @@ const TranscriptStudentTable: React.FC<ITranscriptStudentTable> = (props) => {
 			const studentGrades = {
 				ClassTranscriptId: item.ClassTranscriptId,
 				StudentId: student.StudentId,
-				Details: [{ ClassTranscriptDetailId: item.Id, Value: value }]
+				Details: [{ ClassTranscriptDetailId: item.Id, Value: value.toString() }]
 			}
 			setSaveStudentGrades([studentGrades])
 		}

@@ -15,7 +15,7 @@ const PaymentPerForm = (props) => {
 	const onSubmit = async (data: any) => {
 		setIsLoading(true)
 		try {
-			const res = await RestApi.post('/PaymentAllow', data)
+			const res = await RestApi.post('PaymentAllow', data)
 			if (res.status === 200) {
 				setIsModalVisible(false)
 				onRefresh()
@@ -30,7 +30,7 @@ const PaymentPerForm = (props) => {
 
 	const getAllUserAvailable = async () => {
 		try {
-			const response = await RestApi.get<any>('/PaymentAllow/user-available', {})
+			const response = await RestApi.get<any>('PaymentAllow/user-available', {})
 			if (response.status === 200) {
 				let temp = []
 				response?.data?.data?.forEach((item) => {

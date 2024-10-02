@@ -21,7 +21,7 @@ const PaymentPage = () => {
 
 	const handleDelete = async (id: string) => {
 		try {
-			const res = await RestApi.delete('/PaymentAllow', id)
+			const res = await RestApi.delete('PaymentAllow', id)
 			getUserPaymentAllow()
 			ShowNoti('success', res.data.message)
 			return res
@@ -69,7 +69,7 @@ const PaymentPage = () => {
 	const getUserPaymentAllow = async () => {
 		try {
 			setLoading(true)
-			const res = await RestApi.get<any>('/PaymentAllow', apiParameters)
+			const res = await RestApi.get<any>('PaymentAllow', apiParameters)
 			if (res.status === 200) {
 				setDataTable(res.data.data)
 				setTotalRow(res.data.totalRow)
