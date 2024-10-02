@@ -938,7 +938,7 @@ const Student: FC<IPersonnel> = (props) => {
 				loading={loading}
 				current={apiParameters.PageIndex}
 				key={'UserInformationId'}
-				rowSelection={{
+				rowSelection={([1, 4].includes(role)) ? {
 					type: 'checkbox',
 					fixed: true,
 					selectedRowKeys: selectedRowKeys,
@@ -946,7 +946,7 @@ const Student: FC<IPersonnel> = (props) => {
 					onChange: (rowKeys) => {
 						setSelectedRowKeys(rowKeys)
 					}
-				}}
+				} : null}
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, PageIndex: event })}
 				TitleCard={
 					<>
