@@ -89,10 +89,6 @@ const Student: FC<IPersonnel> = (props) => {
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 	const [isFilter, setIsFilter] = useState<boolean>(false)
 
-	function isManager() {
-		return is(userInformation).manager
-	}
-
 	const sale = useMemo(() => {
 		if (state.saler.Saler.length > 0) {
 			return parseSelectArray(state.saler.Saler, 'FullName', 'UserInformationId')
@@ -741,6 +737,10 @@ const Student: FC<IPersonnel> = (props) => {
 		return is(userInformation).academic
 	}
 
+	function isManager() {
+		return is(userInformation).manager
+	}
+
 	const handleFilter = (params) => {
 		const paramsFormat = {
 			...apiParameters,
@@ -938,7 +938,7 @@ const Student: FC<IPersonnel> = (props) => {
 				loading={loading}
 				current={apiParameters.PageIndex}
 				key={'UserInformationId'}
-				rowSelection={([1, 4].includes(role)) ? {
+				rowSelection={(isAdmin() || isManager()) ? {
 					type: 'checkbox',
 					fixed: true,
 					selectedRowKeys: selectedRowKeys,
