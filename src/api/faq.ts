@@ -15,6 +15,6 @@ export const faqApi = {
 		return instance.post(url, data)
 	},
 	delete(id) {
-		return instance.delete(`${url}/${id}`)
+		return instance.delete(`${url}${id}`)
 	}
 }
