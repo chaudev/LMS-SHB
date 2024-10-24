@@ -693,13 +693,13 @@ export const AdminChildMenu = [
 						Text: 'Thành ngữ lịch',
 						Icon: ''
 					},
-					{
-						ItemType: 'single',
-						Key: '/options/config-template',
-						Route: '/options/config-template',
-						Text: 'Mẫu',
-						Icon: ''
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/config-template',
+					// 	Route: '/options/config-template',
+					// 	Text: 'Mẫu',
+					// 	Icon: ''
+					// },
 					{
 						ItemType: 'single',
 						Key: '/options/faq',

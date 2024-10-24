@@ -3,8 +3,10 @@ import { useEffect, useRef } from 'react'
 import { UploadFileApi } from '~/api/common/upload-image'
 import { ShowNoti } from '~/common/utils'
 
-const quickMenu =
-	'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | fontfamily fontsize blocks | forecolor backcolor | customInsertButton | code | link image'
+const quickMenu = 'undo redo customInsertButton | link image  | fontfamily fontSize blocks | bold italic underline strikethrough | alignleft aligncenter ' +
+    'alignright alignjustforecolorify | bullist numlist outdent indent | ltr rtl ' +
+    'removeformat | help | code'
+	// 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | fontfamily fontsize blocks | forecolor backcolor | customInsertButton | code | link image'
 const editorPlugins =
 	'preview importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons image code'
 

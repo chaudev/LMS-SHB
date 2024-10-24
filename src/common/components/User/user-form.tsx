@@ -362,7 +362,7 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			ContractSigningDate: !!values.ContractSigningDate ? new Date(values.ContractSigningDate) : undefined,
 			EnrollmentDay: !!values.EnrollmentDay ? new Date(values.EnrollmentDay) : undefined,
 			RoleId: isStudent ? 3 : values.RoleId,
-			BranchIds: values.BranchIds
+			BranchIds: values.BranchIds.join(',')
 				? isStudent
 					? !!values.BranchIds?.length
 						? values.BranchIds.join(',')

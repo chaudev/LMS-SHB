@@ -15,7 +15,8 @@ const LoadingLayout = () => {
 					repeat: Infinity
 				}}
 			>
-				<img className="h-[60px] w-[60px]" src="/logo/loading.png" />
+				{/* <img className="h-[60px] w-[60px]" src="/logo/loading.png" /> */}
+				<img className="h-[60px] w-[60px]" src="/logo/main-logo.png" />
 			</motion.div>
 			<motion.div
 				animate={{
@@ -33,7 +34,7 @@ const LoadingLayout = () => {
 					width: 120,
 					height: 120,
 					position: 'absolute',
-					border: 'solid 8px #b32025'
+					border: 'solid 8px #D92528'
 				}}
 			/>
 			<motion.div
@@ -48,7 +49,7 @@ const LoadingLayout = () => {
 					width: 100,
 					height: 100,
 					position: 'absolute',
-					border: `solid 3px #b32025`
+					border: `solid 3px #D92528`
 				}}
 			/>
 		</div>

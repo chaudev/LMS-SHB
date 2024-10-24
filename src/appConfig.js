@@ -1,5 +1,5 @@
 const appConfigs = {
-	appName: 'SHB',
+	appName: 'SHD',
 	primaryColor: '#004aad',
 	secondColor: '#eaede8',
 	oneSignalKey: process.env.NEXT_PUBLIC_ONE_SIGNAL,
