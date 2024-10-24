@@ -66,6 +66,7 @@ const DetailConfigTemplate = () => {
 
 	useEffect(() => {
 		if (template) {
+			console.log(template);
 			form.setFieldValue('Content', template.Content)
 		}
 	}, [template])

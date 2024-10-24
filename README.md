@@ -1,4 +1,4 @@
-## SHB - Tư vấn du học ☘️
+## SHD - Tư vấn du học ☘️
 
 <img src="https://img.shields.io/badge/mona--lms-v2.0-4CAF50"/> <img src="https://img.shields.io/badge/react-18.2.0-%23EC407A"/> <img src="https://img.shields.io/badge/next-12.2.2-orange"/> <img src="https://img.shields.io/badge/antd-4.21.6-42A5F5"/>
 

@@ -170,7 +170,7 @@ function Header({ isOpenMenu, isOpen, funcMenuMobile, openMenuMobile }: IHeader)
 	return (
 		<header className={`app-header ${openMenuMobile ? 'mobile' : ''}`}>
 			<div className={`app-header-logo ${!isOpen ? 'close-app' : countOpen > 0 ? 'open' : 'open-no-ani'}`}>
-				<a href="/" className="flex items-center duration-200">
+				<a href="/" className="flex items-center duration-200 w-[120px]">
 					<img className={isOpen ? '' : 'hidden'} src="/logo/main-logo.png"></img>
 				</a>
 			</div>

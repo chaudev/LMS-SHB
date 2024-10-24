@@ -102,9 +102,9 @@ const NewsItem: FC<{ item: TNews; index: number; onRefresh: Function }> = (props
 	}
 
 	function deleteThisComment() {
-		refreshComment()
 		menuRef.current?.close()
 		deleteNews(Id, onRefresh)
+		refreshComment()
 	}
 
 	const menuContent = (

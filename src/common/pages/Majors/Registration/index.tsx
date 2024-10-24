@@ -183,6 +183,7 @@ const MajorsRegistrationPage = () => {
 		try {
 			setLoading('PAYMENT')
 			const res = await paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1, majorId: majorId })
+
 			if (res.status == 200) {
 				setListOption({ ...listOption, payment: formatOption(res.data.data) })
 			} else {

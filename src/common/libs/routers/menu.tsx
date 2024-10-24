@@ -779,14 +779,14 @@ export const menu: TMenu[] = [
 						Icon: '',
 						Allow: listPermissionsByRoles.config.calendarIdioms.viewList
 					},
-					{
-						ItemType: 'single',
-						Key: '/options/config-template',
-						Route: '/options/config-template',
-						Text: 'Mẫu',
-						Icon: '',
-						Allow: listPermissionsByRoles.config.contractTemplate.viewList
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/config-template',
+					// 	Route: '/options/config-template',
+					// 	Text: 'Mẫu',
+					// 	Icon: '',
+					// 	Allow: listPermissionsByRoles.config.contractTemplate.viewList
+					// },
 					{
 						ItemType: 'single',
 						Key: '/options/faq',
