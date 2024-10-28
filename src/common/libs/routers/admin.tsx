@@ -1,6 +1,6 @@
 import { AiFillSetting } from 'react-icons/ai'
 import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
-import { FaLayerGroup, FaMoneyBillAlt, FaNewspaper, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { FaHouseUser, FaLayerGroup, FaMoneyBillAlt, FaNewspaper, FaUserGraduate, FaUserTie } from 'react-icons/fa'
 import { HiMiniNewspaper } from 'react-icons/hi2'
 
 import { TiHome } from 'react-icons/ti'
@@ -66,6 +66,11 @@ export const AdminMenu = [
 		Key: 'config',
 		TabName: 'Cấu hình',
 		Icon: <AiFillSetting size={22} />
+	},
+	{
+		Key: 'dormitory',
+		TabName: 'Ký túc xá',
+		Icon: <FaHouseUser size={22} />
 	}
 ]
 
@@ -832,5 +837,11 @@ export const AdminChildMenu = [
 				]
 			}
 		]
+	},
+	{
+		MenuName: 'Ký túc xá',
+		MenuTitle: 'Ký túc xá',
+		MenuKey: '/dormitory',
+		Parent: 'dormitory',
 	}
 ]

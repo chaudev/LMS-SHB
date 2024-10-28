@@ -1,6 +1,6 @@
 import { AiFillSetting } from 'react-icons/ai'
 import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
-import { FaLayerGroup, FaMoneyBillAlt, FaUserCheck, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { FaHouseUser, FaLayerGroup, FaMoneyBillAlt, FaUserCheck, FaUserGraduate, FaUserTie } from 'react-icons/fa'
 import { HiMiniNewspaper } from 'react-icons/hi2'
 import { TiHome } from 'react-icons/ti'
 import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
@@ -142,7 +142,6 @@ export const menu: TMenu[] = [
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />,
 		Allow: allRoles,
-
 		MenuTitle: 'Tuyển sinh',
 		MenuKey: '/info-course',
 		Parent: 'student',
@@ -536,7 +535,6 @@ export const menu: TMenu[] = [
 		TabName: 'Tài chính',
 		Icon: <FaMoneyBillAlt size={20} />,
 		Allow: listPermissionsByRoles.finance.menuRoles,
-
 		Parent: 'finance',
 		MenuTitle: 'Tài chính',
 		MenuKey: '/finance',
@@ -614,7 +612,6 @@ export const menu: TMenu[] = [
 		TabName: 'Cấu hình',
 		Icon: <AiFillSetting size={22} />,
 		Allow: allRoles,
-
 		MenuName: 'Cấu hình',
 		MenuTitle: 'Cấu hình',
 		MenuKey: '/options',
@@ -931,6 +928,42 @@ export const menu: TMenu[] = [
 					}
 				]
 			}
+		]
+	},
+	{
+		Key: 'dormitory',
+		TabName: 'Ký túc xá',
+		Icon: <FaHouseUser size={20} />,
+		Allow: allRoles,
+		MenuName: 'Ký túc xá',
+		MenuTitle: 'Ký túc xá',
+		MenuKey: '/dormitory',
+		Parent: 'dormitory',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/dormitory/list',
+				Route: '/dormitory/list',
+				Icon: '',
+				Text: 'Danh sách ký túc xá',
+				Allow: allRoles
+			},
+			{
+				ItemType: 'single',
+				Key: '/dormitory/section',
+				Route: '/dormitory/section',
+				Icon: '',
+				Text: 'Danh sách khu',
+				Allow: allRoles
+			},
+			{
+				ItemType: 'single',
+				Key: '/dormitory/room',
+				Route: '/dormitory/room',
+				Icon: '',
+				Text: 'Danh sách phòng',
+				Allow: allRoles
+			},
 		]
 	}
 ]
