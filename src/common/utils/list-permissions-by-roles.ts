@@ -2737,5 +2737,5 @@ export const listPermissionsByRoles = {
 				ERole.foreignAffairsOfficer
 			]
 		}
-	}
+	},
 }
