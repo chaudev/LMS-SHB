@@ -29,6 +29,7 @@ type TDormitoryItem = IBaseApi<{
 	Note: string //'DK 7 tháng'
 	Status: 1 | 2 | 3 | 4 // 2
 	StatusName: string //'Trong khu'
+	IsPayment: null | boolean
 }>
 
 // ** Chọn phòng cho học viên

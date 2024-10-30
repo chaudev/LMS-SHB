@@ -142,6 +142,13 @@ const RegisterList = () => {
 			}
 		},
 		{
+			dataIndex: 'IsPayment',
+			title: 'Thanh toán',
+			render: (isPayment) => {
+				return <div className={`tag ${isPayment ? 'green' : 'red'}`}>{isPayment ? 'Đã thanh toán' : 'Chưa thanh toán'}</div>
+			}
+		},
+		{
 			dataIndex: 'action',
 			title: '',
 			render: (_, record: TDormitoryItem) => {
@@ -150,7 +157,7 @@ const RegisterList = () => {
 						{record.Status === EDormitoryRegisterStatus.ChoNhapKhu && (
 							<>
 								<ModalCreateUpdate defaultData={record} refetch={refetch} />
-								<UpdateChooseRoom data={record} refetch={refetch} type="choose-room" />
+								{record.IsPayment && <UpdateChooseRoom data={record} refetch={refetch} type="choose-room" />}
 								<DeleteTableRow
 									modalTitle="Xóa đăng ký"
 									title="Xóa đăng ký"

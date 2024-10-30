@@ -142,6 +142,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						key: '9',
 						label: `Chương trình học`,
 						children: <TabMajors />
+					},
+					{
+						key: '11',
+						label: 'Thông tin ký túc xá',
+						children: <TabDormitory />
 					}
 			  ]
 

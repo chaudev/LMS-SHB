@@ -52,6 +52,9 @@ const PrimaryTag: FC<IPrimaryTag> = (props) => {
 		if (color == 'disabled') {
 			return 'text-gray-800'
 		}
+		if (color == 'orange') {
+			return 'text-white'
+		}
 	}
 
 	return <div className={`rounded-lg px-3 py-1  inline-flex items-center text-[500] ${getBG()} ${getColor()} ${width} ${className}`}>{children}</div>
