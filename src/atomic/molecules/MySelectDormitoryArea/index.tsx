@@ -14,7 +14,7 @@ const MySelectDormitoryArea: React.FC<TMySelectDormitoryArea> = (props) => {
 	return (
 		<MySelect
 			className={props.className || 'h-[36px] w-full'}
-			placeholder={props.placeholder || 'Chọn phòng'}
+			placeholder={props.placeholder || 'Chọn khu'}
 			loading={isLoading}
 			options={data?.map((item) => ({ label: item?.Name, value: item?.Id }))}
 			{...props}

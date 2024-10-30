@@ -5,6 +5,7 @@ import { ShowNoti } from '~/common/utils'
 import { permissionApi } from '~/api/permission'
 import SelectField from '../FormControl/SelectField'
 import PrimaryButton from '../Primary/Button'
+import { ShowErrorToast } from '~/common/utils/main-function'
 
 const PermissionEditForm = (props) => {
 	const { item, getFunctionPermission, rolePermission } = props
@@ -27,15 +28,19 @@ const PermissionEditForm = (props) => {
 
 	const onSubmit = async (data) => {
 		let newData
-		if (data.Allowed) {
+
+		if (item?.Id == 0) {
 			newData = {
 				Id: item.Id,
-				Allowed: data.Allowed.join(',')
+				Allowed: data.Allowed.join(','),
+				Controller: item?.Controller,
+				Action: item?.Action,
+				Description: item?.Description
 			}
 		} else {
 			newData = {
 				Id: item.Id,
-				Allowed: ''
+				Allowed: data.Allowed.join(',')
 			}
 		}
 
@@ -46,7 +51,7 @@ const PermissionEditForm = (props) => {
 				getFunctionPermission()
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		} finally {
 			setLoading(false)
 			setIsModalOpen(false)

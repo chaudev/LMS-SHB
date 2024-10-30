@@ -2738,4 +2738,8 @@ export const listPermissionsByRoles = {
 			]
 		}
 	},
+	dormitory: {
+		
+	}
+
 }

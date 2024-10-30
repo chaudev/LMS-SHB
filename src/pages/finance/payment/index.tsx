@@ -64,6 +64,10 @@ const PaymentManagementPage = () => {
 				{
 					value: 5,
 					title: 'Thanh toán học phí'
+				},
+				{
+					value: 6,
+					title: 'Đăng ký KTX'
 				}
 			]
 		},
@@ -283,7 +287,7 @@ const PaymentManagementPage = () => {
 		{
 			title: 'Loại',
 			dataIndex: 'Type',
-			width: 180,
+			width: 200,
 			render: (value, item) => (
 				<>
 					{value == 1 && <PrimaryTag color={'green'}>{item?.TypeName}</PrimaryTag>}
@@ -291,6 +295,7 @@ const PaymentManagementPage = () => {
 					{value == 3 && <PrimaryTag color={'red'}>{item?.TypeName}</PrimaryTag>}
 					{value == 4 && <PrimaryTag color={'yellow'}>{item?.TypeName}</PrimaryTag>}
 					{value == 5 && <PrimaryTag color={'primary'}>{item?.TypeName}</PrimaryTag>}
+					{value == 6 && <PrimaryTag color={'orange'}>{item?.TypeName}</PrimaryTag>}
 				</>
 			)
 		},
@@ -324,18 +329,6 @@ const PaymentManagementPage = () => {
 			width: 60,
 			render: (value, item) => (
 				<div className="flex item-center">
-					{/* <PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.UserInformationId}`}>
-						<Link
-							href={{
-								pathname: '/info-course/student/detail',
-								query: { StudentID: item?.UserInformationId }
-							}}
-						>
-							<a>
-								<ButtonEye className="mr-2" />
-							</a>
-						</Link>
-					</PrimaryTooltip> */}
 					{checkIncludesRole(listPermissionsByRoles.finance.paymentManagement.makePayment, Number(userInformation?.RoleId)) && (
 						<PayForm isEdit defaultData={item} onRefresh={getData} />
 					)}

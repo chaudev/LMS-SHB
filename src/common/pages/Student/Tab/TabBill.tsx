@@ -1,14 +1,13 @@
+import { Modal } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { billApi } from '~/api/bill'
-import PrimaryTable from '~/common/components/Primary/Table'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
+import PrimaryTag from '~/common/components/Primary/Tag'
+import { useRole } from '~/common/hooks/useRole'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { parseToMoney } from '~/common/utils/common'
 import { BillDetail } from '../BillDetail'
-import PrimaryTag from '~/common/components/Primary/Tag'
-import { Card, Divider, Empty, List, Modal } from 'antd'
-import { useRole } from '~/common/hooks/useRole'
 
 type ITabBill = {
 	StudentDetail: IUserResponse
@@ -119,6 +118,7 @@ export const TabBill: React.FC<ITabBill> = ({ StudentDetail }) => {
 						{value == 3 && <PrimaryTag color={'red'}>{item?.TypeName}</PrimaryTag>}
 						{value == 4 && <PrimaryTag color={'yellow'}>{item?.TypeName}</PrimaryTag>}
 						{value == 5 && <PrimaryTag color={'primary'}>{item?.TypeName}</PrimaryTag>}
+						{value == 6 && <PrimaryTag color={'orange'}>{item?.TypeName}</PrimaryTag>}
 					</>
 				)
 			}

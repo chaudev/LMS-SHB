@@ -175,7 +175,6 @@ const CustomerAdviseForm = React.memo((props: any) => {
 			} else {
 				DATA_SUBMIT = { ...data, SaleId: isSaler() ? Number(theInformation.UserInformationId) : data.SaleId }
 			}
-			console.log(' SUBMI FORM')
 
 			const res = await (rowData?.Id
 				? isStudent
@@ -218,7 +217,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 				if (rowData?.ParentModel?.UserInformationId) {
 					form.setFieldsValue({
 						ParentId: rowData?.ParentModel?.UserInformationId,
-						ParentType: rowData?.ParentModel?.ParentType,
+						ParentType: rowData?.ParentModel?.ParentType
 					})
 				}
 			}
@@ -347,20 +346,26 @@ const CustomerAdviseForm = React.memo((props: any) => {
 										<UploadImageField name="Avatar" label="Hình ảnh" form={form} />
 									</div>
 									<div className="col-md-6 col-12">
-										<InputTextField name="UserName" label="Tên đăng nhập" isRequired={true} rules={formRequired} />
+										<InputTextField
+											name="UserName"
+											label="Tên đăng nhập"
+											placeholder="Tên đăng nhập"
+											isRequired={true}
+											rules={formRequired}
+										/>
 									</div>
 									<div className="col-md-6 col-12">
-										<InputTextField name="Password" label="Mật khẩu" isRequired={true} rules={formRequired} />
+										<InputTextField name="Password" label="Mật khẩu" placeholder="Mật khẩu" isRequired={true} rules={formRequired} />
 									</div>
 								</>
 							)}
 
 							<div className="col-md-6 col-12">
-								<InputTextField name="FullName" label="Họ tên" isRequired={true} rules={[yupSync]} />
+								<InputTextField name="FullName" label="Họ tên" placeholder="Họ & tên" isRequired={true} rules={[yupSync]} />
 							</div>
 
 							<div className="col-md-6 col-12">
-								<InputTextField name="Mobile" label="Số điện thoại" isRequired={true} rules={[yupSync]} />
+								<InputTextField name="Mobile" label="Số điện thoại" placeholder="Số điện thoại" isRequired={true} rules={[yupSync]} />
 							</div>
 						</div>
 
@@ -378,7 +383,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 							</Form.Item>
 
 							<div className="col-span-1">
-								<InputTextField name="Email" label="Email" isRequired={true} rules={[yupSync]} />
+								<InputTextField name="Email" label="Email" placeholder="Địa chỉ email" isRequired={true} rules={[yupSync]} />
 							</div>
 						</div>
 
@@ -436,13 +441,23 @@ const CustomerAdviseForm = React.memo((props: any) => {
 									{!!ParentId && (
 										<>
 											<div className="col-md-6 col-12">
-												<InputTextField label="Tên đăng nhập" name="ParentUserName" disabled />
+												<InputTextField label="Tên đăng nhập" placeholder="Tên đăng nhập phụ huynh" name="ParentUserName" disabled />
 											</div>
 											<div className="col-md-6 col-12">
-												<InputTextField label="Họ và tên" name="ParentFullName" disabled={isLoadingParentData} />
+												<InputTextField
+													label="Họ và tên"
+													placeholder="Họ & tên phụ huynh"
+													name="ParentFullName"
+													disabled={isLoadingParentData}
+												/>
 											</div>
 											<div className="col-md-6 col-12">
-												<InputTextField label="Số điện thoại" name="ParentMobile" disabled={isLoadingParentData} />
+												<InputTextField
+													label="Số điện thoại"
+													placeholder="Số điện thoại phụ huynh"
+													name="ParentMobile"
+													disabled={isLoadingParentData}
+												/>
 											</div>
 											<div className="col-md-6 col-12">
 												<DatePickerField
@@ -456,11 +471,16 @@ const CustomerAdviseForm = React.memo((props: any) => {
 											</div>
 											<div className="col-md-6 col-12">
 												<MyFormItem label="Mối quan hệ" name="ParentType" rules={formRequired} required>
-													<MySelectParentRelationship />
+													<MySelectParentRelationship placeholder="Mối quan hệ với học sinh" />
 												</MyFormItem>
 											</div>
 											<div className="col-md-6 col-12">
-												<InputTextField label="Email" name="ParentEmail" disabled={isLoadingParentData} />
+												<InputTextField
+													label="Email"
+													name="ParentEmail"
+													placeholder="Địa chỉ email phụ huynh"
+													disabled={isLoadingParentData}
+												/>
 											</div>
 										</>
 									)}
@@ -469,21 +489,45 @@ const CustomerAdviseForm = React.memo((props: any) => {
 							{IsHasParentAccount === EIsHasParentAccount.CreateNew && (
 								<>
 									<div className="col-md-6 col-12">
-										<InputTextField label="Tên đăng nhập" name="ParentUserName" rules={formRequired} isRequired />
+										<InputTextField
+											label="Tên đăng nhập"
+											name="ParentUserName"
+											placeholder="Tên đăng nhập phụ huynh"
+											rules={formRequired}
+											isRequired
+										/>
 									</div>
 									<div className="col-md-6 col-12">
-										<InputPassField label="Mật khẩu" name="ParentPassword" rules={formRequired} isRequired />
+										<InputPassField
+											label="Mật khẩu"
+											name="ParentPassword"
+											placeholder="Mật khẩu phụ huynh"
+											rules={formRequired}
+											isRequired
+										/>
 									</div>
 									<div className="col-md-6 col-12">
-										<InputTextField label="Họ và tên" name="ParentFullName" rules={formRequired} isRequired />
+										<InputTextField
+											label="Họ và tên"
+											name="ParentFullName"
+											placeholder="Họ & tên phụ huynh"
+											rules={formRequired}
+											isRequired
+										/>
 									</div>
 									<div className="col-md-6 col-12">
-										<InputTextField label="Số điện thoại" name="ParentMobile" rules={formRequired} isRequired />
+										<InputTextField
+											label="Số điện thoại"
+											name="ParentMobile"
+											placeholder="Số điện thoại phụ huynh"
+											rules={formRequired}
+											isRequired
+										/>
 									</div>
 									<div className="col-md-6 col-12">
 										<DatePickerField
 											label="Ngày sinh"
-											placeholder=""
+											placeholder="Ngày sinh phụ huynh"
 											name="ParentDOB"
 											mode="single"
 											format="DD/MM/YYYY"
@@ -493,11 +537,11 @@ const CustomerAdviseForm = React.memo((props: any) => {
 									</div>
 									<div className="col-md-6 col-12">
 										<MyFormItem label="Mối quan hệ" name="ParentType" rules={formRequired} required>
-											<MySelectParentRelationship className="h-[36px]" />
+											<MySelectParentRelationship className="h-[36px]" placeholder="Mối quan hệ với học sinh" />
 										</MyFormItem>
 									</div>
 									<div className="col-md-6 col-12">
-										<InputTextField label="Email" name="ParentEmail" />
+										<InputTextField label="Email" name="ParentEmail" placeholder="Địa chỉ email phụ huynh" />
 									</div>
 								</>
 							)}
@@ -511,6 +555,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 								<SelectField
 									name="AreaId"
 									label="Tỉnh/Thành phố"
+									placeholder="Tỉnh/Thành phố"
 									optionList={convertAreaSelect}
 									isRequired={false}
 									onChangeSelect={(value) => handleSelect('AreaId', value)}
@@ -521,6 +566,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 								<SelectField
 									name="DistrictId"
 									label="Quận/Huyện"
+									placeholder="Quận/Huyện"
 									optionList={districts}
 									isRequired={false}
 									onChangeSelect={(value) => handleSelect('DistrictId', value)}
@@ -528,11 +574,11 @@ const CustomerAdviseForm = React.memo((props: any) => {
 							</div>
 
 							<div className="col-md-6 col-12">
-								<SelectField name="WardId" label="Phường/Xã" optionList={wards} isRequired={false} />
+								<SelectField name="WardId" label="Phường/Xã" placeholder="Phường/Xã" optionList={wards} isRequired={false} />
 							</div>
 
 							<div className="col-md-6 col-12">
-								<InputTextField name="Address" label="Địa chỉ" isRequired={false} />
+								<InputTextField name="Address" label="Địa chỉ" placeholder="Địa chỉ" isRequired={false} />
 							</div>
 						</div>
 						<Divider className="col-span-4" orientation="center">
@@ -544,7 +590,7 @@ const CustomerAdviseForm = React.memo((props: any) => {
 									placeholder="Chọn trung tâm"
 									name={isStudent ? 'BranchIds' : 'BranchId'}
 									onChangeSelect={() => {
-										form.setFieldValue('SaleId', '')
+										form.setFieldValue('SaleId', undefined)
 									}}
 									label="Trung tâm"
 									optionList={branch}
@@ -577,16 +623,16 @@ const CustomerAdviseForm = React.memo((props: any) => {
 							</div>
 							{!isSaler() && (
 								<div className="col-md-6 col-12">
-									<SelectField name="SaleId" label="Tư vấn viên" placeholder="Chọn tư vấn viên" optionList={listSale} />
+									<SelectField
+										name="SaleId"
+										label="Tư vấn viên"
+										// disabled={!Boolean(BranchId) || !Boolean(BranchIds)}
+										placeholder="Chọn tư vấn viên"
+										optionList={listSale}
+									/>
 								</div>
 							)}
 						</div>
-
-						{/* <div className="row mt-3">
-							<div className="col-12 flex-all-center">
-						
-							</div>
-						</div> */}
 					</Form>
 				</div>
 			</Modal>

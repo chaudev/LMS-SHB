@@ -4,9 +4,10 @@ import { FC } from 'preact/compat'
 import { useEffect, useState } from 'react'
 import { dormitoryRoomApi } from '~/api/dormitory/dormitoryRoom'
 import MyInput from '~/atomic/atoms/MyInput'
+import MyInputNumber from '~/atomic/atoms/MyInputNumber'
 import MyTextArea from '~/atomic/atoms/MyTextArea'
-import MySelectDormitoryArea from '~/atomic/molecules/MySelectArea'
 import MySelectDormitory from '~/atomic/molecules/MySelectDormitory'
+import MySelectDormitoryArea from '~/atomic/molecules/MySelectDormitoryArea'
 import PrimaryButton from '~/common/components/Primary/Button'
 import IconButton from '~/common/components/Primary/IconButton'
 import { formRequired } from '~/common/libs/others/form'
@@ -111,6 +112,7 @@ export const ModalCUDormitoryRoom: FC<TProps> = ({ defaultData, refetch }) => {
 						<Form.Item name={'Name'} label="Tên phòng" rules={formRequired}>
 							<MyInput placeholder="Tên phòng" />
 						</Form.Item>
+
 						<Form.Item name={'Code'} label="Mã phòng" rules={formRequired}>
 							<MyInput placeholder="Mã phòng" />
 						</Form.Item>
@@ -121,6 +123,10 @@ export const ModalCUDormitoryRoom: FC<TProps> = ({ defaultData, refetch }) => {
 
 						<Form.Item name={'DormitoryAreaId'} label="Khu" rules={formRequired}>
 							<MySelectDormitoryArea DormitoryId={DormitoryId} placeholder="Khu ký túc xá" disabled={!Boolean(DormitoryId)} />
+						</Form.Item>
+
+						<Form.Item name={'QuantityUse'} label="Số lượng" rules={formRequired}>
+							<MyInputNumber placeholder="Số lượng" />
 						</Form.Item>
 
 						<Form.Item name={'Description'} label="Mô tả">
