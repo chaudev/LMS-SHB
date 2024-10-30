@@ -6,20 +6,19 @@ import { useSelector } from 'react-redux'
 import { userInformationApi } from '~/api/user/user'
 import UploadImageField from '~/common/components/FormControl/UploadImageField'
 import PrimaryButton from '~/common/components/Primary/Button'
+import TabStudentContract from '~/common/components/Student/TabStudentContract'
 import TabStudentDetail from '~/common/components/Student/TabStudentDetail'
+import { useRole } from '~/common/hooks/useRole'
 import { ShowNoti } from '~/common/utils'
+import { is } from '~/common/utils/common'
 import { RootState } from '~/store'
 import { TabBill } from './Tab/TabBill'
 import { TabClassList } from './Tab/TabClassList'
-import { TabClassListHistory } from './Tab/TabClassListHistory'
-import { TabDiscountHistory } from './Tab/TabDiscountHistory'
+import TabMajors from './Tab/TabMajors'
+import TabPaymentSession from './Tab/TabPaymentSession'
 import { TabStudyRoute } from './Tab/TabStudyRoute'
 import { TabTestAppointment } from './Tab/TabTestAppointment'
-import TabMajors from './Tab/TabMajors'
-import { useRole } from '~/common/hooks/useRole'
-import TabPaymentSession from './Tab/TabPaymentSession'
-import TabStudentContract from '~/common/components/Student/TabStudentContract'
-import { is } from '~/common/utils/common'
+import TabDormitory from './Tab/Dormitory'
 
 export interface IStudentDetailInfoPageProps {}
 
@@ -84,6 +83,11 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						key: '9',
 						label: `Chương trình học`,
 						children: <TabMajors />
+					},
+					{
+						key: '10',
+						label: 'Thông tin ký túc xá',
+						children: <TabDormitory />
 					}
 			  ]
 			: [

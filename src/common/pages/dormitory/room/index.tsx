@@ -11,6 +11,7 @@ import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import { ShowNoti } from '~/common/utils'
 import { ModalCUDormitoryRoom } from './com/ModalCreateUpdate'
 import { RoomFilter } from './com/RoomFilter'
+import NestedTable from '~/common/components/NestedTable'
 
 const DormitoryRoomIndex = () => {
 	const [dataRender, setDataRender] = useState<TDormitoryRoom[]>([])
@@ -32,7 +33,10 @@ const DormitoryRoomIndex = () => {
 	}
 
 	const { data, isLoading, isFetching, refetch } = useQuery({
-		queryKey: [dormitoryRoomApi.keyGetAll, [filters.PageIndex, filters.Search, filters.DormitoryId, filters.DormitoryAreaId]],
+		queryKey: [
+			dormitoryRoomApi.keyGetAll,
+			[filters.PageIndex, filters.Search, filters.DormitoryId, filters.DormitoryAreaId, filters.IsFull, filters.IsUse]
+		],
 		queryFn: handleFetching,
 		refetchOnWindowFocus: false
 	})
@@ -50,11 +54,21 @@ const DormitoryRoomIndex = () => {
 	const columns = [
 		{
 			dataIndex: 'Code',
-			title: 'Mã phòng'
-		},
-		{
-			dataIndex: 'Name',
-			title: 'Tên phòng'
+			title: 'Thông tin phòng',
+			render: (_, record: TDormitoryRoom) => {
+				return (
+					<div className="min-w-[200px] text-center">
+						<div className="flex items-center justify-between">
+							<span>Tên phòng: </span>
+							<span className="text-[#b32025]">{record?.Name}</span>
+						</div>
+						<div className="flex items-center justify-between">
+							<span>Mã phòng: </span>
+							<span className="text-[#b32025]">{record?.Code}</span>
+						</div>
+					</div>
+				)
+			}
 		},
 		{
 			dataIndex: 'DormitoryName',
@@ -68,18 +82,45 @@ const DormitoryRoomIndex = () => {
 		},
 		{
 			dataIndex: 'IsUse',
-			title: 'Đang sử dụng',
-			render: (isUse: boolean) => {
+			title: 'Tình trạng',
+			render: (_, record: TDormitoryRoom) => {
 				return (
-					<div className="min-w-[100px] text-center">
-						<FaCheckCircle color={isUse ? 'green' : '#d0d0d0'} size={18}/>
+					<div className="min-w-[200px] text-center">
+						<div className="flex items-center justify-between">
+							<span>Đang sử dụng</span>
+							<FaCheckCircle color={record.IsUse ? 'green' : '#d0d0d0'} size={18} />
+						</div>
+						<div className="flex items-center justify-between">
+							<span>Hết chỗ</span>
+							<FaCheckCircle color={record.IsFull ? 'green' : '#d0d0d0'} size={18} />
+						</div>
+						<Popover
+							content={
+								<div className='min-w-[220px]'>
+									<div className='flex items-center justify-between'>
+										<span>Số lượng học viên:</span>
+										<span>{record?.CountUser}</span>
+									</div>
+									<div className='flex items-center justify-between'>
+										<span>Số lượng tối đa:</span>
+										<span>{record?.QuantityUse}</span>
+									</div>
+								</div>
+							}
+						>
+							<div className="flex items-center justify-between">
+								<span>Số lượng: </span>
+								<span className="text-[#b32025]">{record?.CountUser} / {record?.QuantityUse}</span>
+							</div>
+						</Popover>
 					</div>
 				)
 			}
 		},
 		{
 			dataIndex: 'Description',
-			title: 'Mô tả'
+			title: 'Mô tả',
+			render: (text: string) => <div className="min-w-[120px]">{text}</div>
 		},
 		{
 			dataIndex: 'action',
@@ -95,6 +136,33 @@ const DormitoryRoomIndex = () => {
 
 	const handleFilter = (newFilter: TDormitoryListFilter) => {
 		setFilters({ ...filters, ...newFilter })
+	}
+
+	const expandedRowRender = (data: TDormitoryRoom) => {
+		return (
+			<NestedTable
+				addClass="basic-header hide-pani"
+				dataSource={data?.Users}
+				columns={[
+					{
+						dataIndex: 'UserInformationId',
+						title: 'Id'
+					},
+					{
+						dataIndex: 'UserName',
+						title: 'Học viên'
+					},
+					{
+						dataIndex: 'UserCode',
+						title: 'Mã học viên'
+					},
+					{
+						dataIndex: 'Mobile',
+						title: 'Số điện thoại'
+					}
+				]}
+			/>
+		)
 	}
 
 	return (
@@ -128,6 +196,7 @@ const DormitoryRoomIndex = () => {
 						/>
 					</div>
 				}
+				expandable={expandedRowRender}
 				Extra={<ModalCUDormitoryRoom defaultData={null} refetch={refetch} />}
 				currentPage={filters.PageIndex}
 				totalPage={filters.TotalPage && filters.TotalPage}

@@ -934,7 +934,7 @@ export const menu: TMenu[] = [
 		Key: 'dormitory',
 		TabName: 'Ký túc xá',
 		Icon: <FaHouseUser size={20} />,
-		Allow: allRoles,
+		Allow: [ERole.admin],
 		MenuName: 'Ký túc xá',
 		MenuTitle: 'Ký túc xá',
 		MenuKey: '/dormitory',
@@ -942,27 +942,35 @@ export const menu: TMenu[] = [
 		MenuItem: [
 			{
 				ItemType: 'single',
-				Key: '/dormitory/list',
-				Route: '/dormitory/list',
+				Key: '/dormitory/manager/list',
+				Route: '/dormitory/manager/list',
 				Icon: '',
 				Text: 'Danh sách ký túc xá',
-				Allow: allRoles
+				Allow: [ERole.admin]
 			},
 			{
 				ItemType: 'single',
-				Key: '/dormitory/section',
-				Route: '/dormitory/section',
+				Key: '/dormitory/manager/section',
+				Route: '/dormitory/manager/section',
 				Icon: '',
 				Text: 'Danh sách khu',
-				Allow: allRoles
+				Allow: [ERole.admin]
 			},
 			{
 				ItemType: 'single',
-				Key: '/dormitory/room',
-				Route: '/dormitory/room',
+				Key: '/dormitory/manager/room',
+				Route: '/dormitory/manager/room',
 				Icon: '',
 				Text: 'Danh sách phòng',
-				Allow: allRoles
+				Allow: [ERole.admin]
+			},
+			{
+				ItemType: 'single',
+				Key: '/dormitory/student/list-register',
+				Route: '/dormitory/student/list-register',
+				Icon: '',
+				Text: 'Danh sách đăng ký',
+				Allow: [ERole.admin]
 			},
 		]
 	}

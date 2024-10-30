@@ -80,22 +80,29 @@ const CustomerSupplier = () => {
 		{
 			title: 'Chức năng',
 			width: 120,
-			render: (record) => (
-				<>
-					{checkIncludesRole(listPermissionsByRoles.config.customerSource.update, Number(userInformation?.RoleId)) && (
-						<CustomerSupplierForm rowData={record} getDataTable={getDataTable} />
-					)}
-					{checkIncludesRole(listPermissionsByRoles.config.customerSource.delete, Number(userInformation?.RoleId)) && (
-						<DeleteTableRow text={record.Name} handleDelete={() => handleDelete(record.Id)} />
-					)}
-				</>
-			)
+			render: (record) => {
+
+				if (record.Name === "Website") return <></>
+
+				return (
+					<>
+						{checkIncludesRole(listPermissionsByRoles.config.customerSource.update, Number(userInformation?.RoleId)) && (
+							<CustomerSupplierForm rowData={record} getDataTable={getDataTable} />
+						)}
+						{checkIncludesRole(listPermissionsByRoles.config.customerSource.delete, Number(userInformation?.RoleId)) && (
+							<DeleteTableRow text={record.Name} handleDelete={() => handleDelete(record.Id)} />
+						)}
+					</>
+				)
+			}
 		}
 	]
 
 	useEffect(() => {
 		getDataTable()
 	}, [todoApi])
+
+	console.log(state.source.Source)
 
 	return (
 		<PrimaryTable

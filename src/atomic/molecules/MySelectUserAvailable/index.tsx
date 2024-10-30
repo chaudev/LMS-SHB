@@ -18,6 +18,15 @@ const MySelectUserAvailable: React.FC<TMySelectUserAvailable> = (props) => {
 				label: item.title,
 				value: item.value
 			}))}
+			filterOption={(input, option) => {
+				const label = typeof option?.label === 'string' ? option.label : ''
+				return label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+			}}
+			filterSort={(optionA, optionB) => {
+				const labelA = typeof optionA?.label === 'string' ? optionA.label : ''
+				const labelB = typeof optionB?.label === 'string' ? optionB.label : ''
+				return labelA.toLowerCase().localeCompare(labelB.toLowerCase())
+			}}
 			{...restProps}
 		/>
 	)

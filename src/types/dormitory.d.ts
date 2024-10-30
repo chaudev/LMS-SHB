@@ -64,6 +64,10 @@ type TDormitoryRoom = IBaseApi<{
 	Description: string
 	DormitoryName: string
 	DormitoryAreaName: string
+	IsFull: boolean
+	QuantityUse: number;
+	Users: IUser[]
+	CountUser: number
 }>
 
 type TDormitoryRoomFilter = IBaseFilter & {
@@ -71,4 +75,5 @@ type TDormitoryRoomFilter = IBaseFilter & {
   DormitoryAreaId?: number;
   UserId?: number;
   IsUse?: boolean
+	IsFull?: boolean
 }

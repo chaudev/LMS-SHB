@@ -1,13 +1,10 @@
-import { Spin, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import React, { useEffect, useState } from 'react'
-import { Trash } from 'react-feather'
-import { IoMdTrash } from 'react-icons/io'
+import { useState } from 'react'
 import PrimaryButton from '../Primary/Button'
 import IconButton from '../Primary/IconButton'
 
 const DeleteTableRow = (props) => {
-	const { handleDelete, text, title, setShowPop, overrideText, warning } = props
+	const { handleDelete, text, title, setShowPop, overrideText, warning, modalTitle = 'Xác nhận xóa', icon = 'remove'} = props
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -30,7 +27,7 @@ const DeleteTableRow = (props) => {
 			<IconButton
 				color="red"
 				type="button"
-				icon="remove"
+				icon={icon}
 				tooltip={title || 'Xóa'}
 				onClick={() => {
 					setIsModalVisible(true)
@@ -39,7 +36,7 @@ const DeleteTableRow = (props) => {
 			/>
 
 			<Modal
-				title={'Xác nhận xóa'}
+				title={modalTitle}
 				open={isModalVisible}
 				onCancel={() => setIsModalVisible(false)}
 				footer={
