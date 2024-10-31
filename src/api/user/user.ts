@@ -103,6 +103,12 @@ export const userInformationApi = {
 	keyGetStaffAvailable: 'GET /api/UserInformation/staff-available',
 	getStaffAvailable() {
 		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/staff-available`, {})
+	},
+	
+
+	keyGetUserDormitory: 'dormitory-information',
+	getDormitory(userId: number) {
+		return instance.get<IApiResultData<TDormitoryItem[]>>(`${url}/dormitory-information/${userId}`, {})
 	}
 }
 
