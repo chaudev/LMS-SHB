@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { Avatar } from 'antd'
 import moment from 'moment'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { dormitoryRegisterApi } from '~/api/dormitory/dormitory-register'
 import appConfigs from '~/appConfig'
 import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
@@ -14,9 +14,17 @@ import { HistoryRegister } from './com/HistoryRegister'
 import ModalCreateUpdate from './com/ModalCreateUpdate'
 import RegisterFilter from './com/RegisterFilter'
 import { UpdateChooseRoom } from './com/UpdateChooseRoom'
+import PayForm from '~/common/components/Finance/Payment/pay'
+import { FaMoneyBill } from 'react-icons/fa'
+import { PrimaryTooltip } from '~/common/components'
+import { PaymentModal } from '~/common/components/Finance/Payment/PaymentModal'
+import { useDisclosure } from '~/hooks'
+import IconButton from '~/common/components/Primary/IconButton'
 
 const RegisterList = () => {
 	const [dataRender, setDataRender] = useState<TDormitoryItem[]>([])
+
+	const paymentModalController = useDisclosure()
 
 	const [filters, setFilters] = useState<TDormitoryRegisterParams>({
 		PageIndex: 1,
@@ -71,6 +79,12 @@ const RegisterList = () => {
 		},
 		onError: (error) => ShowNoti('error', error.message)
 	})
+
+	const rowItem = useRef<any>()
+	const handlePayment = (item) => {
+		rowItem.current = item
+		paymentModalController.onOpen()
+	}
 
 	const columns = [
 		{
@@ -157,7 +171,16 @@ const RegisterList = () => {
 						{record.Status === EDormitoryRegisterStatus.ChoNhapKhu && (
 							<>
 								<ModalCreateUpdate defaultData={record} refetch={refetch} />
-								{record.IsPayment && <UpdateChooseRoom data={record} refetch={refetch} type="choose-room" />}
+								{record.IsPayment ? <UpdateChooseRoom data={record} refetch={refetch} type="choose-room" /> : (
+									<IconButton
+										onClick={() => handlePayment(record)}
+										type="button"
+										background="transparent"
+										color="orange"
+										icon="payment"
+										tooltip="Thanh toán"
+									/>
+								)}
 								<DeleteTableRow
 									modalTitle="Xóa đăng ký"
 									title="Xóa đăng ký"
@@ -208,6 +231,16 @@ const RegisterList = () => {
 				totalPage={filters.TotalPage && filters.TotalPage}
 				dataSource={dataRender}
 				columns={columns}
+			/>
+
+			<PaymentModal
+				onClose={paymentModalController.onClose}
+				visible={paymentModalController.isOpen}
+				item={{
+					...rowItem.current,
+					Type: 6
+				}}
+				onRefresh={refetch}
 			/>
 		</>
 	)

@@ -16,7 +16,7 @@ import { parseToMoney } from '~/common/utils/common'
 type TProps = {
 	data: TDormitoryItem
 	refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<TDormitoryItem[], Error>>
-	type: 'change-room' | 'choose-room'
+	type?: 'change-room' | 'choose-room'
 }
 
 export const UpdateChooseRoom: FC<TProps> = ({ data, refetch, type }) => {
@@ -130,10 +130,10 @@ export const UpdateChooseRoom: FC<TProps> = ({ data, refetch, type }) => {
 							<span>Ký túc xá:</span>
 							<span>{data?.DormitoryName || '-'}</span>
 						</div>
-						<div className="flex items-center justify-between">
+						{((type === 'change-room' || type === 'choose-room' && !data.IsPayment)) && <div className="flex items-center justify-between">
 							<span>Chi phí:</span>
 							<span>{parseToMoney(data.Price) || '-'}</span>
-						</div>
+						</div>}
 					</div>
 					<Form layout="vertical" form={form} onFinish={handleSubmit} disabled={isLoading}>
 						<Form.Item label="Khu ký túc xá" name={'DormitoryAreaId'} rules={formRequired}>
@@ -148,7 +148,7 @@ export const UpdateChooseRoom: FC<TProps> = ({ data, refetch, type }) => {
 							/>
 						</Form.Item>
 
-						{type === 'choose-room' && (
+						{type === 'choose-room' && !data.IsPayment && (
 							<>
 								<Form.Item label="Thanh toán" name={'Paid'} rules={formRequired}>
 									<MyInputNumber placeholder="Số tiền thanh toán" min={0} max={data.Price} />

@@ -35,3 +35,17 @@ type IFeedbackStudentReply = IBaseApi<{
 	ModifiedOn: string
 	ModifiedBy: string
 }>
+
+type TFeedback = {
+	Id: number
+	FeedbackGroupId: number;
+	Title: string;
+	Content: string;
+	IsPriority: boolean;
+	IsIncognito: boolean;
+	FeedBackType: EFeedbackType;
+	DormitoryId: number;
+	DormitoryAreaId: number;
+	DormitoryRoomId: number;
+	RoomImages: string[];
+};

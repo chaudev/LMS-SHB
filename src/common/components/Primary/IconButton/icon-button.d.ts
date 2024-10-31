@@ -37,6 +37,7 @@ type IIconButton = {
 		| 'history'
 		| 'pieChart'
 		| 'contract'
+		| 'payment'
 	type: 'button' | 'submit'
 	onClick?: Function
 	className?: string

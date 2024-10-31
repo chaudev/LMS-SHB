@@ -73,8 +73,12 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 
 		const DATA_SUBMIT = {
 			...params,
+			Type: defaultData.Type,
+			RefId: defaultData.RefId,
 			Paid: removeCommas(params.Paid)
 		}
+
+		console.log('-- DATA_SUBMIT', DATA_SUBMIT)
 
 		!isEdit && post(DATA_SUBMIT)
 		isEdit && edit(DATA_SUBMIT)

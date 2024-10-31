@@ -30,5 +30,15 @@ export const feedbackApi = {
 	},
 	delete(id) {
 		return instance.delete(`${url}/${id}`)
+	},
+
+	uploadImages(data: any[]) {
+		let frmData = new FormData();
+
+		data.forEach((item) => frmData.append("files", item));
+		console.log(frmData, data)
+		return instance.post(`${url}/upload-images`, frmData, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		})
 	}
 }
