@@ -2,7 +2,7 @@ import React from 'react'
 import MySelect, { TMySelectProps } from '~/atomic/atoms/MySelect'
 import useQueryDormitoryAll from '~/common/hooks/useQueryDormitoryAll'
 
-type TMySelectDormitory = {} & TMySelectProps
+type TMySelectDormitory = { enabledQuery?: boolean } & TMySelectProps
 
 const MySelectDormitory: React.FC<TMySelectDormitory> = (props) => {
 	const { data, isLoading } = useQueryDormitoryAll()
