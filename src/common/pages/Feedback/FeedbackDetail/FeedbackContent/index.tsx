@@ -15,6 +15,7 @@ import FeedbackItem from './components/FeedbackItem'
 import Avatar from '~/common/components/Avatar'
 import MyRate from '~/atomic/atoms/MyRate'
 import { PrimaryTooltip } from '~/common/components'
+import { Image } from 'antd';
 
 interface IFeedbackContent {
 	loading: boolean
@@ -163,6 +164,14 @@ const FeedbackContent: React.FC<IFeedbackContent> = (props) => {
 								</div>
 								<p className="text-[20px] font-bold mb-2 mt-1 text-gray-500">{data?.Title}</p>
 								<p>{data?.Content}</p>
+							</div>
+							<div className='flex gap-2'>
+								{data?.RoomImages.map((image, index) => <Image
+									width={120}
+									height={120}
+									src={image}
+									key={index}
+								/>)}
 							</div>
 						</div>
 					</div>

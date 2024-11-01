@@ -116,7 +116,7 @@ const FeedbackModal: React.FC<IFeedbackModal> = (props) => {
 							<MyFormItem name="FeedbackGroupId" label="Nhóm phản hồi" className="col-6 pr-1 mb-3" required rules={formRequired}>
 								<MySelectFeedbackGroup />
 							</MyFormItem>
-							<MyFormItem name="FeedBackType" label="Loại phản hồi" className="col-6 pl-1 mb-3" required rules={formRequired}>
+							<MyFormItem name="FeedBackType" label="Loại phản hồi" className="col-6 pl-1 mb-3">
 								<MySelectFeedbackType />
 							</MyFormItem>
 
@@ -152,7 +152,7 @@ const FeedbackModal: React.FC<IFeedbackModal> = (props) => {
 							<MyFormItem name="Title" label="Tiêu đề" className="col-12 mb-3" required rules={formRequired}>
 								<MyInput />
 							</MyFormItem>
-							<MyFormItem name="Content" label="Nội dung" className="col-12 mb-3">
+							<MyFormItem name="Content" label="Nội dung" className="col-12 mb-3" required rules={formRequired}>
 								<MyTextArea cols={4} />
 							</MyFormItem>
 

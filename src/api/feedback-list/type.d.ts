@@ -59,4 +59,5 @@ type TFeedbackDetail = {
 	CreatedBy: string
 	ModifiedOn: string
 	ModifiedBy: string
+	RoomImages: string[]
 }
