@@ -972,6 +972,14 @@ export const menu: TMenu[] = [
 				Text: 'Danh sách đăng ký',
 				Allow: [ERole.admin]
 			},
+			{
+				ItemType: 'single',
+				Key: '/dormitory/report',
+				Route: '/dormitory/report',
+				Icon: '',
+				Text: 'Báo cáo ký túc xá',
+				Allow: [ERole.admin]
+			}
 		]
 	}
 ]
