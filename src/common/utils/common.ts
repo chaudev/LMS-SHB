@@ -200,3 +200,12 @@ export const getMenuByRole = (menuList: TMenu[], roleNumber: number): TMenu[] =>
 		})
 		.filter((menu) => menu.MenuItem.length > 0) // Loại bỏ các menu không có item nào phù hợp
 }
+
+export function toQueryString(ob = null) {
+	if (typeof ob === 'object' && ob) {
+		return Object.keys(ob)
+			.map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(ob[key])}`)
+			.join('&')
+	}
+	throw new Error('Input phải là một đối tượng hợp lệ.')
+}
