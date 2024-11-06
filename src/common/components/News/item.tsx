@@ -33,7 +33,7 @@ const ButtonPost: FC<TNewType> = (props) => {
 			) : (
 				icon
 			)}
-			<span style={{ color: activated ? '#002456' : '#000' }}>{title}</span>
+			<span style={{ color: activated ? '#B32025' : '#000' }}>{title}</span>
 		</div>
 	)
 }
@@ -102,9 +102,9 @@ const NewsItem: FC<{ item: TNews; index: number; onRefresh: Function }> = (props
 	}
 
 	function deleteThisComment() {
-		refreshComment()
 		menuRef.current?.close()
 		deleteNews(Id, onRefresh)
+		refreshComment()
 	}
 
 	const menuContent = (
@@ -254,13 +254,13 @@ const NewsItem: FC<{ item: TNews; index: number; onRefresh: Function }> = (props
 					<div className="cc-news-likes">
 						{!!details?.TotalLike && (
 							<>
-								<AiFillLike size={20} className="mr-[8px] text-[#002456]" />
+								<AiFillLike size={20} className="mr-[8px] text-[#B32025]" />
 								<div className="number-of-likes">{getLiked(details, user.UserInformationId).text}</div>
 							</>
 						)}
 					</div>
 
-					{!!details?.TotalComment && <div className="number-of-likes">{details?.TotalComment} nhận xét</div>}
+					{!!details?.TotalComment && <div className="number-of-likes">{details?.TotalComment} bình luận</div>}
 				</div>
 
 				<div className="cc-hr my-[8px] mx-[-6px]" />
@@ -272,11 +272,11 @@ const NewsItem: FC<{ item: TNews; index: number; onRefresh: Function }> = (props
 						loading={loadingLike}
 						activated={!!details?.IsLike}
 						icon={
-							!!details?.IsLike ? <AiFillLike size={18} className="mr-[8px] text-[#002456]" /> : <BiLike size={18} className="mr-[8px]" />
+							!!details?.IsLike ? <AiFillLike size={18} className="mr-[8px] text-[#B32025]" /> : <BiLike size={18} className="mr-[8px]" />
 						}
 					/>
 
-					<ButtonPost onClick={_clickComment} title="Nhận xét" icon={<GoCommentDiscussion size={18} className="mr-[8px] text-[#000]" />} />
+					<ButtonPost onClick={_clickComment} title="Bình luận" icon={<GoCommentDiscussion size={18} className="mr-[8px] text-[#000]" />} />
 				</div>
 				{showComment && (
 					<div className="cc-news-comment">
@@ -288,7 +288,7 @@ const NewsItem: FC<{ item: TNews; index: number; onRefresh: Function }> = (props
 									<input
 										onKeyUp={inpuKeyUp}
 										disabled={loadingComment}
-										placeholder="Nhập nhận xét..."
+										placeholder="Nhập bình luận..."
 										value={currentComment}
 										onChange={(event) => setCurrentComment(event.target.value)}
 									/>
@@ -296,7 +296,7 @@ const NewsItem: FC<{ item: TNews; index: number; onRefresh: Function }> = (props
 										{loadingComment ? (
 											<BaseLoading.Blue />
 										) : (
-											<FaTelegramPlane size={20} color={!currentComment ? '#0000003d' : '#002456'} className="ml-[-2px]" />
+											<FaTelegramPlane size={20} color={!currentComment ? '#0000003d' : '#B32025'} className="ml-[-2px]" />
 										)}
 									</div>
 								</div>

@@ -3,13 +3,15 @@ import { useEffect, useRef } from 'react'
 import { UploadFileApi } from '~/api/common/upload-image'
 import { ShowNoti } from '~/common/utils'
 
-const quickMenu =
-	'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | fontfamily fontsize blocks | forecolor backcolor | customInsertButton | link image'
+const quickMenu = 'undo redo customInsertButton | link image  | fontfamily fontSize blocks | bold italic underline strikethrough | alignleft aligncenter ' +
+    'alignright alignjustforecolorify | bullist numlist outdent indent | ltr rtl ' +
+    'removeformat | help | code'
+	// 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | fontfamily fontsize blocks | forecolor backcolor | customInsertButton | code | link image'
 const editorPlugins =
 	'preview importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons image code'
 
 const EditorBase = (props) => {
-	const { initialValue, value, placeholder, handleChangeDataEditor, customFieldProps, disableButton, height , disabled} = props
+	const { initialValue, value, placeholder, handleChangeDataEditor, customFieldProps, disableButton, height, disabled, allowPasteImage = false} = props
 	const editorRef = useRef(null)
 
 	const checkHandleChangeDataEditor = (content) => {
@@ -43,6 +45,15 @@ const EditorBase = (props) => {
 					checkHandleChangeDataEditor(value)
 				}}
 				init={{
+					// paste_data_images: false, // cái này để chặn không cho paste hình mà thấy k work
+					// nên chơi kiểu remove cái tag img khi paste vô
+					paste_preprocess: function (pl, o) {
+						if (!allowPasteImage) {
+							if (o.content.indexOf('<img ') > -1) {
+								o.content = o.content.replace(/<img[^>\"']*(((\"[^\"]*\")|('[^']*'))[^\"'>]*)*>/g, '')
+							}
+						}
+					},
 					images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp',
 					inline: false, // Remove iframe tag
 					plugins: editorPlugins,
@@ -51,7 +62,7 @@ const EditorBase = (props) => {
 					height: height || 600,
 					content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
 					menubar: false,
-					toolbar_mode: 'floating',
+					toolbar_mode: 'sliding',
 					toolbar_location: 'top',
 					toolbar_sticky: true,
 					font_family_formats:
@@ -78,7 +89,10 @@ const EditorBase = (props) => {
 						}
 					},
 					/* and here's our custom image picker*/
-					...customFieldProps
+					...customFieldProps,
+					relative_urls: 0,
+					remove_script_host: 0,
+					convert_urls: false
 				}}
 			/>
 		</div>

@@ -1,6 +1,7 @@
 import { AiFillSetting } from 'react-icons/ai'
-import { BsFillGridFill } from 'react-icons/bs'
-import { FaLayerGroup, FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
+import { FaHouseUser, FaLayerGroup, FaMoneyBillAlt, FaNewspaper, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { HiMiniNewspaper } from 'react-icons/hi2'
 
 import { TiHome } from 'react-icons/ti'
 
@@ -11,18 +12,28 @@ export const AdminMenu = [
 		Icon: <TiHome style={{ width: 24, height: 24 }} />
 	},
 	{
-		Key: 'class',
-		TabName: 'Lớp học',
-		Icon: <BsFillGridFill size={22} />
-	},
-	{
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />
 	},
 	{
+		Key: 'class',
+		TabName: 'Lớp học',
+		Icon: <BsFillGridFill size={22} />
+	},
+	{
+		Key: 'feedback',
+		TabName: 'Phản hồi',
+		Icon: <BsChatLeftTextFill size={20} />
+	},
+	{
+		Key: 'evaluation',
+		TabName: 'Đánh giá',
+		Icon: <HiMiniNewspaper size={22} />
+	},
+	{
 		Key: 'majors',
-		TabName: 'Ngành học',
+		TabName: 'Chương trình học',
 		Icon: <FaLayerGroup size={20} />
 	},
 	{
@@ -55,6 +66,11 @@ export const AdminMenu = [
 		Key: 'config',
 		TabName: 'Cấu hình',
 		Icon: <AiFillSetting size={22} />
+	},
+	{
+		Key: 'dormitory',
+		TabName: 'Ký túc xá',
+		Icon: <FaHouseUser size={22} />
 	}
 ]
 
@@ -84,6 +100,41 @@ export const AdminChildMenu = [
 				Route: '/statistic-teaching',
 				Icon: '',
 				Text: 'Thống kê giảng dạy'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-profile',
+				Route: '/statistic-profile',
+				Icon: '',
+				Text: 'Tình trạng hồ sơ'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-salary',
+				Route: '/statistic-salary',
+				Icon: '',
+				Text: 'Thống kê lương'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-roll-up',
+				Route: '/statistic-roll-up',
+				Icon: '',
+				Text: 'Thống kê điểm danh'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-test',
+				Route: '/statistic-test',
+				Icon: '',
+				Text: 'Thống kê kiểm tra'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-attendance',
+				Route: '/statistic-attendance',
+				Icon: '',
+				Text: 'Thống kê chuyên cần'
 			}
 		]
 	},
@@ -128,8 +179,66 @@ export const AdminChildMenu = [
 		]
 	},
 	{
+		MenuName: 'Quản lý đánh giá',
+		MenuTitle: 'Quản lý đánh giá',
+		MenuKey: '/evaluation',
+		Parent: 'evaluation',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/evaluation/list',
+				Route: '/evaluation/list',
+				Text: 'Phiếu đánh giá mẫu',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/evaluation/evaluation-time',
+				Route: '/evaluation/evaluation-time',
+				Text: 'Danh sách đợt đánh giá',
+				Icon: ''
+			}
+		]
+	},
+	{
+		MenuName: 'Quản lý phản hồi',
+		MenuTitle: 'Quản lý phản hồi',
+		MenuKey: '/feedback',
+		Parent: 'feedback',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/options/general-notification',
+				Route: '/options/general-notification',
+				Text: 'Tạo thông báo',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/feedback/list',
+				Route: '/feedback/list',
+				Text: 'Danh sách phản hồi',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/feedback/group',
+				Route: '/feedback/group',
+				Text: 'Quản lý nhóm phản hồi',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/feedback/permission',
+				Route: '/feedback/permission',
+				Text: 'Phân quyền phản hồi',
+				Icon: ''
+			}
+		]
+	},
+	{
 		MenuName: 'Quản lý thông tin học',
-		MenuTitle: 'Thông tin học',
+		MenuTitle: 'Tuyển sinh',
 		MenuKey: '/info-course',
 		Parent: 'student',
 		MenuItem: [
@@ -137,7 +246,7 @@ export const AdminChildMenu = [
 				ItemType: 'single',
 				Key: '/info-course/customer',
 				Route: '/info-course/customer',
-				Text: 'Leads',
+				Text: 'Tư vấn',
 				Icon: ''
 			},
 			{
@@ -147,20 +256,27 @@ export const AdminChildMenu = [
 				Text: 'Hẹn kiểm tra đầu vào',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student',
-				Route: '/info-course/student',
-				Text: 'Danh sách học viên',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student-in-class',
-				Route: '/info-course/student-in-class',
-				Text: 'Học viên trong lớp',
-				Icon: ''
-			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student',
+			// 	Route: '/info-course/student',
+			// 	Text: 'Danh sách học viên',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student-in-class',
+			// 	Route: '/info-course/student-in-class',
+			// 	Text: 'Học viên trong lớp',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/changed',
+			// 	Route: '/info-course/changed',
+			// 	Text: 'Học viên chuyển lớp',
+			// 	Icon: ''
+			// },
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/reserved',
@@ -170,9 +286,9 @@ export const AdminChildMenu = [
 			// },
 			{
 				ItemType: 'single',
-				Key: '/info-course/changed',
-				Route: '/info-course/changed',
-				Text: 'Học viên chuyển lớp',
+				Key: '/info-course/about-to-finish',
+				Route: '/info-course/about-to-finish',
+				Text: 'Học viên sắp học xong',
 				Icon: ''
 			},
 			// {
@@ -189,13 +305,13 @@ export const AdminChildMenu = [
 				Text: 'Cảnh báo học viên',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/feedbacks',
-				Route: '/info-course/feedbacks',
-				Text: 'Phản hồi học viên',
-				Icon: ''
-			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/feedbacks',
+			// 	Route: '/info-course/feedbacks',
+			// 	Text: 'Phản hồi học viên',
+			// 	Icon: ''
+			// },
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/rollup',
@@ -208,6 +324,13 @@ export const AdminChildMenu = [
 				Key: '/info-course/parents',
 				Route: '/info-course/parents',
 				Text: 'Phụ huynh',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/contract',
+				Route: '/info-course/contract',
+				Text: 'Hợp đồng',
 				Icon: ''
 			}
 		]
@@ -304,6 +427,41 @@ export const AdminChildMenu = [
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
 			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student',
+				Route: '/info-course/student',
+				Text: 'Danh sách học viên',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student-in-class',
+				Route: '/info-course/student-in-class',
+				Text: 'Học viên trong lớp',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/changed',
+				Route: '/info-course/changed',
+				Text: 'Học viên chuyển lớp',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/class/roll-up',
+				Route: '/class/roll-up',
+				Text: 'Điểm danh',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/class/enter-score',
+				Route: '/class/enter-score',
+				Text: 'Nhập điểm',
+				Icon: ''
+			},
 			// {
 			// 	TypeItem: 'single',
 			// 	Key: '/class/register',
@@ -342,8 +500,8 @@ export const AdminChildMenu = [
 		]
 	},
 	{
-		MenuName: 'Ngành học',
-		MenuTitle: 'Ngành học',
+		MenuName: 'Chương trình học',
+		MenuTitle: 'Chương trình học',
 		Parent: 'majors',
 		MenuKey: '/majors',
 		MenuItem: [
@@ -351,21 +509,21 @@ export const AdminChildMenu = [
 				ItemType: 'single',
 				Key: '/majors',
 				Route: '/majors',
-				Text: 'Danh sách ngành học',
+				Text: 'Danh sách chương trình học',
 				Icon: ''
 			},
 			{
 				ItemType: 'single',
 				Key: '/majors/registration',
 				Route: '/majors/registration',
-				Text: 'Đăng ký ngành học',
+				Text: 'Đăng ký chương trình học',
 				Icon: ''
 			},
 			{
 				ItemType: 'single',
 				Key: '/majors/change-majors',
 				Route: '/majors/change-majors',
-				Text: 'Thay đổi ngành học',
+				Text: 'Thay đổi chương trình học',
 				Icon: ''
 			}
 		]
@@ -438,8 +596,28 @@ export const AdminChildMenu = [
 						Route: '/options/study-time',
 						Text: 'Ca học',
 						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/grade-templates',
+						Route: '/options/grade-templates',
+						Text: 'Bảng điểm mẫu',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/major-group',
+						Route: '/options/major-group',
+						Text: 'Nhóm chương trình',
+						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/other-major',
+						Route: '/options/other-major',
+						Text: 'Ngành học khác',
+						Icon: ''
 					}
-
 					// {
 					// 	ItemType: 'single',
 					// 	Key: '/options/zoom',
@@ -484,7 +662,7 @@ export const AdminChildMenu = [
 						Text: 'Ngày nghỉ',
 						Icon: ''
 					},
- 
+
 					{
 						ItemType: 'single',
 						Key: '/options/jobs',
@@ -506,13 +684,13 @@ export const AdminChildMenu = [
 						Text: 'Mục đích học',
 						Icon: ''
 					},
-					{
-						ItemType: 'single',
-						Key: '/options/general-notification',
-						Route: '/options/general-notification',
-						Text: 'Tạo thông báo',
-						Icon: ''
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/general-notification',
+					// 	Route: '/options/general-notification',
+					// 	Text: 'Tạo thông báo',
+					// 	Icon: ''
+					// },
 					{
 						ItemType: 'single',
 						Key: '/options/idiom',
@@ -520,13 +698,13 @@ export const AdminChildMenu = [
 						Text: 'Thành ngữ lịch',
 						Icon: ''
 					},
-					{
-						ItemType: 'single',
-						Key: '/options/config-template',
-						Route: '/options/config-template',
-						Text: 'Mẫu',
-						Icon: ''
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/config-template',
+					// 	Route: '/options/config-template',
+					// 	Text: 'Mẫu',
+					// 	Icon: ''
+					// },
 					{
 						ItemType: 'single',
 						Key: '/options/faq',
@@ -541,13 +719,13 @@ export const AdminChildMenu = [
 						Text: 'Phương thức thanh toán',
 						Icon: ''
 					},
-					{
-						ItemType: 'single',
-						Key: '/options/payment-type',
-						Route: '/options/payment-type',
-						Text: 'Hình thức thanh toán',
-						Icon: ''
-					},
+					// {
+					// 	ItemType: 'single',
+					// 	Key: '/options/payment-type',
+					// 	Route: '/options/payment-type',
+					// 	Text: 'Hình thức thanh toán',
+					// 	Icon: ''
+					// },
 					// {
 					// 	ItemType: 'single',
 					// 	Key: '/options/tags',
@@ -659,5 +837,11 @@ export const AdminChildMenu = [
 				]
 			}
 		]
+	},
+	{
+		MenuName: 'Ký túc xá',
+		MenuTitle: 'Ký túc xá',
+		MenuKey: '/dormitory',
+		Parent: 'dormitory',
 	}
 ]

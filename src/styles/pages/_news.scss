@@ -149,7 +149,7 @@
 	}
 	.cc-comment-more {
 		@apply pr-3 inline-flex w-fit row-center ml-1 cursor-pointer;
-		@apply mt-[16px] hover:text-[#002456] hover:underline;
+		@apply mt-[16px] hover:text-[#B32025] hover:underline;
 	}
 	.cc-comment-menu {
 		@apply hover:bg-[rgba(0,0,0,0.08)] flex-shrink-0 active:bg-[rgba(0,0,0,0.16)];
@@ -163,7 +163,7 @@
 }
 
 .btn-submit-post {
-	@apply w-full bg-[#002456] hover:bg-[#1d69cb] cursor-pointer text-[#fff] all-center h-[38px] rounded-[6px];
+	@apply w-full bg-[#B32025] hover:bg-[#1d69cb] cursor-pointer text-[#fff] all-center h-[38px] rounded-[6px];
 }
 
 .news-cmt-info {
@@ -251,7 +251,7 @@
 	.btn-create-group {
 		opacity: 1;
 		@apply text-[#fff] font-[500] mt-[8px];
-		@apply w-full h-[34px] bg-[#002456] hover:bg-[#167bd3] active:bg-[#002456];
+		@apply w-full h-[34px] bg-[#B32025] hover:bg-[#167bd3] active:bg-[#B32025];
 		@apply flex all-center none-selection cursor-pointer rounded-[6px];
 	}
 	.cc-group-item {
@@ -300,7 +300,7 @@
 .cc-add-member {
 	@apply h-[44px] w-[44px];
 	@apply shadow-md text-[#fff] none-selection text-[12px];
-	@apply bg-[#002456] hover:bg-[#1c7fd5] active:bg-[#002456] cursor-pointer flex all-center rounded-full;
+	@apply bg-[#B32025] hover:bg-[#1c7fd5] active:bg-[#B32025] cursor-pointer flex all-center rounded-full;
 }
 
 .cc-group-settings {
@@ -317,7 +317,7 @@
 }
 
 .cc-news-group-more {
-	@apply ml-[16px] mt-[8px] hover:underline text-[#1c7cd0] hover:text-[#002456] none-selection cursor-pointer flex row-center;
+	@apply ml-[16px] mt-[8px] hover:underline text-[#1c7cd0] hover:text-[#B32025] none-selection cursor-pointer flex row-center;
 }
 
 .cc-form-new-group-item {

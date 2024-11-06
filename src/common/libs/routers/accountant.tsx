@@ -1,8 +1,6 @@
-import { AiFillSetting } from 'react-icons/ai'
 import { BsFillGridFill } from 'react-icons/bs'
-import { FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
-import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
-import { RiFileList2Fill } from 'react-icons/ri'
+import { FaMoneyBillAlt, FaUserTie } from 'react-icons/fa'
+import { HiMiniNewspaper } from 'react-icons/hi2'
 import { TiHome } from 'react-icons/ti'
 
 export const AccountantMenu = [
@@ -16,11 +14,11 @@ export const AccountantMenu = [
 		TabName: 'Lớp học',
 		Icon: <BsFillGridFill size={22} />
 	},
-	{
-		Key: 'student',
-		TabName: 'Học viên',
-		Icon: <FaUserGraduate size={20} />
-	},
+	// {
+	// 	Key: 'student',
+	// 	TabName: 'Học viên',
+	// 	Icon: <FaUserGraduate size={20} />
+	// },
 	{
 		Key: 'staff',
 		TabName: 'Nhân viên',
@@ -30,6 +28,11 @@ export const AccountantMenu = [
 		Key: 'finance',
 		TabName: 'Tài chính',
 		Icon: <FaMoneyBillAlt size={20} />
+	},
+	{
+		Key: 'evaluation',
+		TabName: 'Đánh giá',
+		Icon: <HiMiniNewspaper size={22} />
 	}
 ]
 
@@ -90,48 +93,63 @@ export const AccountantChildMenu = [
 		]
 	},
 	{
-		MenuName: 'Quản lý thông tin học',
-		MenuTitle: 'Thông tin học',
-		MenuKey: '/info-course',
-		Parent: 'student',
+		MenuName: 'Đánh giá',
+		MenuTitle: 'Đánh giá',
+		MenuKey: '/evaluation',
+		Parent: 'evaluation',
 		MenuItem: [
 			{
 				ItemType: 'single',
-				Key: '/info-course/student',
-				Route: '/info-course/student',
-				Text: 'Danh sách học viên',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student-in-class',
-				Route: '/info-course/student-in-class',
-				Text: 'Học viên trong lớp',
-				Icon: ''
-			},
-			// {
-			// 	ItemType: 'single',
-			// 	Key: '/info-course/reserved',
-			// 	Route: '/info-course/reserved',
-			// 	Text: 'Học viên bảo lưu',
-			// 	Icon: ''
-			// },
-			{
-				ItemType: 'single',
-				Key: '/info-course/changed',
-				Route: '/info-course/changed',
-				Text: 'Học viên chuyển lớp',
+				Key: '/evaluation/me',
+				Route: '/evaluation/me',
+				Text: 'Danh sách phiếu đánh giá',
 				Icon: ''
 			}
-			// {
-			// 	ItemType: 'single',
-			// 	Key: '/info-course/registration',
-			// 	Route: '/info-course/registration',
-			// 	Text: 'Hẹn đăng ký',
-			// 	Icon: ''
-			// }
 		]
 	},
+	// {
+	// 	MenuName: 'Quản lý thông tin học',
+	// 	MenuTitle: 'Tuyển sinh',
+	// 	MenuKey: '/info-course',
+	// 	Parent: 'student',
+	// 	MenuItem: [
+	// 		{
+	// 			ItemType: 'single',
+	// 			Key: '/info-course/student',
+	// 			Route: '/info-course/student',
+	// 			Text: 'Danh sách học viên',
+	// 			Icon: ''
+	// 		},
+	// 		{
+	// 			ItemType: 'single',
+	// 			Key: '/info-course/student-in-class',
+	// 			Route: '/info-course/student-in-class',
+	// 			Text: 'Học viên trong lớp',
+	// 			Icon: ''
+	// 		},
+	// 		{
+	// 			ItemType: 'single',
+	// 			Key: '/info-course/changed',
+	// 			Route: '/info-course/changed',
+	// 			Text: 'Học viên chuyển lớp',
+	// 			Icon: ''
+	// 		}
+	// 		// {
+	// 		// 	ItemType: 'single',
+	// 		// 	Key: '/info-course/reserved',
+	// 		// 	Route: '/info-course/reserved',
+	// 		// 	Text: 'Học viên bảo lưu',
+	// 		// 	Icon: ''
+	// 		// },
+	// 		// {
+	// 		// 	ItemType: 'single',
+	// 		// 	Key: '/info-course/registration',
+	// 		// 	Route: '/info-course/registration',
+	// 		// 	Text: 'Hẹn đăng ký',
+	// 		// 	Icon: ''
+	// 		// }
+	// 	]
+	// },
 	{
 		MenuName: 'Quản lý tài khoản',
 		MenuTitle: 'Quản lý tài khoản',
@@ -174,6 +192,27 @@ export const AccountantChildMenu = [
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
 			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student',
+				Route: '/info-course/student',
+				Text: 'Danh sách học viên',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student-in-class',
+				Route: '/info-course/student-in-class',
+				Text: 'Học viên trong lớp',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/changed',
+				Route: '/info-course/changed',
+				Text: 'Học viên chuyển lớp',
+				Icon: ''
+			}
 			// {
 			// 	TypeItem: 'single',
 			// 	Key: '/class/register',

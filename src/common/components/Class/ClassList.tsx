@@ -170,7 +170,7 @@ const ClassList = (props) => {
 											}
 										>
 											<p>
-												Lớp học đang có <span className="font-medium text-[#002456]">{item.TotalStudent}</span> học viên. Bạn có chắc muốn
+												Lớp học đang có <span className="font-medium text-[#B32025]">{item.TotalStudent}</span> học viên. Bạn có chắc muốn
 												xóa?
 											</p>
 										</Modal>

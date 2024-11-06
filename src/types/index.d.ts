@@ -39,3 +39,11 @@ type IApiResultCreate<T = any> = {
 	data: T
 	message: string
 }
+type IApiResultPagination<T = any> = {
+	Success: boolean
+	Data: T
+	ResultCode: number
+	ResultMessage: string
+	NoContent: boolean
+	TotalRow: number
+}

@@ -11,6 +11,7 @@ import { userInformationApi } from '~/api/user/user'
 import { ShowNoti } from '~/common/utils'
 import DatePickerField from '../FormControl/DatePickerField'
 import InputTextField from '../FormControl/InputTextField'
+import InputPassField from '../FormControl/InputPassField'
 import SelectField from '../FormControl/SelectField'
 import TextBoxField from '../FormControl/TextBoxField'
 import IconButonUpdateUser from './UserProfileTemplate/IconButonUpdateUser'
@@ -21,23 +22,27 @@ import { foreignLanguageApi } from '~/api/foreign-language'
 import { partnerApi } from '~/api/partner'
 import { visaStatusApi } from '~/api/visa-status'
 import { processApi } from '~/api/process'
-import { useSelector } from 'react-redux'
-import { RootState } from '~/store'
 import { useRole } from '~/common/hooks/useRole'
+import MyFormItem from '~/atomic/atoms/MyFormItem'
+import MySelectFetchParent, { CREATE_NEW_PARENT_ID } from '~/atomic/molecules/MySelectFetchParent'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import MySelectParentRelationship from '~/atomic/molecules/MySelectParentRelationship'
+import IconButton from '../Primary/IconButton'
 //
 export interface ITabStudentDetailProps {
 	StudentDetail: IUserResponse
 	setStudentDetail?: any
 	isNotUpdate: boolean
+	refetch?: () => void
 }
 
 export default function TabStudentDetail(props: ITabStudentDetailProps) {
-	const userInformation = useSelector((state: RootState) => state.user.information)
-	const { StudentDetail, setStudentDetail, isNotUpdate = true } = props
+	const { StudentDetail, setStudentDetail, isNotUpdate = true, refetch } = props
 	console.log('StudentDetail', StudentDetail)
 
 	const router = useRouter()
 	const { isStudent, isParents, isTeacher } = useRole()
+
 	const [optionList, setOptionList] = useState({
 		branch: [],
 		purpose: [],
@@ -54,9 +59,9 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	})
 	const [district, setDistrict] = useState([])
 	const [ward, setWard] = useState([])
-	const [init, setInit] = useState(true)
 
 	const [isLoading, setIsLoading] = useState<string>('')
+	const [isOpenEditParent, setIsOpenEditParent] = useState(false)
 
 	const [form] = Form.useForm()
 	const FullName = Form.useWatch('FullName', form)
@@ -87,7 +92,10 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 	const ContractNumber = Form.useWatch('ContractNumber', form)
 	const EnrollmentDay = Form.useWatch('EnrollmentDay', form)
 	const HighSchool = Form.useWatch('HighSchool', form)
+	const ParentId = Form.useWatch('ParentId', form)
 	const ref = useRef(null)
+
+	const isCreatingNewParent = ParentId === CREATE_NEW_PARENT_ID
 
 	const getDistrict = async (areaID) => {
 		try {
@@ -226,15 +234,33 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 		} catch (err) {}
 	}
 
+	const {
+		data: parentData,
+		isLoading: isLoadingParentData,
+		refetch: refetchParentData
+	} = useQuery({
+		queryKey: [userInformationApi.keyById, ParentId],
+		queryFn: async () => {
+			const res = await userInformationApi.getByID(ParentId)
+			const _parentData = res.data.data
+			form.setFieldsValue({
+				ParentUserName: _parentData?.UserName,
+				ParentFullName: _parentData?.FullName,
+				ParentMobile: _parentData?.Mobile,
+				ParentEmail: _parentData?.Email,
+				ParentDOB: moment(_parentData?.DOB)
+			})
+			return _parentData
+		},
+		enabled: !!ParentId && !isCreatingNewParent
+	})
+
 	useEffect(() => {
 		getInfoOptions()
 	}, [])
 
 	useEffect(() => {
 		if (StudentDetail) {
-			if (!init) {
-				form.setFieldsValue(ref.current.getFieldsValue())
-			} else {
 				let branchs =
 					isStudent || isParents
 						? Number(StudentDetail.BranchIds)
@@ -247,7 +273,9 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 					BranchIds: branchs,
 					DOB: StudentDetail?.DOB ? moment(StudentDetail?.DOB) : null,
 					ContractSigningDate: StudentDetail?.ContractSigningDate ? moment(StudentDetail?.ContractSigningDate) : null,
-					EnrollmentDay: StudentDetail?.EnrollmentDay ? moment(StudentDetail?.EnrollmentDay) : null
+					EnrollmentDay: StudentDetail?.EnrollmentDay ? moment(StudentDetail?.EnrollmentDay) : null,
+					ParentId: StudentDetail?.parentInfo?.UserInformationId,
+					ParentType: StudentDetail?.parentInfo?.ParentType
 				})
 
 				if (StudentDetail.AreaId) {
@@ -256,8 +284,6 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				if (StudentDetail.DistrictId) {
 					getWard(StudentDetail.DistrictId)
 				}
-				setInit(false)
-			}
 		}
 	}, [StudentDetail])
 
@@ -292,7 +318,7 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 				}
 			}
 
-			let res = await userInformationApi.update(payload)
+			let res = await userInformationApi.updateStudent(payload)
 			if (res.status == 200) {
 				setStudentDetail(payload)
 				ShowNoti('success', res.data.message)
@@ -308,6 +334,43 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 		// ko cho giáo  viên + học viên cập nhật thông tin
 		return isStudent || isParents || isTeacher ? true : false
 	}
+
+	const updateParentInfoMutation = useMutation({
+		mutationFn: (data: any) => {
+			return userInformationApi.updateStudent(data)
+		},
+		onSuccess(res, variables, context) {
+			ShowNoti('success', res?.data?.message)
+			setIsOpenEditParent(false)
+			refetch?.()
+		},
+		onError: (error) => ShowNoti('error', error?.message)
+	})
+
+	const onUpdateParentInfo = () => {
+		const dataForm = form.getFieldsValue()
+		const { ParentId, ParentUserName, ParentPassword, ParentFullName, ParentMobile, ParentDOB, ParentType, ParentEmail } = dataForm
+		if (
+			isCreatingNewParent &&
+			(!ParentId || !ParentUserName || !ParentPassword || !ParentFullName || !ParentMobile || !ParentDOB || !ParentType)
+		) {
+			ShowNoti('error', 'Vui lòng điền đầy đủ thông tin của phụ huynh!')
+			return
+		}
+
+		updateParentInfoMutation.mutate({
+			...StudentDetail,
+			ParentId: !isCreatingNewParent ? ParentId : undefined,
+			ParentUserName,
+			ParentPassword: isCreatingNewParent ? ParentPassword : undefined,
+			ParentFullName,
+			ParentMobile,
+			ParentDOB,
+			ParentType,
+			ParentEmail
+		})
+	}
+
 	return (
 		<div>
 			<Divider>
@@ -706,6 +769,107 @@ export default function TabStudentDetail(props: ITabStudentDetailProps) {
 								onClick={() => updateUserInfo('PurposeId', PurposeId)}
 								loading={isLoading === 'PurposeId'}
 							/>
+						</div>
+
+						<Divider>
+							<h2 className="pt-4 font-[600] text-center">Thông tin phụ huynh</h2>
+						</Divider>
+						<div className="flex justify-end gap-[8px] mb-[16px] mr-[-12px]">
+							{!isOpenEditParent && (
+								<IconButton
+									color="blue"
+									icon="edit"
+									type="button"
+									onClick={() => setIsOpenEditParent(true)}
+									tooltip="Sửa thông tin phụ huynh"
+									tooltipPlacement={'left'}
+								/>
+							)}
+							{isOpenEditParent && (
+								<>
+									<IconButton
+										color="green"
+										icon="save"
+										type="button"
+										tooltip="Lưu"
+										onClick={onUpdateParentInfo}
+										loading={updateParentInfoMutation.isPending}
+									/>
+									<IconButton
+										color="black"
+										icon="cancel"
+										type="button"
+										tooltip="Hủy"
+										onClick={() => {
+											setIsOpenEditParent(false)
+											form.setFieldsValue({
+												ParentId: StudentDetail?.parentInfo?.UserInformationId,
+												ParentType: StudentDetail?.parentInfo?.ParentType,
+												ParentUserName: parentData?.UserName,
+												ParentFullName: parentData?.FullName,
+												ParentMobile: parentData?.Mobile,
+												ParentEmail: parentData?.Email,
+												ParentDOB: moment(parentData?.DOB)
+											})
+										}}
+									/>
+								</>
+							)}
+						</div>
+						<div className="d-flex justify-between items-center mb-[24px]">
+							<MyFormItem name="ParentId" label="Chọn phụ huynh" className="w-full m-0">
+								<MySelectFetchParent
+									className="!h-[36px]"
+									disabled={!isOpenEditParent}
+									isHaveCreateNewOption
+									onChange={(val) => {
+										if (val === CREATE_NEW_PARENT_ID) {
+											form.setFieldsValue({
+												ParentUserName: undefined,
+												ParentPassword: undefined,
+												ParentFullName: undefined,
+												ParentMobile: undefined,
+												ParentDOB: undefined,
+												ParentType: undefined,
+												ParentEmail: undefined
+											})
+										}
+									}}
+								/>
+							</MyFormItem>
+						</div>
+						<div className="d-flex justify-between items-center mb-[24px]">
+							<InputTextField label="Tên đăng nhập" name="ParentUserName" className="w-full m-0" disabled={!isCreatingNewParent} />
+						</div>
+						{isCreatingNewParent && (
+							<div className="d-flex justify-between items-center mb-[24px]">
+								<InputPassField label="Mật khẩu" name="ParentPassword" className="w-full m-0" disabled={!isOpenEditParent} />
+							</div>
+						)}
+						<div className="d-flex justify-between items-center mb-[24px]">
+							<InputTextField label="Họ và tên" name="ParentFullName" className="w-full m-0" disabled={!isOpenEditParent} />
+						</div>
+						<div className="d-flex justify-between items-center mb-[24px]">
+							<InputTextField label="Số điện thoại" name="ParentMobile" className="w-full m-0" disabled={!isOpenEditParent} />
+						</div>
+						<div className="d-flex justify-between items-center mb-[24px]">
+							<DatePickerField
+								label="Ngày sinh"
+								placeholder=""
+								name="ParentDOB"
+								mode="single"
+								format="DD/MM/YYYY"
+								className="w-full m-0"
+								disabled={!isOpenEditParent}
+							/>
+						</div>
+						<div className="d-flex justify-between items-center mb-[24px]">
+							<MyFormItem label="Mối quan hệ" name="ParentType" className="w-full m-0">
+								<MySelectParentRelationship disabled={!isOpenEditParent} className='h-[36px]' />
+							</MyFormItem>
+						</div>
+						<div className="d-flex justify-between items-center mb-[24px]">
+							<InputTextField label="Email" name="ParentEmail" className="w-full m-0" disabled={!isOpenEditParent} />
 						</div>
 					</>
 				)}

@@ -10,3 +10,11 @@ type IOptionCommon = {
 	date?: string
 	disabled?: boolean
 }
+
+type TMyTable = {
+	total: number
+	loading: boolean
+	onChangePage: any
+	data: any[]
+	refreshData: any
+} & Omit<IPrimaryTable, 'columns'>

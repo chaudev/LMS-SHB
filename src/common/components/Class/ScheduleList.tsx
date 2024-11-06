@@ -43,7 +43,7 @@ export const ScheduleList = () => {
 							<div className="schedule-item">
 								<div className="top">{index + 1}</div>
 								<div className="time">
-									<div className="date">{moment(item?.StartTime).format('MM/DD')}</div>
+									<div className="date">{moment(item?.StartTime).format('DD/MM')}</div>
 									<div className="hour">
 										{moment(item?.StartTime).format('HH:mm')} - {moment(item?.EndTime).format('HH:mm')}
 									</div>

@@ -1,6 +1,7 @@
 import { Card } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { staticsticalApi } from '~/api/statistic'
+import MyStatisticCard from '~/atomic/molecules/MyStatisticCard'
 import StatisticPie from '~/common/components/Dashboard/StatisticPie'
 
 const FeedRating = ({ todoApi }) => {
@@ -22,9 +23,9 @@ const FeedRating = ({ todoApi }) => {
 		getFeedbackRating()
 	}, [todoApi])
 	return (
-		<Card title={<h1 className="text-2xl font-medium">Tỉ lệ đánh giá phản hồi</h1>}>
+		<MyStatisticCard title={'Tỉ lệ đánh giá phản hồi'}>
 			<StatisticPie data={statisticFeedRating} />
-		</Card>
+		</MyStatisticCard>
 	)
 }
 

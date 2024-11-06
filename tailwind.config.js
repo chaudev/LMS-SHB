@@ -88,6 +88,8 @@ module.exports = {
 			current: 'currentColor',
 			primary: '#b32025',
 			primaryDark: '#7e1416',
+			primaryExtraLight: '#f7f1f1',
+			primaryLight: '#ffd7d7',
 			basicBlue: '#096dd9',
 			basicBlueDark: '#0662c5',
 			'tw-white': '#ffffff',
@@ -100,7 +102,7 @@ module.exports = {
 			'tw-red': '#e21b1b',
 			'tw-green': '#38853b',
 			'tw-success': '#32c6a4',
-			'tw-primary': '#002456',
+			'tw-primary': '#B32025',
 			'tw-primary-lightest': '#cc9fa7',
 			'tw-secondary': '#c94a4f'
 		},

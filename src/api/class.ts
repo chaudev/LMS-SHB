@@ -3,7 +3,9 @@ import { instance } from '~/api/instance'
 const url = '/api/Class'
 export const classApi = {
 	getAll(params) {
-		return instance.get<IApiResultData<IClass[]>>(url, { params: params })
+		return instance.get<IApiResultData<IClass[]> & { total: number; comming: number; present: number; end: number }>(url, {
+			params: params
+		})
 	},
 	getByID(id) {
 		return instance.get<IApiResultData<IClass>>(`${url}/${id}`)
@@ -11,12 +13,14 @@ export const classApi = {
 	getAllTeacherWhenCreate(params) {
 		return instance.get<IApiResultData<ICurriculum[]>>(`${url}/teacher-when-create`, { params: params })
 	},
+	keyCheckTeacherAvailable: 'GET /api/Class/teacher-available',
 	checkTeacherAvailable(params) {
 		return instance.get<IApiResultData<any[]>>(`${url}/teacher-available`, { params: params })
 	},
 	checkTeacherTutoringAvailable(params) {
 		return instance.get<IApiResultData<any[]>>(`${url}/teacher-tutoring-available`, { params: params })
 	},
+	keyCheckRoomAvailable: 'GET /api/Class/room-available',
 	checkRoomAvailable(params) {
 		return instance.get<IApiResultData<any[]>>(`${url}/room-available`, { params: params })
 	},
@@ -89,5 +93,13 @@ export const classApi = {
 	},
 	hideFileCurriculumInClass(Id) {
 		return instance.put(`${url}/hide-file-curriculum-in-class/${Id}`)
+	},
+	keyGetDropdownByBranch: 'GET /api/Class/dropdown-by-branch',
+	getDropdownByBranch(params: { branchIds: string; status: string }) {
+		return instance.get<IApiResultData<IClass[]>>(`${url}/dropdown-by-branch`, { params })
+	},
+	keyGetClassStudentAttendanceRate: 'GET /api/Class/student-attendance-rate',
+	getClassStudentAttendanceRate(params: TGetClassStudentAttendanceRateParams) {
+		return instance.get<IApiResultData<TClassStudentAttendanceRate[]>>(`${url}/student-attendance-rate`, { params })
 	}
 }

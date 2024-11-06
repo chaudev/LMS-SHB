@@ -5,7 +5,7 @@ import PayForm from '~/common/components/Finance/Payment/pay'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNostis } from '~/common/utils'
-import { parseToMoney } from '~/common/utils/common'
+import { checkIncludesRole, parseToMoney } from '~/common/utils/common'
 import BillDetails from '../../../common/components/Finance/BillDetails'
 import moment from 'moment'
 import Head from 'next/head'
@@ -18,11 +18,14 @@ import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
 import { branchApi } from '~/api/branch'
 import PrimaryTag from '~/common/components/Primary/Tag'
 import { PrimaryTooltip } from '~/common/components'
-import { ButtonEye } from '~/common/components/TableButton'
 import Link from 'next/link'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 const initParamters = { pageSize: PAGE_SIZE, pageIndex: 1, search: '', fromDate: null, toDate: null, studentIds: null, branchIds: null }
 const PaymentManagementPage = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [loading, setLoading] = React.useState(true)
 	const [totalPage, setTotalPage] = React.useState(1)
 	const [data, setData] = React.useState([])
@@ -61,6 +64,10 @@ const PaymentManagementPage = () => {
 				{
 					value: 5,
 					title: 'Thanh toán học phí'
+				},
+				{
+					value: 6,
+					title: 'Đăng ký KTX'
 				}
 			]
 		},
@@ -218,12 +225,12 @@ const PaymentManagementPage = () => {
 				<>
 					<p>
 						<span className="font-[400] text-gray">Mã thanh toán: </span>
-						<span className="font-[500] text-[#002456]">{item.Code}</span>
+						<span className="font-[500] text-[#B32025]">{item.Code}</span>
 					</p>
 					<PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.StudentId}`}>
 						<p>
 							<span className="font-[400] text-gray">Người thanh toán: </span>
-							<span className="font-[600] text-[#002456]">
+							<span className="font-[600] text-[#B32025]">
 								<Link
 									href={{
 										pathname: '/info-course/student/detail',
@@ -280,7 +287,7 @@ const PaymentManagementPage = () => {
 		{
 			title: 'Loại',
 			dataIndex: 'Type',
-			width: 180,
+			width: 200,
 			render: (value, item) => (
 				<>
 					{value == 1 && <PrimaryTag color={'green'}>{item?.TypeName}</PrimaryTag>}
@@ -288,6 +295,7 @@ const PaymentManagementPage = () => {
 					{value == 3 && <PrimaryTag color={'red'}>{item?.TypeName}</PrimaryTag>}
 					{value == 4 && <PrimaryTag color={'yellow'}>{item?.TypeName}</PrimaryTag>}
 					{value == 5 && <PrimaryTag color={'primary'}>{item?.TypeName}</PrimaryTag>}
+					{value == 6 && <PrimaryTag color={'orange'}>{item?.TypeName}</PrimaryTag>}
 				</>
 			)
 		},
@@ -300,7 +308,7 @@ const PaymentManagementPage = () => {
 			title: 'Người tạo',
 			dataIndex: 'ModifiedBy',
 			width: 220,
-			render: (value, item) => <p className="font-[600] text-[#002456]">{value}</p>
+			render: (value, item) => <p className="font-[600] text-[#B32025]">{value}</p>
 		},
 		{
 			title: 'Ngày',
@@ -321,20 +329,11 @@ const PaymentManagementPage = () => {
 			width: 60,
 			render: (value, item) => (
 				<div className="flex item-center">
-					{/* <PrimaryTooltip content="Thông tin học viên" place="left" id={`view-st-${item?.UserInformationId}`}>
-						<Link
-							href={{
-								pathname: '/info-course/student/detail',
-								query: { StudentID: item?.UserInformationId }
-							}}
-						>
-							<a>
-								<ButtonEye className="mr-2" />
-							</a>
-						</Link>
-					</PrimaryTooltip> */}
-					<PayForm isEdit defaultData={item} onRefresh={getData} />
-					{item?.Debt < 0 && <RefundForm onRefresh={getData} item={item} />}
+					{checkIncludesRole(listPermissionsByRoles.finance.paymentManagement.makePayment, Number(userInformation?.RoleId)) && (
+						<PayForm isEdit defaultData={item} onRefresh={getData} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.finance.paymentManagement.refund, Number(userInformation?.RoleId)) &&
+						item?.Debt < 0 && <RefundForm onRefresh={getData} item={item} />}
 				</div>
 			)
 		}
@@ -370,7 +369,9 @@ const PaymentManagementPage = () => {
 							/>
 						</div>
 
-						<PaymentForm onRefresh={getData} />
+						{checkIncludesRole(listPermissionsByRoles.finance.paymentManagement.create, Number(userInformation?.RoleId)) && (
+							<PaymentForm onRefresh={getData} />
+						)}
 					</div>
 				}
 				expandable={expandedRowRender}

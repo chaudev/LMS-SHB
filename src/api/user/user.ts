@@ -28,6 +28,7 @@ export const userInformationApi = {
 		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/user-available/${role}`)
 	},
 
+	keyGetAllUserAvailable: 'GET /api/UserInformation/user-available',
 	getAllUserAvailable(params: { roleId: string; branchId: string }) {
 		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/user-available/`, { params: params })
 	},
@@ -36,12 +37,14 @@ export const userInformationApi = {
 		return instance.get<IApiResultData<IUserInformation[]>>('/api/Staff', { params: params })
 	},
 
+	keyGetAll: 'GET /api/UserInformation',
 	getAll(params: IUserInputGetall) {
 		return instance.get<IApiResultData<IUserResponse[]>>(url, {
 			params
 		})
 	},
 
+	keyById: 'GET /api/UserInformation/id',
 	getByID(ID) {
 		return instance.get<IApiResultData<IUserResponse>>(`${url}/${ID}`)
 	},
@@ -51,6 +54,12 @@ export const userInformationApi = {
 	},
 	update(data: { Enable?: boolean } & any) {
 		return instance.put(url, data)
+	},
+	addStudent(data) {
+		return instance.post(`${url}/student`, data)
+	},
+	updateStudent(data: { Enable?: boolean } & any) {
+		return instance.put(`${url}/student`, data)
 	},
 	delete(data) {
 		return instance.delete(`${url}/${data}`)
@@ -64,6 +73,10 @@ export const userInformationApi = {
 		return instance.post(`${url}/ImportStudent`, fData, {
 			headers: { 'Content-Type': 'multipart/form-data' }
 		})
+	},
+
+	getTemplate() {
+		return instance.get(`${url}/student-template`)
 	},
 
 	// profile template
@@ -80,6 +93,22 @@ export const userInformationApi = {
 
 	getOverviewStatus() {
 		return instance.get<IApiResultData<IStatisticOverviewStudent[]>>(url + '/overview-status')
+	},
+
+	keyGetStudentInClass: 'GET /api/UserInformation/student-in-class',
+	getStudentInClass(classes: string) {
+		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/student-in-class/${classes}`, {})
+	},
+
+	keyGetStaffAvailable: 'GET /api/UserInformation/staff-available',
+	getStaffAvailable() {
+		return instance.get<IApiResultData<IUserInformation[]>>(`${url}/staff-available`, {})
+	},
+	
+
+	keyGetUserDormitory: 'dormitory-information',
+	getDormitory(userId: number) {
+		return instance.get<IApiResultData<TDormitoryItem[]>>(`${url}/dormitory-information/${userId}`, {})
 	}
 }
 

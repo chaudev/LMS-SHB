@@ -55,3 +55,16 @@ type ICustomer = IBaseApi<{
 	ParentsNameOf: string
 	CounselorsName: string
 }>
+
+type TCustomerHistory = {
+	CustomerId: number
+	CustomerStatusId: number
+	CustomerStatusName: string
+	BranchId: number
+	SaleId: number
+	Id: number
+	CreatedOn: string
+	CreatedBy: string
+	ModifiedOn: string
+	ModifiedBy: string
+}

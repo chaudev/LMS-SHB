@@ -32,7 +32,7 @@ const MajorsStudentPage = () => {
 	const [totalRow, setTotalRow] = useState(0)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [giftsList, setGiftsList] = useState<any>([])
-	const [idSelected,setIdSelected] = useState<number>(null)
+	const [idSelected, setIdSelected] = useState<number>(null)
 
 	const initParamters = {
 		majorsId: slug,
@@ -116,7 +116,8 @@ const MajorsStudentPage = () => {
 		{
 			title: 'Giá tiền',
 			dataIndex: 'TotalPrice',
-			render: (text) => <p>{parseToMoney(text)}₫</p>
+			align: 'right',
+			render: (text) => <p>{parseToMoney(text)}</p>
 		},
 		{
 			width: 100,
@@ -180,7 +181,7 @@ const MajorsStudentPage = () => {
 						}}
 					>
 						<a>
-							<IconButton tooltip="Thay đổi ngành học" type="button" icon="exchange" color="primary" />
+							<IconButton tooltip="Thay đổi chương trình học" type="button" icon="exchange" color="primary" />
 						</a>
 					</Link>
 					<IconButton onClick={() => showModal(item)} tooltip="Cập nhật thông tin" type="button" icon="edit" color="primary" />
@@ -243,7 +244,7 @@ const MajorsStudentPage = () => {
 	return (
 		<>
 			<Modal
-				title="Cập nhật ngành học"
+				title="Cập nhật chương trình học"
 				open={isModalOpen}
 				closable={false}
 				footer={

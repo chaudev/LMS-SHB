@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart } from 'recharts'
+import MyColumnChart from '~/common/antv-charts/Column/basic/MyColumnChart'
 
 const StatisticStudentByAge = (props) => {
-	const { data, titleBar } = props
+	const { data, titleBar, loading } = props
 	const [hideXAxis, setHideXAxis] = useState(false)
 
 	useEffect(() => {
@@ -30,9 +31,16 @@ const StatisticStudentByAge = (props) => {
 		)
 	}
 
+	const convertChartData = (data) => {
+		return data?.map((item) => ({
+			Name: `Độ tuổi ${item?.Name}`,
+			Value: item.Value
+		}))
+	}
+
 	return (
 		<>
-			<ResponsiveContainer width="100%" height={280}>
+			{/* <ResponsiveContainer width="100%" height={280}>
 				<ComposedChart width={500} height={300} data={data}>
 					<CartesianGrid stroke="#f5f5f5" />
 					{hideXAxis ? <XAxis hide dataKey="Name" /> : <XAxis dataKey="Name" />}
@@ -41,7 +49,16 @@ const StatisticStudentByAge = (props) => {
 					<Legend content={renderLegend} />
 					<Bar dataKey="Value" name={titleBar || 'Thống kê độ tuổi của học viên'} barSize={20} fill="#f492a0" />
 				</ComposedChart>
-			</ResponsiveContainer>
+			</ResponsiveContainer> */}
+			<MyColumnChart
+				// legend={false}
+				loading={loading}
+				data={!!data ? convertChartData(data) : []}
+				xField="Name"
+				yField="Value"
+				truncateNumber={50}
+				color={['#e67e22', '#1abc9c', '#3498db', '#9b59b6', '#e74c3c', '#2980b9', '#c0392b']}
+			/>
 		</>
 	)
 }

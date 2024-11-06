@@ -48,6 +48,11 @@
 	&.blue-weight {
 		background: #004a6f;
 	}
+
+	&.transparent {
+		background-color: transparent;
+		color: #1d262b;
+	}
 }
 .row-tags {
 	display: flex;

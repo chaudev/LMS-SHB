@@ -1,5 +1,7 @@
 import { Form, Input, Select } from 'antd'
+import MySelectMajor from '~/atomic/molecules/MySelectMajor'
 import PrimaryButton from '~/common/components/Primary/Button'
+import styles from './styles.module.scss'
 
 const FormProfileTemplate = ({ form, handleCreateUpdate, isModalOpen = { type: '' }, onCancelModal }) => {
 	return (
@@ -25,6 +27,9 @@ const FormProfileTemplate = ({ form, handleCreateUpdate, isModalOpen = { type: '
 					</Select>
 				</Form.Item>
 			)}
+			<Form.Item label="Chọn chương trình học" name="MajorIds" className={styles.majorSelection}>
+				<MySelectMajor mode="multiple" className="min-h-[36px]" />
+			</Form.Item>
 
 			<div className="d-flex justify-center gap-4">
 				<PrimaryButton onClick={onCancelModal} className="text-white" type="button" icon="cancel" background="orange">

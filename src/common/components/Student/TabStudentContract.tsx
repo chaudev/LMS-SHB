@@ -13,6 +13,7 @@ import { ShowNoti } from '~/common/utils'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
 import IconButton from '../Primary/IconButton'
+import { is } from '~/common/utils/common'
 
 export interface ITabStudentContractProps {
 	StudentDetail: IUserResponse
@@ -32,7 +33,7 @@ export default function TabStudentContract(props: ITabStudentContractProps) {
 
 	const getContractList = async (studentID) => {
 		try {
-			const res = await contractApi.getAll(todoApi)
+			const res = await contractApi.getStudentContract(todoApi)
 			if (res.status === 200) {
 				let temp = []
 				res.data.data.forEach((item) => temp.push({ title: item.Name, value: item.Id }))
@@ -82,23 +83,21 @@ export default function TabStudentContract(props: ITabStudentContractProps) {
 
 	const onSubmit = async (data) => {
 		try {
-			const res =
-				modeEdit == 'add'
-					? await contractApi.addContract({ Name: data.Name, Content: data.Content, StudentId: StudentDetail.UserInformationId })
-					: await contractApi.update({ Name: data.Name, Content: data.Content, Id: data.ContractID })
-
-			if (res.status === 200) {
-				ShowNoti('success', res.data.message)
-				getContractList(StudentDetail.UserInformationId)
-				setModeEdit('edit')
-				handleChangeContract(contracts.option[0].value, contracts.option[0].title)
-				form.setFieldValue('ContractID', contracts.option[0].value)
-				form.setFieldValue('Name', null)
-				form.setFieldValue('Content', null)
-			}
-
-			if (res.status === 204) {
-			}
+			// const res =
+			// 	modeEdit == 'add'
+			// 		? await contractApi.addContract({ Name: data.Name, Content: data.Content, StudentId: StudentDetail.UserInformationId })
+			// 		: await contractApi.update({ Name: data.Name, Content: data.Content, Id: data.ContractID })
+			// if (res.status === 200) {
+			// 	ShowNoti('success', res.data.message)
+			// 	getContractList(StudentDetail.UserInformationId)
+			// 	setModeEdit('edit')
+			// 	handleChangeContract(contracts.option[0].value, contracts.option[0].title)
+			// 	form.setFieldValue('ContractID', contracts.option[0].value)
+			// 	form.setFieldValue('Name', null)
+			// 	form.setFieldValue('Content', null)
+			// }
+			// if (res.status === 204) {
+			// }
 		} catch (err) {
 			// ShowNoti('error', err.message)
 		}
@@ -114,6 +113,7 @@ export default function TabStudentContract(props: ITabStudentContractProps) {
 								<SelectField
 									name="ContractID"
 									label=""
+									allowClear={false}
 									optionList={contracts.option}
 									placeholder="Chọn hợp đồng"
 									onChangeSelect={(data) => {
@@ -126,12 +126,12 @@ export default function TabStudentContract(props: ITabStudentContractProps) {
 									}}
 								/>
 
-								{contracts.list.length > 0 && (
+								{/* {contracts.list.length > 0 && (
 									<PrimaryButton background="green" type="submit" children={<span>Lưu thay đổi</span>} icon="save" onClick={() => {}} />
-								)}
+								)} */}
 							</>
 						)}
-						{modeEdit == 'edit' && userInformation.RoleId !== '3' && (
+						{modeEdit == 'edit' && !is(userInformation).student && (
 							<PrimaryButton
 								background="blue"
 								type="button"
@@ -189,7 +189,7 @@ export default function TabStudentContract(props: ITabStudentContractProps) {
 												)}
 											</>
 										)}
-										{modeEdit == 'edit' && userInformation.RoleId !== '3' && (
+										{modeEdit == 'edit' && !is(userInformation).student && (
 											<PrimaryButton
 												background="blue"
 												type="button"
@@ -214,9 +214,9 @@ export default function TabStudentContract(props: ITabStudentContractProps) {
 					)}
 				</div>
 
-				{userInformation.RoleId !== '3' && <InputTextField name="Name" label="Tên hợp đồng" placeholder="Nhập tên hộp đồng" />}
+				{!is(userInformation).student && <InputTextField name="Name" label="Tên hợp đồng" placeholder="Nhập tên hợp đồng" />}
 
-				{userInformation.RoleId !== '3' ? (
+				{!is(userInformation).student ? (
 					<EditorField name="Content" label="Nội dung hợp đồng" onChangeEditor={(value) => form.setFieldValue('Content', value)} />
 				) : (
 					<p className="form-print-import">{ReactHtmlParser(contract)}</p>

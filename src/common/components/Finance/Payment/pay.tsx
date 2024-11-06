@@ -73,8 +73,12 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 
 		const DATA_SUBMIT = {
 			...params,
+			Type: defaultData.Type,
+			RefId: defaultData.RefId,
 			Paid: removeCommas(params.Paid)
 		}
+
+		console.log('-- DATA_SUBMIT', DATA_SUBMIT)
 
 		!isEdit && post(DATA_SUBMIT)
 		isEdit && edit(DATA_SUBMIT)
@@ -122,7 +126,7 @@ const PayForm: FC<IPayForm> = ({ isEdit, onRefresh, defaultData }) => {
 		<>
 			{isEdit && (
 				<PrimaryTooltip id={`pay-${defaultData?.Code}`} place="left" content="Thanh toán">
-					<div onClick={openEdit} className="px-[4px] cursor-pointer text-[#002456] active:text-[#186fbc]">
+					<div onClick={openEdit} className="px-[4px] cursor-pointer text-[#B32025] active:text-[#186fbc]">
 						<FaMoneyBill size={22} />
 					</div>
 				</PrimaryTooltip>

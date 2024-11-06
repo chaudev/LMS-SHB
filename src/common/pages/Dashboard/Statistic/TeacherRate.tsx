@@ -1,7 +1,8 @@
 import { Card } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { staticsticalApi } from '~/api/statistic'
- import StatisticPieRateTeacher from '~/common/components/Dashboard/StatisticPieRateTeacher'
+import MyStatisticCard from '~/atomic/molecules/MyStatisticCard'
+import StatisticPieRateTeacher from '~/common/components/Dashboard/StatisticPieRateTeacher'
 
 interface ITeacherRate {
 	todoApi: any
@@ -23,9 +24,9 @@ const TeacherRate: React.FC<ITeacherRate> = ({ todoApi }) => {
 		getTeacherRate()
 	}, [todoApi])
 	return (
-		<Card title={<h1 className="text-2xl font-medium">Tỉ lệ đánh giá</h1>}>
+		<MyStatisticCard title={'Tỉ lệ đánh giá'}>
 			<StatisticPieRateTeacher data={statisticTeacherRate} />
-		</Card>
+		</MyStatisticCard>
 	)
 }
 

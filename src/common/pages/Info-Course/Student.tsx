@@ -1,57 +1,59 @@
+import { useMutation } from '@tanstack/react-query'
+import { Alert, Form, Input, Modal, Popconfirm, Popover } from 'antd'
+import moment from 'moment'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { FC, useEffect, useMemo, useState } from 'react'
+import { Filter } from 'react-feather'
+import { BsThreeDots } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { areaApi } from '~/api/area'
-import { registerApi, userInformationApi } from '~/api/user/user'
-import { Alert, Form, Input, Modal, Popconfirm, Popover } from 'antd'
-import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
-import { ShowNostis, ShowNoti } from '~/common/utils'
-import { RootState } from '~/store'
-import { setArea } from '~/store/areaReducer'
-import PrimaryTable from '~/common/components/Primary/Table'
-import PrimaryButton from '~/common/components/Primary/Button'
-import { BsThreeDots } from 'react-icons/bs'
-import ImportStudent from '~/common/components/User/ImportStudent'
-import CreateUser from '~/common/components/User/user-form'
-import appConfigs from '~/appConfig'
-import { parseSelectArray } from '~/common/utils/common'
 import { branchApi } from '~/api/branch'
-import { setBranch } from '~/store/branchReducer'
-import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
-import { sourceApi } from '~/api/source'
-import { learningNeedApi } from '~/api/learning-needs'
-import { purposeApi } from '~/api/purpose'
-import { setSource } from '~/store/sourceReducer'
-import { setLearningNeed } from '~/store/learningNeedReducer'
-import { setPurpose } from '~/store/purposeReducer'
-import { userInfoColumn } from '~/common/libs/columns/user-info'
-import { ButtonEye } from '~/common/components/TableButton'
-import { PrimaryTooltip } from '~/common/components'
-import IconButton from '~/common/components/Primary/IconButton'
-import Link from 'next/link'
-import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
-import { processApi } from '~/api/process'
-import { visaStatusApi } from '~/api/visa-status'
 import { foreignLanguageApi } from '~/api/foreign-language'
-import { profileStatusApi } from '~/api/profile-status'
-import OverviewStatusStudent from './OverviewStatusStudent'
-import { permissionApi } from '~/api/permission'
-import PrimaryTag from '~/common/components/Primary/Tag'
-import moment from 'moment'
-import { useRole } from '~/common/hooks/useRole'
-import SelectField from '~/common/components/FormControl/SelectField'
-import DatePickerField from '~/common/components/FormControl/DatePickerField'
+import { learningNeedApi } from '~/api/learning-needs'
 import { officeApi } from '~/api/office'
 import { partnerApi } from '~/api/partner'
-import { Filter } from 'react-feather'
+import { permissionApi } from '~/api/permission'
+import { processApi } from '~/api/process'
+import { profileStatusApi } from '~/api/profile-status'
+import { purposeApi } from '~/api/purpose'
+import { sourceApi } from '~/api/source'
+import { userInformationApi } from '~/api/user/user'
+import { visaStatusApi } from '~/api/visa-status'
+import appConfigs from '~/appConfig'
+import { PrimaryTooltip } from '~/common/components'
+import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
+import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import DatePickerField from '~/common/components/FormControl/DatePickerField'
+import SelectField from '~/common/components/FormControl/SelectField'
 import ModalFooter from '~/common/components/ModalFooter'
-import { useRouter } from 'next/router'
+import PrimaryButton from '~/common/components/Primary/Button'
+import IconButton from '~/common/components/Primary/IconButton'
+import PrimaryTable from '~/common/components/Primary/Table'
+import PrimaryTag from '~/common/components/Primary/Tag'
+import { ButtonEye } from '~/common/components/TableButton'
+import ImportStudent from '~/common/components/User/ImportStudent'
+import CreateUser from '~/common/components/User/user-form'
+import { userInfoColumn } from '~/common/libs/columns/user-info'
+import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
+import { ShowNostis, ShowNoti } from '~/common/utils'
+import { checkIncludesRole, is, parseSelectArray } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { ShowErrorToast } from '~/common/utils/main-function'
+import { RootState } from '~/store'
+import { setArea } from '~/store/areaReducer'
+import { setBranch } from '~/store/branchReducer'
+import { setLearningNeed } from '~/store/learningNeedReducer'
+import { setPurpose } from '~/store/purposeReducer'
+import { setSource } from '~/store/sourceReducer'
+import OverviewStatusStudent from './OverviewStatusStudent'
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
 	const state = useSelector((state: RootState) => state)
 	const userInformation = useSelector((state: RootState) => state.user.information)
-	const { isParents } = useRole()
 	const dispatch = useDispatch()
+	const router = useRouter()
 
 	const initParamters = {
 		sort: 0,
@@ -61,7 +63,7 @@ const Student: FC<IPersonnel> = (props) => {
 		PageIndex: 1,
 		RoleIds: role,
 		Search: null,
-		parentIds: userInformation?.RoleId == '8' ? userInformation.UserInformationId.toString() : '',
+		parentIds: is(userInformation)?.parent ? userInformation.UserInformationId.toString() : '',
 		branchIds: null,
 		genders: null,
 		profileStatusIds: null,
@@ -82,14 +84,10 @@ const Student: FC<IPersonnel> = (props) => {
 	const [users, setUser] = useState([])
 	const [totalRow, setTotalRow] = useState(1)
 	const [loading, setLoading] = useState(false)
-	const [loadingAllow, setLoadingAllow] = useState(false)
+	// const [loadingAllow, setLoadingAllow] = useState(false)
 
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 	const [isFilter, setIsFilter] = useState<boolean>(false)
-
-	function isManager() {
-		return userInformation?.RoleId == 4
-	}
 
 	const sale = useMemo(() => {
 		if (state.saler.Saler.length > 0) {
@@ -131,7 +129,7 @@ const Student: FC<IPersonnel> = (props) => {
 				dispatch(setSource([]))
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -145,7 +143,7 @@ const Student: FC<IPersonnel> = (props) => {
 				dispatch(setLearningNeed([]))
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -159,7 +157,7 @@ const Student: FC<IPersonnel> = (props) => {
 				dispatch(setPurpose([]))
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 	const getRoleStaff = async () => {
@@ -173,7 +171,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setRoleStaff([])
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -184,7 +182,7 @@ const Student: FC<IPersonnel> = (props) => {
 				dispatch(setBranch(res.data.data))
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -229,7 +227,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setOffice(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -244,7 +242,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setPartner(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -318,7 +316,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setProcess(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -333,7 +331,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setVisaStatus(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -348,7 +346,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setForeignLanguage(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -363,7 +361,7 @@ const Student: FC<IPersonnel> = (props) => {
 				setProfileStatus(temp)
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		}
 	}
 
@@ -419,8 +417,7 @@ const Student: FC<IPersonnel> = (props) => {
 			render: (data, item) => {
 				return (
 					<div className="flex items-center">
-						{isAdmin() && (
-							<>
+							{checkIncludesRole(listPermissionsByRoles.account.staff.update, Number(userInformation?.RoleId)) && (
 								<CreateUser
 									process={process}
 									visaStatus={visaStatus}
@@ -433,27 +430,10 @@ const Student: FC<IPersonnel> = (props) => {
 									onRefresh={() => getUsers(apiParameters)}
 									isStudent={false}
 								/>
+							)}
+							{checkIncludesRole(listPermissionsByRoles.account.staff.delete, Number(userInformation?.RoleId)) && (
 								<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
-							</>
-						)}
-
-						{isManager() && item?.RoleId !== 1 && item?.RoleId !== 4 && (
-							<>
-								<CreateUser
-									process={process}
-									visaStatus={visaStatus}
-									profileStatus={profileStatus}
-									foreignLanguage={foreignLanguage}
-									isEdit
-									roleStaff={roleStaff}
-									defaultData={item}
-									className="!hidden w700:!inline-flex"
-									onRefresh={() => getUsers(apiParameters)}
-									isStudent={false}
-								/>
-								<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
-							</>
-						)}
+							)}
 					</div>
 				)
 			}
@@ -539,6 +519,11 @@ const Student: FC<IPersonnel> = (props) => {
 			title: 'Trường THPT',
 			width: 150,
 			dataIndex: 'HighSchool'
+		},
+		{
+			title: 'Ký túc xá',
+			width: 150,
+			dataIndex: 'Dormitory'
 		},
 		{
 			title: 'Ngày ký hợp đồng',
@@ -676,22 +661,7 @@ const Student: FC<IPersonnel> = (props) => {
 							</Link>
 						</PrimaryTooltip>
 
-						{role !== 3 && (isAdmin() || isManage()) && (
-							<CreateUser
-								process={process}
-								visaStatus={visaStatus}
-								profileStatus={profileStatus}
-								foreignLanguage={foreignLanguage}
-								isEdit
-								roleStaff={roleStaff}
-								defaultData={item}
-								className="!hidden w700:!inline-flex"
-								onRefresh={() => getUsers(apiParameters)}
-								isStudent={false}
-							/>
-						)}
-
-						{role == 3 && (isAdmin() || isManage()) && (
+						{checkIncludesRole(listPermissionsByRoles.student.update, Number(userInformation?.RoleId)) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}
@@ -709,59 +679,66 @@ const Student: FC<IPersonnel> = (props) => {
 								isStudent={true}
 							/>
 						)}
-						{(isAdmin() || isManage()) && (
+						{checkIncludesRole(listPermissionsByRoles.student.delete, Number(userInformation?.RoleId)) && (
 							<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
 						)}
-						{((role == 3 && isAdmin()) || isManage()) && item.LearningStatus !== 1 && (
-							<Popconfirm
-								title={
-									item.LearningStatus === 4
-										? 'Xác nhận hủy bảo lưu?'
-										: 'Học viên sẽ bị xóa ra khỏi tất cả lớp để bảo lưu thông tin học tập, xác nhận?'
-								}
-								onConfirm={() => {
-									reverserUser(item.UserInformationId)
-								}}
-								// onCancel={cancel}
-								okText={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
-								cancelText="Hủy"
-								okButtonProps={{ loading: loading }}
-							>
-								<IconButton tooltip={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'} icon="reserved" type="button" color="purple" />
-							</Popconfirm>
-						)}
+						{checkIncludesRole(listPermissionsByRoles.student.reserveStudents, Number(userInformation?.RoleId)) &&
+							item.LearningStatus !== 1 && (
+								<Popconfirm
+									title={
+										item.LearningStatus === 4
+											? 'Xác nhận hủy bảo lưu?'
+											: 'Học viên sẽ bị xóa ra khỏi tất cả lớp để bảo lưu thông tin học tập, xác nhận?'
+									}
+									onConfirm={() => {
+										reverserUser(item.UserInformationId)
+									}}
+									// onCancel={cancel}
+									okText={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
+									cancelText="Hủy"
+									okButtonProps={{ loading: loading }}
+									placement="bottomRight"
+								>
+									<IconButton
+										tooltip={item.LearningStatus === 4 ? 'Hủy bảo lưu' : 'Bảo lưu'}
+										icon="reserved"
+										type="button"
+										color="purple"
+									/>
+								</Popconfirm>
+							)}
 					</div>
 				)
 			}
 		}
 	]
 
-	const changeAllow = async (param) => {
-		setLoadingAllow(true)
-		try {
-			const response = await registerApi.changeRegister(param)
-			if (response.status === 200) {
-				if (!!reFresh) {
-					reFresh()
-				}
-			}
-		} catch (error) {
-			console.error(error)
-		} finally {
-			setLoadingAllow(false)
-		}
-	}
+	// const changeAllow = async (param) => {
+	// 	setLoadingAllow(true)
+	// 	try {
+	// 		const response = await registerApi.changeRegister(param)
+	// 		if (response.status === 200) {
+	// 			if (!!reFresh) {
+	// 				reFresh()
+	// 			}
+	// 		}
+	// 	} catch (error) {
+	// 		console.error(error)
+	// 	} finally {
+	// 		setLoadingAllow(false)
+	// 	}
+	// }
 
 	function isAdmin() {
-		return userInformation?.RoleId == 1
-	}
-
-	function isManage() {
-		return userInformation?.RoleId == 4
+		return is(userInformation)?.admin
 	}
 
 	function isAcademic() {
-		return userInformation?.RoleId == 7
+		return is(userInformation).academic
+	}
+
+	function isManager() {
+		return is(userInformation).manager
 	}
 
 	const handleFilter = (params) => {
@@ -945,6 +922,13 @@ const Student: FC<IPersonnel> = (props) => {
 		}
 	]
 
+	const mutationGetTemplate = useMutation({
+		mutationKey: ['GET /api/UserInformation/student-template'],
+		mutationFn: async () => userInformationApi.getTemplate(),
+		onSuccess: (res) => router.push(res.data.data),
+		onError: (error) => ShowNoti('error', error.message)
+	})
+
 	return (
 		<div className="info-course-student">
 			<PrimaryTable
@@ -954,7 +938,7 @@ const Student: FC<IPersonnel> = (props) => {
 				loading={loading}
 				current={apiParameters.PageIndex}
 				key={'UserInformationId'}
-				rowSelection={{
+				rowSelection={(isAdmin() || isManager()) ? {
 					type: 'checkbox',
 					fixed: true,
 					selectedRowKeys: selectedRowKeys,
@@ -962,12 +946,12 @@ const Student: FC<IPersonnel> = (props) => {
 					onChange: (rowKeys) => {
 						setSelectedRowKeys(rowKeys)
 					}
-				}}
+				} : null}
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, PageIndex: event })}
 				TitleCard={
 					<>
-						{role === 3 && !isParents && <OverviewStatusStudent />}
-						{role == 3 ? (
+						{is(userInformation).student && <OverviewStatusStudent />}
+						{is(userInformation).student ? (
 							<button onClick={() => setIsFilter(!isFilter)} className="btn btn-secondary light btn-filter">
 								<Filter />
 							</button>
@@ -997,7 +981,7 @@ const Student: FC<IPersonnel> = (props) => {
 				}
 				Extra={
 					<>
-						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+						{/* {role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager || is(userInformation).saler) && (
 							<PrimaryButton
 								loading={loadingAllow}
 								className="mr-2 btn-block-registration"
@@ -1008,25 +992,29 @@ const Student: FC<IPersonnel> = (props) => {
 							>
 								{allowRegister ? 'Cấm đăng ký' : 'Cho phép đăng ký'}
 							</PrimaryButton>
-						)}
+						)} */}
 
-						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+						{role == 3 && checkIncludesRole(listPermissionsByRoles.student.import, Number(userInformation?.RoleId)) && (
 							<PrimaryButton
 								className="mr-2 btn-download"
 								type="button"
 								icon="download"
 								background="blue"
-								onClick={() => window.open(`${appConfigs.linkDownloadExcel}?key=${new Date().getTime()}`)}
+								loading={mutationGetTemplate.isPending}
+								onClick={() => mutationGetTemplate.mutateAsync()}
+								// onClick={() => window.open(`${appConfigs.linkDownloadExcel}?key=${new Date().getTime()}`)}
 							>
 								File mẫu
 							</PrimaryButton>
 						)}
 
-						{role == 3 && (isAdmin() || isManage()) && (
+						{role == 3 && checkIncludesRole(listPermissionsByRoles.student.import, Number(userInformation?.RoleId)) && (
 							<ImportStudent className="mr-1 btn-import" onFetchData={() => getUsers(apiParameters)} />
 						)}
 
-						{role == 3 && (isAdmin() || isManage()) && <ExportStudents filterOption={dataFilterStudent} />}
+						{role == 3 && checkIncludesRole(listPermissionsByRoles.student.export, Number(userInformation?.RoleId)) && (
+							<ExportStudents filterOption={dataFilterStudent} />
+						)}
 
 						<Popover
 							placement="bottomLeft"
@@ -1034,7 +1022,7 @@ const Student: FC<IPersonnel> = (props) => {
 							onVisibleChange={(event) => setVisible(event)}
 							content={
 								<div className="w-[220px]">
-									{role == 3 && allowRegister !== undefined && (
+									{/* {role == 3 && allowRegister !== undefined && (
 										<PrimaryButton
 											loading={loadingAllow}
 											className="mb-3 !w-full"
@@ -1045,7 +1033,7 @@ const Student: FC<IPersonnel> = (props) => {
 										>
 											{allowRegister ? 'Cấm đăng ký' : 'Cho phép đăng ký'}
 										</PrimaryButton>
-									)}
+									)} */}
 
 									<CreateUser
 										process={process}
@@ -1083,7 +1071,7 @@ const Student: FC<IPersonnel> = (props) => {
 							}
 							trigger="click"
 						>
-							{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+							{role == 3 && (isAdmin() || isManager() || isAcademic() || is(userInformation).manager) && (
 								<PrimaryButton
 									onClick={() => setVisible(!visible)}
 									className={`${role == 3 ? 'btn-popover-student' : 'btn-popover-personel'} btn-popover`}
@@ -1095,7 +1083,7 @@ const Student: FC<IPersonnel> = (props) => {
 							)}
 						</Popover>
 
-						{role == 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+						{role == 3 && checkIncludesRole(listPermissionsByRoles.student.create, Number(userInformation?.RoleId)) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}
@@ -1112,7 +1100,7 @@ const Student: FC<IPersonnel> = (props) => {
 							/>
 						)}
 
-						{role !== 3 && (isAdmin() || isManager() || isAcademic() || isManage()) && (
+						{role !== 3 && checkIncludesRole(listPermissionsByRoles.account.staff.create, Number(userInformation?.RoleId)) && (
 							<CreateUser
 								process={process}
 								visaStatus={visaStatus}
@@ -1154,6 +1142,7 @@ const Student: FC<IPersonnel> = (props) => {
 								onRefresh={() => {
 									getUsers(apiParameters)
 								}}
+								role={role}
 							/>
 						</div>
 					</div>
@@ -1163,7 +1152,7 @@ const Student: FC<IPersonnel> = (props) => {
 	)
 }
 
-const AlertSelectStudent = ({ selectedRowKeys, onRefresh }) => {
+const AlertSelectStudent = ({ selectedRowKeys, onRefresh, role }) => {
 	const [isLoadingDelete, setIsLoadingDelete] = useState(false)
 
 	const handleDeleteMutibleUser = async () => {
@@ -1177,7 +1166,7 @@ const AlertSelectStudent = ({ selectedRowKeys, onRefresh }) => {
 			ShowNoti('success', 'Thành công.')
 			setIsLoadingDelete(false)
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 			setIsLoadingDelete(false)
 		}
 	}
@@ -1187,7 +1176,7 @@ const AlertSelectStudent = ({ selectedRowKeys, onRefresh }) => {
 			type="error"
 			message={
 				<div>
-					Đã chọn <span className="font-semibold">{selectedRowKeys.length}</span> học viên.
+					Đã chọn <span className="font-semibold">{selectedRowKeys.length}</span> {role == 3 ? 'học viên' : 'nhân viên'}.
 				</div>
 			}
 			action={

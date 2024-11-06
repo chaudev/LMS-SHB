@@ -22,7 +22,7 @@ export const NotificationInClassPage = () => {
 			title: 'Thông báo qua email',
 			dataIndex: 'Title',
 			width: 200,
-			render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
+			render: (text) => <p className="font-semibold text-[#B32025]">{text}</p>
 		},
 		{
 			title: 'Nội dung',
@@ -38,7 +38,7 @@ export const NotificationInClassPage = () => {
 			title: 'Ngày tạo',
 			width: 200,
 			dataIndex: 'CreatedOn',
-			render: (text) => <>{moment(text).format('DD-MM-YYYY')}</>
+			render: (text) => <>{moment(text).format('DD/MM/YYYY')}</>
 		}
 	]
 

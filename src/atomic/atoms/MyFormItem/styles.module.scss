@@ -1,0 +1,28 @@
+.wrapper {
+	flex-direction: column;
+	margin-bottom: 0px;
+	:global {
+		.ant-form-item-no-colon {
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 18px;
+			text-align: left;
+			color: #4c5663;
+		}
+		.ant-row {
+			flex-direction: column;
+		}
+		.ant-form-item-control-input {
+			min-height: 26px;
+		}
+		.ant-form-item-label > label {
+			height: 20px;
+		}
+		.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:focus {
+			box-shadow: unset;
+		}
+		.ant-form-item-explain-error {
+			font-size: 13px;
+		}
+	}
+}

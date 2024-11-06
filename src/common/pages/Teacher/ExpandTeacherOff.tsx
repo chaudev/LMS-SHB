@@ -92,7 +92,7 @@ const ExpandTeacherOff = ({ item }) => {
 			title: 'Lớp',
 			dataIndex: 'ClassName',
 			key: 'ClassName',
-			className: 'font-[600] text-[#002456]',
+			className: 'font-[600] text-[#B32025]',
 			width: 300,
 			render: (text, item) => (
 				<Link href={returnPathName(item)}>

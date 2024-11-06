@@ -1,24 +1,28 @@
-import { Card, Form, Modal, Select, Spin } from 'antd'
+import { Card, Empty, Form, Modal, Select, Spin } from 'antd'
 import React, { useEffect, useMemo, useState } from 'react'
 import { giftApi } from '~/api/gift'
 import { majorsApi } from '~/api/majors/majors'
 import { majorsRegistrationApi } from '~/api/majors/registration'
 import { paymentTypeApi } from '~/api/option/payment-type'
 import InputNumberField from '~/common/components/FormControl/InputNumberField'
-import InputTextField from '~/common/components/FormControl/InputTextField'
 import SelectField from '~/common/components/FormControl/SelectField'
 import TextBoxField from '~/common/components/FormControl/TextBoxField'
 import PrimaryButton from '~/common/components/Primary/Button'
-import { ShowNostis } from '~/common/utils'
+import { ShowNostis, ShowNoti } from '~/common/utils'
 import { removeCommas } from '~/common/utils/super-functions'
 import ModalViewPaymenTypeDetail from '../Component/ModalViewPaymenTypeDetail'
 import CardInfomation from '../Component/CardInfomation'
 import { ISelectOptionList } from '~/common/components/FormControl/form-control'
-import { optionPaymentType } from '~/common/constant/PaymentType'
 import CardOldMajors from '../Component/CardOldMajors'
 import { useRouter } from 'next/router'
 import Avatar from '~/common/components/Avatar'
 import { paymentMethodsApi } from '~/api/payment-method'
+import { isNull, isNullOrEmptyOrUndefined, ShowErrorToast } from '~/common/utils/main-function'
+import PaymentTypesDetails from '../Component/PaymentTypesDetails'
+import moment from 'moment'
+import { TContractItem } from '../Registration'
+import AddRegistrationContractButton from '../Component/AddRegistrationContractButton'
+import ContractItem from '../Component/ContractItem'
 
 interface IListOption {
 	students: ISelectOptionList[]
@@ -55,14 +59,18 @@ const ChangeMajorsPage = () => {
 
 	const [modal, contextHolder] = Modal.useModal()
 
-	const [listOption, SetListOption] = useState<IListOption>(initValue)
+	const [listOption, setListOption] = useState<IListOption>(initValue)
 	const [listData, setListData] = useState<IListData>(initValue)
 	const [oldMajors, setOldMajors] = useState<IMajorsRegistration>()
 	const [tuitionInOld, setTuitionInOld] = useState<number | string>()
 
-	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL'>('')
+	const [loading, setLoading] = useState<'' | 'GET_ALL' | 'CREATE' | 'PAYMENT_DETAIL' | 'PAYMENT'>('')
 
 	const [paymentTypeDetail, setPaymentTypeDetail] = useState<IPaymentTypeDetail[]>([])
+
+	const [contracts, setContracts] = useState<TContractItem[]>([])
+
+	const [majorDescription, setMajorDescription] = useState('')
 
 	const formatOption = (data) => {
 		let templ = []
@@ -81,11 +89,11 @@ const ChangeMajorsPage = () => {
 			setLoading('GET_ALL')
 			let templOption = { students: [], majors: [], gift: [], payment: [], paymentMethod: [] }
 			let templData = { students: [], majors: [], gift: [], payment: [] }
-			const [students, majors, gift, paymentType, paymentMethod] = await Promise.all([
+			const [students, majors, gift, paymentMethod] = await Promise.all([
 				majorsRegistrationApi.getAllMajorsRegistrationAvailble(),
 				majorsApi.getAll({ pageSize: 9999, pageIndex: 1, status: 1 }),
 				giftApi.getAll({ pageSize: 9999, pageIndex: 1 }),
-				paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 }),
+				// paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1 }),
 				paymentMethodsApi.getAll({ pageSize: 9999, pageIndex: 1 })
 			])
 
@@ -111,24 +119,40 @@ const ChangeMajorsPage = () => {
 				templOption.gift = templ
 				templData.gift = gift.data.data
 			}
-			if (paymentType.status === 200) {
-				let templ = formatOption(paymentType.data.data)
-				templOption.payment = templ
-				templData.payment = paymentType.data.data
-			}
+			// if (paymentType.status === 200) {
+			// 	let templ = formatOption(paymentType.data.data)
+			// 	templOption.payment = templ
+			// 	templData.payment = paymentType.data.data
+			// }
 			if (paymentMethod.status === 200) {
 				let templ = formatOption(paymentMethod.data.data)
 				templOption.paymentMethod = templ
 				templData.payment = paymentMethod.data.data
 			}
 
-			SetListOption(templOption)
+			setListOption(templOption)
 			setListData(templData)
 			if (studentId) {
 				form.setFieldValue('StudentId', Number(studentId))
 			}
 			setLoading('')
 		} catch (error) {
+			setLoading('')
+		}
+	}
+
+	const getPaymentByMajor = async (majorId) => {
+		try {
+			setLoading('PAYMENT')
+			const res = await paymentTypeApi.getAllPaymentType({ pageSize: 9999, pageIndex: 1, majorId: majorId })
+			if (res.status == 200) {
+				setListOption({ ...listOption, payment: formatOption(res.data.data) })
+			} else {
+				setListOption({ ...listOption, payment: formatOption([]) })
+			}
+		} catch (error) {
+			ShowErrorToast(error)
+		} finally {
 			setLoading('')
 		}
 	}
@@ -140,15 +164,23 @@ const ChangeMajorsPage = () => {
 			const response = await paymentTypeApi.getAllPaymentTypeDetail(PaymentTypeId)
 			if (response.status === 200) {
 				let detail = response.data.data[0]
-				if (detail.Type == 1) {
-					const countTotal = (TotalPrice * detail.Percent) / 100
-					form.setFieldValue('countTotal', countTotal ? countTotal : 0)
-				} else {
-					form.setFieldValue('countTotal', '')
-				}
+				// if (detail.Type == PAYMENT_TYPES.majorRegistration) {
+				// 	const countTotal = (TotalPrice * detail.Percent) / 100
+				// 	form.setFieldValue('countTotal', countTotal ? countTotal : 0)
+				// } else {
+				// 	form.setFieldValue('countTotal', '')
+				// }
+				const countTotal = detail.Price
+				form.setFieldValue('countTotal', countTotal ? countTotal : 0)
 				form.setFieldValue('Type', Number(detail.Type))
 				form.setFieldValue('Percent', detail.Percent)
 				form.setFieldValue('Paid', null)
+
+				// ** dynamic set form Prices
+				const datas = response.data.data
+				datas?.forEach((item) => {
+					form.setFieldValue(`Price_${item.Id}`, item?.Price)
+				})
 			}
 			setPaymentTypeDetail(response.data.data)
 			setLoading('')
@@ -215,11 +247,11 @@ const ChangeMajorsPage = () => {
 					title: 'Cảnh báo',
 					content: (
 						<>
-							Học viên <span className="font-[500]  text-[orange]">{templ.StudentName}</span> chưa có ngành học. Vui lòng sử dụng tính năng
-							đăng ký ngành học!
+							Học viên <span className="font-[500]  text-[orange]">{templ.StudentName}</span> chưa có chương trình học. Vui lòng sử dụng tính năng
+							đăng ký chương trình học!
 						</>
 					),
-					okText: 'Đăng ký ngành học',
+					okText: 'Đăng ký chương trình học',
 					cancelText: 'Hủy',
 					onOk: () => {
 						router.push({
@@ -240,16 +272,23 @@ const ChangeMajorsPage = () => {
 
 	useEffect(() => {
 		if (MajorsId) {
+			getPaymentByMajor(MajorsId)
 			const templ = listData.majors.find((value) => {
 				return value.Id == MajorsId
 			})
-			form.setFieldValue('MajorsId', templ.Id)
-			form.setFieldValue('TotalPrice', templ.Price)
-			form.setFieldValue('Description', templ.Description)
+			setPaymentTypeDetail([])
+			form.setFieldValue('PaymentTypeId', null)
+			if (templ) {
+				form.setFieldValue('MajorsId', templ?.Id)
+				form.setFieldValue('TotalPrice', templ?.Price)
+				form.setFieldValue('Description', templ?.Description)
+				setMajorDescription(templ?.Description)
+			}
 		} else {
 			form.setFieldValue('MajorsId', '')
 			form.setFieldValue('TotalPrice', '')
 			form.setFieldValue('Description', '')
+			setMajorDescription('')
 		}
 	}, [MajorsId])
 
@@ -265,14 +304,32 @@ const ChangeMajorsPage = () => {
 		}
 	}, [PaymentTypeId])
 
-	useEffect(() => {
-		if (TotalPrice && PaymentTypeId) {
-			if (Percent) {
-				let countPaid = (removeCommas(TotalPrice) * Percent) / 100
-				form.setFieldValue('countTotal', countPaid)
-			}
-		}
-	}, [TotalPrice])
+	// useEffect(() => {
+	// 	if (TotalPrice && PaymentTypeId) {
+	// 		if (Percent) {
+	// 			let countPaid = (removeCommas(TotalPrice) * Percent) / 100
+	// 			form.setFieldValue('countTotal', countPaid)
+	// 		}
+	// 	}
+	// }, [TotalPrice])
+
+	const onAddContract = (contract: TContractItem) => {
+		setContracts([...contracts, contract])
+		ShowNoti('success', 'Thêm hợp đồng thành công')
+	}
+
+	const onUpdateContract = (index: number, contract: TContractItem) => {
+		const _contracts = [...contracts]
+		_contracts[index] = contract
+		setContracts([..._contracts])
+		ShowNoti('success', 'Chỉnh sửa hợp đồng thành công')
+	}
+
+	const onDeleteContract = (index: number, contract: TContractItem) => {
+		const _contracts = [...contracts]
+		_contracts.splice(index, 1)
+		setContracts([..._contracts])
+	}
 
 	const _onFinish = async (params) => {
 		try {
@@ -284,7 +341,16 @@ const ChangeMajorsPage = () => {
 				Paid: params.Paid ? removeCommas(params.Paid) : 0,
 				GiftId: params.GiftId,
 				PaymentTypeId: params.PaymentTypeId,
-				Note: params.Note
+				Note: params.Note,
+				Contracts: !contracts?.length
+					? undefined
+					: contracts.map((item) => ({ ...item, ContractSigningDate: moment(item?.ContractSigningDate).toISOString() })),
+				Details: Object.keys(params)
+					.filter((key) => key.startsWith('Price_'))
+					.map((key) => ({
+						Price: params[key],
+						PaymentTypeDetailId: Number(key.split('_')[1])
+					}))
 			}
 
 			const response = await majorsRegistrationApi.changeMajors(payload)
@@ -294,10 +360,10 @@ const ChangeMajorsPage = () => {
 				setOldMajors(null)
 				setTuitionInOld(0)
 			}
-
-			setLoading('')
+			setContracts([])
 		} catch (error) {
-			ShowNostis.error(error.message)
+			ShowErrorToast(error)
+		} finally {
 			setLoading('')
 		}
 	}
@@ -351,22 +417,22 @@ const ChangeMajorsPage = () => {
 										{getInformation()} <CardOldMajors oldMajors={oldMajors} tuitionInOld={tuitionInOld} />
 									</div>
 								</Card>
-								<Card title="Thay đổi ngành học" className="col-span-1">
+								<Card title="Thay đổi chương trình học" className="col-span-1">
 									<SelectField
 										className="col-span-2"
 										name={'MajorsId'}
-										label="Chọn ngành học"
+										label="Chọn chương trình học"
 										optionList={listOption.majors}
 										rules={[
 											{
 												required: true,
-												message: 'Vui lòng chọn ngành học'
+												message: 'Vui lòng chọn chương trình học'
 											},
 											{
 												validator: async (_, id) => {
 													if (oldMajors) {
 														if (id == oldMajors.MajorsId) {
-															return Promise.reject(new Error('Ngành học mới phải khác ngành học hiện tại'))
+															return Promise.reject(new Error('Chương trình học mới phải khác chương trình học hiện tại'))
 														}
 													} else {
 														return Promise.reject(new Error('Vui lòng chọn học viên'))
@@ -377,10 +443,17 @@ const ChangeMajorsPage = () => {
 									/>
 									<InputNumberField
 										name="TotalPrice"
-										label="Giá ngành học"
-										rules={[{ required: true, message: 'Vui lòng nhập giá ngành học' }]}
+										label="Giá chương trình học"
+										// disabled
+										rules={[{ required: true, message: 'Vui lòng nhập giá chương trình học' }]}
 									/>
-									<TextBoxField name="Description" label={'Mô tả ngành học'} disabled />
+									{/* <TextBoxField name="Description" label={'Mô tả chương trình học'} disabled /> */}
+									{majorDescription !== '' && (
+										<div className="">
+											<p className="font-medium mb-2">Mô tả chương trình học</p>
+											<p className="whitespace-pre-wrap">{majorDescription}</p>
+										</div>
+									)}
 								</Card>
 							</div>
 							<Card title="Thanh toán" className="col-span-1 ">
@@ -398,24 +471,68 @@ const ChangeMajorsPage = () => {
 											/>
 										</div>
 									}
+									isRequired
 									optionList={listOption.payment}
 									rules={[{ required: true, message: 'Vui lòng chọn hình thức thanh toán' }]}
 								/>
-								<SelectField
+								{!isNullOrEmptyOrUndefined(PaymentTypeId) && <PaymentTypesDetails datas={paymentTypeDetail} />}
+								{!isNullOrEmptyOrUndefined(StudentId) && !isNullOrEmptyOrUndefined(MajorsId) && (
+									<>
+										<AddRegistrationContractButton
+											majorId={MajorsId}
+											studentId={StudentId}
+											paymentTypeId={PaymentTypeId}
+											onAddContract={onAddContract}
+										/>
+
+										{!!contracts?.length ? (
+											<div className="flex flex-col gap-[8px] border p-[12px] rounded-md mt-[8px] mb-[16px]">
+												{contracts.map((item, index) => {
+													return (
+														<ContractItem
+															key={index}
+															studentId={StudentId}
+															paymentTypeId={PaymentTypeId}
+															contractData={item}
+															index={index}
+															onUpdate={onUpdateContract}
+															onDelete={onDeleteContract}
+														/>
+													)
+												})}
+											</div>
+										) : (
+											<Empty className="mt-[8px] mb-[16px]" />
+										)}
+									</>
+								)}
+								{/* <SelectField
 									className="col-span-2"
 									hidden={Type === 1 ? false : true}
 									name={'Type'}
 									label="Loại thanh toán"
 									disabled
 									optionList={optionPaymentType}
-								/>
+								/> */}
 
-								<InputTextField name="Percent" label="Phần trăm" disabled hidden={Type === 1 ? false : true} />
-								<InputNumberField name="countTotal" disabled={true} hidden={Type === 1 ? false : true} label="Số tiền phải đóng" />
-								<InputNumberField name="Paid" hidden={Type != 1 ? true : false} label="Thanh toán" />
+								{/* <InputTextField name="Percent" label="Phần trăm" disabled hidden={Type === 1 ? false : true} /> */}
+								<InputNumberField
+									name="countTotal"
+									disabled={true}
+									// hidden={Type === 1 ? false : true}
+									hidden={isNull(paymentTypeDetail)}
+									label="Số tiền phải đóng"
+								/>
+								<InputNumberField
+									name="Paid"
+									// hidden={Type != 1 ? true : false}
+									hidden={isNull(paymentTypeDetail)}
+									label="Thanh toán"
+								/>
 								<SelectField
 									className="col-span-2"
-									hidden={Type === 1 ? false : true}
+									// hidden={Type === 1 ? false : true}
+									hidden={isNull(paymentTypeDetail)}
 									name={'PaymentMethodId'}
 									label="Phương thức thanh toán"
 									isRequired

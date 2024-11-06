@@ -5,10 +5,15 @@ import { ShowNoti } from '~/common/utils'
 import { Form, Popover, Spin, Tooltip } from 'antd'
 import EditorField from '~/common/components/FormControl/EditorField'
 import PrimaryButton from '~/common/components/Primary/Button'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 const DetailConfigTemplate = () => {
 	const router = useRouter()
 	const slug = router.query.slug
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [template, setTemplate] = useState<IConfigExample>()
 	const [guide, setGuide] = useState<IGuideExample[]>([])
 	const [isLoading, setIsLoading] = useState(false)
@@ -61,6 +66,7 @@ const DetailConfigTemplate = () => {
 
 	useEffect(() => {
 		if (template) {
+			console.log(template);
 			form.setFieldValue('Content', template.Content)
 		}
 	}, [template])
@@ -90,9 +96,11 @@ const DetailConfigTemplate = () => {
 			</Popover>
 			<Form form={form} layout="vertical" onFinish={onSubmit}>
 				<EditorField name="Content" label="Mẫu hợp đồng" onChangeEditor={(value) => form.setFieldValue('Content', value)} />
-				<PrimaryButton className="!flex mx-auto" background="blue" type="submit" icon="save">
-					Lưu {isLoading && <Spin className="loading-base" />}
-				</PrimaryButton>
+				{checkIncludesRole(listPermissionsByRoles.config.contractTemplate.update, Number(userInformation?.RoleId)) && (
+					<PrimaryButton className="!flex mx-auto" background="blue" type="submit" icon="save">
+						Lưu {isLoading && <Spin className="loading-base" />}
+					</PrimaryButton>
+				)}
 			</Form>
 		</div>
 	)

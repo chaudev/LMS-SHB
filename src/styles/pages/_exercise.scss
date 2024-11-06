@@ -30,7 +30,7 @@
 }
 
 .cc-exam-item-code {
-	@apply px-[6px] py-[2px] text-[14px] font-[600] rounded-[4px] bg-[#1b74e820] text-[#002456];
+	@apply px-[6px] py-[2px] text-[14px] font-[600] rounded-[4px] bg-[#1b74e820] text-[#B32025];
 }
 
 .cc-exam-item-info {
@@ -66,7 +66,7 @@
 }
 
 .cc-exercise-drag-menu {
-	@apply w-[24px] h-[24px] bg-[#002456] inline-flex items-center justify-center rounded-full;
+	@apply w-[24px] h-[24px] bg-[#B32025] inline-flex items-center justify-center rounded-full;
 }
 
 .cc-choice-warpper {
@@ -168,8 +168,8 @@
 			border-width: 0px !important;
 			outline: 0px;
 
-			background-color: #002456;
-			border-color: #002456;
+			background-color: #B32025;
+			border-color: #B32025;
 		}
 
 		&:hover {
@@ -479,8 +479,8 @@
 }
 
 .cc-question-type {
-	@apply font-[600] text-[14px] text-[#002456] mb-[4px] h-[26px] flex items-center;
-	@apply border-[1px] inline-flex rounded-[4px] px-[4px] border-[#002456];
+	@apply font-[600] text-[14px] text-[#B32025] mb-[4px] h-[26px] flex items-center;
+	@apply border-[1px] inline-flex rounded-[4px] px-[4px] border-[#B32025];
 	span {
 		margin-top: 1px;
 	}

@@ -48,7 +48,7 @@ const TeacherFixExam = ({ price, record }) => {
 			title: 'Thời gian chấm bài',
 			width: 150,
 			dataIndex: 'CreateOn',
-			render: (price, record) => <p>{moment(price).format('DD-MM-YYYY')}</p>
+			render: (price, record) => <p>{moment(price).format('DD/MM/YYYY')}</p>
 		}
 	]
 

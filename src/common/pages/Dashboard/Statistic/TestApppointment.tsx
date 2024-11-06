@@ -1,6 +1,7 @@
 import { Card } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { staticsticalApi } from '~/api/statistic'
+import MyStatisticCard from '~/atomic/molecules/MyStatisticCard'
 import { StatisticClassNew } from '~/common/components/Dashboard/StatisticClassNew'
 
 interface IClassNew {
@@ -27,8 +28,8 @@ export const ClassNew: React.FC<IClassNew> = ({ todoFeedback }) => {
 	}, [todoFeedback])
 
 	return (
-		<Card title={<h1 className="text-2xl font-medium">Kiểm tra đầu vào trong tháng</h1>}>
+		<MyStatisticCard title={'Kiểm tra đầu vào trong tháng'}>
 			<StatisticClassNew data={statisticialTestAppointment} titleBar="Kiểm tra đầu vào trong tháng" type={2} />
-		</Card>
+		</MyStatisticCard>
 	)
 }

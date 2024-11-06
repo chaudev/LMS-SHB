@@ -13,23 +13,23 @@ const StatisticOverviewStudent = (props) => {
 
 	const styleCard = [
 		{
-			background: '#002456c4',
+			background: '#B32025c4',
  			Icon: <GiVikingLonghouse className="ml-auto text-white text-4xl" />
 		},
 		{
-			background: '#002456c4',
+			background: '#B32025c4',
 			Icon: <BsBookHalf className="ml-auto text-white text-4xl" />
 		},
 		{
-			background: '#002456c4',
+			background: '#B32025c4',
 			Icon: <BiBookBookmark className="ml-auto text-white text-4xl" />
 		},
 		{
-			background: '#002456c4',
+			background: '#B32025c4',
 			Icon: <BsBookFill className="ml-auto text-white text-4xl" />
 		},
 		{
-			background: '#002456c4',
+			background: '#B32025c4',
 			Icon: <BsFillPatchQuestionFill className="ml-auto text-white text-4xl" />
 		}
 	]

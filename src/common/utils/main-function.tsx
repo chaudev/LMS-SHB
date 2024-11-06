@@ -1,4 +1,5 @@
 import { wait } from './common'
+import ShowNoti from './ShowNoti'
 
 export const getFileThumbnails = (type, FileUrl) => {
 	if (type == 'pdf') {
@@ -168,4 +169,73 @@ export const domMastersContent = (section, group) => {
 	if (!section && !group) {
 		viewContent('', false, 'section')
 	}
+}
+
+/**
+ *  Hàm noti tất cả các lỗi
+ * @param error - Truyền error trong try catch
+ * @returns lỗi.
+ */
+export function ShowErrorToast(error) {
+	return ShowNoti(
+		'error',
+		error?.resultMessage || error?.response?.data?.resultMessage || error?.message || error?.ExceptionMessage || error?.MessageDetail
+	)
+}
+
+/**
+ * Function check is data null or empty, undefined
+ * @returns boolean
+ */
+export function isNull(data) {
+	return data === null || data === '' || data === undefined || data?.length === 0
+}
+
+/**
+ * Hàm truncate chữ quá dài => ...
+ * @returns truncated text
+ */
+export function truncate(str, n) {
+	return str?.length > n ? str.substr(0, n - 1) + '...' : str
+}
+
+/**
+ *  Hàm format số sang hàng chục, hàng triệu
+ * @param number
+ * @returns number đã format.
+ */
+export function formatNumberToMillions(number) {
+	if (number >= 1e6) {
+		const millions = Math.floor(number / 1e6)
+		return millions + 'm'
+	} else {
+		if (number >= 1000) {
+			return Math.round(number / 1000) + 'k'
+		}
+		return number
+	}
+}
+
+/**
+ * Function to check if object has any correct keys and have value
+ * @param obj string
+ * @param keysToCheck string[]
+ * @returns true | false
+ */
+export function hasAnyKey(obj, keysToCheck) {
+	for (const key of keysToCheck) {
+		if (obj.hasOwnProperty(key) && obj[key] !== undefined && obj[key] !== null && obj[key] !== '') {
+			return true
+		}
+	}
+
+	return false
+}
+
+/**
+ * Function check is data null or empty, undefined
+ * @returns boolean
+ */
+export function isNullOrEmptyOrUndefined(data) {
+	return data === null || data === '' || data === undefined || data?.length === 0
 }

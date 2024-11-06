@@ -1,6 +1,7 @@
 import { Card } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { staticsticalApi } from '~/api/statistic'
+import MyStatisticCard from '~/atomic/molecules/MyStatisticCard'
 import { StatisticRateTeacher } from '~/common/components/Dashboard/StatisticRateTeacher'
 
 interface IRateTeacher {
@@ -29,9 +30,9 @@ const RateTeacher: React.FC<IRateTeacher> = ({ todoApi }) => {
 		getTotalScheduleStudent()
 	}, [todoApi])
 	return (
-		<Card loading={loading} title={<h1 className="text-2xl font-medium">Tổng số buổi học trong từng tháng</h1>}>
+		<MyStatisticCard loading={loading} title={'Tổng số buổi học trong từng tháng'}>
 			<StatisticRateTeacher data={statisticTotalScheduleStudent} titleBar="Buổi học trong từng tháng" type={1} />
-		</Card>
+		</MyStatisticCard>
 	)
 }
 

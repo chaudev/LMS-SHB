@@ -1,28 +1,26 @@
-import { Tooltip } from 'antd'
 import moment from 'moment'
+import Head from 'next/head'
 import Link from 'next/link'
 import Router from 'next/router'
-import React, { Fragment, useEffect, useMemo, useState } from 'react'
-import { Eye } from 'react-feather'
+import { Fragment, useEffect, useMemo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { gradeApi } from '~/api/grade'
 import { programApi } from '~/api/program'
+import appConfigs from '~/appConfig'
+import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
+import FilterBase from '~/common/components/Elements/FilterBase'
 import SortBox from '~/common/components/Elements/SortBox'
-import ProgramForm from '~/common/components/Program/ProgramForm'
-import PrimaryTable from '~/common/components/Primary/Table'
 import FilterColumn from '~/common/components/FilterTable/Filter/FilterColumn'
+import IconButton from '~/common/components/Primary/IconButton'
+import PrimaryTable from '~/common/components/Primary/Table'
+import ProgramAddTeacherForm from '~/common/components/Program/ProgramAddTeacherForm'
+import ProgramForm from '~/common/components/Program/ProgramForm'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
-import { useSelector } from 'react-redux'
+import { checkIncludesRole, parseSelectArray } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 import { RootState } from '~/store'
-import { useDispatch } from 'react-redux'
 import { setSpecialize } from '~/store/specializeReducer'
-import { parseSelectArray } from '~/common/utils/common'
-import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
-import ProgramAddTeacherForm from '~/common/components/Program/ProgramAddTeacherForm'
-import FilterBase from '~/common/components/Elements/FilterBase'
-import IconButton from '~/common/components/Primary/IconButton'
-import Head from 'next/head'
-import appConfigs from '~/appConfig'
 
 let pageIndex = 1
 
@@ -82,28 +80,6 @@ const Programs = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [totalPage, setTotalPage] = useState(null)
 	const [currentPage, setCurrentPage] = useState(1)
-
-	const theInformation = useSelector((state: RootState) => state.user.information)
-
-	function isAdmin() {
-		return theInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return theInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return theInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return theInformation?.RoleId == 3
-	}
-
-	function isAcademic() {
-		return theInformation?.RoleId == 7
-	}
 
 	const listTodoApi = {
 		pageSize: PAGE_SIZE,
@@ -230,24 +206,23 @@ const Programs = () => {
 	const columns = [
 		{
 			title: 'Mã Khung đào tạo',
-			width: 170,
 			dataIndex: 'Code',
-			className:'font-weight-black',
-			...FilterColumn('Code', onSearch, handleReset, 'text'),
+			className: 'font-weight-black min-w-[120px]',
+			...FilterColumn('Code', onSearch, handleReset, 'text')
 			// render: (value) => <span className="weight-600">{value}</span>
 		},
 		{
 			title: 'Tên Khung đào tạo',
 			dataIndex: 'Name',
-			minWidth: 150,
 			...FilterColumn('Name', onSearch, handleReset, 'text'),
 			render: (text) => {
-				return <p className="font-weight-primary">{text}</p>
+				return <p className="font-weight-primary min-w-[120px]">{text}</p>
 			}
 		},
 		{
 			title: 'Trình độ tiếng',
 			dataIndex: 'GradeName',
+			className: 'min-w-[120px]',
 			render: (text) => {
 				return <p className="font-weight-black">{text}</p>
 			}
@@ -266,12 +241,12 @@ const Programs = () => {
 		// },
 		{
 			title: 'Người tạo',
-
+			className: 'min-w-[100px]',
 			dataIndex: 'ModifiedBy'
 		},
 		{
 			title: 'Ngày tạo',
-
+			className: 'min-w-[100px]',
 			dataIndex: 'ModifiedOn',
 			render: (date: any) => moment(date).format('DD/MM/YYYY')
 		},
@@ -293,13 +268,15 @@ const Programs = () => {
 						</a>
 					</Link>
 
-					<ProgramAddTeacherForm rowData={data} />
+					{checkIncludesRole(listPermissionsByRoles.config.trainingFramework.addTeacher, Number(userInformation?.RoleId)) && (
+						<ProgramAddTeacherForm rowData={data} />
+					)}
 
-					{userInformation && userInformation?.RoleId !== 2 && (
-						<>
-							<ProgramForm rowData={data} specialize={specialize} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
-							<DeleteTableRow text={`Khung đào tạo ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
-						</>
+					{checkIncludesRole(listPermissionsByRoles.config.trainingFramework.update, Number(userInformation?.RoleId)) && (
+						<ProgramForm rowData={data} specialize={specialize} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.trainingFramework.delete, Number(userInformation?.RoleId)) && (
+						<DeleteTableRow text={`Khung đào tạo ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
 					)}
 				</>
 			)
@@ -307,7 +284,10 @@ const Programs = () => {
 	]
 
 	useEffect(() => {
-		if (!!userInformation && !isAdmin() && !isManager() && !isAcademic()) {
+		if (
+			!!userInformation &&
+			!checkIncludesRole(listPermissionsByRoles.config.trainingFramework.viewList, Number(userInformation?.RoleId))
+		) {
 			Router.push('/')
 		}
 	}, [userInformation])
@@ -322,7 +302,11 @@ const Programs = () => {
 				total={totalPage && totalPage}
 				loading={isLoading}
 				onChangePage={(event: number) => setTodoApi({ ...listTodoApi, pageIndex: event })}
-				Extra={<ProgramForm specialize={specialize} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />}
+				Extra={
+					checkIncludesRole(listPermissionsByRoles.config.trainingFramework.create, Number(userInformation?.RoleId)) ? (
+						<ProgramForm specialize={specialize} setTodoApi={setTodoApi} listTodoApi={listTodoApi} />
+					) : undefined
+				}
 				data={dataSource}
 				columns={columns}
 				TitleCard={

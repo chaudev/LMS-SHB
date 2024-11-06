@@ -8,11 +8,11 @@ function CardOldMajors({ oldMajors, tuitionInOld }) {
 			{oldMajors && (
 				<Card>
 					<Card.Meta
-						title={'Ngành học đang theo học'}
+						title={'Chương trình học đang theo học'}
 						description={
 							<div className="d-flex flex-col gap-3 text-black">
 								<div>
-									<span className="font-[500] text-[gray]  inline-block w-2/5">Ngành học</span>:{' '}
+									<span className="font-[500] text-[gray]  inline-block w-2/5">Chương trình học</span>:{' '}
 									<span className="font-[500]">{oldMajors.MajorsName}</span>
 								</div>
 								<div>

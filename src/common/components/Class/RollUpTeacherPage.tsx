@@ -90,12 +90,12 @@ export const RollUpTeacherPage = () => {
 		{
 			title: 'Giáo viên',
 			dataIndex: 'TeacherName',
-			render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
+			render: (text) => <p className="font-semibold text-[#B32025]">{text}</p>
 		},
 		{
 			title: 'Ngày',
 			dataIndex: 'StartTime',
-			render: (text) => <>{moment(text).format('DD-MM-YYYY')}</>
+			render: (text) => <>{moment(text).format('DD/MM/YYYY')}</>
 		},
 		{
 			title: 'Thời gian học',

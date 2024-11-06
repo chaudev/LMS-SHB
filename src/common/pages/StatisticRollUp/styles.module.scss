@@ -1,0 +1,33 @@
+.wrapper {
+	.tabWrapper {
+		:global {
+			.ant-tabs-nav {
+				margin-bottom: 0;
+			}
+		}
+	}
+	.mainContent {
+		background: #fff;
+		padding: 12px;
+		border: 1px solid #f0f0f0;
+		border-top: unset;
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+	}
+}
+
+.tableHeaderWrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 12px;
+	.buttonExportWrapper {
+		display: flex;
+		justify-content: flex-end;
+		@media screen and (max-width: 1260px) {
+			width: 100%;
+		}
+	}
+}

@@ -102,7 +102,7 @@ export default function StudentListInCourse(props: Props) {
 			dataIndex: 'FullName',
 			align: 'left',
 			className:'font-weight-primary'
-			// render: (text, data) => <div className="font-[600] text-[#002456]">{text}</div>
+			// render: (text, data) => <div className="font-[600] text-[#B32025]">{text}</div>
 		},
 		{
 			title: 'Email',

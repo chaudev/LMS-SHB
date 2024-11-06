@@ -1,4 +1,4 @@
-import { Card, Divider, Form, Modal, Popconfirm, Skeleton, Tag, Tooltip } from 'antd'
+import { Card, Divider, Empty, Form, Modal, Popconfirm, Skeleton, Tag, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { profileTemplateApi } from '~/api/profile-template'
 import { ShowNostis } from '~/common/utils'
@@ -7,18 +7,27 @@ import PrimaryButton from '~/common/components/Primary/Button'
 import FormProfileTemplate from './component/FormProfileTemplate'
 import { fakeDataUser } from './component/data'
 import { ImMoveDown, ImMoveUp } from 'react-icons/im'
+import MySelectMajor from '~/atomic/molecules/MySelectMajor'
+import clsx from 'clsx'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
 
 const ProfileTemplatePage = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [form] = Form.useForm()
 	form.getFieldsValue()
 	const [loading, setLoading] = useState<{ type: '' | 'GET_ALL' | 'UPDATE' | 'CREATE'; status: boolean }>({ type: '', status: false })
 	const [profileTemplates, setProfileTemplates] = useState<IProfileTemplate[]>([])
 	const [isModalOpen, setIsModalOpen] = useState<{ type: '' | 'UPDATE' | 'CREATE'; status: boolean }>({ type: '', status: false })
 
+	const [profileTemplateParams, setProfileTemplateParams] = useState({ majorId: undefined })
+
 	const getAllProfileTemplate = async () => {
 		try {
 			setLoading({ type: 'GET_ALL', status: true })
-			const response = await profileTemplateApi.getAll()
+			const response = await profileTemplateApi.getAll(profileTemplateParams)
 			if (response.status === 200) {
 				setProfileTemplates(response.data.data)
 			}
@@ -34,7 +43,7 @@ const ProfileTemplatePage = () => {
 
 	useEffect(() => {
 		getAllProfileTemplate()
-	}, [])
+	}, [profileTemplateParams?.majorId])
 
 	const handleDragEnd = (result) => {
 		if (!result.destination) return
@@ -117,19 +126,24 @@ const ProfileTemplatePage = () => {
 
 	const openModalCreate = () => {
 		form.resetFields()
+		form.setFieldsValue({ MajorIds: profileTemplateParams?.majorId ? [profileTemplateParams?.majorId] : undefined })
 		setIsModalOpen({ type: 'CREATE', status: true })
 	}
 
 	const openModalUpdate = (params) => {
-		form.setFieldsValue({ ...params, Type: String(params.Type) })
+		form.setFieldsValue({
+			...params,
+			Type: String(params.Type),
+			MajorIds: params?.MajorIds ? params?.MajorIds?.split(',').map((item) => Number(item)) : undefined
+		})
 		setIsModalOpen({ type: 'UPDATE', status: true })
 	}
 
 	const handleCreateUpdate = async (params) => {
 		if (isModalOpen.type === 'CREATE') {
-			await createProfileTemplate(params)
+			await createProfileTemplate({ ...params, MajorIds: params?.MajorIds ? params?.MajorIds?.toString() : undefined })
 		} else {
-			await updataeProfileTemplate(params)
+			await updataeProfileTemplate({ ...params, MajorIds: params?.MajorIds ? params?.MajorIds?.toString() : undefined })
 		}
 	}
 
@@ -180,36 +194,77 @@ const ProfileTemplatePage = () => {
 					<Divider className="font-[600]">
 						<h2 className="py-4 font-[600] text-center">Thông tin Thêm</h2>
 					</Divider>
+					<div className="w-[400px] mt-[-12px] mb-[24px]">
+						<MySelectMajor value={profileTemplateParams?.majorId} onChange={(val) => setProfileTemplateParams({ majorId: val })} />
+					</div>
 					{!!loading.status && loading.type === 'GET_ALL' ? (
 						<Skeleton></Skeleton>
 					) : (
 						<div className="grid gap-3">
 							<div className="">
-								{profileTemplates.map((item, index) => {
+								{!profileTemplates?.length ? (
+									<Empty className="mb-[16px]" />
+								) : (
+								profileTemplates.map((item, index) => {
 									return (
 										<div className="">
-											<div key={index} className="grid grid-cols-4 gap-2">
-												<div className="col-span-4  font-[500]">{item.Name}</div>
-												<div className="col-span-2 d-flex items-center">
-													<Tag className="rounded-full px-2  cursor-pointer" color={item.Type == 1 ? 'blue' : 'green'}>
-														<div className="d-flex items-center px-2">{item.Type === 1 ? 'Văn bản' : 'Lựa chọn'}</div>
-													</Tag>
+											<div key={index} className="flex justify-between gap-4">
+												<div className="">
+													<div className="flex gap-[16px]">
+														<div className="font-[500]">{item.Name}</div>
+														<div className="d-flex items-center">
+															<Tag className="rounded-lg px-2  cursor-pointer" color={item.Type == 1 ? 'blue' : 'green'}>
+																<div className="d-flex items-center font-medium px-2">{item.Type === 1 ? 'Văn bản' : 'Lựa chọn'}</div>
+															</Tag>
+														</div>
+													</div>
+													<div className="flex gap-[12px] mt-[8px]">
+														<span className="font-medium text-[12px] whitespace-nowrap">Chương trình học:</span>
+														{!item?.Majors?.length ? (
+															'-'
+														) : (
+															<div className="flex flex-wrap gap-[8px]">
+																{item?.Majors?.map((item) => {
+																	return (
+																		<Tag
+																			key={item.Id}
+																			// color={item.Id === profileTemplateParams?.majorId ? 'volcano' : undefined}
+																			className={clsx('rounded-lg m-0', { 'font-medium': item.Id === profileTemplateParams?.majorId })}
+																		>
+																			{item.Name}
+																		</Tag>
+																	)
+																})}
+															</div>
+														)}
+													</div>
 												</div>
-												<div className="col-span-2 d-flex justify-end">
+												<div className="d-flex justify-center">
+													{checkIncludesRole(listPermissionsByRoles.config.applicationForm.changePosition, Number(userInformation?.RoleId)) && (
+														<>
 													{index !== 0 && (
-														<div className="icon   cursor-pointer px-2 btn-icon" onClick={() => handleMoveItem(index, item, 'up')}>
+														<div
+															className="flex items-center icon   cursor-pointer px-2 btn-icon"
+															onClick={() => handleMoveItem(index, item, 'up')}
+														>
 															<Tooltip title={'Di chuyển lên trên'}>
 																<ImMoveUp size={22} color="#0068ac" />
 															</Tooltip>
 														</div>
 													)}
 													{index + 1 < profileTemplates.length && (
-														<div className="icon  cursor-pointer px-2 btn-icon" onClick={() => handleMoveItem(index, item, 'down')}>
+														<div
+															className="flex items-center icon  cursor-pointer px-2 btn-icon"
+															onClick={() => handleMoveItem(index, item, 'down')}
+														>
 															<Tooltip title={'Di chuyển xuống dưới'}>
 																<ImMoveDown size={22} color="#007134" />
 															</Tooltip>
 														</div>
 													)}
+														</>
+													)}
+													{checkIncludesRole(listPermissionsByRoles.config.applicationForm.update, Number(userInformation?.RoleId)) && (
 													<IconButton
 														type="button"
 														icon="edit"
@@ -220,6 +275,8 @@ const ProfileTemplatePage = () => {
 														className=""
 														tooltip="Cập nhật thông tin"
 													/>
+													)}
+													{checkIncludesRole(listPermissionsByRoles.config.applicationForm.delete, Number(userInformation?.RoleId)) &&(
 													<Popconfirm
 														title="Bạn có chắc muốn xóa thông tin này?"
 														okText="Có"
@@ -235,16 +292,20 @@ const ProfileTemplatePage = () => {
 															tooltip="Xóa Thông tin này"
 														/>
 													</Popconfirm>
+													)}
 												</div>
 											</div>
 											<Divider></Divider>
 										</div>
 									)
-								})}
+								})
+								)}
 							</div>
-							<PrimaryButton onClick={() => openModalCreate()} type="button" icon="add" background="primary">
-								Thêm thông tin
-							</PrimaryButton>
+							{checkIncludesRole(listPermissionsByRoles.config.applicationForm.create, Number(userInformation?.RoleId)) && (
+								<PrimaryButton onClick={() => openModalCreate()} type="button" icon="add" background="primary">
+									Thêm thông tin
+								</PrimaryButton>
+							)}
 						</div>
 					)}
 				</div>

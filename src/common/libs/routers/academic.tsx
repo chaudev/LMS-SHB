@@ -1,6 +1,7 @@
 import { AiFillSetting } from 'react-icons/ai'
 import { BsFillGridFill } from 'react-icons/bs'
 import { FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { HiMiniNewspaper } from 'react-icons/hi2'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { RiFileList2Fill } from 'react-icons/ri'
 import { TiHome } from 'react-icons/ti'
@@ -12,14 +13,14 @@ export const AcademicMenu = [
 		Icon: <TiHome style={{ width: 24, height: 24 }} />
 	},
 	{
-		Key: 'class',
-		TabName: 'Lớp học',
-		Icon: <BsFillGridFill size={22} />
-	},
-	{
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />
+	},
+	{
+		Key: 'class',
+		TabName: 'Lớp học',
+		Icon: <BsFillGridFill size={22} />
 	},
 	{
 		Key: 'staff',
@@ -30,6 +31,11 @@ export const AcademicMenu = [
 		Key: 'finance',
 		TabName: 'Tài chính',
 		Icon: <FaMoneyBillAlt size={20} />
+	},
+	{
+		Key: 'evaluation',
+		TabName: 'Đánh giá',
+		Icon: <HiMiniNewspaper size={22} />
 	},
 	// {
 	// 	Key: 'video',
@@ -72,6 +78,27 @@ export const AcademicChildMenu = [
 				Route: '/dashboard',
 				Icon: '',
 				Text: 'Thống kê'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-roll-up',
+				Route: '/statistic-roll-up',
+				Icon: '',
+				Text: 'Thống kê điểm danh'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-test',
+				Route: '/statistic-test',
+				Icon: '',
+				Text: 'Thống kê kiểm tra'
+			},
+			{
+				TypeItem: 'single',
+				Key: '/statistic-attendance',
+				Route: '/statistic-attendance',
+				Icon: '',
+				Text: 'Thống kê chuyên cần'
 			}
 		]
 	},
@@ -103,8 +130,23 @@ export const AcademicChildMenu = [
 		]
 	},
 	{
+		MenuName: 'Đánh giá',
+		MenuTitle: 'Đánh giá',
+		MenuKey: '/evaluation',
+		Parent: 'evaluation',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/evaluation/me',
+				Route: '/evaluation/me',
+				Text: 'Danh sách phiếu đánh giá',
+				Icon: ''
+			}
+		]
+	},
+	{
 		MenuName: 'Quản lý thông tin học',
-		MenuTitle: 'Thông tin học',
+		MenuTitle: 'Tuyển sinh',
 		MenuKey: '/info-course',
 		Parent: 'student',
 		MenuItem: [
@@ -112,7 +154,7 @@ export const AcademicChildMenu = [
 				ItemType: 'single',
 				Key: '/info-course/customer',
 				Route: '/info-course/customer',
-				Text: 'Leads',
+				Text: 'Tư vấn',
 				Icon: ''
 			},
 			{
@@ -122,20 +164,27 @@ export const AcademicChildMenu = [
 				Text: 'Hẹn kiểm tra đầu vào',
 				Icon: ''
 			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student',
-				Route: '/info-course/student',
-				Text: 'Danh sách học viên',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/student-in-class',
-				Route: '/info-course/student-in-class',
-				Text: 'Học viên trong lớp',
-				Icon: ''
-			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student',
+			// 	Route: '/info-course/student',
+			// 	Text: 'Danh sách học viên',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student-in-class',
+			// 	Route: '/info-course/student-in-class',
+			// 	Text: 'Học viên trong lớp',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/changed',
+			// 	Route: '/info-course/changed',
+			// 	Text: 'Học viên chuyển lớp',
+			// 	Icon: ''
+			// },
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/reserved',
@@ -143,13 +192,6 @@ export const AcademicChildMenu = [
 			// 	Text: 'Học viên bảo lưu',
 			// 	Icon: ''
 			// },
-			{
-				ItemType: 'single',
-				Key: '/info-course/changed',
-				Route: '/info-course/changed',
-				Text: 'Học viên chuyển lớp',
-				Icon: ''
-			},
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/registration',
@@ -163,14 +205,14 @@ export const AcademicChildMenu = [
 				Route: '/info-course/student/warning',
 				Text: 'Cảnh báo học viên',
 				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/feedbacks',
-				Route: '/info-course/feedbacks',
-				Text: 'Phản hồi học viên',
-				Icon: ''
 			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/feedbacks',
+			// 	Route: '/info-course/feedbacks',
+			// 	Text: 'Phản hồi học viên',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{
@@ -192,7 +234,7 @@ export const AcademicChildMenu = [
 				Route: '/users/salary',
 				Text: 'Bảng lương',
 				Icon: ''
-			},
+			}
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/users/teacher/open-calender',
@@ -243,6 +285,41 @@ export const AcademicChildMenu = [
 				Icon: '',
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student',
+				Route: '/info-course/student',
+				Text: 'Danh sách học viên',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student-in-class',
+				Route: '/info-course/student-in-class',
+				Text: 'Học viên trong lớp',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/changed',
+				Route: '/info-course/changed',
+				Text: 'Học viên chuyển lớp',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/class/roll-up',
+				Route: '/class/roll-up',
+				Text: 'Điểm danh',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/class/enter-score',
+				Route: '/class/enter-score',
+				Text: 'Nhập điểm',
+				Icon: ''
 			},
 			// {
 			// 	TypeItem: 'single',
@@ -322,6 +399,13 @@ export const AcademicChildMenu = [
 						Route: '/options/study-time',
 						Text: 'Ca học',
 						Icon: ''
+					},
+					{
+						ItemType: 'single',
+						Key: '/options/other-major',
+						Route: '/options/other-major',
+						Text: 'Ngành học khác',
+						Icon: ''
 					}
 				]
 			},
@@ -352,7 +436,7 @@ export const AcademicChildMenu = [
 						Text: 'Ngày nghỉ',
 						Icon: ''
 					},
- 					{
+					{
 						ItemType: 'single',
 						Key: '/options/jobs',
 						Route: '/options/jobs',

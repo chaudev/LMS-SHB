@@ -1,12 +1,12 @@
 import { Card, Form, Modal, Select } from 'antd'
-import React, { FC, useEffect, useState } from 'react'
-import RestApi from '~/api/RestApi'
-import { ShowNostis, ShowNoti } from '~/common/utils'
-import { formNoneRequired, formRequired } from '~/common/libs/others/form'
-import PrimaryButton from '~/common/components/Primary/Button'
-import ModalFooter from '~/common/components/ModalFooter'
 import moment from 'moment'
+import { FC, useEffect, useState } from 'react'
+import RestApi from '~/api/RestApi'
 import Avatar from '~/common/components/Avatar'
+import ModalFooter from '~/common/components/ModalFooter'
+import PrimaryButton from '~/common/components/Primary/Button'
+import { formRequired } from '~/common/libs/others/form'
+import { ShowNostis, ShowNoti } from '~/common/utils'
 
 interface IParentForm {
 	isEdit?: boolean
@@ -19,7 +19,6 @@ const url = 'UserInformation'
 
 const AddChildForm: FC<IParentForm> = (props) => {
 	const { isEdit, onRefresh, parent } = props
-	console.log(parent)
 
 	const [form] = Form.useForm()
 
@@ -94,7 +93,7 @@ const AddChildForm: FC<IParentForm> = (props) => {
 
 	return (
 		<>
-			<PrimaryButton onClick={toggle} background="green" icon="add" type="button">
+			<PrimaryButton onClick={toggle} className='mt-2 ml-4' background="green" icon="add" type="button">
 				Thêm học viên
 			</PrimaryButton>
 

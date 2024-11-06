@@ -8,23 +8,23 @@ const StatisticOverviewTeacher = (props) => {
 	const { overviewTeacher } = props
 	const styleCard = [
 		{
-			background: '#002456c4',
+			background: '#B32025c4',
 			Icon: <FiUsers className="ml-auto text-white text-4xl" />
 		},
 		{
-			background: '#002456c4',
+			background: '#B32025c4',
 			Icon: <GiVikingLonghouse className="ml-auto text-white text-4xl" />
 		},
 		{
-			background: '#002456c4',
+			background: '#B32025c4',
 			Icon: <GiFamilyHouse className="ml-auto text-white text-4xl" />
 		},
 		{
-			background: '#002456c4',
+			background: '#B32025c4',
 			Icon: <BsCalendarXFill className="ml-auto text-white text-4xl" />
 		},
 		{
-			background: '#002456c4',
+			background: '#B32025c4',
 			Icon: <GiVideoConference className="ml-auto text-white text-4xl" />
 		}
 	]

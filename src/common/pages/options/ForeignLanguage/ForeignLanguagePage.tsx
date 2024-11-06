@@ -6,8 +6,13 @@ import { Card, Pagination, Popover, Skeleton } from 'antd'
 import { foreignLanguageApi } from '~/api/foreign-language'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import EmptyData from '~/common/components/EmptyData'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 export const ForeignLanguagePage = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const init = { pageIndex: 1, pageSize: PAGE_SIZE }
 	const [data, setData] = useState([])
 	const [loading, setLoading] = useState(false)
@@ -48,8 +53,12 @@ export const ForeignLanguagePage = () => {
 			width: 50,
 			render: (text, item) => (
 				<div className="flex items-center">
-					<ModalForeignLanguageCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
-					<ModalForeignLanguageCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					{checkIncludesRole(listPermissionsByRoles.config.languageStatus.update, Number(userInformation?.RoleId)) && (
+						<ModalForeignLanguageCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.languageStatus.delete, Number(userInformation?.RoleId)) && (
+						<ModalForeignLanguageCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					)}
 				</div>
 			)
 		}
@@ -64,7 +73,11 @@ export const ForeignLanguagePage = () => {
 				TitleCard={<h1 className="text-2xl font-medium">Tình trạng tiếng</h1>}
 				data={data}
 				columns={columns}
-				Extra={<ModalForeignLanguageCRUD mode="add" onRefresh={() => getData(todoApi)} />}
+				Extra={
+					checkIncludesRole(listPermissionsByRoles.config.languageStatus.create, Number(userInformation?.RoleId)) ? (
+						<ModalForeignLanguageCRUD mode="add" onRefresh={() => getData(todoApi)} />
+					) : undefined
+				}
 			/>
 		</>
 	)

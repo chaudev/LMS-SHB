@@ -1,6 +1,8 @@
 import { Image, Modal } from 'antd'
+import Link from 'next/link'
 import React, { FC, useEffect, useState } from 'react'
-import { FaPlay } from 'react-icons/fa'
+import { FaFile, FaPlay } from 'react-icons/fa'
+import ModalViewFile from './ModalViewFile/ModalViewFile'
 
 type TNewsFiles = {
 	files: Array<{ FileType: string; FileUrl: string; FileName: string }>
@@ -10,6 +12,7 @@ const NewsFiles: FC<TNewsFiles> = React.memo(({ files }) => {
 	const [visible, setVisible] = useState('')
 
 	const [images, setImages] = useState([])
+	const [otherFiles, setOtherFiles] = useState([])
 
 	function isImage(params) {
 		if (params == 'jpg' || params == 'jpeg') {
@@ -26,13 +29,18 @@ const NewsFiles: FC<TNewsFiles> = React.memo(({ files }) => {
 
 	useEffect(() => {
 		if (!!files) {
+			console.log(files, 'file-list----')
 			let temp = []
+			let tempNotImageFile = []
 			files.forEach((element) => {
 				if (!!element?.FileUrl && isImage(element.FileType)) {
 					temp.push({ src: element?.FileUrl, alt: element.FileName, fileType: element.FileType })
+				} else {
+					tempNotImageFile.push({ src: element?.FileUrl, alt: element.FileName, fileType: element.FileType })
 				}
 			})
 			setImages([...temp])
+			setOtherFiles([...tempNotImageFile])
 		}
 	}, [files])
 
@@ -50,9 +58,26 @@ const NewsFiles: FC<TNewsFiles> = React.memo(({ files }) => {
 		<>
 			{files.length > 0 && <div className="cc-hr my-[8px] mx-[-6px]" />}
 
+			<div className="mb-2">
+				{otherFiles?.length > 0 &&
+					otherFiles?.map((item) => (
+						<div key={crypto.randomUUID()}>
+							<ModalViewFile file={item} />
+						</div>
+						// <div key={crypto.randomUUID()}>
+						// 	{/* // <Link href={item?.src}>
+						// 		// 	<a className="!text-primary hover:underline" target="_blank">
+						// 		// 		<div className="">
+						// 		// 			<FaFile /> {item?.alt}
+						// 		// 		</div>
+						// 		// 	</a>
+						// 		// </Link> */}
+						// </div>
+					))}
+			</div>
 			<div className={`grid grid-cols-${imagesLength} gap-x-2 gap-y-2`}>
-				{images.map((item, index) => {
-					return (
+				{images?.length > 0 &&
+					images.map((item, index) => (
 						<div
 							key={`FILE-POST-${index}-${new Date().getTime()}`}
 							onClick={() => setVisible(item.src)}
@@ -63,7 +88,7 @@ const NewsFiles: FC<TNewsFiles> = React.memo(({ files }) => {
 									draggable={false}
 									src={item.src}
 									className={`${imagesLength > 1 ? 'max-h-[400px] w-[100%]' : ''} object-cover`}
-									width="100%"
+									width="100%s"
 								/>
 							)}
 
@@ -79,8 +104,7 @@ const NewsFiles: FC<TNewsFiles> = React.memo(({ files }) => {
 								</div>
 							)}
 						</div>
-					)
-				})}
+					))}
 			</div>
 
 			<Modal width={1000} closable={false} centered open={!!visible} footer={null} onCancel={() => setVisible('')}>

@@ -3,13 +3,15 @@ import { Empty, Input, Modal, Popover, Skeleton } from 'antd'
 import { useEffect, useState } from 'react'
 import { FaUserPlus } from 'react-icons/fa'
 import { IoClose, IoPersonAddSharp } from 'react-icons/io5'
-import RestApi from '~/api/RestApi'
-import { ShowNostis } from '~/common/utils'
-import GroupForm from './form'
-import Avatar from '../../Avatar'
 import { useSelector } from 'react-redux'
-import { RootState } from '~/store'
+import RestApi from '~/api/RestApi'
 import { userInNewsFeedGroup } from '~/api/user/user-in-news-feed-group'
+import { ShowNostis } from '~/common/utils'
+import { checkIncludesRole } from '~/common/utils/common'
+import { RootState } from '~/store'
+import Avatar from '../../Avatar'
+import GroupForm from './form'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const { Search } = Input
 
@@ -109,30 +111,6 @@ function GroupHeader({ groupId }) {
 
 	const userInformation = useSelector((state: RootState) => state.user.information)
 
-	function isAdmin() {
-		return userInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return userInformation?.RoleId == 2
-	}
-
-	function isStdent() {
-		return userInformation?.RoleId == 3
-	}
-
-	function isManager() {
-		return userInformation?.RoleId == 4
-	}
-
-	function isAccountant() {
-		return userInformation?.RoleId == 6
-	}
-
-	function isAcademic() {
-		return userInformation?.RoleId == 7
-	}
-
 	const content = (
 		<div className="w-[400px] max-h-[500px] scrollable">
 			{stuInGroup.map((item) => {
@@ -174,13 +152,14 @@ function GroupHeader({ groupId }) {
 					</div>
 				</div>
 
-				{(isAdmin() || isTeacher() || isManager() || isAcademic()) && (
-					<>
-						<div className="cc-add-member" onClick={() => setShowUser(true)}>
-							<FaUserPlus size={20} />
-						</div>
-						<GroupForm isEdit defaultData={details} onRefresh={getNewsDetail} />
-					</>
+				{checkIncludesRole(listPermissionsByRoles.news.addMemberToGroup, Number(userInformation?.RoleId)) && (
+					<div className="cc-add-member" onClick={() => setShowUser(true)}>
+						<FaUserPlus size={20} />
+					</div>
+				)}
+
+				{checkIncludesRole(listPermissionsByRoles.news.updateGroup, Number(userInformation?.RoleId)) && (
+					<GroupForm isEdit defaultData={details} onRefresh={getNewsDetail} />
 				)}
 			</div>
 

@@ -6,3 +6,4 @@ import { log } from '~/common/utils/log'
 import ShowNostis from '~/common/utils/show-noti'
 
 export { _check, log, _format, wait, copyRightLog, parseJwt, ShowNoti, ShowNostis }
+export * from './file'

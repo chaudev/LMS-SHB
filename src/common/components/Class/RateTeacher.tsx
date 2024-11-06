@@ -100,7 +100,7 @@ export const RateTeacher = () => {
 									label={
 										<>
 											<div>
-												[{moment(item?.StartTime).format('DD-MM')}] {moment(item?.StartTime).format('HH:mm')} -{' '}
+												[{moment(item?.StartTime).format('DD/MM')}] {moment(item?.StartTime).format('HH:mm')} -{' '}
 												{moment(item?.EndTime).format('HH:mm')}
 											</div>
 											{item?.StatusTutoringName ? (
@@ -133,7 +133,7 @@ export const RateTeacher = () => {
 									<div className="flex items-start justify-between">
 										<div>
 											<div className="mb-2">
-												<span className="font-semibold text-[#002456]">{item?.TeacherName}</span> <span> - {item?.TeacherCode}</span>
+												<span className="font-semibold text-[#B32025]">{item?.TeacherName}</span> <span> - {item?.TeacherCode}</span>
 											</div>
 											<div>
 												<Rate

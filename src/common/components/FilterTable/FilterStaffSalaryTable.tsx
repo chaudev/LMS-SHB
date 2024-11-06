@@ -4,7 +4,7 @@ import { Filter } from 'react-feather'
 import { useForm } from 'react-hook-form'
 import { MdOutlineRestore, MdSearch } from 'react-icons/md'
 
-const dateFormat = 'YYYY/MM/DD'
+const dateFormat = 'DD/MM/YYYY'
 
 const { RangePicker } = DatePicker
 

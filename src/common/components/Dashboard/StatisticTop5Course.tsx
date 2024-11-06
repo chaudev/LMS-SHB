@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Bar, CartesianGrid, ComposedChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import MyColumnChart from '~/common/antv-charts/Column/basic/MyColumnChart'
 
 const StatisticTop5Course = (props) => {
-	const { data, titleBar, type } = props
+	const { data, titleBar, type, loading } = props
 
 	const [hideXAxis, setHideXAxis] = useState(false)
 
@@ -36,7 +37,7 @@ const StatisticTop5Course = (props) => {
 
 	return (
 		<>
-			<ResponsiveContainer width="100%" height={280}>
+			{/* <ResponsiveContainer width="100%" height={280}>
 				<ComposedChart width={500} height={500} data={data}>
 					<CartesianGrid stroke="#f5f5f5" />
 					{hideXAxis ? <XAxis hide dataKey="Name" /> : <XAxis dataKey="Name" />}
@@ -50,7 +51,16 @@ const StatisticTop5Course = (props) => {
 						fill={type == 1 ? '#EF8B43' : type == 2 ? '#0262DB' : '#8884d8'}
 					/>
 				</ComposedChart>
-			</ResponsiveContainer>
+			</ResponsiveContainer> */}
+
+			<MyColumnChart
+				legend={false}
+				loading={loading}
+				data={!!data ? data : []}
+				xField="Name"
+				yField="Value"
+				color={['#e67e22', '#1abc9c', '#3498db', '#9b59b6', '#e74c3c', '#2980b9', '#c0392b']}
+			/>
 		</>
 	)
 }

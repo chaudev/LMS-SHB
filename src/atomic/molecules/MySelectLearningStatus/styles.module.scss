@@ -1,0 +1,9 @@
+.wrapper {
+	width: 100%;
+	:global {
+		.ant-select-selector {
+			min-height: 36px;
+			margin-right: 0;
+		}
+	}
+}

@@ -20,7 +20,7 @@ const PrimaryTag: FC<IPrimaryTag> = (props) => {
 			return 'bg-[#000]'
 		}
 		if (color == 'primary') {
-			return 'bg-[#002456]'
+			return 'bg-[#B32025]'
 		}
 		if (color == 'disabled') {
 			return 'bg-[#CFD8DC]'
@@ -51,6 +51,9 @@ const PrimaryTag: FC<IPrimaryTag> = (props) => {
 		}
 		if (color == 'disabled') {
 			return 'text-gray-800'
+		}
+		if (color == 'orange') {
+			return 'text-white'
 		}
 	}
 

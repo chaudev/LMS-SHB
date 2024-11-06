@@ -7,7 +7,7 @@ import NotiModal from '~/common/components/Elements/NotiModal'
 import SortBox from '~/common/components/Elements/SortBox'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import FilterColumn from '~/common/components/FilterTable/Filter/FilterColumn'
-import { parseSelectArray } from '~/common/utils/common'
+import { is, parseSelectArray } from '~/common/utils/common'
 import ScoreModal from '~/common/components/Service/ScoreModal'
 import TestUpdateStatus from '~/common/components/Service/TestUpdateStatus'
 import { ShowNoti } from '~/common/utils'
@@ -24,6 +24,7 @@ import ExpandedRowAppointment from '~/common/components/Service/ExpandedRowAppoi
 import IconButton from '~/common/components/Primary/IconButton'
 import { useRouter } from 'next/router'
 import { Form, Select } from 'antd'
+import { ShowErrorToast } from '~/common/utils/main-function'
 
 const appointmenInitFilter = [
 	{
@@ -46,19 +47,19 @@ const appointmenInitFilter = [
 			{ value: 2, title: 'Đã kiểm tra' }
 		],
 		value: null
-	},
-	{
-		name: 'Type',
-		title: 'Địa điểm làm bài',
-		col: 'col-md-12 col-12',
-		type: 'select',
-		mode: 'multiple',
-		optionList: [
-			{ value: 1, title: 'Tại trung tâm' },
-			{ value: 2, title: 'Làm bài trực tuyến' }
-		],
-		value: null
 	}
+	// {
+	// 	name: 'Type',
+	// 	title: 'Địa điểm làm bài',
+	// 	col: 'col-md-12 col-12',
+	// 	type: 'select',
+	// 	mode: 'multiple',
+	// 	optionList: [
+	// 		{ value: 1, title: 'Tại trung tâm' },
+	// 		{ value: 2, title: 'Làm bài trực tuyến' }
+	// 	],
+	// 	value: null
+	// }
 ]
 
 const appointmenDataOption = [
@@ -142,34 +143,34 @@ export default function ServiceAppointmentTest(props) {
 		PageSize: PAGE_SIZE,
 		PageIndex: 1,
 		RoleIds: '3',
-		parentIds: userInformation?.RoleId == '8' ? userInformation.UserInformationId.toString() : ''
+		parentIds: is(userInformation).parent ? userInformation.UserInformationId.toString() : ''
 	})
 
 	// LIST FILTER
 	const [dataFilter, setDataFilter] = useState(appointmenInitFilter)
 
 	function isAdmin() {
-		return userInformation?.RoleId == 1
+		return is(userInformation).admin
 	}
 
 	function isTeacher() {
-		return userInformation?.RoleId == 2
+		return is(userInformation).teacher
 	}
 
 	function isSaler() {
-		return userInformation?.RoleId == 5
+		return is(userInformation).saler
 	}
 
 	function isManager() {
-		return userInformation?.RoleId == 4
+		return is(userInformation).manager
 	}
 
 	function isStdent() {
-		return userInformation?.RoleId == 3
+		return is(userInformation).student
 	}
 
 	function isAcademic() {
-		return userInformation?.RoleId == 7
+		return is(userInformation).academic
 	}
 
 	useMemo(() => {
@@ -194,7 +195,7 @@ export default function ServiceAppointmentTest(props) {
 				setStudents([])
 			}
 		} catch (error) {
-			console.error(error)
+			ShowErrorToast(error)
 		} finally {
 		}
 	}
@@ -209,7 +210,7 @@ export default function ServiceAppointmentTest(props) {
 					dispatch(setBranch([]))
 				}
 			} catch (err) {
-				ShowNoti('error', err.message)
+				ShowErrorToast(err)
 			}
 		}
 	}
@@ -246,7 +247,7 @@ export default function ServiceAppointmentTest(props) {
 				setDataSource([])
 			}
 		} catch (err) {
-			ShowNoti('error', err.message)
+			ShowErrorToast(err)
 		} finally {
 			setIsLoading(false)
 		}
@@ -314,7 +315,7 @@ export default function ServiceAppointmentTest(props) {
 					setListExamination([])
 				}
 			} catch (err) {
-				ShowNoti('error', err.message)
+				ShowErrorToast(err)
 			}
 		}
 	}
@@ -422,7 +423,7 @@ export default function ServiceAppointmentTest(props) {
 								tooltip="Đăng ký học"
 								color="green"
 								type="button"
-								onClick={() => router.push({ pathname: '/class/register', query: { userId: data?.StudentId } })}
+								onClick={() => router.push({ pathname: '/majors/registration', query: { studentId: data?.StudentId } })}
 							/>
 						)}
 					</div>

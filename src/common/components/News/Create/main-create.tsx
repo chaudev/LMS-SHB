@@ -45,8 +45,8 @@ function MainCreate(props) {
 						setHaveImage(true)
 						onClick()
 					}}
-					icon={<IoMdImages size={20} className="text-[#002456] mt-[-2px] mr-[8px]" />}
-					title="Ảnh/video"
+					icon={<IoMdImages size={20} className="text-[#B32025] mt-[-2px] mr-[8px]" />}
+					title="Ảnh/video..."
 				/>
 			</div>
 		</div>

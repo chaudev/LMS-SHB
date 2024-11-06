@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 type IFormInputText = {
 	style?: object
 	label: string | element
-	name: string |[number,string]
+	name: string | [number, string]
 	isRequired?: boolean
 	className?: string
 	allowClear?: boolean
@@ -13,7 +13,7 @@ type IFormInputText = {
 	onChange?: any
 	value?: any
 	suffix?: element
-	hidden?:boolean
+	hidden?: boolean
 }
 
 type IUploadImageField = {
@@ -33,8 +33,8 @@ type IUploadImageField = {
 
 type IFormInputNumber = {
 	style?: object
-	name: string
-	label: string
+	name: string | [number, string]
+	label: React.ReactNode
 	isRequired?: boolean
 	className?: string
 	allowClear?: boolean
@@ -44,12 +44,12 @@ type IFormInputNumber = {
 	max?: number
 	onChange?: any
 	loading?: boolean
-	hidden?:boolean
+	hidden?: boolean
 }
 
 type IFormSelectField = {
 	style?: object
-	name: string | [number,string]
+	name: string | [number, string]
 	label: string | element
 	isRequired?: boolean
 	className?: string
@@ -64,16 +64,16 @@ type IFormSelectField = {
 	optionList: ISelectOptionList[] | []
 	title?: string[] | string | ReactNode
 	suffix?: element
-	allowClear?:boolean
-	hidden?:boolean
-	initialValue?:any
-	max?:number
+	allowClear?: boolean
+	hidden?: boolean
+	initialValue?: any
+	max?: number
 }
 
 type ISelectOptionList = {
 	title: string
 	value: any
-	disabled?:boolean
+	disabled?: boolean
 }
 
 type IEditorField = {
@@ -88,7 +88,8 @@ type IEditorField = {
 	placeholder?: string
 	customFieldProps?: any
 	id?: any
-	height?: number
+	height?: string | number
+	allowPasteImage?: boolean
 }
 
 type IUploadFileField = {
@@ -119,11 +120,11 @@ type ITextBoxField = {
 	rules?: array
 	maxLength?: number
 	onChange?: Function
-	autoSize?:boolean
+	autoSize?: boolean
 }
 
 type IDatePickerField = {
-	label: string |element
+	label: string | element
 	name: string
 	mode: 'range' | 'single'
 	placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'

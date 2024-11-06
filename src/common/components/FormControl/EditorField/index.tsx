@@ -21,7 +21,8 @@ function EditorField(props: IEditorField) {
 		onChangeEditor,
 		disableButton,
 		id,
-		height
+		height,
+		allowPasteImage
 	} = props
 	const [value, setValue] = useState('')
 
@@ -43,6 +44,7 @@ function EditorField(props: IEditorField) {
 				disableButton={disableButton}
 				id={id}
 				height={height}
+				allowPasteImage={allowPasteImage}
 			/>
 		</Form.Item>
 	)

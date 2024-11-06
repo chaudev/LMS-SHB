@@ -7,6 +7,8 @@ import { ModalSalaryConfigCRUD } from './ModalSalaryConfigCRUD'
 import { Input } from 'antd'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 const initParameters = { fullName: '', userCode: '', pageIndex: 1, pageSize: PAGE_SIZE, search: '' }
 export const SalaryConfigPage = () => {
 	const state = useSelector((state: RootState) => state)
@@ -16,33 +18,6 @@ export const SalaryConfigPage = () => {
 	const [dataTable, setDataTable] = useState([])
 	const [loading, setLoading] = useState(false)
 
-	function isAdmin() {
-		return userInformation?.RoleId == 1
-	}
-
-	function isTeacher() {
-		return userInformation?.RoleId == 2
-	}
-
-	function isManager() {
-		return userInformation?.RoleId == 4
-	}
-
-	function isStdent() {
-		return userInformation?.RoleId == 3
-	}
-
-	function isSaler() {
-		return userInformation?.RoleId == 5
-	}
-
-	function isAccountant() {
-		return userInformation?.RoleId == 6
-	}
-
-	function isAcademic() {
-		return userInformation?.RoleId == 7
-	}
 	const getSalaryConfig = async (params) => {
 		try {
 			setLoading(true)
@@ -77,7 +52,7 @@ export const SalaryConfigPage = () => {
 		{
 			title: 'Họ tên',
 			dataIndex: 'FullName',
-			render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
+			render: (text) => <p className="font-semibold text-[#B32025]">{text}</p>
 		},
 		{
 			title: 'Chức vụ',
@@ -116,12 +91,14 @@ export const SalaryConfigPage = () => {
 			title: '',
 			dataIndex: 'Action',
 			render: (text, item) => {
-				if (isSaler() || isAcademic() || isTeacher()) return ''
-
 				return (
 					<div className="flex items-center">
-						<ModalSalaryConfigCRUD mode="edit" onRefresh={() => getSalaryConfig(apiParameters)} dataRow={item} />
-						<ModalSalaryConfigCRUD mode="delete" onRefresh={() => getSalaryConfig(apiParameters)} dataRow={item} />
+						{checkIncludesRole(listPermissionsByRoles.account.salaryConfig.update, Number(userInformation?.RoleId)) && (
+							<ModalSalaryConfigCRUD mode="edit" onRefresh={() => getSalaryConfig(apiParameters)} dataRow={item} />
+						)}
+						{checkIncludesRole(listPermissionsByRoles.account.salaryConfig.delete, Number(userInformation?.RoleId)) && (
+							<ModalSalaryConfigCRUD mode="delete" onRefresh={() => getSalaryConfig(apiParameters)} dataRow={item} />
+						)}
 					</div>
 				)
 			}
@@ -150,7 +127,11 @@ export const SalaryConfigPage = () => {
 				}
 				data={dataTable}
 				columns={columns}
-				Extra={<ModalSalaryConfigCRUD mode="add" onRefresh={() => getSalaryConfig(apiParameters)} />}
+				Extra={
+					checkIncludesRole(listPermissionsByRoles.account.salaryConfig.create, Number(userInformation?.RoleId)) ? (
+						<ModalSalaryConfigCRUD mode="add" onRefresh={() => getSalaryConfig(apiParameters)} />
+					) : undefined
+				}
 			/>
 		</div>
 	)

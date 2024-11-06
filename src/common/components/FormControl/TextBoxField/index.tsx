@@ -1,8 +1,8 @@
 import { Form } from 'antd'
-import TextArea from 'antd/lib/input/TextArea'
+import TextArea, { TextAreaProps } from 'antd/lib/input/TextArea'
 import { ITextBoxField } from '../form-control'
 
-export default function TextBoxField(props: ITextBoxField) {
+export default function TextBoxField(props: ITextBoxField & TextAreaProps) {
 	const {
 		style,
 		label,
@@ -16,7 +16,8 @@ export default function TextBoxField(props: ITextBoxField) {
 		rows,
 		maxLength,
 		onChange,
-		autoSize  
+		autoSize,
+		...rest
 	} = props
 	return (
 		<Form.Item name={name} style={style} label={label} className={`${className}`} required={isRequired} rules={rules}>
@@ -29,6 +30,7 @@ export default function TextBoxField(props: ITextBoxField) {
 				disabled={disabled}
 				onChange={(e) => !!onChange && onChange(e)}
 				maxLength={maxLength}
+				{...rest}
 			/>
 		</Form.Item>
 	)

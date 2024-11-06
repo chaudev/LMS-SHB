@@ -143,7 +143,7 @@ export const ModalOfficeCRUD: React.FC<I> = ({ mode, dataRow, onRefresh }) => {
 				centered
 				footer={
 					<>
-						<PrimaryButton onClick={() => onClose()} className='btn-outline' background="transparent" icon="cancel" type="button">
+						<PrimaryButton onClick={() => onClose()} className="btn-outline" background="transparent" icon="cancel" type="button">
 							Huỷ
 						</PrimaryButton>
 						<PrimaryButton
@@ -176,6 +176,16 @@ export const ModalOfficeCRUD: React.FC<I> = ({ mode, dataRow, onRefresh }) => {
 											label="Văn phòng"
 											name="Name"
 											placeholder="Nhập văn phòng"
+										/>
+									</div>
+
+									<div className="col-span-2">
+										<InputTextField
+											// isRequired
+											// rules={[{ required: true, message: 'Bạn không được để trống!' }]}
+											label="Mã văn phòng"
+											name="Code"
+											placeholder="Nhập mã văn phòng"
 										/>
 									</div>
 

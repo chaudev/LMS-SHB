@@ -29,6 +29,8 @@ import Source from './Statistic/Source'
 import TopJob from './Statistic/TopJob'
 import StudentAge from './Statistic/StudentAge'
 import FeedRating from './Statistic/FeedRating'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const Dashboard = () => {
 	const user = useSelector((state: RootState) => state.user.information)
@@ -50,6 +52,8 @@ const Dashboard = () => {
 	const [todoFeedback, setTodoFeedback] = useState(initialFeedback)
 	const [feedback, setFeedback] = useState([])
 	const [totalFeedback, setTotalFeedback] = useState(0)
+
+	const viewWholeData = checkIncludesRole(listPermissionsByRoles.statistics.viewFullData, Number(user?.RoleId))
 
 	// ----------------------------------------------------------------
 
@@ -125,7 +129,7 @@ const Dashboard = () => {
 
 	return (
 		<div className="w-full d-flex flex-col  mx-auto dashboard gap-4">
-			{isAdmin || isAcademic || isManager ? <StudentByAttenance /> : ''}
+			{viewWholeData ? <StudentByAttenance /> : ''}
 
 			<div className="w-full grid grid-cols-1 tablet:grid-cols-3 gap-4">
 				{isParents && (
@@ -162,7 +166,7 @@ const Dashboard = () => {
 									setTodoApiOverView((pre) => ({ ...pre, year: dateString }))
 								}}
 								picker="year"
-								placeholder='Chọn năm'
+								placeholder="Chọn năm"
 							/>
 						</div>
 					</>
@@ -171,9 +175,9 @@ const Dashboard = () => {
 
 			<StatisticOverview todoApiOverView={todoApiOverView} />
 
-			{(isAdmin || isAcademic || isSaler || isManager || isAccountant) && <DashboardStudents />}
+			{viewWholeData && <DashboardStudents />}
 
-			{(isAdmin || isManager || isAcademic) && (
+			{viewWholeData && (
 				<>
 					{isAcademic ? <Revenue todoApi={todoApi} /> : ''}
 					<div className="grid grid-cols-1 tablet:grid-cols-2 gap-4">

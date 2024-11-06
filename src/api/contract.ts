@@ -11,12 +11,26 @@ export const contractApi = {
 	getByStudentID(studentID) {
 		return instance.get<IApiResultData<IContract[]>>(`${url}template/${studentID}`)
 	},
+	getStudentContract(params) {
+		return instance.get<IApiResultData<IContract[]>>(`${url}Me`, { params })
+	},
 
 	// Cập nhật data
 	update(data) {
 		return instance.put(url, data)
 	},
-	addContract(data) {
+	addContract(data: TPostContract) {
 		return instance.post(url, data)
+	},
+	delete(id) {
+		return instance.delete(url + `/${id}`)
+	},
+
+	upload(data) {
+		let fData = new FormData()
+		fData.append('file', data)
+		return instance.post(`${url}upload`, fData, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		})
 	}
 }

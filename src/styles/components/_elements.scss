@@ -551,7 +551,7 @@ body {
 
 	textarea.ant-input {
 		font-size: 14px;
-		border-radius: 0.375rem !important;
+		// border-radius: 0.375rem !important;
 		// height: 90px !important;
 	}
 
@@ -758,12 +758,12 @@ body {
 			padding: 6px 12px;
 			cursor: pointer;
 			border-radius: 6px;
-			color: #002456;
+			color: #b32025;
 			text-align: center;
 
 			&.active {
 				background: rgba(27, 115, 232, 0.0901960784);
-				color: #002456;
+				color: #b32025;
 			}
 		}
 	}
@@ -2206,7 +2206,7 @@ body {
 
 			&:hover {
 				.bg-upload {
-					color: #002456;
+					color: #b32025;
 				}
 			}
 		}

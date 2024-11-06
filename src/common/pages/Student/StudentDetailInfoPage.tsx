@@ -6,18 +6,19 @@ import { useSelector } from 'react-redux'
 import { userInformationApi } from '~/api/user/user'
 import UploadImageField from '~/common/components/FormControl/UploadImageField'
 import PrimaryButton from '~/common/components/Primary/Button'
+import TabStudentContract from '~/common/components/Student/TabStudentContract'
 import TabStudentDetail from '~/common/components/Student/TabStudentDetail'
+import { useRole } from '~/common/hooks/useRole'
 import { ShowNoti } from '~/common/utils'
+import { is } from '~/common/utils/common'
 import { RootState } from '~/store'
 import { TabBill } from './Tab/TabBill'
 import { TabClassList } from './Tab/TabClassList'
-import { TabClassListHistory } from './Tab/TabClassListHistory'
-import { TabDiscountHistory } from './Tab/TabDiscountHistory'
+import TabMajors from './Tab/TabMajors'
+import TabPaymentSession from './Tab/TabPaymentSession'
 import { TabStudyRoute } from './Tab/TabStudyRoute'
 import { TabTestAppointment } from './Tab/TabTestAppointment'
-import TabMajors from './Tab/TabMajors'
-import { useRole } from '~/common/hooks/useRole'
-import TabPaymentSession from './Tab/TabPaymentSession'
+import TabDormitory from './Tab/Dormitory'
 
 export interface IStudentDetailInfoPageProps {}
 
@@ -44,20 +45,20 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 	}
 
 	const items: TabsProps['items'] =
-		userInformation?.RoleId === '3' || userInformation?.RoleId === '8'
+		is(userInformation).student || is(userInformation).parent
 			? [
 					{
 						key: '1',
 						label: `Chi tiết`,
 						children: (
-							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} refetch={getStudentDetail} />
 						)
 					},
-					// {
-					// 	key: '2',
-					// 	label: `Hợp đồng`,
-					// 	children: <TabStudentContract StudentDetail={studentDetail} />
-					// },
+					{
+						key: '2',
+						label: `Hợp đồng`,
+						children: <TabStudentContract StudentDetail={studentDetail} />
+					},
 					{
 						key: '3',
 						label: `Lộ trình`,
@@ -80,8 +81,13 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					// },
 					{
 						key: '9',
-						label: `Ngành học`,
+						label: `Chương trình học`,
 						children: <TabMajors />
+					},
+					{
+						key: '10',
+						label: 'Thông tin ký túc xá',
+						children: <TabDormitory />
 					}
 			  ]
 			: [
@@ -89,7 +95,7 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 						key: '1',
 						label: `Chi tiết`,
 						children: (
-							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} />
+							<TabStudentDetail isNotUpdate={isTeacher || isParents} StudentDetail={studentDetail} setStudentDetail={setStudentDetail} refetch={getStudentDetail} />
 						)
 					},
 					// {
@@ -134,8 +140,13 @@ export default function StudentDetailInfoPage(props: IStudentDetailInfoPageProps
 					// },
 					{
 						key: '9',
-						label: `Ngành học`,
+						label: `Chương trình học`,
 						children: <TabMajors />
+					},
+					{
+						key: '11',
+						label: 'Thông tin ký túc xá',
+						children: <TabDormitory />
 					}
 			  ]
 

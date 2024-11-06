@@ -1,5 +1,5 @@
 import { BiBookBookmark } from 'react-icons/bi'
-import { BsFillGridFill } from 'react-icons/bs'
+import { BsChatLeftTextFill, BsFillGridFill } from 'react-icons/bs'
 import { FaUserGraduate } from 'react-icons/fa'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { MdAirplay } from 'react-icons/md'
@@ -13,14 +13,19 @@ export const StudentMenu = [
 		Icon: <TiHome style={{ width: 24, height: 24 }} />
 	},
 	{
+		Key: 'student',
+		TabName: 'Học viên',
+		Icon: <FaUserGraduate size={20} />
+	},
+	{
 		Key: 'class',
 		TabName: 'Lớp học',
 		Icon: <BsFillGridFill size={22} />
 	},
 	{
-		Key: 'student',
-		TabName: 'Học viên',
-		Icon: <FaUserGraduate size={20} />
+		Key: 'feedback',
+		TabName: 'Phản hồi',
+		Icon: <BsChatLeftTextFill size={20} />
 	}
 	// {
 	// 	Key: 'video',
@@ -79,8 +84,37 @@ export const StudentChildMenu = [
 		]
 	},
 	{
+		MenuName: 'Quản lý phản hồi',
+		MenuTitle: 'Quản lý phản hồi',
+		MenuKey: '/feedback',
+		Parent: 'feedback',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/feedback/list',
+				Route: '/feedback/list',
+				Text: 'Danh sách phản hồi',
+				Icon: ''
+			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/feedback/group',
+			// 	Route: '/feedback/group',
+			// 	Text: 'Quản lý nhóm phản hồi',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/feedback/permission',
+			// 	Route: '/feedback/permission',
+			// 	Text: 'Phân quyền phản hồi',
+			// 	Icon: ''
+			// }
+		]
+	},
+	{
 		MenuName: 'Quản lý thông tin học',
-		MenuTitle: 'Thông tin học',
+		MenuTitle: 'Tuyền sinh',
 		MenuKey: '/info-course',
 		Parent: 'student',
 		MenuItem: [
@@ -97,14 +131,14 @@ export const StudentChildMenu = [
 				Route: '/info-course/student/warning',
 				Text: 'Thông tin cảnh báo',
 				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/feedbacks',
-				Route: '/info-course/feedbacks',
-				Text: 'Thông tin phản hồi',
-				Icon: ''
 			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/feedbacks',
+			// 	Route: '/info-course/feedbacks',
+			// 	Text: 'Thông tin phản hồi',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{

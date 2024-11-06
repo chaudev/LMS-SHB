@@ -16,8 +16,9 @@ import { ButtonRefund } from '~/common/components/TableButton'
 import { ShowNostis, ShowNoti } from '~/common/utils'
 import { _format } from '~/common/utils/format'
 import { RootState } from '~/store'
-import { parseToMoney } from '~/common/utils/common'
+import { checkIncludesRole, parseToMoney } from '~/common/utils/common'
 import FilterBase from '~/common/components/Elements/FilterBase'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const PAGE_SIZE = 10
 
@@ -41,7 +42,7 @@ const PaymentApprovePage = () => {
 	const getPaymentApprove = async () => {
 		try {
 			setIsLoading(true)
-			const response = await RestApi.get<any>('/PaymentApprove', todoApi)
+			const response = await RestApi.get<any>('PaymentApprove', todoApi)
 			if (response.status == 200) {
 				const { data, totalRow, totalMoney }: any = response.data
 				setDataPaymentApprove(data)
@@ -63,7 +64,7 @@ const PaymentApprovePage = () => {
 
 	const handleDelete = async (id: string) => {
 		try {
-			const res = await RestApi.delete('/PaymentApprove', id)
+			const res = await RestApi.delete('PaymentApprove', id)
 			getPaymentApprove()
 			ShowNoti('success', res.data.message)
 			return res
@@ -107,7 +108,7 @@ const PaymentApprovePage = () => {
 		{
 			title: 'Họ tên',
 			dataIndex: 'FullName',
-			render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
+			render: (text) => <p className="font-semibold text-[#B32025]">{text}</p>
 		},
 		{
 			width: 120,
@@ -153,8 +154,12 @@ const PaymentApprovePage = () => {
 
 				return (
 					<div className="flex items-center">
-						<DeleteTableRow handleDelete={() => handleDelete(data.Id)} />
-						{data.Status == 1 && <PaymentApprovePage.ApproveMoney id={data.Id} onRefresh={getPaymentApprove} />}
+						{checkIncludesRole(listPermissionsByRoles.finance.paymentApproval.approve, Number(user?.RoleId)) && data.Status == 1 && (
+							<PaymentApprovePage.ApproveMoney id={data.Id} onRefresh={getPaymentApprove} />
+						)}
+						{checkIncludesRole(listPermissionsByRoles.finance.paymentApproval.delete, Number(user?.RoleId)) && (
+							<DeleteTableRow handleDelete={() => handleDelete(data.Id)} />
+						)}
 					</div>
 				)
 			},

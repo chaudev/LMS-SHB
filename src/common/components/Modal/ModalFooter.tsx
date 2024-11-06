@@ -1,8 +1,6 @@
-import { Button, Popconfirm } from 'antd'
+import { Popconfirm } from 'antd'
 import { useRouter } from 'next/router'
-import React, { MouseEventHandler, useState } from 'react'
-import { AiOutlineCloseCircle, AiOutlineSave } from 'react-icons/ai'
-import { VscSignOut } from 'react-icons/vsc'
+import { MouseEventHandler, useState } from 'react'
 import RestApi from '~/api/RestApi'
 import { ShowNostis } from '~/common/utils'
 import PrimaryButton from '../Primary/Button'
@@ -24,7 +22,7 @@ const ModalFooter = (props: IProps) => {
 	const handleConfirm = async () => {
 		setIsLoading(true)
 		try {
-			await RestApi.delete('/NewsFeedGroup/', groupId)
+			await RestApi.delete('NewsFeedGroup', groupId)
 
 			ShowNostis.success('Thành công')
 			router.push('/')
@@ -55,7 +53,7 @@ const ModalFooter = (props: IProps) => {
 					Huỷ
 				</PrimaryButton>
 			)}
-			{/* <Button className={buttonFull ? 'flex-1' : ''} onClick={onOK} style={{ background: '#002456' }} loading={loading}>
+			{/* <Button className={buttonFull ? 'flex-1' : ''} onClick={onOK} style={{ background: '#B32025' }} loading={loading}>
 				<AiOutlineSave className="text-[18px] mr-2" /> {isEdit ? 'Chỉnh sửa' : 'Lưu'}
 			</Button> */}
 			<PrimaryButton type="button" onClick={onOK} loading={loading} background="primary" className="w-full" icon="save">

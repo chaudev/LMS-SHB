@@ -170,20 +170,20 @@ function Header({ isOpenMenu, isOpen, funcMenuMobile, openMenuMobile }: IHeader)
 	return (
 		<header className={`app-header ${openMenuMobile ? 'mobile' : ''}`}>
 			<div className={`app-header-logo ${!isOpen ? 'close-app' : countOpen > 0 ? 'open' : 'open-no-ani'}`}>
-				<a href="/" className="flex items-center duration-200">
-					<img className={isOpen ? 'h-[85%] w-[80%] ml-[12px]' : 'hidden'} src="/logo/main-logo.png"></img>
+				<a href="/" className="flex items-center duration-200 w-[120px]">
+					<img className={isOpen ? '' : 'hidden'} src="/logo/main-logo.png"></img>
 				</a>
 			</div>
 
 			<div className={`app-header-inner ${!isOpen && 'close-app'}`}>
 				<div className="right">
 					<div className="box-menu desktop" onClick={() => isOpenMenu()}>
-						<div className="icon-action">{!isOpen ? <MenuUnfoldOutlined color="#002456" /> : <MenuFoldOutlined color="#002456" />}</div>
+						<div className="icon-action">{!isOpen ? <MenuUnfoldOutlined color="#B32025" /> : <MenuFoldOutlined color="#B32025" />}</div>
 					</div>
 
 					<div className="box-menu mobile" onClick={() => funcMenuMobile()}>
 						<div className="icon-action">
-							{!openMenuMobile ? <MenuUnfoldOutlined color="#002456" /> : <MenuFoldOutlined color="#002456" />}
+							{!openMenuMobile ? <MenuUnfoldOutlined color="#B32025" /> : <MenuFoldOutlined color="#B32025" />}
 						</div>
 					</div>
 				</div>

@@ -1,4 +1,4 @@
-import { DatePicker, Input, Popconfirm } from 'antd'
+import { DatePicker, Input, Modal, Popconfirm } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { staffSalaryApi } from '~/api/staff-salary'
@@ -12,6 +12,9 @@ import { ModalTeachingDetail } from './ModalTeachingDetail'
 import { useSelector } from 'react-redux'
 import { RootState } from '~/store'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import PrimaryButton from '~/common/components/Primary/Button'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
 
 export const SalaryPage = () => {
 	const [valueDate, setValueDate] = useState(moment().subtract(1, 'months'))
@@ -21,6 +24,8 @@ export const SalaryPage = () => {
 	const [dataTable, setDataTable] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [time, setTime] = useState(null)
+
+	const router = useRouter()
 
 	useEffect(() => {
 		if (valueDate) {
@@ -113,7 +118,7 @@ export const SalaryPage = () => {
 			width: 200,
 			title: 'Nhân viên',
 			dataIndex: 'FullName',
-			render: (text) => <p className="font-semibold text-[#002456]">{text}</p>
+			render: (text) => <p className="font-semibold text-[#B32025]">{text}</p>
 		},
 		{
 			title: 'Năm',
@@ -194,6 +199,16 @@ export const SalaryPage = () => {
 		}
 	]
 
+	const mutationExportExcel = useMutation({
+		mutationKey: ['GET api/Salary/excel'],
+		mutationFn: async (params: any) => staffSalaryApi.exportExcel(params),
+		onSuccess: (res) => {
+			const data = res.data.data;
+			router.push(data)
+		},
+		onError: (error) => ShowNoti('error', error?.message)
+	})
+
 	return (
 		<div className="salary-page-list">
 			<PrimaryTable
@@ -224,7 +239,13 @@ export const SalaryPage = () => {
 									setApiParameters(initParameters)
 								}}
 							/>
-							<DatePicker onChange={handleFilterMonth} picker="month" placeholder="Chọn tháng" value={valueDate} />
+							<DatePicker
+								onChange={handleFilterMonth}
+								picker="month"
+								placeholder="Chọn tháng"
+								value={valueDate}
+								className="min-w-[120px]"
+							/>
 							<Input.Search
 								className="primary-search max-w-[300px]"
 								onChange={(event) => {
@@ -243,18 +264,39 @@ export const SalaryPage = () => {
 				Extra={
 					<>
 						{(isAdmin() || isAccountant()) && (
-							<>
-								<div className="mr-2">
-									<ModalSalaryCRUD time={time} mode="salary" onRefresh={() => getSalary(apiParameters)} />
-								</div>
+							<div className="flex gap-2">
+								<PrimaryButton
+									onClick={() => {
+										mutationExportExcel.mutateAsync(apiParameters)
+									}}
+									children="Xuất Excel"
+									icon="excel"
+									background="red"
+									type={'button'}
+									disable={dataTable.length <= 0 || mutationExportExcel.isPending}
+									loading={mutationExportExcel.isPending}
+								/>
+								<ModalSalaryCRUD time={time} mode="salary" onRefresh={() => getSalary(apiParameters)} />
+
 								<Popconfirm
-									title={`Xác nhận tính lương từ ${moment().subtract(1, 'months').startOf('month').format('DD-MM-YYYY')} đến ${moment()
-										.subtract(1, 'months')
-										.endOf('month')
-										.format('DD-MM-YYYY')}?`}
+									// title={`Xác nhận tính lương từ ${moment().subtract(1, 'months').startOf('month').format('DD-MM-YYYY')} đến ${moment()
+									// 	.subtract(1, 'months')
+									// 	.endOf('month')
+									// 	.format('DD-MM-YYYY')}?`}
+									title={
+										<div>
+											<span className="font-bold">Xác nhận tính lương thủ công</span>
+											<div className="flex flex-col gap-1 mt-2">
+												<span>Từ ngày: {moment().subtract(1, 'months').startOf('month').format('DD/MM/YYYY')}</span>
+												<span>Đến ngày: {moment().subtract(1, 'months').endOf('month').format('DD/MM/YYYY')}</span>
+											</div>
+										</div>
+									}
 									okText="Ok"
 									cancelText="No"
 									onConfirm={handleSalaryClosing}
+									placement="topRight"
+									icon={null}
 								>
 									<button
 										type="button"
@@ -263,7 +305,7 @@ export const SalaryPage = () => {
 										Tính lương tháng trước
 									</button>
 								</Popconfirm>
-							</>
+							</div>
 						)}
 					</>
 				}

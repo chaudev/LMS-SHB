@@ -6,8 +6,13 @@ import EmptyData from '~/common/components/EmptyData'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ModalProfileStatusCRUD } from './ModalProfileStatusCRUD'
 import PrimaryTable from '~/common/components/Primary/Table'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { RootState } from '~/store'
+import { useSelector } from 'react-redux'
 
 export const ProfileStatusPage = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const init = { pageIndex: 1, pageSize: PAGE_SIZE }
 	const [data, setData] = useState([])
 	const [loading, setLoading] = useState(false)
@@ -48,8 +53,12 @@ export const ProfileStatusPage = () => {
 			width: 50,
 			render: (text, item) => (
 				<div className="flex items-center">
-					<ModalProfileStatusCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
-					<ModalProfileStatusCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					{checkIncludesRole(listPermissionsByRoles.config.applicationStatus.update, Number(userInformation?.RoleId)) && (
+						<ModalProfileStatusCRUD dataRow={item} mode="edit" onRefresh={() => getData(todoApi)} />
+					)}
+					{checkIncludesRole(listPermissionsByRoles.config.applicationStatus.delete, Number(userInformation?.RoleId)) && (
+						<ModalProfileStatusCRUD dataRow={item} mode="delete" onRefresh={() => getData(todoApi)} />
+					)}
 				</div>
 			)
 		}
@@ -64,7 +73,11 @@ export const ProfileStatusPage = () => {
 				TitleCard={<h1 className="text-2xl font-medium">Tình trạng thu hồ sơ</h1>}
 				data={data}
 				columns={columns}
-				Extra={<ModalProfileStatusCRUD mode="add" onRefresh={() => getData(todoApi)} />}
+				Extra={
+					checkIncludesRole(listPermissionsByRoles.config.applicationStatus.create, Number(userInformation?.RoleId)) ? (
+						<ModalProfileStatusCRUD mode="add" onRefresh={() => getData(todoApi)} />
+					) : undefined
+				}
 			/>
 		</>
 	)

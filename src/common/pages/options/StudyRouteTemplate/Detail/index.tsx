@@ -9,10 +9,15 @@ import { StudyRouteTemplateDetailApi } from '~/api/option/study-router-template-
 import { ShowNostis } from '~/common/utils'
 import ModalActionStudyRouteTemplateDetail from './ModalActionStudyRouteTemplateDetail'
 import IconButton from '~/common/components/Primary/IconButton'
+import { useSelector } from 'react-redux'
+import { RootState } from '~/store'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 
 const StudyRouteTemplateDetailPage = () => {
 	const router = useRouter()
 	const { slug, name } = router.query
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [loading, setLoading] = useState<string>('')
 	const [studyTemplateDetail, setStudyTemplateDetail] = useState<IStudyRouteTemplateDetail[]>([])
 
@@ -93,7 +98,11 @@ const StudyRouteTemplateDetailPage = () => {
 				className="w-full max-w-[1200px]"
 				title={name ? name : ''}
 				loading={loading === 'GET_ALL'}
-				extra={<ModalActionStudyRouteTemplateDetail mode="CREATE" onRefresh={getAllStudyTemplateDetail} />}
+				extra={
+					checkIncludesRole(listPermissionsByRoles.config.sampleLearningRoadmap.createDetail, Number(userInformation?.RoleId)) ? (
+						<ModalActionStudyRouteTemplateDetail mode="CREATE" onRefresh={getAllStudyTemplateDetail} />
+					) : undefined
+				}
 			>
 				<Timeline mode="left">
 					{studyTemplateDetail.length > 0 && studyTemplateDetail ? (
@@ -110,32 +119,47 @@ const StudyRouteTemplateDetailPage = () => {
 												<span className="font-[500] ">Người tạo:</span> {item?.CreatedBy}
 											</p>
 											<p>
-												<span className="font-[500]">Ngày tạo:</span> {moment(item?.CreatedOn).format('DD-MM-YYYY HH:MM')}
+												<span className="font-[500]">Ngày tạo:</span> {moment(item?.CreatedOn).format('DD/MM/YYYY HH:MM')}
 											</p>
 											<p>
 												<span className="font-[500]">Ghi chú:</span> {item?.Note}
 											</p>
 										</div>
 										<div className="d-flex justify-end items-center gap-1">
-											{index !== 0 && (
-												<div onClick={() => handleChangeIndex('up', index)} className="icon cursor-pointer">
-													<ImMoveUp size={22} color="#0068ac" />
-												</div>
+											{checkIncludesRole(
+												listPermissionsByRoles.config.sampleLearningRoadmap.updateDetailIndex,
+												Number(userInformation?.RoleId)
+											) && (
+												<>
+													{index !== 0 && (
+														<div onClick={() => handleChangeIndex('up', index)} className="icon cursor-pointer">
+															<ImMoveUp size={22} color="#0068ac" />
+														</div>
+													)}
+													{index + 1 < studyTemplateDetail.length && (
+														<div onClick={() => handleChangeIndex('down', index)} className="icon cursor-pointer">
+															<ImMoveDown size={22} color="#007134" />
+														</div>
+													)}
+												</>
 											)}
-											{index + 1 < studyTemplateDetail.length && (
-												<div onClick={() => handleChangeIndex('down', index)} className="icon cursor-pointer">
-													<ImMoveDown size={22} color="#007134" />
-												</div>
+											{checkIncludesRole(
+												listPermissionsByRoles.config.sampleLearningRoadmap.updateDetail,
+												Number(userInformation?.RoleId)
+											) && <ModalActionStudyRouteTemplateDetail item={item} mode="UPDATE" onRefresh={getAllStudyTemplateDetail} />}
+											{checkIncludesRole(
+												listPermissionsByRoles.config.sampleLearningRoadmap.deleteDetail,
+												Number(userInformation?.RoleId)
+											) && (
+												<Popconfirm
+													onConfirm={() => handleRemovePrograms(item)}
+													title="Xóa Khung đào tạo khỏi lộ trình học"
+													okText="Xóa"
+													cancelText="Hủy"
+												>
+													<IconButton type="button" icon="remove" color="red" />
+												</Popconfirm>
 											)}
-											<ModalActionStudyRouteTemplateDetail item={item} mode="UPDATE" onRefresh={getAllStudyTemplateDetail} />
-											<Popconfirm
-												onConfirm={() => handleRemovePrograms(item)}
-												title="Xóa Khung đào tạo khỏi lộ trình học"
-												okText="Xóa"
-												cancelText="Hủy"
-											>
-												<IconButton type="button" icon="remove" color="red" />
-											</Popconfirm>
 										</div>
 									</div>
 								</Timeline.Item>

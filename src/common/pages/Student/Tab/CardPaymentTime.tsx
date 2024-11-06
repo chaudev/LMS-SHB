@@ -161,7 +161,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 			{paymentTimes && paymentTimes.length > 0 ? (
 				<Timeline className="p-3">
 					{paymentTimes.map((item) => { 
-						let color = item.Status === 3 ? 'green' : item.Status == 1 ? 'orange' : '#002456'
+						let color = item.Status === 3 ? 'green' : item.Status == 1 ? 'orange' : '#B32025'
 						return (
 							<Timeline.Item
 								color={color}
@@ -254,7 +254,7 @@ const CardPaymentTimes: React.FC<ICardLearningHistory> = ({ optionType, majorsId
 															optionList={[
 																{
 																	value: 1,
-																	title: 'Đăng ký ngành học',
+																	title: 'Đăng ký chương trình học',
 																	disabled: true
 																},
 																{

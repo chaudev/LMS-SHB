@@ -1,6 +1,7 @@
 import { AiFillSetting } from 'react-icons/ai'
 import { BsFillGridFill } from 'react-icons/bs'
 import { FaMoneyBillAlt, FaUserGraduate, FaUserTie } from 'react-icons/fa'
+import { HiMiniNewspaper } from 'react-icons/hi2'
 import { IoLibrarySharp, IoVideocam } from 'react-icons/io5'
 import { TiHome } from 'react-icons/ti'
 
@@ -11,19 +12,24 @@ export const SalerMenu = [
 		Icon: <TiHome style={{ width: 24, height: 24 }} />
 	},
 	{
-		Key: 'class',
-		TabName: 'Lớp học',
-		Icon: <BsFillGridFill size={22} />
-	},
-	{
 		Key: 'student',
 		TabName: 'Học viên',
 		Icon: <FaUserGraduate size={20} />
 	},
 	{
+		Key: 'class',
+		TabName: 'Lớp học',
+		Icon: <BsFillGridFill size={22} />
+	},
+	{
 		Key: 'staff',
 		TabName: 'Nhân viên',
 		Icon: <FaUserTie size={20} />
+	},
+	{
+		Key: 'evaluation',
+		TabName: 'Đánh giá',
+		Icon: <HiMiniNewspaper size={22} />
 	}
 ]
 
@@ -69,35 +75,6 @@ export const SalerChildMenu = [
 				Route: '/class/schedule',
 				Text: 'Kiểm tra lịch'
 			},
-			// {
-			// 	TypeItem: 'single',
-			// 	Key: '/class/register',
-			// 	Icon: '',
-			// 	Route: '/class/register',
-			// 	Text: 'Đăng ký học'
-			// }
-		]
-	},
-	{
-		MenuName: 'Quản lý thông tin học',
-		MenuTitle: 'Thông tin học',
-		MenuKey: '/info-course',
-		Parent: 'student',
-		MenuItem: [
-			{
-				ItemType: 'single',
-				Key: '/info-course/customer',
-				Route: '/info-course/customer',
-				Text: 'Leads',
-				Icon: ''
-			},
-			{
-				ItemType: 'single',
-				Key: '/info-course/service-appointment-test',
-				Route: '/info-course/service-appointment-test',
-				Text: 'Hẹn kiểm tra đầu vào',
-				Icon: ''
-			},
 			{
 				ItemType: 'single',
 				Key: '/info-course/student',
@@ -112,6 +89,106 @@ export const SalerChildMenu = [
 				Text: 'Học viên trong lớp',
 				Icon: ''
 			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/changed',
+				Route: '/info-course/changed',
+				Text: 'Học viên chuyển lớp',
+				Icon: ''
+			}
+			// {
+			// 	TypeItem: 'single',
+			// 	Key: '/class/register',
+			// 	Icon: '',
+			// 	Route: '/class/register',
+			// 	Text: 'Đăng ký học'
+			// }
+		]
+	},
+	{
+		MenuName: 'Đánh giá',
+		MenuTitle: 'Đánh giá',
+		MenuKey: '/evaluation',
+		Parent: 'evaluation',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/evaluation/me',
+				Route: '/evaluation/me',
+				Text: 'Danh sách phiếu đánh giá',
+				Icon: ''
+			}
+		]
+	},
+	{
+		MenuName: 'Quản lý thông tin học',
+		MenuTitle: 'Tuyền sinh',
+		MenuKey: '/info-course',
+		Parent: 'student',
+		MenuItem: [
+			{
+				ItemType: 'single',
+				Key: '/info-course/customer',
+				Route: '/info-course/customer',
+				Text: 'Tư vấn',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/service-appointment-test',
+				Route: '/info-course/service-appointment-test',
+				Text: 'Hẹn kiểm tra đầu vào',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/about-to-finish',
+				Route: '/info-course/about-to-finish',
+				Text: 'Học viên sắp học xong',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/student/warning',
+				Route: '/info-course/student/warning',
+				Text: 'Cảnh báo học viên',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/parents',
+				Route: '/info-course/parents',
+				Text: 'Phụ huynh',
+				Icon: ''
+			},
+			{
+				ItemType: 'single',
+				Key: '/info-course/contract',
+				Route: '/info-course/contract',
+				Text: 'Hợp đồng',
+				Icon: ''
+			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student',
+			// 	Route: '/info-course/student',
+			// 	Text: 'Danh sách học viên',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/student-in-class',
+			// 	Route: '/info-course/student-in-class',
+			// 	Text: 'Học viên trong lớp',
+			// 	Icon: ''
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/changed',
+			// 	Route: '/info-course/changed',
+			// 	Text: 'Học viên chuyển lớp',
+			// 	Icon: ''
+			// }
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/reserved',
@@ -119,13 +196,6 @@ export const SalerChildMenu = [
 			// 	Text: 'Học viên bảo lưu',
 			// 	Icon: ''
 			// },
-			{
-				ItemType: 'single',
-				Key: '/info-course/changed',
-				Route: '/info-course/changed',
-				Text: 'Học viên chuyển lớp',
-				Icon: ''
-			},
 			// {
 			// 	ItemType: 'single',
 			// 	Key: '/info-course/registration',
@@ -133,13 +203,13 @@ export const SalerChildMenu = [
 			// 	Text: 'Hẹn đăng ký',
 			// 	Icon: ''
 			// }
-			{
-				ItemType: 'single',
-				Key: '/info-course/feedbacks',
-				Route: '/info-course/feedbacks',
-				Text: 'Phản hồi học viên',
-				Icon: ''
-			}
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/info-course/feedbacks',
+			// 	Route: '/info-course/feedbacks',
+			// 	Text: 'Phản hồi học viên',
+			// 	Icon: ''
+			// }
 		]
 	},
 	{

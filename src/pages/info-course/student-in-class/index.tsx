@@ -1,42 +1,44 @@
 import { Input } from 'antd'
-import React, { useEffect, useState } from 'react'
+import Head from 'next/head'
+import React, { useEffect } from 'react'
+import { ImWarning } from 'react-icons/im'
 import RestApi from '~/api/RestApi'
+import appConfigs from '~/appConfig'
 import { MainLayout } from '~/common'
 import { PrimaryTooltip } from '~/common/components'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
+import { ChangeClass } from '~/common/components/Student/StudentInClass'
+import { ButtonEye } from '~/common/components/TableButton'
+import { userInfoColumn } from '~/common/libs/columns/user-info'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNostis } from '~/common/utils'
-import Head from 'next/head'
-import appConfigs from '~/appConfig'
-import { ImWarning } from 'react-icons/im'
-import { ButtonEye } from '~/common/components/TableButton'
-import { ChangeClass } from '~/common/components/Student/StudentInClass'
-import { userInfoColumn } from '~/common/libs/columns/user-info'
-import Filters from '~/common/components/Student/Filters'
 
 import Link from 'next/link'
-import { useRole } from '~/common/hooks/useRole'
+import { useSelector } from 'react-redux'
 import FilterBaseVer2 from '~/common/components/Elements/FilterBaseVer2'
+import useQueryClasses from '~/common/hooks/useQueryClasses'
+import { useRole } from '~/common/hooks/useRole'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
+import { RootState } from '~/store'
 
 const initFilters = { PageSize: PAGE_SIZE, PageIndex: 1, Search: '' }
 
 const StudentInClassPage = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
+
 	const [loading, setLoading] = React.useState(true)
 	const [totalPage, setTotalPage] = React.useState(1)
 	const [data, setData] = React.useState([])
 	const [filters, setFilter] = React.useState(initFilters)
 
-	const [listClass, setListClass] = React.useState([])
+	const { classes, isLoading } = useQueryClasses()
 
 	const { isSaler } = useRole()
 
 	useEffect(() => {
 		getData()
 	}, [filters])
-
-	useEffect(() => {
-		getClasses()
-	}, [])
 
 	async function getData() {
 		setLoading(true)
@@ -53,27 +55,6 @@ const StudentInClassPage = () => {
 			ShowNostis.error(error?.message)
 		} finally {
 			setLoading(false)
-		}
-	}
-
-	const getClasses = async () => {
-		try {
-			const response = await RestApi.get<any>('Class', { pageIndex: 1, pageSize: 99999, types: '1,2' })
-			if (response.status == 200) {
-				let temp = []
-				response.data.data.map((item) => {
-					temp.push({
-						title: item.Name,
-						value: item.Id
-					})
-				})
-
-				setListClass(temp)
-			} else {
-				setListClass([])
-			}
-		} catch (error) {
-			ShowNostis.error(error?.message)
 		}
 	}
 
@@ -95,7 +76,7 @@ const StudentInClassPage = () => {
 					</Link>
 				</PrimaryTooltip>
 
-				{item?.ClassType !== 3 && (
+				{item?.ClassType !== 3 && checkIncludesRole(listPermissionsByRoles.studentInClass.changeClass, Number(userInformation?.RoleId)) && (
 					<>
 						<ChangeClass item={item} onRefresh={getData} />
 						{/* <ReserveForm item={item} onRefresh={getData} /> */}
@@ -184,7 +165,7 @@ const StudentInClassPage = () => {
 			type: 'select',
 			col: 'col-span-2',
 			mode: 'multiple',
-			optionList: listClass
+			optionList: classes?.map((item) => ({ title: item?.Name, value: item?.Id }))
 		},
 		{
 			name: 'warning',

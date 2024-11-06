@@ -3,6 +3,9 @@ import React, { useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import AuthProvider from '~/common/components/Auth/Provider'
 
+//moment vi
+import 'moment/locale/vi'
+
 // ant
 import { ConfigProvider } from 'antd'
 import locale from 'antd/lib/locale/vi_VN'
@@ -28,6 +31,7 @@ import MainHeader from '~/common/libs/SEO/main-header'
 
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 import Script from 'next/script'
+import ReactQueryProvider from '~/common/providers/ReactQuery/ReactQueryProvider'
 
 const gaMeasurementId = 'G-LX9VLW177F'
 
@@ -42,7 +46,7 @@ function App({ Component, pageProps }: AppProps & IViewProps) {
 	ConfigProvider.config({
 		prefixCls: 'custom',
 		theme: {
-			primaryColor: '#002456',
+			primaryColor: '#B32025',
 			errorColor: '#ff4d4f',
 			warningColor: '#faad14',
 			successColor: '#52c41a',
@@ -58,14 +62,16 @@ function App({ Component, pageProps }: AppProps & IViewProps) {
 			<MainHeader />
 
 			<StoreProvider store={store}>
-				<AuthProvider>
-					<ConfigProvider locale={locale}>
-						<ToastifyContainer />
-						<Layout breadcrumb={breadcrumb}>
-							<Component {...pageProps} />
-						</Layout>
-					</ConfigProvider>
-				</AuthProvider>
+				<ReactQueryProvider>
+					<AuthProvider>
+						<ConfigProvider locale={locale}>
+							<ToastifyContainer />
+							<Layout breadcrumb={breadcrumb}>
+								<Component {...pageProps} />
+							</Layout>
+						</ConfigProvider>
+					</AuthProvider>
+				</ReactQueryProvider>
 			</StoreProvider>
 		</>
 	)

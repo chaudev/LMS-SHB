@@ -62,7 +62,7 @@
 								border-radius: 50%;
 								@include flex(center, center);
 								text-align: center;
-								background: #002456;
+								background: #B32025;
 
 								:hover {
 									width: 30px;
@@ -117,7 +117,7 @@
 								.icn {
 									@include flex(center, center);
 									margin-right: 2px;
-									color: #002456;
+									color: #B32025;
 								}
 							}
 						}
@@ -137,7 +137,7 @@
 							margin-right: 5px;
 
 							.icon {
-								color: #002456;
+								color: #B32025;
 								@include flex(center, center);
 								margin-right: 2px;
 							}

@@ -8,10 +8,13 @@ import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
 import PrimaryTable from '~/common/components/Primary/Table'
 import { PAGE_SIZE } from '~/common/libs/others/constant-constructer'
 import { ShowNoti } from '~/common/utils'
+import { checkIncludesRole } from '~/common/utils/common'
+import { listPermissionsByRoles } from '~/common/utils/list-permissions-by-roles'
 import { RootState } from '~/store'
 import { setCustomerStatus } from '~/store/customerStatusReducer'
 
 const ConsultationStatus = () => {
+	const userInformation = useSelector((state: RootState) => state.user.information)
 	const [currentPage, setCurrentPage] = useState(1)
 	const listParamsDefault = {
 		pageSize: PAGE_SIZE,
@@ -44,8 +47,12 @@ const ConsultationStatus = () => {
 					<>
 						{data.Type === 2 && (
 							<>
-								<ConsultationStatusForm infoDetail={data} getDataConsultationStatus={getDataConsultationStatus} />
-								<DeleteTableRow text={`trạng thái ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
+								{checkIncludesRole(listPermissionsByRoles.config.customerStatus.update, Number(userInformation?.RoleId)) && (
+									<ConsultationStatusForm infoDetail={data} getDataConsultationStatus={getDataConsultationStatus} />
+								)}
+								{checkIncludesRole(listPermissionsByRoles.config.customerStatus.delete, Number(userInformation?.RoleId)) && (
+									<DeleteTableRow text={`trạng thái ${data.Name}`} handleDelete={() => handleDelete(data.Id)} />
+								)}
 							</>
 						)}
 					</>
@@ -101,7 +108,11 @@ const ConsultationStatus = () => {
 			// getPagination={(pageNumber: number) => getPagination(pageNumber)}
 			// addClass="basic-header"
 			// TitlePage="Tình trạng tư vấn khách hàng"
-			Extra={<ConsultationStatusForm getDataConsultationStatus={getDataConsultationStatus} />}
+			Extra={
+				checkIncludesRole(listPermissionsByRoles.config.customerStatus.create, Number(userInformation?.RoleId)) ? (
+					<ConsultationStatusForm getDataConsultationStatus={getDataConsultationStatus} />
+				) : undefined
+			}
 			data={state.customerStatus.CustomerStatus}
 			columns={columns}
 			onChangePage={(event: number) => setParams({ ...params, pageIndex: event })}

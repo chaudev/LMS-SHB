@@ -5,6 +5,7 @@ type IUserInputGetall = {
 	fullName?: string
 	userCode?: string
 	roleIds?: number | string
+	userIds?: number | string
 	branchIds?: number | string
 	genders?: number | string
 	parentIds?: number | string

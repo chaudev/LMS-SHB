@@ -4,16 +4,16 @@ import { Edit, LogIn, X, FileMinus, Edit3, Book, Trash2 } from 'react-feather'
 import { AiOutlineCheckCircle, AiOutlineEye, AiOutlineInfoCircle, AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { BiReset } from 'react-icons/bi'
 import { CgAddR, CgFileDocument } from 'react-icons/cg'
-import { FaChalkboardTeacher } from 'react-icons/fa'
+import { FaChalkboardTeacher, FaFileContract, FaMoneyBill } from 'react-icons/fa'
 import { FiArrowDownCircle, FiArrowUpCircle, FiMenu, FiMoreVertical, FiPrinter, FiSave, FiSend } from 'react-icons/fi'
 import { HiOutlineFilter } from 'react-icons/hi'
-import { MdOutlineCancel, MdPendingActions } from 'react-icons/md'
-import { RiExchangeLine } from 'react-icons/ri'
+import { MdOutlineCancel, MdOutlineHistory, MdPendingActions, MdPieChartOutline } from 'react-icons/md'
+import { RiExchangeLine, RiPieChart2Fill } from 'react-icons/ri'
 import { TbDownload, TbReportMoney, TbSchool, TbUpload } from 'react-icons/tb'
 import { VscRootFolderOpened } from 'react-icons/vsc'
 
 const IconButton: FC<IIconButton> = (props) => {
-	const { tooltip, background, icon, type, onClick, className, color, size, disabled, loading } = props
+	const { tooltip, background, icon, type, onClick, className, color, size, disabled, loading, tooltipPlacement } = props
 	const refTooltip = useRef(null)
 	function getBG() {
 		if (background == 'green') {
@@ -32,7 +32,7 @@ const IconButton: FC<IIconButton> = (props) => {
 			return 'bg-[#000] hover:bg-[#191919] focus:bg-[#313131]'
 		}
 		if (background == 'primary') {
-			return 'bg-[#002456] hover:bg-[#002456] focus:bg-[#002456]'
+			return 'bg-[#B32025] hover:bg-[#B32025] focus:bg-[#B32025]'
 		}
 		if (background == 'disabled') {
 			return 'bg-[#cacaca] hover:bg-[#bababa] focus:bg-[#acacac] cursor-not-allowed'
@@ -66,7 +66,7 @@ const IconButton: FC<IIconButton> = (props) => {
 			return 'text-[#000] hover:text-[#191919] focus:text-[#313131]'
 		}
 		if (color == 'primary') {
-			return 'text-[#002456] hover:text-[#00337A] focus:text-[#002456]'
+			return 'text-[#B32025] hover:text-[#00337A] focus:text-[#B32025]'
 		}
 		if (color == 'disabled') {
 			return 'text-[#cacaca] hover:text-[#bababa] focus:text-[#acacac] cursor-not-allowed'
@@ -126,19 +126,19 @@ const IconButton: FC<IIconButton> = (props) => {
 			return <MdOutlineCancel size={!!size ? size : 22} />
 		}
 		if (icon == 'x') {
-			return <X  size={!!size ? size : 22} />
+			return <X size={!!size ? size : 22} />
 		}
 		if (icon == 'login') {
-			return <LogIn  size={!!size ? size : 22} />
+			return <LogIn size={!!size ? size : 22} />
 		}
 		if (icon == 'send') {
 			return <FiSend size={22} />
 		}
 		if (icon == 'file') {
-			return <FileMinus  size={!!size ? size : 22} />
+			return <FileMinus size={!!size ? size : 22} />
 		}
 		if (icon == 'print') {
-			return <FiPrinter  size={!!size ? size : 22} />
+			return <FiPrinter size={!!size ? size : 22} />
 		}
 		if (icon == 'user-group') {
 			return <AiOutlineUsergroupAdd size={!!size ? size : 22} />
@@ -176,7 +176,18 @@ const IconButton: FC<IIconButton> = (props) => {
 		if (icon == 'reserved') {
 			return <MdPendingActions size={!!size ? size : 20} />
 		}
-		
+		if (icon == 'history') {
+			return <MdOutlineHistory size={!!size ? size : 20} />
+		}
+		if (icon == 'pieChart') {
+			return <MdPieChartOutline size={!!size ? size : 20} />
+		}
+		if (icon == 'contract') {
+			return <FaFileContract size={!!size ? size : 20} />
+		}
+		if (icon == 'payment') {
+			return <FaMoneyBill size={!!size ? size : 20} />
+		}
 	}
 
 	const _onClick = (event) => {
@@ -187,7 +198,7 @@ const IconButton: FC<IIconButton> = (props) => {
 	}
 
 	return (
-		<Tooltip title={tooltip} ref={refTooltip}>
+		<Tooltip title={tooltip} ref={refTooltip} placement={tooltipPlacement}>
 			{/* <button
 				type={type}
 				onClick={_onClick}
