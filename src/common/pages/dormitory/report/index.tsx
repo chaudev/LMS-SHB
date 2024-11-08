@@ -6,7 +6,7 @@ import ViolationDormitory from '~/common/pages/dormitory/report/components/Viola
 import MyStatisticCard from '~/atomic/molecules/MyStatisticCard'
 import FilterDormitoryHeader from '~/common/pages/dormitory/report/components/FilterDormitoryHeader'
 import useStudentInOutDormitoryQuery from '~/common/pages/dormitory/report/hooks/useStudentInOutDormitoryQuery'
-import useDormitoryWarningQuery from '~/common/pages/dormitory/report/hooks/useDormitoryWarningQuery'
+import useDormitoryWarningStatisticQuery from '~/common/pages/dormitory/report/hooks/useDormitoryWarningStatisticQuery'
 
 export default function DormitoryReport() {
 	const [startDate, setStartDate] = useState<string>('')
@@ -14,7 +14,7 @@ export default function DormitoryReport() {
 	const [select, setSelect] = useState<string>('')
 
 	const studentInOutDormitoryQuery = useStudentInOutDormitoryQuery({ FromDate: startDate, ToDate: endDate, Search: select })
-	const dormitoryWarningQuery = useDormitoryWarningQuery({ FromDate: startDate, ToDate: endDate, Search: select })
+	const dormitoryWarningStatisticQuery = useDormitoryWarningStatisticQuery({ FromDate: startDate, ToDate: endDate, Search: select })
 
 	return (
 		<div className="space-y-6">
@@ -33,8 +33,8 @@ export default function DormitoryReport() {
 						<div className="space-y-4 pt-2">
 							<h3 className="font-semibold">Vi phạm</h3>
 							<ViolationDormitory
-								totalWarning={dormitoryWarningQuery?.data?.data?.data?.TotalWarning ?? 0}
-								violationDormitoryList={dormitoryWarningQuery?.data?.data?.data?.TotalWarningBasaeOnLevels ?? []}
+								totalWarning={dormitoryWarningStatisticQuery?.data?.data?.data?.TotalWarning ?? 0}
+								violationDormitoryList={dormitoryWarningStatisticQuery?.data?.data?.data?.TotalWarningBasaeOnLevels ?? []}
 							/>
 						</div>
 					</div>

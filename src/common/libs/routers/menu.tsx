@@ -979,6 +979,14 @@ export const menu: TMenu[] = [
 				Icon: '',
 				Text: 'Báo cáo ký túc xá',
 				Allow: [ERole.admin]
+			},
+			{
+				ItemType: 'single',
+				Key: '/dormitory/manager/violate-rules',
+				Route: '/dormitory/manager/violate-rules',
+				Icon: '',
+				Text: 'Danh sách vi phạm ',
+				Allow: [ERole.admin]
 			}
 		]
 	}

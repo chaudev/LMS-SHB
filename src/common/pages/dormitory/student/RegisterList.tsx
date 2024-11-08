@@ -20,6 +20,7 @@ import { PrimaryTooltip } from '~/common/components'
 import { PaymentModal } from '~/common/components/Finance/Payment/PaymentModal'
 import { useDisclosure } from '~/hooks'
 import IconButton from '~/common/components/Primary/IconButton'
+import ModalViolation from '~/common/pages/dormitory/student/com/ModalViolation'
 
 const RegisterList = () => {
 	const [dataRender, setDataRender] = useState<TDormitoryItem[]>([])
@@ -203,6 +204,7 @@ const RegisterList = () => {
 										mutationExportDormitory.mutateAsync({ Id: record.Id, DateChange: moment().format('YYYY-MM-DDTHH:mm:ss.SSS') })
 									}
 								/>
+								<ModalViolation data={record} />
 							</>
 						)}
 

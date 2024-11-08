@@ -9,7 +9,7 @@ const dormitoryReportApi = {
 		instance.get<IApiResultCertificate<TStudentInOutDormitory[]>>(
 			`${prefix}/statistic-student-in-out-dormitory?${queryString ? toQueryString(queryString) : ''}`
 		),
-	dormitoryWarning: (queryString: TQueryDormitoryWarning) =>
+	dormitoryWarningStatistic: (queryString: TQueryDormitoryWarning) =>
 		instance.get<IApiResultCertificate<TDormitoryWarning>>(`${prefix}Warning/statistic?${queryString ? toQueryString(queryString) : ''}`)
 }
 
