@@ -49,7 +49,7 @@ const DormitoryListIndex = () => {
 	const columns = [
 		{
 			dataIndex: 'Code',
-			title: 'Mã ký túc xá'
+			title: 'Mã'
 		},
 		{
 			dataIndex: 'Name',
@@ -58,11 +58,11 @@ const DormitoryListIndex = () => {
 		{
 			dataIndex: 'Fee',
 			title: 'Chi phí theo tháng',
-			render: (fee: number) => <div>{parseToMoney(fee)}</div>
+			render: (fee: number) => <div className="min-w-[150px]">{parseToMoney(fee)}</div>
 		},
 		{
 			dataIndex: 'Description',
-			title: 'Mô tả ký túc xá'
+			title: 'Mô tả '
 		},
 		{
 			dataIndex: 'action',
