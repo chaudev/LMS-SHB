@@ -3,7 +3,6 @@ import { Input, Popover } from 'antd'
 import Head from 'next/head'
 import { useState } from 'react'
 import { Filter } from 'react-feather'
-import { FaCheckCircle } from 'react-icons/fa'
 import { dormitoryRoomApi } from '~/api/dormitory/dormitoryRoom'
 import appConfigs from '~/appConfig'
 import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
@@ -54,25 +53,29 @@ const DormitoryRoomIndex = () => {
 	const columns = [
 		{
 			dataIndex: 'Code',
-			title: 'Thông tin phòng',
-			render: (_, record: TDormitoryRoom) => {
+			title: 'Mã phòng',
+			render: (code: string) => {
 				return (
-					<div className="min-w-[200px] text-center">
-						<div className="flex items-center justify-between">
-							<span>Tên phòng: </span>
-							<span className="text-[#b32025]">{record?.Name}</span>
-						</div>
-						<div className="flex items-center justify-between">
-							<span>Mã phòng: </span>
-							<span className="text-[#b32025]">{record?.Code}</span>
-						</div>
+					<div className="min-w-[100px]">
+						<span>{code}</span>
+					</div>
+				)
+			}
+		},
+		{
+			dataIndex: 'Name',
+			title: 'Tên phòng',
+			render: (roomName: string) => {
+				return (
+					<div className="min-w-[100px]">
+						<span>{roomName}</span>
 					</div>
 				)
 			}
 		},
 		{
 			dataIndex: 'DormitoryName',
-			title: 'Tên ký túc xá',
+			title: 'Ký túc xá',
 			render: (name: string) => <div className="min-w-[100px]">{name}</div>
 		},
 		{
@@ -81,40 +84,16 @@ const DormitoryRoomIndex = () => {
 			render: (name: string) => <div className="min-w-[100px]">{name}</div>
 		},
 		{
-			dataIndex: 'IsUse',
-			title: 'Tình trạng',
+			dataIndex: 'QuantityUse',
+			title: 'Số giường',
+			render: (totalBeds: string) => <div className="min-w-[100px]">{totalBeds}</div>
+		},
+		{
+			dataIndex: 'QuantityUse',
+			title: 'Giường trống',
 			render: (_, record: TDormitoryRoom) => {
-				return (
-					<div className="min-w-[200px] text-center">
-						<div className="flex items-center justify-between">
-							<span>Đang sử dụng</span>
-							<FaCheckCircle color={record.IsUse ? 'green' : '#d0d0d0'} size={18} />
-						</div>
-						<div className="flex items-center justify-between">
-							<span>Hết chỗ</span>
-							<FaCheckCircle color={record.IsFull ? 'green' : '#d0d0d0'} size={18} />
-						</div>
-						<Popover
-							content={
-								<div className='min-w-[220px]'>
-									<div className='flex items-center justify-between'>
-										<span>Số lượng học viên:</span>
-										<span>{record?.CountUser}</span>
-									</div>
-									<div className='flex items-center justify-between'>
-										<span>Số lượng tối đa:</span>
-										<span>{record?.QuantityUse}</span>
-									</div>
-								</div>
-							}
-						>
-							<div className="flex items-center justify-between">
-								<span>Số lượng: </span>
-								<span className="text-[#b32025]">{record?.CountUser} / {record?.QuantityUse}</span>
-							</div>
-						</Popover>
-					</div>
-				)
+				const emptyBeds = record.QuantityUse - record.CountUser
+				return <div className="min-w-[100px]">{emptyBeds}</div>
 			}
 		},
 		{
@@ -143,6 +122,7 @@ const DormitoryRoomIndex = () => {
 			<NestedTable
 				addClass="basic-header hide-pani"
 				dataSource={data?.Users}
+				Extra="Danh sách học viên ở phòng này"
 				columns={[
 					{
 						dataIndex: 'UserInformationId',
