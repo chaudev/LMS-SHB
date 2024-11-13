@@ -7,6 +7,7 @@ import MyLoadingSmallContent from '~/atomic/atoms/MyLoadingSmallContent'
 import IconButton from '~/common/components/Primary/IconButton'
 import { ShowNoti } from '~/common/utils'
 import { FaUserPen } from 'react-icons/fa6'
+import { MdOutlineHistory } from 'react-icons/md'
 
 type TProps = {
 	domitoryRegistrationId: number
@@ -48,7 +49,11 @@ export const HistoryRegister: FC<TProps> = ({ domitoryRegistrationId }) => {
 
 	return (
 		<>
-			<IconButton color="green" type="button" icon="history" tooltip="Lịch sử" onClick={handleToggleModal} />
+			{/* <IconButton color="green" type="button" icon="history" tooltip="Lịch sử" onClick={handleToggleModal} /> */}
+			<button onClick={handleToggleModal} type="button" className="flex items-center gap-2.5 py-1 hover:text-tw-green">
+				<MdOutlineHistory size={20} />
+				<p>Lịch sử</p>
+			</button>
 
 			<Modal forceRender={null} footer={false} centered open={open} onCancel={handleToggleModal} title="Chi tiết lịch sử">
 				{mutationGetHistory.isPending ? (
