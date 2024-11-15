@@ -32,6 +32,7 @@ import MainHeader from '~/common/libs/SEO/main-header'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 import Script from 'next/script'
 import ReactQueryProvider from '~/common/providers/ReactQuery/ReactQueryProvider'
+import ModalCheckLoginFirstProvider from '~/common/providers/ModalCheckLoginFirst'
 
 const gaMeasurementId = 'G-LX9VLW177F'
 
@@ -65,10 +66,12 @@ function App({ Component, pageProps }: AppProps & IViewProps) {
 				<ReactQueryProvider>
 					<AuthProvider>
 						<ConfigProvider locale={locale}>
-							<ToastifyContainer />
-							<Layout breadcrumb={breadcrumb}>
-								<Component {...pageProps} />
-							</Layout>
+								<ToastifyContainer />
+								<ModalCheckLoginFirstProvider>
+									<Layout breadcrumb={breadcrumb}>
+										<Component {...pageProps} />
+									</Layout>
+								</ModalCheckLoginFirstProvider>
 						</ConfigProvider>
 					</AuthProvider>
 				</ReactQueryProvider>
