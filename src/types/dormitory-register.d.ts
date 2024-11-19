@@ -84,3 +84,14 @@ type TDormitoryRegisterHistory = {
 	StudentName: string // 'MonaDevTest'
 	UserId: number // F1458
 }
+
+type IApiResultDataDormitoryRegistrationAvailableStudent<T = any> = {
+	data: T
+	message: string
+	totalRow: number
+}
+
+type TDormitoryRegistrationAvailableStudent = {
+	UserInformationId: number
+	FullName: string
+}

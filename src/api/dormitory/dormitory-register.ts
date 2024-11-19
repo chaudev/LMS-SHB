@@ -52,5 +52,7 @@ export const dormitoryRegisterApi = {
 	keyGetHitory: `GET ${url}/id`,
 	getRegisterHistory(params: { domitoryRegistrationId: number }) {
 		return instance.get<IApiResultData<TDormitoryRegisterHistory[]>>(`${url}/History`, { params })
-	}
+	},
+	getDormitoryRegistrationAvailableStudent: () =>
+		instance.get<IApiResultDataDormitoryRegistrationAvailableStudent<TDormitoryRegistrationAvailableStudent[]>>(`${url}/Available-Student`)
 }
