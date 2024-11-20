@@ -47,6 +47,20 @@ import { setLearningNeed } from '~/store/learningNeedReducer'
 import { setPurpose } from '~/store/purposeReducer'
 import { setSource } from '~/store/sourceReducer'
 import OverviewStatusStudent from './OverviewStatusStudent'
+import MySelect from '~/atomic/atoms/MySelect'
+
+const selectStayType = [
+	{
+		label: 'Nội trú',
+		value: 1
+
+	},
+	{
+		label: 'Ngoại trú',
+		value: 2,
+
+	}
+]
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
@@ -69,7 +83,8 @@ const Student: FC<IPersonnel> = (props) => {
 		profileStatusIds: null,
 		foreignLanguageIds: null,
 		visaStatusIds: null,
-		processIds: null
+		processIds: null,
+		StayType: null
 	}
 	const [office, setOffice] = useState([])
 	const [partner, setPartner] = useState([])
@@ -485,9 +500,9 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'Gender',
 			render: (value, record) => (
 				<>
-					{value == 0 && <PrimaryTag color="disabled">Khác</PrimaryTag>}
-					{value == 1 && <PrimaryTag color="blue">Nam</PrimaryTag>}
-					{value == 2 && <PrimaryTag color="yellow">Nữ</PrimaryTag>}
+					{value == 0 && <span>Khác</span>}
+					{value == 1 && <span className="text-tw-blue">Nam</span>}
+					{value == 2 && <span className="text-tw-orange">Nữ</span>}
 				</>
 			)
 		},
@@ -496,21 +511,29 @@ const Student: FC<IPersonnel> = (props) => {
 			width: 140,
 			dataIndex: 'StayType',
 			render: (value: string) => {
-				let converValue: string | null
+				let converValue: {label: string, color: string} | null
 				switch (value) {
 					case 'OutDormitory': {
-						converValue = 'Ngoại trú'
+						converValue = {
+							label: 'Ngoại trú',
+							color: 'text-tw-black'
+						}
 						break
 					}
 					case 'InDormitory': {
-						converValue = 'Nội trú'
+						converValue = {
+							label: 'Nội trú',
+							color: 'text-tw-green'
+						}
 						break
 					}
 					default:
 						converValue = null
 						break
 				}
-				return <>{converValue}</>
+				if(!converValue) return null
+				const { color, label } = converValue
+				return <span className={color}>{label}</span>
 			}
 		},
 		{
@@ -999,6 +1022,13 @@ const Student: FC<IPersonnel> = (props) => {
 							onSearch={(event) => setApiParameters({ ...apiParameters, PageIndex: 1, Search: event })}
 							placeholder="Tìm kiếm"
 						/>
+						<MySelect className='max-w-[250px] h-tw-10.5 ml-2' placeholder='Hình thức lưu trú' options={selectStayType} onChange={(value) => {
+							if(!value) {
+								setApiParameters({ ...apiParameters, PageIndex: 1, StayType: '' })
+							} else {
+								setApiParameters({ ...apiParameters, PageIndex: 1, StayType: value })
+							}
+						}} />
 					</>
 				}
 				Extra={

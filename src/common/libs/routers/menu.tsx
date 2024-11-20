@@ -974,6 +974,14 @@ export const menu: TMenu[] = [
 			},
 			{
 				ItemType: 'single',
+				Key: '/dormitory/student/list-boarder',
+				Route: '/dormitory/student/list-boarder',
+				Icon: '',
+				Text: 'Danh sách nội trú',
+				Allow: [ERole.admin]
+			},
+			{
+				ItemType: 'single',
 				Key: '/dormitory/report',
 				Route: '/dormitory/report',
 				Icon: '',
