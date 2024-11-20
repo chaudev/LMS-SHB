@@ -13,6 +13,7 @@ import PrimaryButton from '~/common/components/Primary/Button'
 import IconButton from '~/common/components/Primary/IconButton'
 import useQueryDormitoryAll from '~/common/hooks/useQueryDormitoryAll'
 import { formRequired } from '~/common/libs/others/form'
+import SelectUserRegisterDormitory from '~/common/pages/dormitory/student/com/SelectUserRegisterDormitory'
 import { ShowNoti } from '~/common/utils'
 import { Edit } from 'react-feather'
 
@@ -157,7 +158,8 @@ const ModalCreateUpdate: FC<TProps> = ({ defaultData, refetch }) => {
 				<div className="max-h-[70vh] overflow-auto">
 					<Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={initialValueMonth}>
 						<Form.Item name={'StudentId'} label="Học viên" rules={formRequired}>
-							<MySelectUserAvailable roleId={3} placeholder="Chọn học viên" />
+							{/* <MySelectUserAvailable roleId={3} placeholder="Chọn học viên" /> */}
+							<SelectUserRegisterDormitory placeholder="Chọn học viên" />
 						</Form.Item>
 						<Form.Item name={'DormitoryId'} label="Ký túc xá" rules={formRequired}>
 							<MySelect
