@@ -12,6 +12,8 @@ import IconButton from '~/common/components/Primary/IconButton'
 import { formRequired } from '~/common/libs/others/form'
 import { ShowNoti } from '~/common/utils'
 import { parseToMoney } from '~/common/utils/common'
+import { Edit3 } from 'react-feather'
+import { CgAddR } from 'react-icons/cg'
 
 type TProps = {
 	data: TDormitoryItem
@@ -101,13 +103,17 @@ export const UpdateChooseRoom: FC<TProps> = ({ data, refetch, type }) => {
 
 	return (
 		<>
-			<IconButton
+			{/* <IconButton
 				color="green"
 				type="button"
 				icon={type === 'choose-room' ? 'add' : 'edit3'}
 				tooltip={`${type === 'choose-room' ? 'Nhập' : 'Đổi'} khu ký túc xá`}
 				onClick={handleToggleModal}
-			/>
+			/> */}
+			<button onClick={handleToggleModal} type="button" className="flex items-center gap-2.5 py-1 hover:text-tw-green">
+				{type === 'choose-room' ? <CgAddR size={20} /> : <Edit3 size={20} />}
+				<p>{type === 'choose-room' ? 'Nhập' : 'Đổi'} khu ký túc xá</p>
+			</button>
 			<Modal
 				centered
 				open={open}

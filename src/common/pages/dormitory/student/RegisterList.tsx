@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { Avatar } from 'antd'
+import { Avatar, Dropdown, Menu } from 'antd'
 import moment from 'moment'
 import Head from 'next/head'
 import { useRef, useState } from 'react'
@@ -16,6 +16,7 @@ import RegisterFilter from './com/RegisterFilter'
 import { UpdateChooseRoom } from './com/UpdateChooseRoom'
 import PayForm from '~/common/components/Finance/Payment/pay'
 import { FaMoneyBill } from 'react-icons/fa'
+import { BsThreeDots } from 'react-icons/bs'
 import { PrimaryTooltip } from '~/common/components'
 import { PaymentModal } from '~/common/components/Finance/Payment/PaymentModal'
 import { useDisclosure } from '~/hooks'
@@ -136,13 +137,13 @@ const RegisterList = () => {
 			render: (_, record: TDormitoryItem) => {
 				return (
 					<div>
-						<div className="flex items-center justify-between">
+						<div className="flex items-center justify-between space-x-1">
 							<span>Bắt đầu:</span>
-							<span className="">{record?.StartDate ? moment(record?.StartDate).format('DD/MM/YYYY - HH:mm') : '-'}</span>
+							<span className="">{record?.StartDate ? moment(record?.StartDate).format('DD/MM/YYYY') : '-'}</span>
 						</div>
-						<div className="flex items-center justify-between">
-							<span>Kết thúc:</span>
-							<span className="">{record?.EndDate ? moment(record?.EndDate).format('DD/MM/YYYY - HH:mm') : '-'}</span>
+						<div className="flex items-center justify-between space-x-1">
+							<span>Đến hạn:</span>
+							<span className="">{record?.EndDate ? moment(record?.EndDate).format('DD/MM/YYYY') : '-'}</span>
 						</div>
 					</div>
 				)
@@ -160,56 +161,92 @@ const RegisterList = () => {
 			dataIndex: 'IsPayment',
 			title: 'Thanh toán',
 			render: (isPayment) => {
-				return <div className={`tag ${isPayment ? 'green' : 'red'}`}>{isPayment ? 'Đã thanh toán' : 'Chưa thanh toán'}</div>
+				return (
+					<div className={`text-tw-${isPayment ? 'green' : 'red'} font-semibold`}>{isPayment ? 'Đã thanh toán' : 'Chưa thanh toán'}</div>
+				)
 			}
 		},
 		{
 			dataIndex: 'action',
 			title: '',
 			render: (_, record: TDormitoryItem) => {
-				return (
-					<div>
+				const menu = (
+					<Menu className="p-0 rounded-md shadow-md">
 						{record.Status === EDormitoryRegisterStatus.ChoNhapKhu && (
 							<>
-								<ModalCreateUpdate defaultData={record} refetch={refetch} />
-								{record.IsPayment ? <UpdateChooseRoom data={record} refetch={refetch} type="choose-room" /> : (
-									<IconButton
-										onClick={() => handlePayment(record)}
-										type="button"
-										background="transparent"
-										color="orange"
-										icon="payment"
-										tooltip="Thanh toán"
-									/>
+								<Menu.Item>
+									<ModalCreateUpdate defaultData={record} refetch={refetch} />
+								</Menu.Item>
+								{record.IsPayment ? (
+									<Menu.Item>
+										<UpdateChooseRoom data={record} refetch={refetch} type="choose-room" />
+									</Menu.Item>
+								) : (
+									<Menu.Item>
+										{/* <IconButton
+												onClick={() => handlePayment(record)}
+												type="button"
+												background="transparent"
+												color="orange"
+												icon="payment"
+												tooltip="Thanh toán"
+											/> */}
+										<button
+											onClick={() => handlePayment(record)}
+											type="button"
+											className="flex items-center gap-2.5 py-1 hover:text-tw-orange"
+										>
+											<FaMoneyBill size={20} />
+											<p>Thanh toán</p>
+										</button>
+									</Menu.Item>
 								)}
-								<DeleteTableRow
-									modalTitle="Xóa đăng ký"
-									title="Xóa đăng ký"
-									overrideText={`Bạn xác nhận xóa đăng ký: ${record?.StudentName}`}
-									handleDelete={() => mutationDeleteDormitory.mutateAsync(record.Id)}
-								/>
+								<Menu.Item>
+									<DeleteTableRow
+										modalTitle="Xóa đăng ký"
+										title="Xóa đăng ký"
+										overrideText={`Bạn xác nhận xóa đăng ký: ${record?.StudentName}`}
+										handleDelete={() => mutationDeleteDormitory.mutateAsync(record.Id)}
+										isDormitoryRegistrationList
+									/>
+								</Menu.Item>
 							</>
 						)}
 
 						{record.Status === EDormitoryRegisterStatus.TrongKhu && (
 							<>
-								<UpdateChooseRoom data={record} refetch={refetch} type="change-room" />
-
-								<DeleteTableRow
-									icon={'x'}
-									modalTitle="Xuất khu ký túc xá"
-									title="Xuất khu ký túc xá"
-									overrideText={`Bạn xác nhận xuất khu cho: ${record?.StudentName}`}
-									handleDelete={() =>
-										mutationExportDormitory.mutateAsync({ Id: record.Id, DateChange: moment().format('YYYY-MM-DDTHH:mm:ss.SSS') })
-									}
-								/>
-								<ModalViolation data={record} />
+								<Menu.Item>
+									<UpdateChooseRoom data={record} refetch={refetch} type="change-room" />
+								</Menu.Item>
+								<Menu.Item>
+									<DeleteTableRow
+										icon={'x'}
+										modalTitle="Xuất khu ký túc xá"
+										title="Xuất khu ký túc xá"
+										overrideText={`Bạn xác nhận xuất khu cho: ${record?.StudentName}`}
+										handleDelete={() =>
+											mutationExportDormitory.mutateAsync({ Id: record.Id, DateChange: moment().format('YYYY-MM-DDTHH:mm:ss.SSS') })
+										}
+										isDormitoryRegistrationList
+									/>
+								</Menu.Item>
+								<Menu.Item>
+									<ModalViolation data={record} />
+								</Menu.Item>
 							</>
 						)}
 
-						{record.Status !== EDormitoryRegisterStatus.ChoNhapKhu && <HistoryRegister domitoryRegistrationId={record.Id} />}
-					</div>
+						{record.Status !== EDormitoryRegisterStatus.ChoNhapKhu && (
+							<Menu.Item>
+								<HistoryRegister domitoryRegistrationId={record.Id} />
+							</Menu.Item>
+						)}
+					</Menu>
+				)
+				return (
+					<Dropdown overlay={menu} trigger={['click']} placement="bottomRight" className="w-10">
+						<BsThreeDots className="size-5 cursor-pointer" />
+					</Dropdown>
 				)
 			}
 		}

@@ -2,9 +2,10 @@ import Modal from 'antd/lib/modal/Modal'
 import { useState } from 'react'
 import PrimaryButton from '../Primary/Button'
 import IconButton from '../Primary/IconButton'
+import { Trash2 } from 'react-feather'
 
 const DeleteTableRow = (props) => {
-	const { handleDelete, text, title, setShowPop, overrideText, warning, modalTitle = 'Xác nhận xóa', icon = 'remove'} = props
+	const { handleDelete, text, title, setShowPop, overrideText, warning, modalTitle = 'Xác nhận xóa', icon = 'remove', isDormitoryRegistrationList = false } = props
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -24,16 +25,30 @@ const DeleteTableRow = (props) => {
 
 	return (
 		<>
-			<IconButton
-				color="red"
-				type="button"
-				icon={icon}
-				tooltip={title || 'Xóa'}
-				onClick={() => {
-					setIsModalVisible(true)
-					setShowPop && setShowPop('')
-				}}
-			/>
+			{isDormitoryRegistrationList ? (
+				<button
+					className="flex items-center gap-2.5 py-1 hover:text-tw-red"
+					type="button"
+					onClick={() => {
+						setIsModalVisible(true)
+						setShowPop && setShowPop('')
+					}}
+				>
+					<Trash2 size={20} />
+					<p>{title || 'Xóa'}</p>
+				</button>
+			) : (
+				<IconButton
+					color="red"
+					type="button"
+					icon={icon}
+					tooltip={title || 'Xóa'}
+					onClick={() => {
+						setIsModalVisible(true)
+						setShowPop && setShowPop('')
+					}}
+				/>
+			)}
 
 			<Modal
 				title={modalTitle}

@@ -105,14 +105,18 @@ const PrimaryTable: FC<IPrimaryTable> = (props) => {
 								}
 								return `${record}`
 							}}
-							pagination={ pagination === false ? false : {
-								pageSize: pageSize ? pageSize : PAGE_SIZE,
-								pageSizeOptions: ['30'],
-								total: total && total,
-								current: current && current,
-								showTotal: () => total && <div className="font-weight-black">Tổng cộng: {total}</div>,
-								onChange: (pageNumber, pageSize) => changePagination(pageNumber, pageSize)
-							}}
+							pagination={
+								pagination === false
+									? false
+									: {
+											pageSize: pageSize ? pageSize : PAGE_SIZE,
+											pageSizeOptions: ['30'],
+											total: total && total,
+											current: current && current,
+											showTotal: () => total && <div className="font-weight-black">Tổng cộng: {total}</div>,
+											onChange: (pageNumber, pageSize) => changePagination(pageNumber, pageSize)
+									  }
+							}
 							rowClassName={(record, index) => (index == rowActivated ? 'active' : index % 2 === 0 ? 'row-light' : 'row-dark')}
 							onRow={(record, index) => ({
 								onContextMenu: (e) => {
