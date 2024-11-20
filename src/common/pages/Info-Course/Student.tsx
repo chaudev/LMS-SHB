@@ -492,6 +492,28 @@ const Student: FC<IPersonnel> = (props) => {
 			)
 		},
 		{
+			title: 'Hình thức lưu trú',
+			width: 140,
+			dataIndex: 'StayType',
+			render: (value: string) => {
+				let converValue: string | null
+				switch (value) {
+					case 'OutDormitory': {
+						converValue = 'Ngoại trú'
+						break
+					}
+					case 'InDormitory': {
+						converValue = 'Nội trú'
+						break
+					}
+					default:
+						converValue = null
+						break
+				}
+				return <>{converValue}</>
+			}
+		},
+		{
 			title: 'Ngày sinh',
 			width: 160,
 			dataIndex: 'DOB',

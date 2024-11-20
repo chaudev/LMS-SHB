@@ -15,6 +15,7 @@ import { formRequired } from '~/common/libs/others/form'
 import { ShowErrorToast } from '~/common/utils/main-function'
 import { ShowNoti } from '~/common/utils'
 import MySelectWarningLevel from '~/atomic/molecules/MySelectWarningLevel'
+import { RiErrorWarningLine } from 'react-icons/ri'
 
 interface ModalViolationProps {
 	data: TDormitoryItem
@@ -60,7 +61,11 @@ export default function ModalViolation({ data }: ModalViolationProps) {
 
 	return (
 		<>
-			<IconButton color="green" type="button" icon={'add'} tooltip={'Thêm vi phạm'} onClick={showMoldal} />
+			{/* <IconButton color="green" type="button" icon={'add'} tooltip={'Thêm vi phạm'} onClick={showMoldal} /> */}
+			<button onClick={showMoldal} type="button" className="flex items-center gap-2.5 py-1 hover:text-tw-green">
+				<RiErrorWarningLine size={20} />
+				<p>Thêm vi phạm</p>
+			</button>
 			<MyModal
 				open={isOpen}
 				onCancel={handleResetAndToggleModal}

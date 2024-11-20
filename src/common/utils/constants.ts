@@ -164,3 +164,5 @@ export const parentRelationshipOptions = [
 	{ value: EParentRelationship.Mother, label: 'Mẹ' },
 	{ value: EParentRelationship.Relatives, label: 'Người thân' }
 ]
+
+export const CREATE_STUDENT_PASSWORD_DEFAULT = 'SHDEducation' as const

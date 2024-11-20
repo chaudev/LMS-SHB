@@ -35,6 +35,8 @@ import MyFormItem from '~/atomic/atoms/MyFormItem'
 import { useQuery } from '@tanstack/react-query'
 import MySelectOtherMajor from '~/atomic/molecules/MySelectOtherMajor'
 import MySelectParentRelationship from '~/atomic/molecules/MySelectParentRelationship'
+import { useWatch } from 'antd/lib/form/Form'
+import { CREATE_STUDENT_PASSWORD_DEFAULT } from '~/common/utils/constants'
 
 enum EIsHasParentAccount {
 	NoInfo = 1,
@@ -67,6 +69,8 @@ const CreateUser: FC<ICreateNew> = (props) => {
 	const area = useSelector((state: RootState) => state.area.Area)
 	const branch = useSelector((state: RootState) => state.branch.Branch)
 
+	const mobileChange = useWatch('Mobile', form)
+
 	const convertAreaSelect = useMemo(() => {
 		return parseSelectArray(area, 'Name', 'Id')
 	}, [area])
@@ -79,13 +83,13 @@ const CreateUser: FC<ICreateNew> = (props) => {
 
 	let schema = yup.object().shape({
 		FullName: yup.string().required('Bạn không được để trống'),
-		UserName: yup.string().required('Bạn không được để trống'),
+		UserName: yup.string().required('Bạn hãy nhập sdt để có tên tài khoản'),
 		RoleId: yup.string().required('Bạn không được để trống'),
 		Email: yup.string().email('Email nhập sai cú pháp').required('Bạn không được để trống'),
 		Mobile: yup.string().required('Bạn không được để trống'),
 		Gender: yup.string().required('Bạn không được để trống'),
 		BranchIds: yup.mixed().required('Bạn không được để trống'),
-		Password: yup.string().required('Bạn không được để trống')
+		Password: yup.string().required('Bạn hãy nhập sdt để có mật khẩu')
 	})
 
 	const yupSync = {
@@ -345,6 +349,16 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			getAllSaleByBranch()
 		}
 	}, [BranchIds])
+
+	useEffect(() => {
+		if (!isEdit && mobileChange) {
+			form.setFieldsValue({
+				UserName: mobileChange,
+				Password: CREATE_STUDENT_PASSWORD_DEFAULT
+			})
+		}
+	}, [isEdit, mobileChange])
+
 	function convertToString(arr) {
 		if (!arr) return ''
 		return arr.join(',')
@@ -362,15 +376,24 @@ const CreateUser: FC<ICreateNew> = (props) => {
 			ContractSigningDate: !!values.ContractSigningDate ? new Date(values.ContractSigningDate) : undefined,
 			EnrollmentDay: !!values.EnrollmentDay ? new Date(values.EnrollmentDay) : undefined,
 			RoleId: isStudent ? 3 : values.RoleId,
-			BranchIds: values.BranchIds.join(',')
-				? isStudent
+			// BranchIds: values.BranchIds.join(',')
+			// 	? isStudent
+			// 		? !!values.BranchIds?.length
+			// 			? values.BranchIds.join(',')
+			// 			: values.BranchIds
+			// 		: values.BranchIds.join(',')
+			// 	: '',
+			BranchIds: values?.BranchIds
+				? typeof values.BranchIds === 'number'
+					? String(values.BranchIds)
+					: isStudent
 					? !!values.BranchIds?.length
 						? values.BranchIds.join(',')
 						: values.BranchIds
 					: values.BranchIds.join(',')
 				: '',
 			ProgramIds: !values?.ProgramIds ? null : convertToString(values?.ProgramIds),
-			SaleId: isSaler() ? Number(theInformation.UserInformationId) : values?.SaleId,
+			SaleId: isSaler() ? Number(theInformation.UserInformationId) : values?.SaleId ? values?.SaleId : undefined,
 			ParentDOB: !!values.ParentDOB ? new Date(values.ParentDOB) : undefined
 		}
 		console.log('===DATA_SUBMIT: ', !isEdit ? DATA_SUBMIT : { ...DATA_SUBMIT, UserInformationId: defaultData.UserInformationId })
@@ -524,12 +547,22 @@ const CreateUser: FC<ICreateNew> = (props) => {
 							placeholder="Tên đăng nhập"
 							name="UserName"
 							isRequired
+							disabled={true}
 							rules={[yupSync]}
 						/>
 						{user?.RoleId == 1 && isEdit ? (
-							<InputPassField className="col-span-2" label="Mật khẩu" name="Password" />
+							// <InputPassField className="col-span-2" label="Mật khẩu" name="Password" />
+							<></>
 						) : (
-							<InputTextField className="col-span-2" label="Mật khẩu" name="Password" isRequired rules={[yupSync]} />
+							<InputTextField
+								className="col-span-2"
+								label="Mật khẩu"
+								name="Password"
+								isRequired
+								disabled={!isEdit}
+								rules={[yupSync]}
+								placeholder="Mật khẩu"
+							/>
 						)}
 						<InputTextField className={'col-span-2'} label="Mã học viên" name="UserCode" placeholder="Mã học viên" />
 

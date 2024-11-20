@@ -8,11 +8,13 @@ import Head from 'next/head'
 import appConfigs from '~/appConfig'
 import { playWithToken } from '~/common/utils/token-handle'
 import LoginForm from '~/common/components/Auth/LoginForm'
+import { useModalCheckLoginFirstContext } from '~/common/providers/ModalCheckLoginFirst'
 
 function SignIn({ csrfToken }) {
 	const dispatch = useDispatch()
 
 	const [alloweRegisters, setAlloweRegisters] = useState(false)
+	const { openModal } = useModalCheckLoginFirstContext()
 
 	useEffect(() => {
 		getAllow()
@@ -44,6 +46,8 @@ function SignIn({ csrfToken }) {
 			if (response.status == 200) {
 				playWithToken(response?.data, dispatch)
 				ShowNoti('success', response.data.message)
+				localStorage.setItem('isFirstLogin', JSON.stringify(response?.data?.IsFirstLogin))
+				response?.data?.IsFirstLogin && openModal()
 			}
 		} catch (error) {
 			setErrorLogin(error?.message)
