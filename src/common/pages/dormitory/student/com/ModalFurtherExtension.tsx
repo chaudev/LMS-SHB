@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react'
 import { MdOutlineAutorenew } from 'react-icons/md'
 import { Form } from 'antd'
+import { useMutation } from '@tanstack/react-query'
+
+import dormitoryExtendRegistrationApi from '~/api/dormitory/dormitoryExtend-registration'
 
 import MyForm from '~/atomic/atoms/MyForm'
 import MyModal from '~/atomic/atoms/MyModal'
 import MyFormItem from '~/atomic/atoms/MyFormItem'
 import MyInputNumber from '~/atomic/atoms/MyInputNumber'
+import MyTextArea from '~/atomic/atoms/MyTextArea'
 
 import PrimaryButton from '~/common/components/Primary/Button'
 import { formRequired } from '~/common/libs/others/form'
+import { ShowNoti } from '~/common/utils'
 
 interface ModalFurtherExtensionProps {
 	data: TDormitoryItem
@@ -16,28 +21,50 @@ interface ModalFurtherExtensionProps {
 
 interface FormData {
 	Price: number
-	month: number
+	Month: number
+	Note: string
 }
 
 export default function ModalFurtherExtension({ data }: ModalFurtherExtensionProps) {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [form] = Form.useForm<FormData>()
 
-	const monthChange = Form.useWatch('month', form)
+	const addDormitoryExtendRegistrationMutation = useMutation({
+		mutationFn: dormitoryExtendRegistrationApi.addDormitoryExtendRegistration
+	})
+
+	const monthChange = Form.useWatch('Month', form)
 	const priceChange = Form.useWatch('Price', form)
 
 	useEffect(() => {
 		form.setFieldsValue({
 			Price: data.Price,
-			month: 6
+			Month: 6
 		})
 	}, [data])
 
 	const showMoldal = () => setIsOpen(true)
-	const toggleModal = () => setIsOpen(!open)
+	const toggleModal = () => setIsOpen(!isOpen)
 
-	const onSubmit = (values: FormData) => {
-		console.log(values)
+	const onSubmit = async (values: FormData) => {
+		if (addDormitoryExtendRegistrationMutation.isPending) return
+		try {
+			const body: IAddDormitoryExtendRegistrationBody = {
+				DormitoryRegistrationId: data.Id,
+				StudentId: data.StudentId,
+				DormitoryId: data.DormitoryId,
+				DormitoryAreaId: data.DormitoryAreaId,
+				DormitoryRoomId: data.DormitoryRoomId,
+				ExtendDate: data.EndDate,
+				Price: values.Price,
+				Note: values.Note || ''
+			}
+			const result = await addDormitoryExtendRegistrationMutation.mutateAsync(body)
+			ShowNoti('success', result?.data?.message)
+			toggleModal()
+		} catch (error) {
+			ShowNoti('error', error?.message || 'Thêm gia hạn thất bại')
+		}
 	}
 
 	return (
@@ -53,10 +80,17 @@ export default function ModalFurtherExtension({ data }: ModalFurtherExtensionPro
 				title="Thêm gia hạn KTX"
 				footer={
 					<div className="flex gap-2 justify-center">
-						<PrimaryButton disable={false} onClick={toggleModal} background="red" icon="cancel" type="button">
+						<PrimaryButton onClick={toggleModal} background="red" icon="cancel" type="button">
 							Huỷ
 						</PrimaryButton>
-						<PrimaryButton loading={false} onClick={() => form.submit()} background="primary" icon="save" type="button">
+						<PrimaryButton
+							loading={addDormitoryExtendRegistrationMutation.isPending}
+							disable={addDormitoryExtendRegistrationMutation.isPending}
+							onClick={() => form.submit()}
+							background="primary"
+							icon="save"
+							type="button"
+						>
 							Lưu
 						</PrimaryButton>
 					</div>
@@ -73,7 +107,7 @@ export default function ModalFurtherExtension({ data }: ModalFurtherExtensionPro
 						</ul>
 					</div>
 					<MyForm form={form} onFinish={onSubmit}>
-						<MyFormItem name="month" label="Số tháng ở" rules={formRequired}>
+						<MyFormItem name="Month" label="Số tháng ở" rules={formRequired}>
 							<MyInputNumber placeholder="chọn tháng" min={1} max={500} />
 						</MyFormItem>
 						<MyFormItem name="Price" label="Chi phí hàng tháng" rules={formRequired}>
@@ -85,6 +119,9 @@ export default function ModalFurtherExtension({ data }: ModalFurtherExtensionPro
 								{priceChange && monthChange ? Intl.NumberFormat('ja-JP').format(priceChange * monthChange) : 0} VND
 							</span>
 						</div>
+						<MyFormItem name="Note" label="Ghi chú">
+							<MyTextArea rows={3} placeholder="Mô tả" />
+						</MyFormItem>
 					</MyForm>
 				</div>
 			</MyModal>
