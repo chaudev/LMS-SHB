@@ -1,0 +1,22 @@
+.container {
+	:global {
+		.ant-tabs-nav {
+			.ant-tabs-nav-wrap {
+				.ant-tabs-tab-active div {
+					// style active tabs
+					color: black;
+				}
+				.ant-tabs-ink-bar {
+					// style border
+					height: 2px;
+					background-color: #b32025;
+				}
+				.ant-tabs-tab:hover {
+					// hover tabs
+					color: black;
+					font-weight: 500;
+				}
+			}
+		}
+	}
+}

@@ -948,20 +948,28 @@ export const menu: TMenu[] = [
 				Text: 'Danh sách ký túc xá',
 				Allow: [ERole.admin]
 			},
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/dormitory/manager/section',
+			// 	Route: '/dormitory/manager/section',
+			// 	Icon: '',
+			// 	Text: 'Danh sách khu',
+			// 	Allow: [ERole.admin]
+			// },
+			// {
+			// 	ItemType: 'single',
+			// 	Key: '/dormitory/manager/room',
+			// 	Route: '/dormitory/manager/room',
+			// 	Icon: '',
+			// 	Text: 'Danh sách phòng',
+			// 	Allow: [ERole.admin]
+			// },
 			{
 				ItemType: 'single',
-				Key: '/dormitory/manager/section',
-				Route: '/dormitory/manager/section',
+				Key: '/dormitory/manager/zones-rooms',
+				Route: '/dormitory/manager/zones-rooms',
 				Icon: '',
-				Text: 'Danh sách khu',
-				Allow: [ERole.admin]
-			},
-			{
-				ItemType: 'single',
-				Key: '/dormitory/manager/room',
-				Route: '/dormitory/manager/room',
-				Icon: '',
-				Text: 'Danh sách phòng',
+				Text: 'Danh sách khu và phòng',
 				Allow: [ERole.admin]
 			},
 			{
