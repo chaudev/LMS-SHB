@@ -1,30 +1,53 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { Avatar, Dropdown, Menu } from 'antd'
-import moment from 'moment'
-import Head from 'next/head'
 import { useRef, useState } from 'react'
+import { Avatar, Dropdown, Menu } from 'antd'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import moment from 'moment'
+import { FaMoneyBill } from 'react-icons/fa'
+import { BsThreeDots } from 'react-icons/bs'
+
+import { useDisclosure } from '~/hooks'
+
+import { EDormitoryRegisterStatus } from '~/enums/common'
+
 import { dormitoryRegisterApi } from '~/api/dormitory/dormitory-register'
-import appConfigs from '~/appConfig'
+
 import DeleteTableRow from '~/common/components/Elements/DeleteTableRow'
 import ExpandTable from '~/common/components/Primary/Table/ExpandTable'
 import { ShowNoti } from '~/common/utils'
 import { parseToMoney } from '~/common/utils/common'
-import { EDormitoryRegisterStatus } from '~/enums/common'
+import { PaymentModal } from '~/common/components/Finance/Payment/PaymentModal'
+import ModalViolation from '~/common/pages/dormitory/student/com/ModalViolation'
+import { TYPE_PAGE } from '~/common/pages/dormitory/student/utils'
+import ModalFurtherExtension from '~/common/pages/dormitory/student/com/ModalFurtherExtension'
+
 import { HistoryRegister } from './com/HistoryRegister'
 import ModalCreateUpdate from './com/ModalCreateUpdate'
 import RegisterFilter from './com/RegisterFilter'
 import { UpdateChooseRoom } from './com/UpdateChooseRoom'
-import PayForm from '~/common/components/Finance/Payment/pay'
-import { FaMoneyBill } from 'react-icons/fa'
-import { BsThreeDots } from 'react-icons/bs'
-import { PrimaryTooltip } from '~/common/components'
-import { PaymentModal } from '~/common/components/Finance/Payment/PaymentModal'
-import { useDisclosure } from '~/hooks'
-import IconButton from '~/common/components/Primary/IconButton'
-import ModalViolation from '~/common/pages/dormitory/student/com/ModalViolation'
-import { TYPE_PAGE } from '~/common/pages/dormitory/student/utils'
 
-const RegisterList = () => {
+const checkRenewalOrExpirationDate = (date: string) => {
+	const inputDate = moment(date)
+	const thirtyDaysAgo = inputDate.clone().subtract(30, 'days')
+	const currentTime = moment()
+
+	if (currentTime.isBetween(thirtyDaysAgo, inputDate, null, '[)')) {
+		return 'NhacHan'
+	} else if (currentTime.isAfter(inputDate)) {
+		return 'QuaHan'
+	} else {
+		return 'ChuaDenHan'
+	}
+}
+const checkDate = {
+	QuaHan: {
+		textColor: 'text-tw-red'
+	},
+	NhacHan: {
+		textColor: 'text-tw-orange'
+	}
+}
+
+const BoarderList = () => {
 	const [dataRender, setDataRender] = useState<TDormitoryItem[]>([])
 
 	const paymentModalController = useDisclosure()
@@ -32,7 +55,7 @@ const RegisterList = () => {
 	const [filters, setFilters] = useState<TDormitoryRegisterParams>({
 		PageIndex: 1,
 		PageSize: 20,
-		Status: 1
+		Status: 2
 	})
 
 	const handleFetching = async () => {
@@ -137,15 +160,17 @@ const RegisterList = () => {
 			dataIndex: 'StartDate',
 			title: 'Thời gian lưu trú',
 			render: (_, record: TDormitoryItem) => {
+				const status = checkRenewalOrExpirationDate(record.EndDate)
 				return (
 					<div>
 						<div className="flex items-center justify-between space-x-1">
 							<span>Bắt đầu:</span>
 							<span className="">{record?.StartDate ? moment(record?.StartDate).format('DD/MM/YYYY') : '-'}</span>
 						</div>
+
 						<div className="flex items-center justify-between space-x-1">
-							<span>Đến hạn:</span>
-							<span className="">{record?.EndDate ? moment(record?.EndDate).format('DD/MM/YYYY') : '-'}</span>
+							<span className={checkDate[status]?.textColor}>Đến hạn:</span>
+							<span className={checkDate[status]?.textColor}>{record?.EndDate ? moment(record?.EndDate).format('DD/MM/YYYY') : '-'}</span>
 						</div>
 					</div>
 				)
@@ -174,52 +199,24 @@ const RegisterList = () => {
 			render: (_, record: TDormitoryItem) => {
 				const menu = (
 					<Menu className="p-0 rounded-md shadow-md">
-						{record.Status === EDormitoryRegisterStatus.ChoNhapKhu && (
-							<>
-								<Menu.Item>
-									<ModalCreateUpdate defaultData={record} refetch={refetch} />
-								</Menu.Item>
-								{record.IsPayment ? (
-									<Menu.Item>
-										<UpdateChooseRoom data={record} refetch={refetch} type="choose-room" />
-									</Menu.Item>
-								) : (
-									<Menu.Item>
-										{/* <IconButton
-												onClick={() => handlePayment(record)}
-												type="button"
-												background="transparent"
-												color="orange"
-												icon="payment"
-												tooltip="Thanh toán"
-											/> */}
-										<button
-											onClick={() => handlePayment(record)}
-											type="button"
-											className="flex items-center gap-2.5 py-1 hover:text-tw-orange"
-										>
-											<FaMoneyBill size={20} />
-											<p>Thanh toán</p>
-										</button>
-									</Menu.Item>
-								)}
-								<Menu.Item>
-									<DeleteTableRow
-										modalTitle="Xóa đăng ký"
-										title="Xóa đăng ký"
-										overrideText={`Bạn xác nhận xóa đăng ký: ${record?.StudentName}`}
-										handleDelete={() => mutationDeleteDormitory.mutateAsync(record.Id)}
-										isDormitoryRegistrationList
-									/>
-								</Menu.Item>
-							</>
-						)}
-
 						{record.Status === EDormitoryRegisterStatus.TrongKhu && (
 							<>
 								<Menu.Item>
 									<UpdateChooseRoom data={record} refetch={refetch} type="change-room" />
 								</Menu.Item>
+
+								<Menu.Item>
+									<ModalFurtherExtension data={record} />
+								</Menu.Item>
+
+								<Menu.Item>
+									<ModalViolation data={record} />
+								</Menu.Item>
+
+								<Menu.Item>
+									<HistoryRegister domitoryRegistrationId={record.Id} />
+								</Menu.Item>
+
 								<Menu.Item>
 									<DeleteTableRow
 										icon={'x'}
@@ -232,13 +229,9 @@ const RegisterList = () => {
 										isDormitoryRegistrationList
 									/>
 								</Menu.Item>
-								<Menu.Item>
-									<ModalViolation data={record} />
-								</Menu.Item>
 							</>
 						)}
-
-						{record.Status !== EDormitoryRegisterStatus.ChoNhapKhu && (
+						{record.Status === EDormitoryRegisterStatus.XuatKhu && (
 							<Menu.Item>
 								<HistoryRegister domitoryRegistrationId={record.Id} />
 							</Menu.Item>
@@ -260,14 +253,10 @@ const RegisterList = () => {
 
 	return (
 		<>
-			<Head>
-				<title>{appConfigs.appName} | Danh sách đăng ký KTX</title>
-			</Head>
-
 			<ExpandTable
-				TitleCard={<RegisterFilter filter={filters} handleFilter={handleFilter} typePage={TYPE_PAGE.REGISTER_LIST} />}
+				TitleCard={<RegisterFilter filter={filters} handleFilter={handleFilter} typePage={TYPE_PAGE.BOARDER_LIST} />}
 				loading={isLoading || isFetching}
-				Extra={<ModalCreateUpdate defaultData={null} refetch={refetch} />}
+				// Extra={<ModalCreateUpdate defaultData={null} refetch={refetch} />}
 				currentPage={filters.PageIndex}
 				totalPage={filters.TotalPage && filters.TotalPage}
 				dataSource={dataRender}
@@ -287,4 +276,4 @@ const RegisterList = () => {
 	)
 }
 
-export default RegisterList
+export default BoarderList

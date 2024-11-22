@@ -1,12 +1,13 @@
 import { Form, Input, Popover } from 'antd'
 import clsx from 'clsx'
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 import { Filter } from 'react-feather'
 import MySelectDormitory from '~/atomic/molecules/MySelectDormitory'
 import MySelectDormitoryArea from '~/atomic/molecules/MySelectDormitoryArea'
 import MySelectDormitoryRoom from '~/atomic/molecules/MySelectDormitoryRoom'
 import PrimaryButton from '~/common/components/Primary/Button'
-import { dormitoryRegisterStatusFilter } from '~/enums/common'
+import { ETypePage, TYPE_PAGE } from '~/common/pages/dormitory/student/utils'
+import { dormitoryRegisterStatusFilter, EDormitoryRegisterStatus } from '~/enums/common'
 
 /**
  *  const color = ['blue', 'green', 'yellow', 'gray']
@@ -17,6 +18,7 @@ const color = ['blue', 'green', 'yellow', 'gray']
 type TProps = {
 	filter: TDormitoryRegisterParams
 	handleFilter: (newFilter: TDormitoryRegisterParams) => void
+	typePage: ETypePage.REGISTER_LIST | ETypePage.BOARDER_LIST
 }
 
 type TFiltesLocal = {
@@ -25,11 +27,32 @@ type TFiltesLocal = {
 	DormitoryRoomId?: number
 }
 
-const RegisterFilter: FC<TProps> = ({ filter, handleFilter }) => {
+const RegisterFilter: FC<TProps> = ({ filter, handleFilter, typePage }) => {
 	const [form] = Form.useForm<TFiltesLocal>()
 	const dormitoryId = Form.useWatch('DormitoryId', form)
 	const dormitoryAreaId = Form.useWatch('DormitoryAreaId', form)
 
+	const isBoarderList = typePage === TYPE_PAGE.BOARDER_LIST
+	const isRegisterList = typePage === TYPE_PAGE.REGISTER_LIST
+
+	const dormitoryRegisterStatusFilterConvert = useMemo(() => {
+		if (isBoarderList) {
+			return dormitoryRegisterStatusFilter.filter(
+				(item) => !(item.value === EDormitoryRegisterStatus.ChoNhapKhu || item.value === EDormitoryRegisterStatus.Huy)
+			)
+		} else if (isRegisterList) {
+			return dormitoryRegisterStatusFilter.filter(
+				(item) =>
+					!(
+						item.value === EDormitoryRegisterStatus.TrongKhu ||
+						item.value === EDormitoryRegisterStatus.XuatKhu ||
+						item.value === EDormitoryRegisterStatus.Huy
+					)
+			)
+		} else {
+			return dormitoryRegisterStatusFilter
+		}
+	}, [isBoarderList, isRegisterList, dormitoryRegisterStatusFilter])
 	// useEffect(() => {
 	// 	if (filter.DormitoryId) {
 	// 		form.setFieldsValue({
@@ -121,7 +144,7 @@ const RegisterFilter: FC<TProps> = ({ filter, handleFilter }) => {
 				placeholder="Tìm kiếm"
 			/>
 			<div className="flex gap-2">
-				{dormitoryRegisterStatusFilter.map((item) => (
+				{dormitoryRegisterStatusFilterConvert.map((item) => (
 					<div
 						className={clsx(
 							'tag !flex items-center cursor-pointer justify-center',
@@ -130,7 +153,8 @@ const RegisterFilter: FC<TProps> = ({ filter, handleFilter }) => {
 						key={item.value}
 						onClick={() => {
 							if (filter.Status === item.value) {
-								handleFilter({ ...filter, Status: undefined })
+								// handleFilter({ ...filter, Status: undefined })
+								return
 							} else {
 								handleFilter({ ...filter, Status: item.value })
 							}
