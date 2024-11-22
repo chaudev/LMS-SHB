@@ -47,20 +47,6 @@ import { setLearningNeed } from '~/store/learningNeedReducer'
 import { setPurpose } from '~/store/purposeReducer'
 import { setSource } from '~/store/sourceReducer'
 import OverviewStatusStudent from './OverviewStatusStudent'
-import MySelect from '~/atomic/atoms/MySelect'
-
-const selectStayType = [
-	{
-		label: 'Nội trú',
-		value: 1
-
-	},
-	{
-		label: 'Ngoại trú',
-		value: 2,
-
-	}
-]
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
@@ -804,7 +790,8 @@ const Student: FC<IPersonnel> = (props) => {
 			purposeIds: params.purposeIds ? params.purposeIds.join(',') : null,
 			statusId: params.statusId,
 			enrollmentDayFrom: params.enrollment ? moment(params.enrollment[0]).format('DD/MM/YYYY') : null,
-			enrollmentDayTo: params.enrollment ? moment(params.enrollment[1]).format('DD/MM/YYYY') : null
+			enrollmentDayTo: params.enrollment ? moment(params.enrollment[1]).format('DD/MM/YYYY') : null,
+			StayType: params.StayType || ''
 		}
 
 		setApiParameters(paramsFormat)
@@ -843,6 +830,22 @@ const Student: FC<IPersonnel> = (props) => {
 				{
 					value: 1,
 					title: 'Đã khóa'
+				}
+			]
+		},
+		{
+			name: 'StayType',
+			title: 'Hình thức lưu trú',
+			type: 'select',
+			col: 'col-span-2',
+			optionList: [
+				{
+					title: 'Nội trú',
+					value: 1
+				},
+				{
+					title: 'Ngoại trú',
+					value: 2
 				}
 			]
 		},
@@ -1022,13 +1025,6 @@ const Student: FC<IPersonnel> = (props) => {
 							onSearch={(event) => setApiParameters({ ...apiParameters, PageIndex: 1, Search: event })}
 							placeholder="Tìm kiếm"
 						/>
-						<MySelect className='max-w-[250px] h-tw-10.5 ml-2' placeholder='Hình thức lưu trú' options={selectStayType} onChange={(value) => {
-							if(!value) {
-								setApiParameters({ ...apiParameters, PageIndex: 1, StayType: '' })
-							} else {
-								setApiParameters({ ...apiParameters, PageIndex: 1, StayType: value })
-							}
-						}} />
 					</>
 				}
 				Extra={
