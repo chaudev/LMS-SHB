@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { Alert, Form, Input, Modal, Popconfirm, Popover } from 'antd'
+import { Alert, Form, Input, Modal, Popconfirm, Popover, Tag } from 'antd'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -47,20 +47,6 @@ import { setLearningNeed } from '~/store/learningNeedReducer'
 import { setPurpose } from '~/store/purposeReducer'
 import { setSource } from '~/store/sourceReducer'
 import OverviewStatusStudent from './OverviewStatusStudent'
-import MySelect from '~/atomic/atoms/MySelect'
-
-const selectStayType = [
-	{
-		label: 'Nội trú',
-		value: 1
-
-	},
-	{
-		label: 'Ngoại trú',
-		value: 2,
-
-	}
-]
 
 const Student: FC<IPersonnel> = (props) => {
 	const { reFresh, allowRegister, role } = props
@@ -432,23 +418,23 @@ const Student: FC<IPersonnel> = (props) => {
 			render: (data, item) => {
 				return (
 					<div className="flex items-center">
-							{checkIncludesRole(listPermissionsByRoles.account.staff.update, Number(userInformation?.RoleId)) && (
-								<CreateUser
-									process={process}
-									visaStatus={visaStatus}
-									profileStatus={profileStatus}
-									foreignLanguage={foreignLanguage}
-									isEdit
-									roleStaff={roleStaff}
-									defaultData={item}
-									className="!hidden w700:!inline-flex"
-									onRefresh={() => getUsers(apiParameters)}
-									isStudent={false}
-								/>
-							)}
-							{checkIncludesRole(listPermissionsByRoles.account.staff.delete, Number(userInformation?.RoleId)) && (
-								<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
-							)}
+						{checkIncludesRole(listPermissionsByRoles.account.staff.update, Number(userInformation?.RoleId)) && (
+							<CreateUser
+								process={process}
+								visaStatus={visaStatus}
+								profileStatus={profileStatus}
+								foreignLanguage={foreignLanguage}
+								isEdit
+								roleStaff={roleStaff}
+								defaultData={item}
+								className="!hidden w700:!inline-flex"
+								onRefresh={() => getUsers(apiParameters)}
+								isStudent={false}
+							/>
+						)}
+						{checkIncludesRole(listPermissionsByRoles.account.staff.delete, Number(userInformation?.RoleId)) && (
+							<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
+						)}
 					</div>
 				)
 			}
@@ -500,9 +486,9 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'Gender',
 			render: (value, record) => (
 				<>
-					{value == 0 && <span>Khác</span>}
+					{value !== 1 && value !== 2 && <span>Khác</span>}
 					{value == 1 && <span className="text-tw-blue">Nam</span>}
-					{value == 2 && <span className="text-tw-orange">Nữ</span>}
+					{value == 2 && <span className="text-[#ff008d]">Nữ</span>}
 				</>
 			)
 		},
@@ -511,19 +497,19 @@ const Student: FC<IPersonnel> = (props) => {
 			width: 140,
 			dataIndex: 'StayType',
 			render: (value: string) => {
-				let converValue: {label: string, color: string} | null
+				let converValue: { label: string; color: string } | null
 				switch (value) {
 					case 'OutDormitory': {
 						converValue = {
 							label: 'Ngoại trú',
-							color: 'text-tw-black'
+							color: 'orange'
 						}
 						break
 					}
 					case 'InDormitory': {
 						converValue = {
 							label: 'Nội trú',
-							color: 'text-tw-green'
+							color: 'blue'
 						}
 						break
 					}
@@ -531,9 +517,9 @@ const Student: FC<IPersonnel> = (props) => {
 						converValue = null
 						break
 				}
-				if(!converValue) return null
+				if (!converValue) return null
 				const { color, label } = converValue
-				return <span className={color}>{label}</span>
+				return <Tag color={color}>{label}</Tag>
 			}
 		},
 		{
@@ -804,7 +790,8 @@ const Student: FC<IPersonnel> = (props) => {
 			purposeIds: params.purposeIds ? params.purposeIds.join(',') : null,
 			statusId: params.statusId,
 			enrollmentDayFrom: params.enrollment ? moment(params.enrollment[0]).format('DD/MM/YYYY') : null,
-			enrollmentDayTo: params.enrollment ? moment(params.enrollment[1]).format('DD/MM/YYYY') : null
+			enrollmentDayTo: params.enrollment ? moment(params.enrollment[1]).format('DD/MM/YYYY') : null,
+			StayType: params.StayType || ''
 		}
 
 		setApiParameters(paramsFormat)
@@ -843,6 +830,22 @@ const Student: FC<IPersonnel> = (props) => {
 				{
 					value: 1,
 					title: 'Đã khóa'
+				}
+			]
+		},
+		{
+			name: 'StayType',
+			title: 'Hình thức lưu trú',
+			type: 'select',
+			col: 'col-span-2',
+			optionList: [
+				{
+					title: 'Nội trú',
+					value: 1
+				},
+				{
+					title: 'Ngoại trú',
+					value: 2
 				}
 			]
 		},
@@ -983,15 +986,19 @@ const Student: FC<IPersonnel> = (props) => {
 				loading={loading}
 				current={apiParameters.PageIndex}
 				key={'UserInformationId'}
-				rowSelection={(isAdmin() || isManager()) ? {
-					type: 'checkbox',
-					fixed: true,
-					selectedRowKeys: selectedRowKeys,
+				rowSelection={
+					isAdmin() || isManager()
+						? {
+								type: 'checkbox',
+								fixed: true,
+								selectedRowKeys: selectedRowKeys,
 
-					onChange: (rowKeys) => {
-						setSelectedRowKeys(rowKeys)
-					}
-				} : null}
+								onChange: (rowKeys) => {
+									setSelectedRowKeys(rowKeys)
+								}
+						  }
+						: null
+				}
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, PageIndex: event })}
 				TitleCard={
 					<>
@@ -1022,13 +1029,6 @@ const Student: FC<IPersonnel> = (props) => {
 							onSearch={(event) => setApiParameters({ ...apiParameters, PageIndex: 1, Search: event })}
 							placeholder="Tìm kiếm"
 						/>
-						<MySelect className='max-w-[250px] h-tw-10.5 ml-2' placeholder='Hình thức lưu trú' options={selectStayType} onChange={(value) => {
-							if(!value) {
-								setApiParameters({ ...apiParameters, PageIndex: 1, StayType: '' })
-							} else {
-								setApiParameters({ ...apiParameters, PageIndex: 1, StayType: value })
-							}
-						}} />
 					</>
 				}
 				Extra={
