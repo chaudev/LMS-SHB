@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { Alert, Form, Input, Modal, Popconfirm, Popover } from 'antd'
+import { Alert, Form, Input, Modal, Popconfirm, Popover, Tag } from 'antd'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -418,23 +418,23 @@ const Student: FC<IPersonnel> = (props) => {
 			render: (data, item) => {
 				return (
 					<div className="flex items-center">
-							{checkIncludesRole(listPermissionsByRoles.account.staff.update, Number(userInformation?.RoleId)) && (
-								<CreateUser
-									process={process}
-									visaStatus={visaStatus}
-									profileStatus={profileStatus}
-									foreignLanguage={foreignLanguage}
-									isEdit
-									roleStaff={roleStaff}
-									defaultData={item}
-									className="!hidden w700:!inline-flex"
-									onRefresh={() => getUsers(apiParameters)}
-									isStudent={false}
-								/>
-							)}
-							{checkIncludesRole(listPermissionsByRoles.account.staff.delete, Number(userInformation?.RoleId)) && (
-								<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
-							)}
+						{checkIncludesRole(listPermissionsByRoles.account.staff.update, Number(userInformation?.RoleId)) && (
+							<CreateUser
+								process={process}
+								visaStatus={visaStatus}
+								profileStatus={profileStatus}
+								foreignLanguage={foreignLanguage}
+								isEdit
+								roleStaff={roleStaff}
+								defaultData={item}
+								className="!hidden w700:!inline-flex"
+								onRefresh={() => getUsers(apiParameters)}
+								isStudent={false}
+							/>
+						)}
+						{checkIncludesRole(listPermissionsByRoles.account.staff.delete, Number(userInformation?.RoleId)) && (
+							<DeleteTableRow text={`${item.RoleName} ${item.FullName}`} handleDelete={() => deleteUser(item.UserInformationId)} />
+						)}
 					</div>
 				)
 			}
@@ -486,9 +486,9 @@ const Student: FC<IPersonnel> = (props) => {
 			dataIndex: 'Gender',
 			render: (value, record) => (
 				<>
-					{value == 0 && <span>Khác</span>}
+					{value !== 1 && value !== 2 && <span>Khác</span>}
 					{value == 1 && <span className="text-tw-blue">Nam</span>}
-					{value == 2 && <span className="text-tw-orange">Nữ</span>}
+					{value == 2 && <span className="text-[#ff008d]">Nữ</span>}
 				</>
 			)
 		},
@@ -497,19 +497,19 @@ const Student: FC<IPersonnel> = (props) => {
 			width: 140,
 			dataIndex: 'StayType',
 			render: (value: string) => {
-				let converValue: {label: string, color: string} | null
+				let converValue: { label: string; color: string } | null
 				switch (value) {
 					case 'OutDormitory': {
 						converValue = {
 							label: 'Ngoại trú',
-							color: 'text-tw-black'
+							color: 'orange'
 						}
 						break
 					}
 					case 'InDormitory': {
 						converValue = {
 							label: 'Nội trú',
-							color: 'text-tw-green'
+							color: 'blue'
 						}
 						break
 					}
@@ -517,9 +517,9 @@ const Student: FC<IPersonnel> = (props) => {
 						converValue = null
 						break
 				}
-				if(!converValue) return null
+				if (!converValue) return null
 				const { color, label } = converValue
-				return <span className={color}>{label}</span>
+				return <Tag color={color}>{label}</Tag>
 			}
 		},
 		{
@@ -986,15 +986,19 @@ const Student: FC<IPersonnel> = (props) => {
 				loading={loading}
 				current={apiParameters.PageIndex}
 				key={'UserInformationId'}
-				rowSelection={(isAdmin() || isManager()) ? {
-					type: 'checkbox',
-					fixed: true,
-					selectedRowKeys: selectedRowKeys,
+				rowSelection={
+					isAdmin() || isManager()
+						? {
+								type: 'checkbox',
+								fixed: true,
+								selectedRowKeys: selectedRowKeys,
 
-					onChange: (rowKeys) => {
-						setSelectedRowKeys(rowKeys)
-					}
-				} : null}
+								onChange: (rowKeys) => {
+									setSelectedRowKeys(rowKeys)
+								}
+						  }
+						: null
+				}
 				onChangePage={(event: number) => setApiParameters({ ...apiParameters, PageIndex: event })}
 				TitleCard={
 					<>
