@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "next dev -p 3004",
 		"build": "next build",
-		"export": "next export",
+		"export": "next build && next export",
 		"start": "next start -p $PORT",
 		"lint": "next lint",
 		"export:mona": "env-cmd -f .env.mona yarn build && yarn export",

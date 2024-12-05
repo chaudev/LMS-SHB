@@ -121,9 +121,9 @@ const ModalCreateUpdate: FC<TProps> = ({ defaultData, refetch }) => {
 		}
 	}
 
-	const disablePastDates = (currentDate) => {
-		return currentDate && currentDate < moment().startOf('day')
-	}
+	// const disablePastDates = (currentDate) => {
+	// 	return currentDate && currentDate < moment().startOf('day')
+	// }
 
 	return (
 		<>
@@ -163,10 +163,14 @@ const ModalCreateUpdate: FC<TProps> = ({ defaultData, refetch }) => {
 						</Form.Item>
 						<Form.Item name={'DormitoryId'} label="Ký túc xá" rules={formRequired}>
 							<MySelect
-								options={data?.data.map((item) => ({
-									label: item.Name,
-									value: item.Id
-								}))}
+								options={
+									data?.data?.length
+										? data?.data?.map((item) => ({
+												label: item.Name,
+												value: item.Id
+										  }))
+										: []
+								}
 								placeholder="Chọn ký túc xá"
 							/>
 						</Form.Item>
@@ -182,7 +186,7 @@ const ModalCreateUpdate: FC<TProps> = ({ defaultData, refetch }) => {
 									<MyDatePicker
 										placeholder="Ngày bắt đầu"
 										disabled={!monthChange}
-										disabledDate={disablePastDates}
+										// disabledDate={disablePastDates}
 										onChange={handleCalendarChange}
 										format={'DD/MM/YYYY'}
 									/>
